@@ -1,0 +1,7 @@
+Makefile
+QMapfileEditor
+QMapfileEditor.pro.user
+moc_*
+*.o
+ui_*
+
