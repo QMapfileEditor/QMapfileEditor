@@ -16,7 +16,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void  handleFileOpenClick();
+public slots:
+    void  openMapfile();
 
 private:
     Ui::MainWindow *ui;
