@@ -17,10 +17,16 @@ void MainWindow::openMapfile()
     QString fileName ;
 
     fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
+//    this->mapfile = new App::MapfileParser(fileName);
+
 }
 
 
 MainWindow::~MainWindow()
 {
+// this will likely cause a memory leak ...
+//    if (this->mapfile) {
+//        delete this->mapfile;
+//    }
     delete ui;
 }

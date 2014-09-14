@@ -1,12 +1,21 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <iostream>
+
 #include <QMainWindow>
 #include <QDir>
 #include <QFileDialog>
 
+
+
 namespace Ui {
-class MainWindow;
+  class MainWindow;
+}
+
+// this class will be defined ... but later on :-)
+namespace App {
+   class MapfileParser;
 }
 
 class MainWindow : public QMainWindow
@@ -21,6 +30,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+    App::MapfileParser * mapfile;
 };
 
 #endif // MAINWINDOW_H

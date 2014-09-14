@@ -13,8 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    mapfileparser.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    mapfileparser.h
 
 FORMS    += mainwindow.ui
+
+INCLUDEPATH += "/usr/include/mapserver" \
+  "/usr/include/gdal"
+
+LIBS += -lmapserver
