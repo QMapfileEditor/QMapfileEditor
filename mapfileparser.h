@@ -1,14 +1,13 @@
 #ifndef MAPFILEPARSER_H
 #define MAPFILEPARSER_H
 
-#include <mapserver.h>
-#include <mapfile.h>
 #include <string>
 #include <iostream>
 
+#include "libmapserver-bridge.h"
+
+
 namespace App {
-  class MapfileParser;
-}
 
 class MapfileParser
 {
@@ -20,4 +19,5 @@ class MapfileParser
 
 };
 
+}
 #endif // MAPFILEPARSER_H

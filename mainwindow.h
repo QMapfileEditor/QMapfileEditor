@@ -7,15 +7,10 @@
 #include <QDir>
 #include <QFileDialog>
 
-
+#include "mapfileparser.h"
 
 namespace Ui {
   class MainWindow;
-}
-
-// this class will be defined ... but later on :-)
-namespace App {
-   class MapfileParser;
 }
 
 class MainWindow : public QMainWindow
