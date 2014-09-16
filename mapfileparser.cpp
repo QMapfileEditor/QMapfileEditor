@@ -1,3 +1,4 @@
+
 #include <mapserver.h>
 #include <mapfile.h>
 
@@ -28,7 +29,18 @@ mapObj * umnms_new_map(char *filename) {
 MapfileParser::MapfileParser(const std::string filename)
 {
     this->map = umnms_new_map((char *) filename.c_str());
-    std::cout << "mapfile loaded.";
+    this->layers = new QVector<QString *>();
+
+    // Loads layers into a map
+    for (int i = 0; i <  this->map->numlayers ; i++) {
+      QString *curStr = new QString(this->map->layers[i]->name);
+      this->layers->append(curStr);
+    }
+
+}
+
+QVector<QString *> * MapfileParser::getLayers() {
+  return this->layers;
 
 }
 
