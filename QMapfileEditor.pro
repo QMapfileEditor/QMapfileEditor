@@ -25,3 +25,4 @@ INCLUDEPATH += "/usr/include/mapserver" \
   "/usr/include/gdal"
 
 LIBS += -lmapserver
+OBJECTS += libmapserver-bridge.o
