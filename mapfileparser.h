@@ -14,10 +14,10 @@ class MapfileParser
   public:
       MapfileParser(const std::string filename);
       ~MapfileParser();
-      QVector<QString *> * getLayers(void);
+      QVector<QString> * getLayers(void);
   private:
       struct mapObj * map = NULL;
-      QVector<QString *> * layers = NULL;
+      QVector<QString> * layers = NULL;
 
 
 };
