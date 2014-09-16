@@ -1,3 +1,9 @@
+#include <mapserver.h>
+#include <mapfile.h>
+
+#include <string>
+#include <iostream>
+
 #include "mapfileparser.h"
 
 // Defining missing functions

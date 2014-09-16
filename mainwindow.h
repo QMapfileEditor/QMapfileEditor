@@ -8,14 +8,10 @@
 #include <QFileDialog>
 
 
+#include "mapfileparser.h"
 
 namespace Ui {
   class MainWindow;
-}
-
-// this class will be defined ... but later on :-)
-namespace App {
-   class MapfileParser;
 }
 
 class MainWindow : public QMainWindow
@@ -30,7 +26,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    App::MapfileParser * mapfile;
+    MapfileParser * mapfile;
 };
 
 #endif // MAINWINDOW_H
