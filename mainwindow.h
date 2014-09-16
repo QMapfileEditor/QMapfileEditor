@@ -7,7 +7,6 @@
 #include <QDir>
 #include <QFileDialog>
 
-
 #include "mapfileparser.h"
 
 namespace Ui {

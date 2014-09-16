@@ -1,0 +1,120 @@
+MAP
+  EXTENT -180 -90 180 90
+  IMAGECOLOR 192 192 192
+  IMAGETYPE "png24"
+  NAME "World Map"
+  SIZE 600 300
+  STATUS ON
+  UNITS DD
+
+  OUTPUTFORMAT
+    NAME "png24"
+    MIMETYPE "image/png"
+    DRIVER "AGG/PNG"
+    EXTENSION "png"
+    IMAGEMODE RGB
+    TRANSPARENT FALSE
+  END # OUTPUTFORMAT
+
+  OUTPUTFORMAT
+    NAME "png"
+    MIMETYPE "image/png"
+    DRIVER "GD/PNG"
+    EXTENSION "png"
+    IMAGEMODE PC256
+    TRANSPARENT FALSE
+  END # OUTPUTFORMAT
+
+  PROJECTION
+    "proj=longlat"
+    "ellps=WGS84"
+    "datum=WGS84"
+    "no_defs"
+  END # PROJECTION
+  LEGEND
+    KEYSIZE 18 12
+    KEYSPACING 5 5
+    LABEL
+      SIZE MEDIUM
+      COLOR 0 0 89
+      OFFSET 0 0
+      SHADOWSIZE 1 1
+      TYPE BITMAP
+    END # LABEL
+    STATUS ON
+  END # LEGEND
+
+  QUERYMAP
+    SIZE -1 -1
+    STATUS OFF
+    STYLE HILITE
+  END # QUERYMAP
+
+  SCALEBAR
+    INTERVALS 4
+    LABEL
+      SIZE MEDIUM
+      OFFSET 0 0
+      SHADOWSIZE 1 1
+      TYPE BITMAP
+    END # LABEL
+    SIZE 200 3
+    STATUS OFF
+    UNITS MILES
+  END # SCALEBAR
+
+  WEB
+    IMAGEPATH "/tmp/"
+    IMAGEURL "/tmp/"
+    METADATA
+      "wms_srs"	"EPSG:4326"
+      "wms_onlineresource"	"http://localhost/cgi-bin/mapserv.exe?map=wms.map&"
+      "wms_title"	"World Map"
+      "wms_enable_request" "GetCapabilities GetMap"
+    END # METADATA
+  END # WEB
+
+  LAYER
+    DATA "world_raster.tif"
+    METADATA
+      "wms_title"	"world_raster"
+    END # METADATA
+    NAME "world_raster"
+    PROJECTION
+      "proj=longlat"
+      "ellps=WGS84"
+      "datum=WGS84"
+      "no_defs"
+    END # PROJECTION
+    STATUS ON
+    TILEITEM "location"
+    TYPE RASTER
+    UNITS METERS
+  END # LAYER
+
+  LAYER
+    DATA "world_adm0.shp"
+    METADATA
+      "wms_title"	"world_adm0"
+    END # METADATA
+    NAME "world_adm0"
+    PROJECTION
+      "proj=longlat"
+      "ellps=WGS84"
+      "datum=WGS84"
+      "no_defs"
+    END # PROJECTION
+    STATUS DEFAULT
+    TILEITEM "location"
+    TYPE POLYGON
+    UNITS METERS
+    CLASS
+      NAME "world_adm0"
+      STYLE
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END # STYLE
+    END # CLASS
+  END # LAYER
+
+END # MAP

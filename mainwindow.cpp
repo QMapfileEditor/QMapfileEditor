@@ -20,12 +20,13 @@ void MainWindow::openMapfile()
     fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
     this->mapfile = new MapfileParser(fileName.toStdString());
 
+    std::cout << fileName.toStdString() << "\n" ;
 }
 
 
 MainWindow::~MainWindow()
 {
-// this will likely cause a memory leak ...
+// this commented out will likely cause a memory leak ...
 //    if (this->mapfile) {
 //        delete this->mapfile;
 //    }

@@ -1,6 +1,9 @@
 #ifndef MAPFILEPARSER_H
 #define MAPFILEPARSER_H
 
+#include <string>
+#include <iostream>
+
 
 
 class MapfileParser
