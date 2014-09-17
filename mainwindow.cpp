@@ -1,5 +1,3 @@
-#include <QStandardItemModel>
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -10,6 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    mfStructureModel = new QStandardItemModel();
+    mapParamsItem = new QStandardItem(QString("Map parameters"));
+    layersItem = new QStandardItem(QString("Layers"));
+    mfStructureModel->appendRow(mapParamsItem);
+    mfStructureModel->appendRow(layersItem);
+    ui->mf_structure->setModel(mfStructureModel);
     this->connect(ui->mf_tb_open, SIGNAL(clicked()), SLOT(openMapfile()));
 }
 
@@ -24,14 +28,12 @@ void MainWindow::openMapfile()
 
     QVector<QString> * layers = this->mapfile->getLayers();
 
-    QStandardItemModel * layertree = new QStandardItemModel();
 
 
     for (int i = 0; i < layers->size(); ++i) {
-      layertree->appendRow(new  QStandardItem(layers->at(i)));
+      layersItem->appendRow(new  QStandardItem(layers->at(i)));
       std::cout << "\t" << layers->at(i).toStdString()   << std::endl;
     }
-    ui->mf_structure->setModel(layertree);
     std::cout << fileName.toStdString() << "\n" ;
 }
 

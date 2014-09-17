@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include <QStandardItemModel>
+#include <QStandardItem>
 #include <QMainWindow>
 #include <QDir>
 #include <QFileDialog>
@@ -25,7 +27,12 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    MapfileParser * mapfile;
+    MapfileParser * mapfile = NULL;
+
+    QStandardItemModel * mfStructureModel = NULL;
+    QStandardItem * mapParamsItem = NULL;
+    QStandardItem * layersItem = NULL;
+
 };
 
 #endif // MAINWINDOW_H
