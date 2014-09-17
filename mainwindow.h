@@ -25,7 +25,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    App::MapfileParser * mapfile;
+    MapfileParser * mapfile;
 };
 
 #endif // MAINWINDOW_H
