@@ -40,9 +40,10 @@ void MainWindow::openMapfile()
 
 MainWindow::~MainWindow()
 {
-// this commented out will likely cause a memory leak ...
-//    if (this->mapfile) {
-//        delete this->mapfile;
-//    }
+    if (this->mapfile) {
+        delete this->mapfile;
+    }
+    delete this->mfStructureModel;
+    // This *should* destroy the children objects
     delete ui;
 }
