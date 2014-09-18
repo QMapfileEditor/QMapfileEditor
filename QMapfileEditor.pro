@@ -26,3 +26,6 @@ INCLUDEPATH += "/usr/include/mapserver" \
   "/usr/include/gdal"
 
 LIBS += -lmapserver
+
+RESOURCES += \
+    resources.qrc

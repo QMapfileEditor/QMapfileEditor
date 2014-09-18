@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/ui">
+        <file>images/icons/zoom-out.png</file>
+        <file>images/icons/zoom-original.png</file>
+        <file>images/icons/zoom-in.png</file>
+        <file>images/icons/transform-move.png</file>
+        <file>images/icons/tools-wizard.png</file>
+        <file>images/icons/draw-eraser.png</file>
+        <file>images/icons/documentinfo.png</file>
+        <file>images/icons/document-save.png</file>
+        <file>images/icons/document-preview.png</file>
+        <file>images/icons/document-open.png</file>
+        <file>images/icons/document-new.png</file>
+        <file>images/icons/document-import.png</file>
+        <file>images/icons/document-edit.png</file>
+        <file>images/icons/document-close.png</file>
+        <file>images/icons/dialog-ok-apply.png</file>
+        <file>images/icons/dialog-cancel.png</file>
+    </qresource>
+</RCC>
