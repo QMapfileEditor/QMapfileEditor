@@ -25,9 +25,16 @@ void MainWindow::openMapfile()
     QString prevFilePath = QDir::homePath();
     QString fileName ;
 
+    // Reinit / free objects if necessary
+    if (this->mapfile) {
+      layersItem->removeRows(0, layersItem->rowCount());
+      mapParamsItem->removeRows(0, mapParamsItem->rowCount());
+      delete this->mapfile;
+    }
+
     fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
     this->mapfile = new MapfileParser(fileName.toStdString());
-    
+
 
     QVector<QString> * layers = this->mapfile->getLayers();
 
@@ -43,7 +50,6 @@ void MainWindow::openMapfile()
     for (int i = 0; i < layers->size(); ++i) {
       layersItem->appendRow(new  QStandardItem(layers->at(i)));
     }
-    std::cout << fileName.toStdString() << "\n" ;
 }
 
 
