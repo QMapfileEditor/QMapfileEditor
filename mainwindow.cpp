@@ -1,3 +1,5 @@
+#include <QMessageBox>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -25,14 +27,21 @@ void MainWindow::openMapfile()
 
     fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
     this->mapfile = new MapfileParser(fileName.toStdString());
+    
 
     QVector<QString> * layers = this->mapfile->getLayers();
 
-
+    if (layers == NULL) {
+      QMessageBox::critical( 
+          this, 
+          "QMapfileEditor", 
+          tr("Error occured while loading the mapfile.") );
+      delete this->mapfile;
+      return;
+    }
 
     for (int i = 0; i < layers->size(); ++i) {
       layersItem->appendRow(new  QStandardItem(layers->at(i)));
-      std::cout << "\t" << layers->at(i).toStdString()   << std::endl;
     }
     std::cout << fileName.toStdString() << "\n" ;
 }
