@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mfStructureModel->appendRow(mapParamsItem);
     mfStructureModel->appendRow(layersItem);
     ui->mf_structure->setModel(mfStructureModel);
-    this->connect(ui->mf_tb_open, SIGNAL(clicked()), SLOT(openMapfile()));
+    this->connect(ui->actionOpen, SIGNAL(triggered()), SLOT(openMapfile()));
 }
 
 
