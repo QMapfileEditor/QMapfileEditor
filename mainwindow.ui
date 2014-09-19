@@ -47,8 +47,8 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>images/icons/document-new.png</normaloff>images/icons/document-new.png</iconset>
+         <iconset resource="resources.qrc">
+          <normaloff>:/ui/images/icons/document-new.png</normaloff>:/ui/images/icons/document-new.png</iconset>
         </property>
        </widget>
       </item>
@@ -58,8 +58,8 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>images/icons/document-open.png</normaloff>images/icons/document-open.png</iconset>
+         <iconset resource="resources.qrc">
+          <normaloff>:/ui/images/icons/document-open.png</normaloff>:/ui/images/icons/document-open.png</iconset>
         </property>
        </widget>
       </item>
@@ -69,8 +69,8 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>images/icons/document-save.png</normaloff>images/icons/document-save.png</iconset>
+         <iconset resource="resources.qrc">
+          <normaloff>:/ui/images/icons/document-save.png</normaloff>:/ui/images/icons/document-save.png</iconset>
         </property>
        </widget>
       </item>
@@ -80,8 +80,8 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>images/icons/tools-wizard.png</normaloff>images/icons/tools-wizard.png</iconset>
+         <iconset resource="resources.qrc">
+          <normaloff>:/ui/images/icons/tools-wizard.png</normaloff>:/ui/images/icons/tools-wizard.png</iconset>
         </property>
        </widget>
       </item>
@@ -91,8 +91,8 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>images/icons/document-preview.png</normaloff>images/icons/document-preview.png</iconset>
+         <iconset resource="resources.qrc">
+          <normaloff>:/ui/images/icons/document-preview.png</normaloff>:/ui/images/icons/document-preview.png</iconset>
         </property>
        </widget>
       </item>
@@ -128,7 +128,7 @@
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>550</height>
+        <height>16777215</height>
        </size>
       </property>
       <property name="baseSize">
@@ -157,8 +157,8 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>images/icons/zoom-original.png</normaloff>images/icons/zoom-original.png</iconset>
+              <iconset resource="resources.qrc">
+               <normaloff>:/ui/images/icons/zoom-original.png</normaloff>:/ui/images/icons/zoom-original.png</iconset>
              </property>
             </widget>
            </item>
@@ -168,8 +168,8 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>images/icons/zoom-in.png</normaloff>images/icons/zoom-in.png</iconset>
+              <iconset resource="resources.qrc">
+               <normaloff>:/ui/images/icons/zoom-in.png</normaloff>:/ui/images/icons/zoom-in.png</iconset>
              </property>
             </widget>
            </item>
@@ -179,8 +179,8 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>images/icons/zoom-out.png</normaloff>images/icons/zoom-out.png</iconset>
+              <iconset resource="resources.qrc">
+               <normaloff>:/ui/images/icons/zoom-out.png</normaloff>:/ui/images/icons/zoom-out.png</iconset>
              </property>
             </widget>
            </item>
@@ -190,8 +190,8 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>images/icons/transform-move.png</normaloff>images/icons/transform-move.png</iconset>
+              <iconset resource="resources.qrc">
+               <normaloff>:/ui/images/icons/transform-move.png</normaloff>:/ui/images/icons/transform-move.png</iconset>
              </property>
             </widget>
            </item>
@@ -480,7 +480,9 @@
   <tabstop>mf_tb_save</tabstop>
   <tabstop>mf_tb_mapparameter</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>
