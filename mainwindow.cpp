@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::newMapfile()
 {
     // check if a mapfile is already opened
-    if (this->mapfile->isLoaded()) {
+    if ((this->mapfile) &&  (this->mapfile->isLoaded())) {
       QMessageBox::StandardButton reply;
       reply = QMessageBox::question(this, "Currently editing an existing mapfile", "Discard current modifications ?",
           QMessageBox::Yes|QMessageBox::No);
