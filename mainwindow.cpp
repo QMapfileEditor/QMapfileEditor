@@ -16,9 +16,16 @@ MainWindow::MainWindow(QWidget *parent) :
     mfStructureModel->appendRow(mapParamsItem);
     mfStructureModel->appendRow(layersItem);
     ui->mf_structure->setModel(mfStructureModel);
+    this->connect(ui->actionNew, SIGNAL(triggered()), SLOT(newMapfile()));
     this->connect(ui->actionOpen, SIGNAL(triggered()), SLOT(openMapfile()));
 }
 
+void MainWindow::newMapfile()
+{
+
+    this->mapfile = new MapfileParser("");
+    //TODO: need to call a method to clean up the inteface with empty mapfile. 
+}
 
 void MainWindow::openMapfile()
 {
@@ -48,6 +55,7 @@ void MainWindow::openMapfile()
       return;
     }
 
+    //TODO: move this outside
     // map title
     QList<QStandardItem *>  mapNameLst = QList<QStandardItem *>();
     // key
