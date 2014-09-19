@@ -20,7 +20,8 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     mapfileparser.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    mapSetting.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
   "/usr/include/gdal"
