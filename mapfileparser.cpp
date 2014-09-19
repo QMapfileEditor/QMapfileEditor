@@ -7,10 +7,17 @@
 
 #include "mapfileparser.h"
 
+/**
+ *
+ * This class provides a bridge between raw Mapserver C API and
+ * our C++ application.
+ *
+ */
+
 // Defining missing functions
 // declared in mapserver-api
 extern "C" {
-mapObj * umnms_new_map(char *filename) {
+  mapObj * umnms_new_map(char *filename) {
     mapObj *map = NULL;
     if(filename) {
         map = msLoadMap(filename,NULL);
@@ -22,7 +29,7 @@ mapObj * umnms_new_map(char *filename) {
         }
     }
     return map;
-}
+  }
 }
 
 
@@ -32,20 +39,55 @@ MapfileParser::MapfileParser(const std::string filename)
     if (this->map == NULL) {
       return;
     }
-    this->layers = new QVector<QString>();
 
-    // Loads layers into a map
+    // Loads layers into an array of QString
+    this->layers = new QVector<QString>();
     for (int i = 0; i <  this->map->numlayers ; i++) {
       QString curStr = QString(this->map->layers[i]->name);
       this->layers->append(curStr);
     }
-
 }
 
+bool MapfileParser::isLoaded() { return (this->map != NULL); }
+
+// Layers
 QVector<QString> * MapfileParser::getLayers() {
   return this->layers;
-
 }
+// Map name
+QString MapfileParser::getMapName() {
+  if (this->map)
+    return QString(this->map->name);
+  return QString("");
+}
+
+// Extent object parameters
+int MapfileParser::getMapExtentMinX() {
+  if (this->map)
+    return this->map->extent.minx;
+  return -1;
+}
+
+int MapfileParser::getMapExtentMinY() {
+  if (this->map)
+    return this->map->extent.miny;
+  return -1;
+}
+
+int MapfileParser::getMapExtentMaxX() {
+  if (this->map)
+    return this->map->extent.maxx;
+  return -1;
+}
+
+int MapfileParser::getMapExtentMaxY() {
+  if (this->map)
+    return this->map->extent.maxy;
+  return -1;
+}
+
+
+// Destructor
 
 MapfileParser::~MapfileParser() {
     if (this->map) {

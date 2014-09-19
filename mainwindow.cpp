@@ -30,23 +30,35 @@ void MainWindow::openMapfile()
       layersItem->removeRows(0, layersItem->rowCount());
       mapParamsItem->removeRows(0, mapParamsItem->rowCount());
       delete this->mapfile;
+      this->mapfile = NULL;
     }
 
     fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
     this->mapfile = new MapfileParser(fileName.toStdString());
 
 
-    QVector<QString> * layers = this->mapfile->getLayers();
 
-    if (layers == NULL) {
-      QMessageBox::critical( 
-          this, 
-          "QMapfileEditor", 
-          tr("Error occured while loading the mapfile.") );
+    if (! this->mapfile->isLoaded()) {
+      QMessageBox::critical(
+          this,
+          "QMapfileEditor",
+          tr("Error occured while loading the mapfile.")
+      );
       delete this->mapfile;
       return;
     }
 
+    // map title
+    QList<QStandardItem *>  mapNameLst = QList<QStandardItem *>();
+    // key
+    mapNameLst.append(new QStandardItem(tr("name")));
+    //value
+    mapNameLst.append(new QStandardItem(this->mapfile->getMapName()));
+    mapParamsItem->appendRow(mapNameLst);
+
+
+
+    QVector<QString> * layers = this->mapfile->getLayers();
     for (int i = 0; i < layers->size(); ++i) {
       layersItem->appendRow(new  QStandardItem(layers->at(i)));
     }
