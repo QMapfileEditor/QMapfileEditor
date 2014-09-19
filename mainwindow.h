@@ -24,6 +24,7 @@ public:
     ~MainWindow();
 public slots:
     void  openMapfile();
+    void  newMapfile();
 
 private:
     Ui::MainWindow *ui;
