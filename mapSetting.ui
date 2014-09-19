@@ -138,7 +138,7 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left of extent.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget1">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -236,7 +236,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget2">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -302,7 +302,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget3">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -343,7 +343,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget4">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -401,7 +401,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget5">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -541,7 +541,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/documentinfo.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/documentinfo.png</iconset>
+                <normaloff>:/ui/images/icons/documentinfo.png</normaloff>:/ui/images/icons/documentinfo.png</iconset>
               </property>
              </widget>
             </item>
@@ -578,7 +578,7 @@
       <attribute name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path configuration for the map object.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </attribute>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget6">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -613,7 +613,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget7">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -648,7 +648,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget8">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -796,7 +796,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget9">
        <property name="geometry">
         <rect>
          <x>260</x>
@@ -877,7 +877,7 @@
         <string>Other configuration</string>
        </property>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget10">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -899,7 +899,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget11">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -933,7 +933,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget12">
        <property name="geometry">
         <rect>
          <x>50</x>
@@ -955,7 +955,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget13">
        <property name="geometry">
         <rect>
          <x>50</x>
@@ -984,7 +984,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget14">
        <property name="geometry">
         <rect>
          <x>50</x>
@@ -1034,7 +1034,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget15">
        <property name="geometry">
         <rect>
          <x>50</x>
@@ -1074,7 +1074,7 @@
       <attribute name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Managing custom output formats.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </attribute>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget16">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1096,7 +1096,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-new.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-new.png</iconset>
+              <normaloff>:/ui/images/icons/document-new.png</normaloff>:/ui/images/icons/document-new.png</iconset>
             </property>
            </widget>
           </item>
@@ -1110,7 +1110,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-edit.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-edit.png</iconset>
+              <normaloff>:/ui/images/icons/document-edit.png</normaloff>:/ui/images/icons/document-edit.png</iconset>
             </property>
            </widget>
           </item>
@@ -1124,7 +1124,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-close.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-close.png</iconset>
+              <normaloff>:/ui/images/icons/document-close.png</normaloff>:/ui/images/icons/document-close.png</iconset>
             </property>
            </widget>
           </item>
@@ -1138,7 +1138,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/draw-eraser.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/draw-eraser.png</iconset>
+              <normaloff>:/ui/images/icons/draw-eraser.png</normaloff>:/ui/images/icons/draw-eraser.png</iconset>
             </property>
            </widget>
           </item>
@@ -1155,7 +1155,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-import.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/document-import.png</iconset>
+              <normaloff>:/ui/images/icons/document-import.png</normaloff>:/ui/images/icons/document-import.png</iconset>
             </property>
            </widget>
           </item>
@@ -1178,7 +1178,7 @@
          <height>291</height>
         </rect>
        </property>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QWidget" name="layoutWidget17">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -1381,7 +1381,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/dialog-ok-apply.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/dialog-ok-apply.png</iconset>
+               <normaloff>:/ui/images/icons/dialog-ok-apply.png</normaloff>:/ui/images/icons/dialog-ok-apply.png</iconset>
              </property>
             </widget>
            </item>
@@ -1392,7 +1392,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/dialog-cancel.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/dialog-cancel.png</iconset>
+               <normaloff>:/ui/images/icons/dialog-cancel.png</normaloff>:/ui/images/icons/dialog-cancel.png</iconset>
              </property>
             </widget>
            </item>
@@ -1478,7 +1478,7 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QWidget" name="layoutWidget18">
         <property name="geometry">
          <rect>
           <x>3</x>
@@ -1763,7 +1763,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/edit-table-insert-row-above.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/edit-table-insert-row-above.png</iconset>
+               <normaloff>:/ui/images/icons/edit-table-insert-row-above.png</normaloff>:/ui/images/icons/edit-table-insert-row-above.png</iconset>
              </property>
             </widget>
            </item>
@@ -1774,7 +1774,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/edit-table-delete-row.png</normaloff>../../../../../../../../../../../../usr/share/icons/oxygen/16x16/actions/edit-table-delete-row.png</iconset>
+               <normaloff>:/ui/images/icons/edit-table-delete-row.png</normaloff>:/ui/images/icons/edit-table-delete-row.png</iconset>
              </property>
             </widget>
            </item>
@@ -1799,7 +1799,7 @@
         </layout>
        </widget>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget19">
        <property name="geometry">
         <rect>
          <x>6</x>
@@ -1849,7 +1849,7 @@
       <attribute name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Debug parameters (on/off, level, error file)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </attribute>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget20">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1892,7 +1892,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget21">
        <property name="geometry">
         <rect>
          <x>10</x>
