@@ -3,7 +3,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+// private
 
+void MainWindow::reinitMapfile() {
+      this->layersItem->removeRows(0, layersItem->rowCount());
+      this->mapParamsItem->removeRows(0, mapParamsItem->rowCount());
+      delete this->mapfile;
+      this->mapfile = NULL;
+}
+
+// public
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,10 +31,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::newMapfile()
 {
-
-    this->mapfile = new MapfileParser("");
-    //TODO: need to call a method to clean up the inteface with empty mapfile. 
+    // check if a mapfile is already opened
+    if (this->mapfile->isLoaded()) {
+      QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(this, "Currently editing an existing mapfile", "Discard current modifications ?",
+          QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+       this->reinitMapfile();
+      } else {
+        return;
+      }
+    }
 }
+
+
 
 void MainWindow::openMapfile()
 {
@@ -34,10 +53,7 @@ void MainWindow::openMapfile()
 
     // Reinit / free objects if necessary
     if (this->mapfile) {
-      layersItem->removeRows(0, layersItem->rowCount());
-      mapParamsItem->removeRows(0, mapParamsItem->rowCount());
-      delete this->mapfile;
-      this->mapfile = NULL;
+      this->reinitMapfile();
     }
 
     fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));

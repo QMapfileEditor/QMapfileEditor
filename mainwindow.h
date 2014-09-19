@@ -34,6 +34,9 @@ private:
     QStandardItem * mapParamsItem = NULL;
     QStandardItem * layersItem = NULL;
 
+
+    // some internals
+    void reinitMapfile();
 };
 
 #endif // MAINWINDOW_H
