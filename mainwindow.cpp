@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
-
   // init default mapfile structure model
   mfStructureModel = new QStandardItemModel();
   mapParamsItem = new QStandardItem(QString("Map parameters"));
@@ -32,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
   // connects extra actions
   this->connect(ui->actionNew, SIGNAL(triggered()), SLOT(newMapfile()));
   this->connect(ui->actionOpen, SIGNAL(triggered()), SLOT(openMapfile()));
+  this->connect(ui->actionSave, SIGNAL(triggered()), SLOT(saveMapfile()));
+  this->connect(ui->actionSaveAs, SIGNAL(triggered()), SLOT(saveAsMapfile()));
   this->connect(ui->actionMapSetting, SIGNAL(triggered()), SLOT(showMapSettings()));
 
 
@@ -112,6 +113,30 @@ void MainWindow::showMapSettings() {
   
 }
 
+
+void MainWindow::saveMapfile()
+{
+    if (this->mapfile) {
+        this->mapfile->saveMapfile();
+    }
+}
+
+void MainWindow::saveAsMapfile()
+{
+    QString prevFilePath = QDir::homePath();
+
+    if (this->mapfile) {
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)")); 
+	
+	// open file dialog has been discarded (escape)
+	if (fileName.isEmpty()) {
+	  return;
+	}
+	
+        this->mapfile->saveAsMapfile(fileName.toStdString());
+	return;
+    }
+}
 
 
 MainWindow::~MainWindow()
