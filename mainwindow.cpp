@@ -4,10 +4,18 @@
 // private
 
 void MainWindow::reinitMapfile() {
+  // if a MapSettings window has been opened, closes and destroys it
+  if (this->settings) {
+    this->settings->close();
+    delete this->settings;
+    this->settings = NULL;
+  }
+  
   this->layersItem->removeRows(0, layersItem->rowCount());
   this->mapParamsItem->removeRows(0, mapParamsItem->rowCount());
   delete this->mapfile;
   this->mapfile = new MapfileParser();
+
 }
 
 // public
