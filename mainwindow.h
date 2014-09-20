@@ -25,6 +25,8 @@ public:
 public slots:
     void  openMapfile();
     void  newMapfile();
+    void  showMapSettings();
+
 
 private:
     Ui::MainWindow *ui;

@@ -17,7 +17,7 @@
 // Defining missing functions
 // declared in mapserver-api
 extern "C" {
-  mapObj * umnms_new_map(char *filename) {
+  mapObj * umnms_new_map(char * filename) {
     mapObj *map = NULL;
     if(filename) {
         map = msLoadMap(filename,NULL);
@@ -33,6 +33,10 @@ extern "C" {
 }
 
 
+/**
+ * Loads a mapfile from an existing path.
+ *
+ */
 MapfileParser::MapfileParser(const std::string filename)
 {
     this->map = umnms_new_map((char *) filename.c_str());
@@ -46,6 +50,12 @@ MapfileParser::MapfileParser(const std::string filename)
       QString curStr = QString(this->map->layers[i]->name);
       this->layers->append(curStr);
     }
+}
+/**
+ * Creates a mapfile from scratch.
+ */
+MapfileParser::MapfileParser() {
+  this->map = umnms_new_map(NULL);
 }
 
 bool MapfileParser::isLoaded() { return (this->map != NULL); }
