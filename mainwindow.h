@@ -25,10 +25,13 @@ public:
 public slots:
     void  openMapfile();
     void  newMapfile();
+    void  saveMapfile();
+    void  saveAsMapfile();
 
 private:
     Ui::MainWindow *ui;
     MapfileParser * mapfile = NULL;
+    MapfileParser * filename = NULL;
 
     QStandardItemModel * mfStructureModel = NULL;
     QStandardItem * mapParamsItem = NULL;

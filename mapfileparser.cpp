@@ -39,7 +39,7 @@ MapfileParser::MapfileParser(const std::string filename)
     if (this->map == NULL) {
       return;
     }
-
+    this->filename = QString::fromStdString(filename);
     // Loads layers into an array of QString
     this->layers = new QVector<QString>();
     for (int i = 0; i <  this->map->numlayers ; i++) {
@@ -86,7 +86,24 @@ int MapfileParser::getMapExtentMaxY() {
   return -1;
 }
 
+QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
+QString MapfileParser::getMapfileName() { return QString(this->filename); }
 
+int MapfileParser::saveMapfile(const std::string filename = NULL) {
+  if (this->map)
+  {
+    if (!filename)
+    {
+      QByteArray byteArray = this->filename.toUtf8();
+      char* cString = byteArray.data();
+    } else {
+      cString = filename;
+    }
+    msSaveMap(this->map, cString);
+    return 1;
+  }
+  return -1;
+}
 // Destructor
 
 MapfileParser::~MapfileParser() {

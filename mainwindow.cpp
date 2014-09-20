@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mf_structure->setModel(mfStructureModel);
     this->connect(ui->actionNew, SIGNAL(triggered()), SLOT(newMapfile()));
     this->connect(ui->actionOpen, SIGNAL(triggered()), SLOT(openMapfile()));
+    this->connect(ui->actionSave, SIGNAL(triggered()), SLOT(saveMapfile()));
+    this->connect(ui->actionSaveAs, SIGNAL(triggered()), SLOT(saveAsMapfile()));
 }
 
 void MainWindow::newMapfile()
@@ -57,7 +59,7 @@ void MainWindow::openMapfile()
     }
 
     fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
-    this->mapfile = new MapfileParser(fileName.toStdString());
+    mapfile = new MapfileParser(fileName.toStdString());
 
 
 
@@ -85,6 +87,24 @@ void MainWindow::openMapfile()
     QVector<QString> * layers = this->mapfile->getLayers();
     for (int i = 0; i < layers->size(); ++i) {
       layersItem->appendRow(new  QStandardItem(layers->at(i)));
+    }
+}
+
+void MainWindow::saveMapfile()
+{
+    if (this->mapfile) {
+        this->mapfile->saveMapfile();
+    }
+}
+
+void MainWindow::saveAsMapfile()
+{
+    QString prevFilePath = QDir::homePath();
+    QString fileName ;
+
+    if (this->mapfile) {
+        fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)")); 
+        this->mapfile->saveMapfile(fileName.toStdString());
     }
 }
 
