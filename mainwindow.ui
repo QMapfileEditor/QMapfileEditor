@@ -307,7 +307,7 @@
     <string>Help</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+H</string>
+    <string>F1</string>
    </property>
   </action>
   <action name="actionAbout">
