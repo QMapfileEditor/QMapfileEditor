@@ -3,7 +3,6 @@
 
 #include <QDialog>
 
-#include "ui_mapsettings.h"
 #include "mapfileparser.h"
 
 
