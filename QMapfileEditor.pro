@@ -15,9 +15,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mapfileparser.cpp
+        mapsettings.cpp \
+        mapfileparser.cpp
 
 HEADERS  += mainwindow.h \
+    mapsettings.h \
     mapfileparser.h
 
 FORMS    += mainwindow.ui \

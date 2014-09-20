@@ -831,8 +831,10 @@
           </property>
          </widget>
         </item>
+          <!-- neither kcolorbutton nor QColorButton available on my setup,
+               commenting it out for now.
         <item>
-         <widget class="KColorButton" name="mf_map_imagecolor">
+         <widget class="QColorButton" name="mf_map_imagecolor">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -856,6 +858,7 @@
           </property>
          </widget>
         </item>
+         -->
        </layout>
       </widget>
       <widget class="QLabel" name="mf_map_config_label">
@@ -1929,6 +1932,7 @@
    </item>
   </layout>
  </widget>
+ <!--
  <customwidgets>
   <customwidget>
    <class>KColorButton</class>
@@ -1936,6 +1940,7 @@
    <header>kcolorbutton.h</header>
   </customwidget>
  </customwidgets>
+ -->
  <tabstops>
   <tabstop>mf_map_name</tabstop>
   <tabstop>settingsForm</tabstop>
