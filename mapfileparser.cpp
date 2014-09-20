@@ -17,7 +17,7 @@
 // Defining missing functions
 // declared in mapserver-api
 extern "C" {
-  mapObj * umnms_new_map(char *filename) {
+  mapObj * umnms_new_map(char * filename) {
     mapObj *map = NULL;
     if(filename) {
         map = msLoadMap(filename,NULL);
@@ -33,6 +33,10 @@ extern "C" {
 }
 
 
+/**
+ * Loads a mapfile from an existing path.
+ *
+ */
 MapfileParser::MapfileParser(const std::string filename)
 {
     this->map = umnms_new_map((char *) filename.c_str());
@@ -46,6 +50,12 @@ MapfileParser::MapfileParser(const std::string filename)
       QString curStr = QString(this->map->layers[i]->name);
       this->layers->append(curStr);
     }
+}
+/**
+ * Creates a mapfile from scratch.
+ */
+MapfileParser::MapfileParser() {
+  this->map = umnms_new_map(NULL);
 }
 
 bool MapfileParser::isLoaded() { return (this->map != NULL); }
@@ -89,17 +99,22 @@ int MapfileParser::getMapExtentMaxY() {
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
 QString MapfileParser::getMapfileName() { return QString(this->filename); }
 
-int MapfileParser::saveMapfile(const std::string filename = NULL) {
+int MapfileParser::saveMapfile() {
   if (this->map)
   {
-    if (!filename)
-    {
-      QByteArray byteArray = this->filename.toUtf8();
-      char* cString = byteArray.data();
-    } else {
-      cString = filename;
-    }
-    msSaveMap(this->map, cString);
+    QByteArray byteArray = this->filename.toUtf8();
+    const char* cString = byteArray.constData();
+    
+    return this->saveAsMapfile(cString);
+  }
+  return -1;
+}
+
+int MapfileParser::saveAsMapfile(const std::string filename) {
+  if (this->map)
+  {
+
+    msSaveMap(this->map, (char *) filename.c_str());
     return 1;
   }
   return -1;

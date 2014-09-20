@@ -407,6 +407,9 @@
    </property>
   </action>
   <action name="actionSaveAs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/ui/images/icons/document-save.png</normaloff>:/ui/images/icons/document-save.png</iconset>

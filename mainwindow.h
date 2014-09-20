@@ -27,6 +27,9 @@ public slots:
     void  newMapfile();
     void  saveMapfile();
     void  saveAsMapfile();
+    void  showMapSettings();
+
+
 
 private:
     Ui::MainWindow *ui;
