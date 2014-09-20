@@ -21,7 +21,7 @@ HEADERS  += mainwindow.h \
     mapfileparser.h
 
 FORMS    += mainwindow.ui \
-    mapSetting.ui
+    mapsettings.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
   "/usr/include/gdal"

@@ -62,7 +62,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Map settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <property name="toolTip">
@@ -407,7 +407,7 @@
          <x>10</x>
          <y>100</y>
          <width>521</width>
-         <height>93</height>
+         <height>97</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="projectionLayout">
@@ -540,7 +540,7 @@
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="resources.qrc">
                 <normaloff>:/ui/images/icons/documentinfo.png</normaloff>:/ui/images/icons/documentinfo.png</iconset>
               </property>
              </widget>
@@ -584,7 +584,7 @@
          <x>0</x>
          <y>100</y>
          <width>531</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -619,7 +619,7 @@
          <x>0</x>
          <y>70</y>
          <width>531</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -654,7 +654,7 @@
          <x>0</x>
          <y>40</y>
          <width>531</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -802,7 +802,7 @@
          <x>260</x>
          <y>40</y>
          <width>271</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -883,7 +883,7 @@
          <x>0</x>
          <y>90</y>
          <width>531</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -905,7 +905,7 @@
          <x>0</x>
          <y>120</y>
          <width>531</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -939,7 +939,7 @@
          <x>50</x>
          <y>200</y>
          <width>481</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_15">
@@ -961,7 +961,7 @@
          <x>50</x>
          <y>230</y>
          <width>481</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_16">
@@ -1040,7 +1040,7 @@
          <x>50</x>
          <y>290</y>
          <width>481</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_19">
@@ -1079,7 +1079,7 @@
         <rect>
          <x>0</x>
          <y>10</y>
-         <width>151</width>
+         <width>188</width>
          <height>311</height>
         </rect>
        </property>
@@ -1095,7 +1095,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="resources.qrc">
               <normaloff>:/ui/images/icons/document-new.png</normaloff>:/ui/images/icons/document-new.png</iconset>
             </property>
            </widget>
@@ -1109,7 +1109,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="resources.qrc">
               <normaloff>:/ui/images/icons/document-edit.png</normaloff>:/ui/images/icons/document-edit.png</iconset>
             </property>
            </widget>
@@ -1123,7 +1123,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="resources.qrc">
               <normaloff>:/ui/images/icons/document-close.png</normaloff>:/ui/images/icons/document-close.png</iconset>
             </property>
            </widget>
@@ -1137,7 +1137,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="resources.qrc">
               <normaloff>:/ui/images/icons/draw-eraser.png</normaloff>:/ui/images/icons/draw-eraser.png</iconset>
             </property>
            </widget>
@@ -1154,7 +1154,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="resources.qrc">
               <normaloff>:/ui/images/icons/document-import.png</normaloff>:/ui/images/icons/document-import.png</iconset>
             </property>
            </widget>
@@ -1184,7 +1184,7 @@
           <x>10</x>
           <y>10</y>
           <width>380</width>
-          <height>281</height>
+          <height>292</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1380,7 +1380,7 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resources.qrc">
                <normaloff>:/ui/images/icons/dialog-ok-apply.png</normaloff>:/ui/images/icons/dialog-ok-apply.png</iconset>
              </property>
             </widget>
@@ -1391,7 +1391,7 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resources.qrc">
                <normaloff>:/ui/images/icons/dialog-cancel.png</normaloff>:/ui/images/icons/dialog-cancel.png</iconset>
              </property>
             </widget>
@@ -1483,8 +1483,8 @@
          <rect>
           <x>3</x>
           <y>0</y>
-          <width>543</width>
-          <height>310</height>
+          <width>544</width>
+          <height>316</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -1898,7 +1898,7 @@
          <x>10</x>
          <y>50</y>
          <width>411</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_29">
@@ -1954,7 +1954,9 @@
   <tabstop>mf_map_extent_bottom</tabstop>
   <tabstop>mf_map_extent_left</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>mapSettingButtonBox</sender>
