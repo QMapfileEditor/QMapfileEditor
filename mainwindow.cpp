@@ -1,5 +1,3 @@
-#include <QMessageBox>
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -58,8 +56,6 @@ void MainWindow::newMapfile()
   }
 }
 
-
-
 void MainWindow::openMapfile()
 {
   QString prevFilePath = QDir::homePath();
@@ -110,7 +106,17 @@ void MainWindow::openMapfile()
  * Displays the map settings window.
  */
 void MainWindow::showMapSettings() {
-  
+  // Mapfile not loaded
+  if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
+    return;
+  }
+  // a window has alrady been created
+  if (this->settings) {
+    this->settings->show();
+    return;
+  }
+  this->settings = new MapSettings(this, this->mapfile);
+  this->settings->show();
 }
 
 
@@ -126,18 +132,16 @@ void MainWindow::saveAsMapfile()
     QString prevFilePath = QDir::homePath();
 
     if (this->mapfile) {
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)")); 
-	
-	// open file dialog has been discarded (escape)
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save map File"), prevFilePath, tr("Map file (*.map)")); 
 	if (fileName.isEmpty()) {
 	  return;
 	}
-	
-        this->mapfile->saveAsMapfile(fileName.toStdString());
+        if (this->mapfile->saveAsMapfile(fileName.toStdString()) == -1) {
+          QMessageBox::critical(this, "QMapfileEditor", tr("Error occured while saving the mapfile."));
+        }
 	return;
     }
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -145,6 +149,9 @@ MainWindow::~MainWindow()
     delete this->mapfile;
   }
   delete this->mfStructureModel;
+  if (this->settings) {
+    delete this->settings;
+  }
   // This *should* destroy the children objects
   delete ui;
 }

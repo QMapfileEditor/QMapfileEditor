@@ -104,7 +104,6 @@ int MapfileParser::saveMapfile() {
   {
     QByteArray byteArray = this->filename.toUtf8();
     const char* cString = byteArray.constData();
-    
     return this->saveAsMapfile(cString);
   }
   return -1;
@@ -119,6 +118,7 @@ int MapfileParser::saveAsMapfile(const std::string filename) {
   }
   return -1;
 }
+
 // Destructor
 
 MapfileParser::~MapfileParser() {

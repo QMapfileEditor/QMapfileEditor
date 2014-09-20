@@ -3,11 +3,12 @@
 
 #include <QDialog>
 
+#include "ui_mapsettings.h"
 #include "mapfileparser.h"
 
 
 namespace Ui {
-  class Ui_MapSettings;
+  class MapSettings;
 }
 
 class MapSettings : public QDialog
@@ -19,6 +20,7 @@ class MapSettings : public QDialog
     ~MapSettings();
 
   private:
+    Ui::MapSettings * ui;
     MapfileParser * mapfile;
 
 };

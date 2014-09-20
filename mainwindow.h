@@ -3,11 +3,14 @@
 
 #include <iostream>
 
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QMainWindow>
 #include <QDir>
 #include <QFileDialog>
+#include <QMainWindow>
+#include <QMessageBox>
+#include <QStandardItem>
+#include <QStandardItemModel>
+
+#include "mapsettings.h"
 
 #include "mapfileparser.h"
 
@@ -29,8 +32,6 @@ public slots:
     void  saveAsMapfile();
     void  showMapSettings();
 
-
-
 private:
     Ui::MainWindow *ui;
     MapfileParser * mapfile = NULL;
@@ -40,8 +41,9 @@ private:
     QStandardItem * mapParamsItem = NULL;
     QStandardItem * layersItem = NULL;
 
+    MapSettings * settings = NULL;
 
-    // some internals
+    // some internal methods
     void reinitMapfile();
 };
 
