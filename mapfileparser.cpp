@@ -37,13 +37,13 @@ extern "C" {
  * Loads a mapfile from an existing path.
  *
  */
-MapfileParser::MapfileParser(const std::string filename)
+MapfileParser::MapfileParser(const QString & fname) :
+    filename(fname)
 {
-  this->map = umnms_new_map((char *) filename.c_str());
+  this->map = umnms_new_map((char *) filename.toStdString().c_str());
   if (this->map == NULL) {
     return;
   }
-  this->filename = QString::fromStdString(filename);
   // Loads layers into an array of QString
   this->layers = new QVector<QString>();
   for (int i = 0; i <  this->map->numlayers ; i++) {
@@ -51,13 +51,8 @@ MapfileParser::MapfileParser(const std::string filename)
     this->layers->append(curStr);
   }
 }
-/**
- * Creates a mapfile from scratch.
- */
-MapfileParser::MapfileParser() {
-  this->map = umnms_new_map(NULL);
-}
 
+bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
 bool MapfileParser::isLoaded() { return (this->map != NULL); }
 
 // Layers
@@ -99,24 +94,21 @@ int MapfileParser::getMapExtentMaxY() {
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
 QString MapfileParser::getMapfileName() { return QString(this->filename); }
 
-int MapfileParser::saveMapfile() {
-  if (this->map)
-  {
-    QByteArray byteArray = this->filename.toUtf8();
-    const char* cString = byteArray.constData();
-    return this->saveAsMapfile(cString);
+bool MapfileParser::saveMapfile(const QString & filename) {
+  int ret = -1;
+  if (this->map) {
+    // mapfile is a new one ("create mapfile" action)
+    // filename argument should be "valid"  then
+    if (! filename.isEmpty()) {
+      ret = msSaveMap(this->map, (char *) filename.toStdString().c_str());
+    }
+    // using existing file (already existing mapfile loaded)
+    // ("save" action)
+    else if (! this->filename.isEmpty()) {
+      ret = msSaveMap(this->map, (char *) filename.toStdString().c_str());
+    }
   }
-  return -1;
-}
-
-int MapfileParser::saveAsMapfile(const std::string filename) {
-  if (this->map)
-  {
-
-    msSaveMap(this->map, (char *) filename.c_str());
-    return 1;
-  }
-  return -1;
+  return (ret == 0);
 }
 
 // Destructor

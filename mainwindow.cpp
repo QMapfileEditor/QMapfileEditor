@@ -14,7 +14,7 @@ void MainWindow::reinitMapfile() {
   this->layersItem->removeRows(0, layersItem->rowCount());
   this->mapParamsItem->removeRows(0, mapParamsItem->rowCount());
   delete this->mapfile;
-  this->mapfile = new MapfileParser();
+  this->mapfile = new MapfileParser(QString());
 
 }
 
@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
   //creates a default empty mapfileparser
-  this->mapfile = new MapfileParser();
+  this->mapfile = new MapfileParser(QString());
 }
 
 void MainWindow::newMapfile()
@@ -55,8 +55,6 @@ void MainWindow::newMapfile()
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
       this->reinitMapfile();
-      // Then recreates an empty mapfileparser
-      this->mapfile = new MapfileParser();
     }
     else {
       return;
@@ -83,7 +81,7 @@ void MainWindow::openMapfile()
     this->reinitMapfile();
   }
 
-  this->mapfile = new MapfileParser(fileName.toStdString());
+  this->mapfile = new MapfileParser(fileName);
 
   if (! this->mapfile->isLoaded()) {
     QMessageBox::critical(
@@ -131,7 +129,12 @@ void MainWindow::showMapSettings() {
 void MainWindow::saveMapfile()
 {
   if (this->mapfile) {
-    this->mapfile->saveMapfile();
+    // if this is a new mapfile, calls saveAsMapfile instead
+    if (this->mapfile->isNew()) {
+      this->saveAsMapfile();
+    } else {
+      this->mapfile->saveMapfile(QString());
+    }
   }
 }
 
@@ -144,7 +147,7 @@ void MainWindow::saveAsMapfile()
     if (fileName.isEmpty()) {
       return;
     }
-    if (this->mapfile->saveAsMapfile(fileName.toStdString()) == -1) {
+    if (! this->mapfile->saveMapfile(fileName)) {
       QMessageBox::critical(this, "QMapfileEditor", tr("Error occured while saving the mapfile."));
     }
     return;

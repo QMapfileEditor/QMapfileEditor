@@ -12,8 +12,7 @@
 class MapfileParser
 {
  public:
-  MapfileParser(void);
-  MapfileParser(const std::string filename);
+  MapfileParser(const QString & filename);
   ~MapfileParser();
 
   QString getMapName();
@@ -26,15 +25,15 @@ class MapfileParser
   int getMapExtentMinY();
   int getMapExtentMaxX();
   int getMapExtentMaxY();
-  int saveAsMapfile(const std::string filename);
-  int saveMapfile();
+  bool saveMapfile(const QString & filename);
 
   bool isLoaded();
+  bool isNew();
 
  private:
   // Private plain mapserver object
   struct mapObj * map = NULL;
-  QString filename ;
+  QString filename;
 
   // accessible objects (via getters/setters)
 
