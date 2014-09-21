@@ -39,6 +39,7 @@ lrelease.commands = lrelease QMapfileEditor.pro
 lrelease.depends = lupdate
 QMAKE_EXTRA_TARGETS += lupdate lrelease
 
+POST_TARGETDEPS += lrelease
 
 TRANSLATIONS += lang/fr.ts \
     lang/en.ts
