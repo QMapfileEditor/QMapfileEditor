@@ -17,8 +17,8 @@
         <file>images/icons/dialog-ok-apply.png</file>
         <file>images/icons/dialog-cancel.png</file>
     </qresource>
-    <qresource prefix="/lang">
-        <file>lang/en.qm</file>
-        <file>lang/fr.qm</file>
+    <qresource>
+        <file>lang/en_US.qm</file>
+        <file>lang/fr_FR.qm</file>
     </qresource>
 </RCC>

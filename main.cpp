@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
   // loading translations / qtlinguist
   QTranslator trans;
-  trans.load(QString(":/lang/" + QLocale::system().name()));
+  trans.load(QString(QLocale::system().name()), ":/lang/");
   a.installTranslator(& trans);
 
   MainWindow w;
