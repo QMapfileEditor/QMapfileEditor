@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>labelSizeItemSettings</class>
  <widget class="QTabWidget" name="labelSizeItemSettings">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -282,6 +285,9 @@
        </item>
        <item>
         <widget class="QSpinBox" name="mf_opacity_box">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="maximum">
           <number>100</number>
          </property>
@@ -300,6 +306,9 @@
        </item>
        <item>
         <widget class="QSpinBox" name="mf_offsiteRed_box">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximum">
           <number>250</number>
          </property>
@@ -307,6 +316,9 @@
        </item>
        <item>
         <widget class="QSpinBox" name="mf_offsiteGreen_box">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximum">
           <number>250</number>
          </property>
@@ -314,6 +326,9 @@
        </item>
        <item>
         <widget class="QSpinBox" name="mf_offsiteBlue_box">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximum">
           <number>250</number>
          </property>
@@ -878,50 +893,16 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QWidget" name="tab_3">
+  <widget class="QWidget" name="advancedTab">
    <attribute name="title">
     <string>Advanced</string>
    </attribute>
-   <widget class="QWidget" name="horizontalLayoutWidget_29">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>361</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_30">
-     <item>
-      <widget class="QLabel" name="mf_processing_label">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Processing</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="mf_processing_edit"/>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_10">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
-      <width>361</width>
+      <y>10</y>
+      <width>411</width>
       <height>111</height>
      </rect>
     </property>
@@ -941,9 +922,9 @@
    <widget class="QWidget" name="horizontalLayoutWidget_24">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>160</y>
-      <width>361</width>
+      <x>430</x>
+      <y>120</y>
+      <width>411</width>
       <height>32</height>
      </rect>
     </property>
@@ -1042,32 +1023,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="mf_grid_label">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>50</y>
-      <width>62</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Grid</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="mf_Feature_label">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>20</y>
-      <width>62</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Feature</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_9">
     <property name="geometry">
      <rect>
@@ -1112,10 +1067,10 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>190</y>
-      <width>361</width>
-      <height>81</height>
+      <x>430</x>
+      <y>10</y>
+      <width>411</width>
+      <height>111</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -1212,191 +1167,413 @@
        </item>
       </layout>
      </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_30">
+       <item>
+        <widget class="QLabel" name="mf_processing_label">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Processing</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="mf_processing_edit"/>
+       </item>
+      </layout>
+     </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_13">
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>90</y>
-      <width>190</width>
+      <x>10</x>
+      <y>120</y>
+      <width>411</width>
       <height>31</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_37">
-     <item>
-      <widget class="QLabel" name="mf_transform_label">
-       <property name="text">
-        <string>Transform</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox">
-       <item>
-        <property name="text">
-         <string>true</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>false</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>upper left</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>upper center</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>upper right</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>middle left</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>center center</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>middle right</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>lower left</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>lower center</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>lower right</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_30">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>390</y>
-      <width>451</width>
-      <height>151</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_41">
-     <item>
-      <widget class="QLabel" name="mf_validation_label">
-       <property name="minimumSize">
-        <size>
-         <width>70</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>70</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Validation</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTableView" name="mf_validation_table">
-       <property name="alternatingRowColors">
-        <bool>true</bool>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_33">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>260</y>
-      <width>451</width>
-      <height>121</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_44">
      <item>
-      <widget class="QLabel" name="mf_cluster_label">
-       <property name="minimumSize">
-        <size>
-         <width>70</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>70</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Cluster</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_37">
+       <item>
+        <widget class="QLabel" name="mf_transform_label">
+         <property name="text">
+          <string>Transform</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>true</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>false</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>upper left</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>upper center</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>upper right</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>middle left</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>center center</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>middle right</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>lower left</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>lower center</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>lower right</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QTableView" name="mf_cluster_table"/>
+      <layout class="QHBoxLayout" name="horizontalLayout_21">
+       <item>
+        <widget class="QLabel" name="mf_maxFeatures_label">
+         <property name="text">
+          <string>Max Features</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="mf_maxFeatures_edit"/>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_20">
+   <widget class="QCheckBox" name="layer_cluster_enabled_check">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>90</y>
-      <width>160</width>
-      <height>27</height>
+      <x>10</x>
+      <y>160</y>
+      <width>131</width>
+      <height>23</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_21">
+    <property name="text">
+     <string>Enable cluster</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="layer_cluster_group">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>831</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Cluster settings</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="tab">
+   <attribute name="title">
+    <string>Geometry</string>
+   </attribute>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>831</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Chart settings</string>
+    </property>
+    <widget class="QWidget" name="horizontalLayoutWidget_41">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>238</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_51">
+      <item>
+       <widget class="QLabel" name="mf_charttype_label">
+        <property name="text">
+         <string>Chart type</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_3">
+        <item>
+         <property name="text">
+          <string>Pie chart</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Bar graphs</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Stacked bar graphs</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>160</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_13">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_53">
+        <item>
+         <widget class="QLabel" name="chart_bar_minval_label">
+          <property name="text">
+           <string>Min Value</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="chart_bar_minxval_edit"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_54">
+        <item>
+         <widget class="QLabel" name="chart_bar_maxval_label">
+          <property name="text">
+           <string>Max Value</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="chart_bar_maxval_edit"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_42">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>160</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_52">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Size</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="chart_bar_size__box"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QCheckBox" name="layer_chart_enabled_check">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>151</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Enable chart</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="layer_feature_enabled_check">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>0</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Enable feature</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>831</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Feature settings</string>
+    </property>
+    <widget class="QLabel" name="mf_grid_type_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>62</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Type</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="mf_grid_content_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>62</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Features</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="mf_feature_content_text">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>60</y>
+       <width>751</width>
+       <height>81</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="mf_feature_type_combo">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>30</y>
+       <width>86</width>
+       <height>25</height>
+      </rect>
+     </property>
      <item>
-      <widget class="QLabel" name="mf_maxFeatures_label">
-       <property name="text">
-        <string>Max Features</string>
-       </property>
-      </widget>
+      <property name="text">
+       <string>WKT</string>
+      </property>
      </item>
      <item>
-      <widget class="QLineEdit" name="mf_maxFeatures_edit"/>
+      <property name="text">
+       <string>Points</string>
+      </property>
      </item>
-    </layout>
+     <item>
+      <property name="text">
+       <string>Items</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Text</string>
+      </property>
+     </item>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="layer_grid_group">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>380</y>
+      <width>831</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Grids settings</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="layer_grid_enabled_check">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>0</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>enable grid</string>
+    </property>
    </widget>
   </widget>
   <widget class="QWidget" name="classesTab">
@@ -1495,7 +1672,7 @@
       <x>340</x>
       <y>10</y>
       <width>160</width>
-      <height>21</height>
+      <height>27</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1680,7 +1857,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QWidget" name="tab">
+  <widget class="QWidget" name="labelTab">
    <attribute name="title">
     <string>Label</string>
    </attribute>
@@ -1868,6 +2045,58 @@
    </attribute>
   </widget>
   <widget class="QWidget" name="tab_2">
+   <attribute name="title">
+    <string>Validation</string>
+   </attribute>
+   <widget class="QWidget" name="horizontalLayoutWidget_30">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>451</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_41">
+     <item>
+      <widget class="QLabel" name="mf_validation_label">
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Validation</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableView" name="mf_validation_table">
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="debugTab">
    <attribute name="title">
     <string>Debug</string>
    </attribute>
