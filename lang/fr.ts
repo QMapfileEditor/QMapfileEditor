@@ -6,210 +6,210 @@
     <message>
         <location filename="../mainwindow.ui" line="32"/>
         <source>Mapfile Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de Mapfile</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="151"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="163"/>
-        <location filename="../mainwindow.ui" line="307"/>
+        <location filename="../mainwindow.ui" line="311"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="170"/>
-        <location filename="../mainwindow.ui" line="279"/>
+        <location filename="../mainwindow.ui" line="283"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="181"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramêtres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="232"/>
+        <location filename="../mainwindow.ui" line="235"/>
         <source>filetools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="259"/>
+        <location filename="../mainwindow.ui" line="263"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="282"/>
+        <location filename="../mainwindow.ui" line="286"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="291"/>
+        <location filename="../mainwindow.ui" line="295"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="294"/>
+        <location filename="../mainwindow.ui" line="298"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="299"/>
+        <location filename="../mainwindow.ui" line="303"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="302"/>
+        <location filename="../mainwindow.ui" line="306"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="310"/>
+        <location filename="../mainwindow.ui" line="314"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="315"/>
+        <location filename="../mainwindow.ui" line="319"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="320"/>
+        <location filename="../mainwindow.ui" line="324"/>
         <source>Style Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Objet Style</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="325"/>
+        <location filename="../mainwindow.ui" line="329"/>
         <source>Layer object</source>
-        <translation type="unfinished"></translation>
+        <translation>Objet Couche</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="330"/>
+        <location filename="../mainwindow.ui" line="334"/>
         <source>Class object</source>
-        <translation type="unfinished"></translation>
+        <translation>Objet Classe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="335"/>
+        <location filename="../mainwindow.ui" line="339"/>
         <source>Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbôle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="340"/>
+        <location filename="../mainwindow.ui" line="344"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Police</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="349"/>
+        <location filename="../mainwindow.ui" line="356"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauver</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="352"/>
+        <location filename="../mainwindow.ui" line="359"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="361"/>
+        <location filename="../mainwindow.ui" line="368"/>
         <source>Map settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramêtres de la carte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="364"/>
+        <location filename="../mainwindow.ui" line="371"/>
         <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="376"/>
+        <location filename="../mainwindow.ui" line="383"/>
         <source>Save as ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer sous ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="379"/>
+        <location filename="../mainwindow.ui" line="386"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="384"/>
+        <location filename="../mainwindow.ui" line="391"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="389"/>
+        <location filename="../mainwindow.ui" line="396"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Refaire</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="394"/>
+        <location filename="../mainwindow.ui" line="401"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Options</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="399"/>
+        <location filename="../mainwindow.ui" line="406"/>
         <source>Last mapfile</source>
-        <translation type="unfinished"></translation>
+        <translation>Dernier mapfile</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="408"/>
+        <location filename="../mainwindow.ui" line="415"/>
         <source>Refresh Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiser la carte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="411"/>
+        <location filename="../mainwindow.ui" line="418"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="420"/>
+        <location filename="../mainwindow.ui" line="427"/>
         <source>Zoom to Extend</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomer sur l&apos;extent</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="429"/>
+        <location filename="../mainwindow.ui" line="436"/>
         <source>Zoom +</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom +</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="438"/>
+        <location filename="../mainwindow.ui" line="445"/>
         <source>Zoom -</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom -</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="447"/>
+        <location filename="../mainwindow.ui" line="454"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Se déplacer sur la carte</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="68"/>
         <source>Open map File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir un mapfile</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="68"/>
         <location filename="../mainwindow.cpp" line="135"/>
         <source>Map file (*.map)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier Mapfile (*.map)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="86"/>
         <source>Error occured while loading the mapfile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une erreur est survenue au chargement du mapfile.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="135"/>
         <source>Save map File</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauver le Mapfile</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
         <source>Error occured while saving the mapfile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une erreur est survenue à la sauvegarde du mapfile.</translation>
     </message>
 </context>
 <context>
@@ -217,13 +217,13 @@
     <message>
         <location filename="../mapsettings.ui" line="35"/>
         <source>Map Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramêtres de la carte</translation>
     </message>
     <message>
         <location filename="../mapsettings.ui" line="46"/>
         <location filename="../mapsettings.ui" line="1199"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../mapsettings.ui" line="62"/>
