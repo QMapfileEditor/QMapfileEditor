@@ -32,3 +32,6 @@ LIBS += -lmapserver
 
 RESOURCES += \
     resources.qrc
+
+TRANSLATIONS += lang/fr.ts \
+    lang/en.ts
