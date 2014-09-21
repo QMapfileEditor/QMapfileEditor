@@ -21,6 +21,7 @@ class MapSettings : public QDialog
  private:
       Ui::MapSettings * ui;
       MapfileParser * mapfile;
+      QStringList units;
 
 };
 
