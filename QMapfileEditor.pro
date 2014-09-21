@@ -33,3 +33,14 @@ LIBS += -lmapserver
 
 RESOURCES += \
     resources.qrc
+
+lupdate.commands = lupdate QMapfileEditor.pro
+lupdate.depends  = $$SOURCES $$HEADERS $$FORMS $$TRANSLATIONS
+lrelease.commands = lrelease QMapfileEditor.pro
+lrelease.depends = lupdate
+QMAKE_EXTRA_TARGETS += lupdate lrelease
+
+POST_TARGETDEPS += lrelease
+
+TRANSLATIONS += lang/fr.ts \
+    lang/en.ts

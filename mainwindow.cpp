@@ -12,7 +12,6 @@ void MainWindow::reinitMapfile() {
   }
 
   this->layersItem->removeRows(0, layersItem->rowCount());
-  this->mapParamsItem->removeRows(0, mapParamsItem->rowCount());
   delete this->mapfile;
   this->mapfile = new MapfileParser(QString());
 
@@ -28,9 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // init default mapfile structure model
   mfStructureModel = new QStandardItemModel();
-  mapParamsItem = new QStandardItem(QString("Map parameters"));
   layersItem = new QStandardItem(QString("Layers"));
-  mfStructureModel->appendRow(mapParamsItem);
   mfStructureModel->appendRow(layersItem);
   ui->mf_structure->setModel(mfStructureModel);
 
@@ -66,8 +63,7 @@ void MainWindow::openMapfile()
 {
   QString prevFilePath = QDir::homePath();
 
-  // TODO: if modifications made on a new / opened 
-  // mapfile, warns the user
+  // TODO: if modifications made on a new / opened mapfile, warns the user
 
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
 
@@ -93,21 +89,14 @@ void MainWindow::openMapfile()
     return;
   }
 
-  //TODO: this should be moved outside ?
-
-  // map title
-  QList<QStandardItem *>  mapNameLst = QList<QStandardItem *>();
-  // key
-  mapNameLst.append(new QStandardItem(tr("name")));
-  //value
-  mapNameLst.append(new QStandardItem(this->mapfile->getMapName()));
-  mapParamsItem->appendRow(mapNameLst);
-
   QVector<QString> * layers = this->mapfile->getLayers();
   for (int i = 0; i < layers->size(); ++i) {
     layersItem->appendRow(new  QStandardItem(layers->at(i)));
   }
+
+  ui->mf_structure->expandAll();
 }
+
 /**
  * Displays the map settings window.
  */
@@ -159,7 +148,9 @@ MainWindow::~MainWindow()
   if (this->mapfile) {
     delete this->mapfile;
   }
+
   delete this->mfStructureModel;
+
   if (this->settings) {
     delete this->settings;
   }
