@@ -66,6 +66,39 @@ QString MapfileParser::getMapName() {
   return QString("");
 }
 
+// Status parameters
+bool MapfileParser::getMapStatus() {
+  if (this->map)
+    return this->map->status;
+  return -1;
+}
+
+// Width/Height parameters
+int MapfileParser::getMapWidth() {
+  if (this->map)
+    return this->map->width;
+  return -1;
+}
+
+int MapfileParser::getMapHeight() {
+  if (this->map)
+    return this->map->height;
+  return -1;
+}
+
+int MapfileParser::getMapSize() {
+  if (this->map)
+    return this->map->maxsize;
+  return -1;
+}
+
+// units parameter
+int MapfileParser::getMapUnits() {
+  if (this->map)
+    return this->map->units;
+  return -1;
+}
+
 // Extent object parameters
 int MapfileParser::getMapExtentMinX() {
   if (this->map)

@@ -21,6 +21,12 @@ class MapfileParser
 
   QVector<QString> * getLayers(void);
 
+  bool getMapStatus();
+  int getMapWidth();
+  int getMapHeight();
+  int getMapSize();
+  int getMapUnits();
+  
   int getMapExtentMinX();
   int getMapExtentMinY();
   int getMapExtentMaxX();
