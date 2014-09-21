@@ -38,7 +38,6 @@ class MainWindow : public QMainWindow
       MapfileParser * filename = NULL;
 
       QStandardItemModel * mfStructureModel = NULL;
-      QStandardItem * mapParamsItem = NULL;
       QStandardItem * layersItem = NULL;
 
       MapSettings * settings = NULL;
