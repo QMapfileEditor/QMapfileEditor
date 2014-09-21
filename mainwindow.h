@@ -20,31 +20,31 @@ namespace Ui {
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-public slots:
-    void  openMapfile();
-    void  newMapfile();
-    void  saveMapfile();
-    void  saveAsMapfile();
-    void  showMapSettings();
+ public:
+      explicit MainWindow(QWidget *parent = 0);
+      ~MainWindow();
+ public slots:
+      void  openMapfile();
+      void  newMapfile();
+      void  saveMapfile();
+      void  saveAsMapfile();
+      void  showMapSettings();
 
-private:
-    Ui::MainWindow *ui;
-    MapfileParser * mapfile = NULL;
-    MapfileParser * filename = NULL;
+ private:
+      Ui::MainWindow *ui;
+      MapfileParser * mapfile = NULL;
+      MapfileParser * filename = NULL;
 
-    QStandardItemModel * mfStructureModel = NULL;
-    QStandardItem * mapParamsItem = NULL;
-    QStandardItem * layersItem = NULL;
+      QStandardItemModel * mfStructureModel = NULL;
+      QStandardItem * mapParamsItem = NULL;
+      QStandardItem * layersItem = NULL;
 
-    MapSettings * settings = NULL;
+      MapSettings * settings = NULL;
 
-    // some internal methods
-    void reinitMapfile();
+      // some internal methods
+      void reinitMapfile();
 };
 
 #endif // MAINWINDOW_H

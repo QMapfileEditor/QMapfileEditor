@@ -10,7 +10,7 @@ void MainWindow::reinitMapfile() {
     delete this->settings;
     this->settings = NULL;
   }
-  
+
   this->layersItem->removeRows(0, layersItem->rowCount());
   this->mapParamsItem->removeRows(0, mapParamsItem->rowCount());
   delete this->mapfile;
@@ -21,8 +21,8 @@ void MainWindow::reinitMapfile() {
 // public
 
 MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow)
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
 
@@ -52,7 +52,7 @@ void MainWindow::newMapfile()
   if ((this->mapfile) &&  (this->mapfile->isLoaded())) {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Currently editing an existing mapfile", "Discard current modifications ?",
-        QMessageBox::Yes|QMessageBox::No);
+                                  QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
       this->reinitMapfile();
       // Then recreates an empty mapfileparser
@@ -130,25 +130,25 @@ void MainWindow::showMapSettings() {
 
 void MainWindow::saveMapfile()
 {
-    if (this->mapfile) {
-        this->mapfile->saveMapfile();
-    }
+  if (this->mapfile) {
+    this->mapfile->saveMapfile();
+  }
 }
 
 void MainWindow::saveAsMapfile()
 {
-    QString prevFilePath = QDir::homePath();
+  QString prevFilePath = QDir::homePath();
 
-    if (this->mapfile) {
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save map File"), prevFilePath, tr("Map file (*.map)")); 
-	if (fileName.isEmpty()) {
-	  return;
-	}
-        if (this->mapfile->saveAsMapfile(fileName.toStdString()) == -1) {
-          QMessageBox::critical(this, "QMapfileEditor", tr("Error occured while saving the mapfile."));
-        }
-	return;
+  if (this->mapfile) {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save map File"), prevFilePath, tr("Map file (*.map)")); 
+    if (fileName.isEmpty()) {
+      return;
     }
+    if (this->mapfile->saveAsMapfile(fileName.toStdString()) == -1) {
+      QMessageBox::critical(this, "QMapfileEditor", tr("Error occured while saving the mapfile."));
+    }
+    return;
+  }
 }
 
 MainWindow::~MainWindow()

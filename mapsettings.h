@@ -7,20 +7,20 @@
 
 
 namespace Ui {
-  class MapSettings;
+class MapSettings;
 }
 
 class MapSettings : public QDialog
 {
   Q_OBJECT
 
-  public:
-    explicit MapSettings(QWidget * parent, MapfileParser *);
-    ~MapSettings();
+ public:
+      explicit MapSettings(QWidget * parent, MapfileParser *);
+      ~MapSettings();
 
-  private:
-    Ui::MapSettings * ui;
-    MapfileParser * mapfile;
+ private:
+      Ui::MapSettings * ui;
+      MapfileParser * mapfile;
 
 };
 

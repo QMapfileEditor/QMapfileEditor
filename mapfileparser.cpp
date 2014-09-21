@@ -20,13 +20,13 @@ extern "C" {
   mapObj * umnms_new_map(char * filename) {
     mapObj *map = NULL;
     if(filename) {
-        map = msLoadMap(filename,NULL);
+      map = msLoadMap(filename,NULL);
     } else {
-        map = (mapObj *)msSmallCalloc(sizeof(mapObj),1);
-        if(initMap(map) == -1) {
-            free(map);
-            return NULL;
-        }
+      map = (mapObj *)msSmallCalloc(sizeof(mapObj),1);
+      if(initMap(map) == -1) {
+        free(map);
+        return NULL;
+      }
     }
     return map;
   }
@@ -39,17 +39,17 @@ extern "C" {
  */
 MapfileParser::MapfileParser(const std::string filename)
 {
-    this->map = umnms_new_map((char *) filename.c_str());
-    if (this->map == NULL) {
-      return;
-    }
-    this->filename = QString::fromStdString(filename);
-    // Loads layers into an array of QString
-    this->layers = new QVector<QString>();
-    for (int i = 0; i <  this->map->numlayers ; i++) {
-      QString curStr = QString(this->map->layers[i]->name);
-      this->layers->append(curStr);
-    }
+  this->map = umnms_new_map((char *) filename.c_str());
+  if (this->map == NULL) {
+    return;
+  }
+  this->filename = QString::fromStdString(filename);
+  // Loads layers into an array of QString
+  this->layers = new QVector<QString>();
+  for (int i = 0; i <  this->map->numlayers ; i++) {
+    QString curStr = QString(this->map->layers[i]->name);
+    this->layers->append(curStr);
+  }
 }
 /**
  * Creates a mapfile from scratch.
@@ -122,10 +122,10 @@ int MapfileParser::saveAsMapfile(const std::string filename) {
 // Destructor
 
 MapfileParser::~MapfileParser() {
-    if (this->map) {
-      free(this->map);
-    }
-    if (this->layers) {
-      delete this->layers;
-    }
+  if (this->map) {
+    free(this->map);
+  }
+  if (this->layers) {
+    delete this->layers;
+  }
 };
