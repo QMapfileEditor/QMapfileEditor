@@ -26,6 +26,8 @@ class MapfileParser
   int getMapHeight();
   int getMapSize();
   int getMapUnits();
+  QString getMapImageType();
+  int getMapProjection();
   
   int getMapExtentMinX();
   int getMapExtentMinY();

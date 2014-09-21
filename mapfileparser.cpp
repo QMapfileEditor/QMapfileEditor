@@ -99,6 +99,20 @@ int MapfileParser::getMapUnits() {
   return -1;
 }
 
+// imageType parameter
+QString MapfileParser::getMapImageType() {
+  if (this->map)
+    return this->map->imagetype;
+  return "";
+}
+
+//projection parameters
+int MapfileParser::getMapProjection() {
+  if (this->map)
+    return this->map->projection.wellknownprojection;
+  return -1;
+}
+
 // Extent object parameters
 int MapfileParser::getMapExtentMinX() {
   if (this->map)

@@ -8,6 +8,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       
       /** Constants **/
       this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << "dd" << "pixels" << "pourcentages" << "nauticalmiles";
+      this->imageTypes << "jpeg" << "pdf" << "png" << "svg";
       
       //TODO: create Slots and Signal on extent auto/manual to enabling forms
       
@@ -30,6 +31,14 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       
       ui->mf_map_units->addItems(this->units);
       ui->mf_map_units->setCurrentIndex(this->mapfile->getMapUnits());
+      
+      ui->mf_map_outputformat->addItems(this->imageTypes);
+      //TODO: add custom outputformat
+      //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
+      
+      //TODO: create autocompleter for projection
+      //QCompleter *epsgCompleter = new QCompleter(, this);
+      ui->mf_map_projection->addItem(QString::number(this->mapfile->getMapProjection()));
       
       ui->mf_map_extent_top->setText(QString::number(this->mapfile->getMapExtentMaxY()));
       ui->mf_map_extent_bottom->setText(QString::number(this->mapfile->getMapExtentMinY()));

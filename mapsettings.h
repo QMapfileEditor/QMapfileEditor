@@ -22,6 +22,7 @@ class MapSettings : public QDialog
       Ui::MapSettings * ui;
       MapfileParser * mapfile;
       QStringList units;
+      QStringList imageTypes;
 
 };
 
