@@ -1,7 +1,7 @@
 SET(PROJECT_NAME "QMapfileEditor")
 PROJECT(${PROJECT_NAME})
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
 
 SET(QT_MIN_VERSION 4.7.0)
