@@ -2,6 +2,8 @@
 #define MAPSETTINGS_H
 
 #include <QDialog>
+#include <QDir>
+#include <QFileDialog>
 
 #include "mapfileparser.h"
 
@@ -17,13 +19,15 @@ class MapSettings : public QDialog
  public:
       explicit MapSettings(QWidget * parent, MapfileParser *);
       ~MapSettings();
+ public slots:
+      void browseDebugFile();
 
  private:
       Ui::MapSettings * ui;
       MapfileParser * mapfile;
       QStringList units;
       QStringList imageTypes;
-
+      QString filename = NULL;
 };
 
 #endif // MAPSETTINGS_H

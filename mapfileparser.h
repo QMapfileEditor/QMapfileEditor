@@ -35,8 +35,14 @@ class MapfileParser
   int getMapExtentMaxY();
   bool saveMapfile(const QString & filename);
 
+  bool getDebugStatus();
+  QString getDebugFile();
+  QString browseDebugFile();
+
   bool isLoaded();
   bool isNew();
+
+  int debug;
 
  private:
   // Private plain mapserver object

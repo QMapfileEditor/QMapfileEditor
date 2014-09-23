@@ -6,6 +6,10 @@ MAP
   SIZE 600 300
   STATUS ON
   UNITS DD
+  DEBUG 1
+  CONFIG
+   "MS_ERRORFILE" "mapserver.og"
+  END
 
   OUTPUTFORMAT
     NAME "png24"

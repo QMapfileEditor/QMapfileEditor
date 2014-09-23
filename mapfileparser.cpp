@@ -50,6 +50,8 @@ MapfileParser::MapfileParser(const QString & fname) :
     QString curStr = QString(this->map->layers[i]->name);
     this->layers->append(curStr);
   }
+
+  this->debug = this->map->debug;
 }
 
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
@@ -136,6 +138,18 @@ int MapfileParser::getMapExtentMaxY() {
   if (this->map)
     return this->map->extent.maxy;
   return -1;
+}
+
+bool MapfileParser::getDebugStatus() {
+    if (this->map)
+        return this->map->debug;
+    return false;
+}
+
+QString MapfileParser::getDebugFile() {
+    if (this->map)
+        return msLookupHashTable( &(this->map->configoptions), "MS_ERRORFILE");
+    return NULL;
 }
 
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
