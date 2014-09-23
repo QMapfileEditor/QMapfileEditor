@@ -52,6 +52,32 @@ MapfileParser::MapfileParser(const QString & fname) :
   }
 }
 
+/**
+ * Creates an image representation of the current map
+ */
+unsigned char * MapfileParser::getCurrentMapImage() {
+  if (! this->map)
+    return NULL;
+  // image already loaded
+  if (this->currentImage)
+    return this->currentImage->img.raw_byte;
+
+  // TODO: ERROR HERE, leaking memory ...
+  imageObj * ret = msDrawMap(this->map, MS_FALSE);
+  if (ret != NULL) {
+    this->currentImage = ret;
+    return (unsigned char *) ret->img.raw_byte;
+  }
+  return NULL;
+}
+
+unsigned int MapfileParser::getCurrentMapImageSize() {
+  if (! this->currentImage)
+    return 0;
+  //return this->currentImage
+  return 32;
+}
+
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
 bool MapfileParser::isLoaded() { return (this->map != NULL); }
 

@@ -5,8 +5,10 @@
 
 #include <QDir>
 #include <QFileDialog>
+#include <QGraphicsScene>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QPixmap>
 #include <QStandardItem>
 #include <QStandardItemModel>
 

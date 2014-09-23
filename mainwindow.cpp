@@ -95,6 +95,17 @@ void MainWindow::openMapfile()
   }
 
   ui->mf_structure->expandAll();
+
+
+  // tries to draw the map
+  // TODO: Leaking memory here as well ...
+  QGraphicsScene * g = new QGraphicsScene();
+  QPixmap mapRepr = QPixmap();
+  mapRepr.loadFromData((const uchar *) this->mapfile->getCurrentMapImage(), this->mapfile->getCurrentMapImageSize());
+
+  bool r = mapRepr.save("/tmp/QMapfileEditorsample.png");
+  g->addPixmap(mapRepr);
+  ui->mf_preview->setScene(g);
 }
 
 /**
