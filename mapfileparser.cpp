@@ -38,7 +38,7 @@ extern "C" {
  *
  */
 MapfileParser::MapfileParser(const QString & fname) :
-    filename(fname)
+    filename(fname), currentImageSize(0)
 {
   this->map = umnms_new_map((char *) filename.toStdString().c_str());
   if (this->map == NULL) {
@@ -63,19 +63,17 @@ unsigned char * MapfileParser::getCurrentMapImage() {
     return this->currentImage->img.raw_byte;
 
   // TODO: ERROR HERE, leaking memory ...
+  // just meant to try out
   imageObj * ret = msDrawMap(this->map, MS_FALSE);
   if (ret != NULL) {
     this->currentImage = ret;
-    return (unsigned char *) ret->img.raw_byte;
+    return msSaveImageBuffer(this->currentImage, &this->currentImageSize, this->currentImage->format);
   }
   return NULL;
 }
 
-unsigned int MapfileParser::getCurrentMapImageSize() {
-  if (! this->currentImage)
-    return 0;
-  //return this->currentImage
-  return 32;
+int MapfileParser::getCurrentMapImageSize() {
+  return this->currentImageSize;
 }
 
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }

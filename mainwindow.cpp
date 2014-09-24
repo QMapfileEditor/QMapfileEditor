@@ -101,7 +101,10 @@ void MainWindow::openMapfile()
   // TODO: Leaking memory here as well ...
   QGraphicsScene * g = new QGraphicsScene();
   QPixmap mapRepr = QPixmap();
-  mapRepr.loadFromData((const uchar *) this->mapfile->getCurrentMapImage(), this->mapfile->getCurrentMapImageSize());
+  unsigned char * mapImage = this->mapfile->getCurrentMapImage();
+  int mapImageSize = this->mapfile->getCurrentMapImageSize();
+
+  mapRepr.loadFromData(mapImage, mapImageSize);
 
   bool r = mapRepr.save("/tmp/QMapfileEditorsample.png");
   g->addPixmap(mapRepr);
