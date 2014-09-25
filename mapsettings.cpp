@@ -48,6 +48,10 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_extent_bottom->setText(QString::number(this->mapfile->getMapExtentMinY()));
       ui->mf_map_extent_right->setText(QString::number(this->mapfile->getMapExtentMaxX()));
       ui->mf_map_extent_left->setText(QString::number(this->mapfile->getMapExtentMinX()));
+      /** Path tab **/
+      ui->mf_map_shapepath->setText(this->mapfile->shapepath);
+      ui->mf_map_symbolset->setText(this->mapfile->symbolset);
+      ui->mf_map_fontset->setText(this->mapfile->fontset);
 
       /** Debug tab **/
       //TODO: add slot/action to enable mf_map_debug box

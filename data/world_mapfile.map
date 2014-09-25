@@ -10,7 +10,10 @@ MAP
   CONFIG
    "MS_ERRORFILE" "mapserver.og"
   END
-
+  SHAPEPATH /home/yjacolin/Documents/Dev/QMapfileEditor/data/
+  FONSET test.font
+  SYMBOLSET test.sym
+  
   OUTPUTFORMAT
     NAME "png24"
     MIMETYPE "image/png"

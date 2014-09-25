@@ -52,6 +52,9 @@ MapfileParser::MapfileParser(const QString & fname) :
   }
 
   this->debug = this->map->debug;
+  this->shapepath = this->map->shapepath;
+  this->fontset = this->map->fontset.filename;
+  this->symbolset = this->map->symbolset.filename;
 }
 
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
@@ -170,6 +173,10 @@ bool MapfileParser::saveMapfile(const QString & filename) {
     }
   }
   return (ret == 0);
+}
+
+QString MapfileParser::browseDebugFile() {
+   return "";
 }
 
 // Destructor

@@ -43,6 +43,9 @@ class MapfileParser
   bool isNew();
 
   int debug;
+  QString shapepath;
+  QString symbolset;
+  QString fontset;
 
  private:
   // Private plain mapserver object
