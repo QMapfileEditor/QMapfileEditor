@@ -49,18 +49,18 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_extent_right->setText(QString::number(this->mapfile->getMapExtentMaxX()));
       ui->mf_map_extent_left->setText(QString::number(this->mapfile->getMapExtentMinX()));
       /** Path tab **/
-      ui->mf_map_shapepath->setText(this->mapfile->shapepath);
-      ui->mf_map_symbolset->setText(this->mapfile->symbolset);
-      ui->mf_map_fontset->setText(this->mapfile->fontset);
+      ui->mf_map_shapepath->setText(this->mapfile->getShapepath());
+      ui->mf_map_symbolset->setText(this->mapfile->getSymbolSet());
+      ui->mf_map_fontset->setText(this->mapfile->getFontSet());
 
       /** Debug tab **/
       //TODO: add slot/action to enable mf_map_debug box
       //TODO: add slot/connect for browsing
-      if( this->mapfile->getDebugStatus() )
+      if( this->mapfile->getDebug() )
       {
           ui->mf_map_debug_off->setChecked(false);
           ui->mf_map_debug_on->setChecked(true);
-          ui->mf_map_debug->setValue(this->mapfile->debug);
+          ui->mf_map_debug->setValue(this->mapfile->getDebug());
           ui->mf_map_debug->setEnabled(true);
       } else {
           ui->mf_map_debug_off->setChecked(true);

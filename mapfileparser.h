@@ -36,16 +36,17 @@ class MapfileParser
   bool saveMapfile(const QString & filename);
 
   bool getDebugStatus();
+  int getDebug();
   QString getDebugFile();
   QString browseDebugFile();
+  QString getShapepath();
+  QString getSymbolSet();
+  QString getFontSet();
 
   bool isLoaded();
   bool isNew();
 
   int debug;
-  QString shapepath;
-  QString symbolset;
-  QString fontset;
 
  private:
   // Private plain mapserver object

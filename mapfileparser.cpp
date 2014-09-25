@@ -50,11 +50,6 @@ MapfileParser::MapfileParser(const QString & fname) :
     QString curStr = QString(this->map->layers[i]->name);
     this->layers->append(curStr);
   }
-
-  this->debug = this->map->debug;
-  this->shapepath = this->map->shapepath;
-  this->fontset = this->map->fontset.filename;
-  this->symbolset = this->map->symbolset.filename;
 }
 
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
@@ -149,9 +144,34 @@ bool MapfileParser::getDebugStatus() {
     return false;
 }
 
+int MapfileParser::getDebug() {
+    if (this->map)
+        return this->map->debug;
+    return false;
+}
+
 QString MapfileParser::getDebugFile() {
     if (this->map)
         return msLookupHashTable( &(this->map->configoptions), "MS_ERRORFILE");
+    return NULL;
+}
+
+QString MapfileParser::getShapepath() {
+    if (this->map)
+        //return this->map->shapepath;
+        return msLookupHashTable( &(this->map->configoptions), "MS_SHAPEPATH");
+    return NULL;
+}
+
+QString MapfileParser::getSymbolSet() {
+    if (this->map)
+        return this->map->symbolset.filename;
+    return NULL;
+}
+
+QString MapfileParser::getFontSet() {
+    if (this->map)
+        return this->map->fontset.filename;
     return NULL;
 }
 

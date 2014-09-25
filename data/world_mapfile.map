@@ -6,12 +6,12 @@ MAP
   SIZE 600 300
   STATUS ON
   UNITS DD
-  DEBUG 1
+  DEBUG 0
   CONFIG
-   "MS_ERRORFILE" "mapserver.og"
+   "MS_ERRORFILE" "mapserver.log"
   END
   SHAPEPATH /home/yjacolin/Documents/Dev/QMapfileEditor/data/
-  FONSET test.font
+  FONTSET test.font
   SYMBOLSET test.sym
   
   OUTPUTFORMAT
