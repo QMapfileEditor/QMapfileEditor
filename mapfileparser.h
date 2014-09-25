@@ -43,6 +43,18 @@ class MapfileParser
   QString getSymbolSet();
   QString getFontSet();
 
+  QString getTemplatePattern();
+  QString getDataPattern();
+  QString getConfigContextUrl();
+  QString getConfigEncryptionKey();
+
+
+
+
+  int getResolution();
+  int getDefResolution();
+  float getAngle();
+
   bool isLoaded();
   bool isNew();
 

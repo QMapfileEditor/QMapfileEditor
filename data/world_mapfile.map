@@ -10,9 +10,11 @@ MAP
   CONFIG
    "MS_ERRORFILE" "mapserver.log"
   END
+  ANGLE 45
   SHAPEPATH "/home/yjacolin/Documents/Dev/QMapfileEditor/data/"
   FONTSET test.font
   SYMBOLSET test.sym
+  TEMPLATE ttt.html
   
   OUTPUTFORMAT
     NAME "png24"

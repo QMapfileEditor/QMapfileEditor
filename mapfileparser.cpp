@@ -174,6 +174,51 @@ QString MapfileParser::getFontSet() {
     return NULL;
 }
 
+int MapfileParser::getResolution() {
+    if (this->map)
+        return this->map->resolution;
+    return -1;
+}
+
+int MapfileParser::getDefResolution() {
+    if (this->map)
+        return this->map->defresolution;
+    return -1;
+}
+
+float MapfileParser::getAngle() {
+    if (this->map)
+        return this->map->gt.rotation_angle;
+    return -1.0;
+}
+
+QString MapfileParser::getTemplatePattern() {
+    if (this->map)
+        return this->map->templatepattern;
+    return NULL;
+}
+
+QString MapfileParser::getDataPattern() {
+    if (this->map)
+        return this->map->datapattern;
+    return NULL;
+}
+
+QString MapfileParser::getConfigContextUrl() {
+    if (this->map)
+        return  msLookupHashTable( &(this->map->configoptions), "CGI_CONTEXT_URL");
+    return NULL;
+}
+
+QString MapfileParser::getConfigEncryptionKey() {
+    if (this->map)
+        return msLookupHashTable( &(this->map->configoptions), "MS_ENCRYPTION_KEY");
+    return NULL;
+}
+
+//MS_NONSQUARE ON_MISSING_DATA PROJ_LIB
+
+
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
 QString MapfileParser::getMapfileName() { return QString(this->filename); }
 

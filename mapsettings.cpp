@@ -52,6 +52,16 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_shapepath->setText(this->mapfile->getShapepath());
       ui->mf_map_symbolset->setText(this->mapfile->getSymbolSet());
       ui->mf_map_fontset->setText(this->mapfile->getFontSet());
+      
+      /** Advanced tab **/
+      //TODO: add action/slot for encryption key and proj lib path
+      ui->mf_map_resolution->setValue(this->mapfile->getResolution());
+      ui->mf_map_defresolution->setValue(this->mapfile->getDefResolution());
+      ui->mf_map_angle->setValue(this->mapfile->getAngle());
+      ui->mf_map_templatepattern->setText(this->mapfile->getTemplatePattern());
+      ui->mf_map_datapattern->setText(this->mapfile->getDataPattern());
+      ui->mf_map_config_contexturl->setText(this->mapfile->getConfigContextUrl());
+      ui->mf_map_config_encryption->setText(this->mapfile->getConfigEncryptionKey());
 
       /** Debug tab **/
       //TODO: add slot/action to enable mf_map_debug box
