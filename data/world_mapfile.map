@@ -10,7 +10,7 @@ MAP
   CONFIG
    "MS_ERRORFILE" "mapserver.log"
   END
-  SHAPEPATH /home/yjacolin/Documents/Dev/QMapfileEditor/data/
+  SHAPEPATH "/home/yjacolin/Documents/Dev/QMapfileEditor/data/"
   FONTSET test.font
   SYMBOLSET test.sym
   

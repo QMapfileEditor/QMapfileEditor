@@ -21,13 +21,15 @@ class MapSettings : public QDialog
       ~MapSettings();
  public slots:
       void browseDebugFile();
+      void browseShapepath();
+      void browseSymbolsetFile();
+      void browseFontsetFile();
 
  private:
       Ui::MapSettings * ui;
       MapfileParser * mapfile;
       QStringList units;
       QStringList imageTypes;
-      QString filename = NULL;
 };
 
 #endif // MAPSETTINGS_H

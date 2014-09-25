@@ -158,8 +158,7 @@ QString MapfileParser::getDebugFile() {
 
 QString MapfileParser::getShapepath() {
     if (this->map)
-        //return this->map->shapepath;
-        return msLookupHashTable( &(this->map->configoptions), "MS_SHAPEPATH");
+        return this->map->shapepath;
     return NULL;
 }
 

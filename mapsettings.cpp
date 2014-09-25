@@ -56,6 +56,10 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       /** Debug tab **/
       //TODO: add slot/action to enable mf_map_debug box
       //TODO: add slot/connect for browsing
+      this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
+      this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
+      this->connect(ui->mf_map_symbolset_browse, SIGNAL(clicked()), SLOT(browseSymbolsetFile()));
+
       if( this->mapfile->getDebug() )
       {
           ui->mf_map_debug_off->setChecked(false);
@@ -74,7 +78,10 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_config_errorFile->setText(this->mapfile->getDebugFile());
 }
 
+/** Following method should be refactored **/
 void MapSettings::browseDebugFile() {
+
+      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
       QString prevFilePath = QDir::homePath();
 
       QString fileName = QFileDialog::getOpenFileName(this, tr("Open debug File"), prevFilePath, tr("Debug file (*.log)"));
@@ -82,10 +89,51 @@ void MapSettings::browseDebugFile() {
       if (fileName.isEmpty()) {
             return;
       }
-      //TODO: should we used relatif or absolute path?
-      //TODO: not working
-      ui->mf_map_config_errorFile->setText((char *) filename.toStdString().c_str());
+      //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
+      ui->mf_map_config_errorFile->setText((char *) fileName.toStdString().c_str());
 }
+
+void MapSettings::browseSymbolsetFile() {
+
+      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
+      QString prevFilePath = QDir::homePath();
+
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open symbolset File"), prevFilePath, tr("Symbolset file (*.sym)"));
+      // open file dialog has been discarded (escape)
+      if (fileName.isEmpty()) {
+            return;
+      }
+      //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
+      ui->mf_map_symbolset->setText((char *) fileName.toStdString().c_str());
+}
+
+void MapSettings::browseFontsetFile() {
+
+      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
+      QString prevFilePath = QDir::homePath();
+
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open fontset File"), prevFilePath, tr("Fontset file (*.font)"));
+      // open file dialog has been discarded (escape)
+      if (fileName.isEmpty()) {
+            return;
+      }
+      //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
+      ui->mf_map_fontset->setText((char *) fileName.toStdString().c_str());
+}
+
+void MapSettings::browseShapepath() {
+      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
+      QString prevDirPath = QDir::homePath();
+
+      QString dirName = QFileDialog::getExistingDirectory(this, tr("Open Directory Files"), prevDirPath);
+      // open file dialog has been discarded (escape)
+      if (dirName.isEmpty()) {
+            return;
+      }
+      //TODO: should we used relatif or absolute path?
+      ui->mf_map_shapepath->setText((char *) dirName.toStdString().c_str());
+}
+/** End refactoring **/
 
 MapSettings::~MapSettings() {
   // mapfile lifecycle should be managed elsewhere

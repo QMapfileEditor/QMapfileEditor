@@ -26,12 +26,14 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
 
   // init default mapfile structure model
+  this->showInfo("Initializing default mapfile");
   mfStructureModel = new QStandardItemModel();
   layersItem = new QStandardItem(QString("Layers"));
   mfStructureModel->appendRow(layersItem);
   ui->mf_structure->setModel(mfStructureModel);
 
   // connects extra actions
+  this->showInfo("Activate actions");
   this->connect(ui->actionNew, SIGNAL(triggered()), SLOT(newMapfile()));
   this->connect(ui->actionOpen, SIGNAL(triggered()), SLOT(openMapfile()));
   this->connect(ui->actionSave, SIGNAL(triggered()), SLOT(saveMapfile()));
@@ -41,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
+  this->showInfo("Initialisation process: succeed!");
 }
 
 void MainWindow::newMapfile()
@@ -86,6 +89,7 @@ void MainWindow::openMapfile()
         tr("Error occured while loading the mapfile.")
         );
     this->reinitMapfile();
+    this->showInfo("Mapfile openend vwith success.");
     return;
   }
 
@@ -141,6 +145,13 @@ void MainWindow::saveAsMapfile()
     }
     return;
   }
+}
+
+void MainWindow::showInfo( QString message )
+{
+   //TODO: if statusBar is on so:
+   ui->statusbar->showMessage(message);
+   return;
 }
 
 MainWindow::~MainWindow()

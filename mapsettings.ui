@@ -64,11 +64,8 @@
        <height>430</height>
       </size>
      </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Map settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -672,7 +669,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="mf_map_shapepath"/>
+         <widget class="QLineEdit" name="mf_map_shapepath">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path to the directory where are located most of your files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="mf_map_shapepath_browse">
