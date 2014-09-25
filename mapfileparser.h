@@ -28,11 +28,13 @@ class MapfileParser
   int getMapUnits();
   QString getMapImageType();
   int getMapProjection();
-  
+
   int getMapExtentMinX();
   int getMapExtentMinY();
   int getMapExtentMaxX();
   int getMapExtentMaxY();
+  unsigned char * getCurrentMapImage();
+  int getCurrentMapImageSize();
   bool saveMapfile(const QString & filename);
 
   bool getDebugStatus();
@@ -54,7 +56,8 @@ class MapfileParser
   QString filename;
 
   // accessible objects (via getters/setters)
-
+  struct imageObj * currentImage = NULL;
+  int currentImageSize;
   // map name and extent are directly accessible
 
   // layers list
