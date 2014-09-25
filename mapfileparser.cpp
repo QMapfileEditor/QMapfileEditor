@@ -186,9 +186,12 @@ bool MapfileParser::saveMapfile(const QString & filename) {
 
 MapfileParser::~MapfileParser() {
   if (this->map) {
-    free(this->map);
+    msFreeMap(this->map);
+  }
+  if (this->currentImage) {
+    msFreeImage(this->currentImage);
   }
   if (this->layers) {
     delete this->layers;
   }
-};
+}
