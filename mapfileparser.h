@@ -48,6 +48,9 @@ class MapfileParser
   QString getConfigContextUrl();
   QString getConfigEncryptionKey();
 
+  QString getConfigNonsquare();
+  QString getConfigMissingData();
+  QString getConfigProjLib();
 
 
 

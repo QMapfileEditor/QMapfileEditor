@@ -30,6 +30,7 @@ class MapSettings : public QDialog
       MapfileParser * mapfile;
       QStringList units;
       QStringList imageTypes;
+      QStringList missingdata;
 };
 
 #endif // MAPSETTINGS_H

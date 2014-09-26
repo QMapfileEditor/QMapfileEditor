@@ -216,7 +216,22 @@ QString MapfileParser::getConfigEncryptionKey() {
     return NULL;
 }
 
-//MS_NONSQUARE ON_MISSING_DATA PROJ_LIB
+QString MapfileParser::getConfigNonsquare() {
+    if (this->map)
+        return msLookupHashTable( &(this->map->configoptions), "MS_NONSQUARE");
+    return NULL;
+}
+
+QString MapfileParser::getConfigMissingData() {
+    if (this->map)
+        return msLookupHashTable( &(this->map->configoptions), "MS_MISSING_DATA");
+    return NULL;
+}
+QString MapfileParser::getConfigProjLib() {
+    if (this->map)
+        return msLookupHashTable( &(this->map->configoptions), "MS_PROJ_LIB");
+    return NULL;
+}
 
 
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }

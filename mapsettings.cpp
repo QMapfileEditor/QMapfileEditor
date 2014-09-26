@@ -9,7 +9,8 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       /** Constants **/
       this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << "dd" << "pixels" << "pourcentages" << "nauticalmiles";
       this->imageTypes << "jpeg" << "pdf" << "png" << "svg";
-      
+      this->missingdata << "FAIL" << "LOG" << "IGNORE";
+
       //TODO: create Slots and Signal on extent auto/manual to enabling forms
       
       /** General Tab **/
@@ -62,6 +63,22 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_datapattern->setText(this->mapfile->getDataPattern());
       ui->mf_map_config_contexturl->setText(this->mapfile->getConfigContextUrl());
       ui->mf_map_config_encryption->setText(this->mapfile->getConfigEncryptionKey());
+
+      if (this->mapfile->getConfigNonsquare() != NULL ) {
+          ui->mf_map_config_squarepixel_yes->setChecked(true);
+          ui->mf_map_config_squarepixel_off->setChecked(false);
+      } else {
+          ui->mf_map_config_squarepixel_yes->setChecked(false);
+          ui->mf_map_config_squarepixel_off->setChecked(true);
+      }
+
+      if (this->mapfile->getConfigMissingData() != NULL ) {
+          ui->mf_map_config_missingdata->addItems(this->missingdata);
+          //TODO: select correct item in the combobox
+          //ui->mf_map_config_missingdata->setCurrentIndex(this->mapfile->getConfigMissingData());
+      }
+
+      ui->mf_map_config_projlib->setText(this->mapfile->getConfigProjLib());
 
       /** Debug tab **/
       //TODO: add slot/action to enable mf_map_debug box
