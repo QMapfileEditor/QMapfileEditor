@@ -4,4 +4,4 @@ QMapfileEditor.pro.user
 moc_*
 *.o
 ui_*
-
+data/mapserver.log
