@@ -64,9 +64,6 @@
        <height>430</height>
       </size>
      </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Map settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
      <property name="currentIndex">
       <number>4</number>
      </property>
@@ -672,7 +669,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="mf_map_shapepath"/>
+         <widget class="QLineEdit" name="mf_map_shapepath">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path to the directory where are located most of your files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="mf_map_shapepath_browse">
@@ -744,6 +745,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
          </widget>
         </item>
        </layout>
@@ -766,7 +770,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="mf_map_resolution"/>
+         <widget class="QSpinBox" name="mf_map_resolution">
+          <property name="maximum">
+           <number>99999</number>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="horizontalSpacer_3">
@@ -789,7 +797,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="mf_map_defresolution"/>
+         <widget class="QSpinBox" name="mf_map_defresolution">
+          <property name="maximum">
+           <number>999999</number>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -861,6 +873,18 @@
        <layout class="QHBoxLayout" name="horizontalLayout_12">
         <item>
          <widget class="QLabel" name="mf_map_templatepattern_label">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>Template pattern</string>
           </property>
@@ -885,13 +909,13 @@
          <widget class="QLabel" name="mf_map_datapattern_label">
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>150</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -917,6 +941,18 @@
        <layout class="QHBoxLayout" name="horizontalLayout_15">
         <item>
          <widget class="QLabel" name="mf_map_config_contexturl_label">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>cgi context url</string>
           </property>
@@ -939,16 +975,47 @@
        <layout class="QHBoxLayout" name="horizontalLayout_16">
         <item>
          <widget class="QLabel" name="mf_map_config_encryption_label">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="text">
            <string>Encryption key</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="mf_map_config_encryption"/>
+         <widget class="QLineEdit" name="mf_map_config_encryption">
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="mf_map_config_encryption_browse">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>Browse</string>
           </property>
@@ -1018,6 +1085,18 @@
        <layout class="QHBoxLayout" name="horizontalLayout_19">
         <item>
          <widget class="QLabel" name="mf_map_config_projlib_label">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>Proj Lib path</string>
           </property>
