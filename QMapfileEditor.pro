@@ -24,7 +24,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     mapsettings.ui \
-    layersSetings.ui
+    layersettings.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
   "/usr/include/gdal"
