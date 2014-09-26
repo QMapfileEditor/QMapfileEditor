@@ -138,6 +138,43 @@ int MapfileParser::getMapExtentMaxY() {
   return -1;
 }
 
+bool MapfileParser::getDebugStatus() {
+    if (this->map)
+        return this->map->debug;
+    return false;
+}
+
+int MapfileParser::getDebug() {
+    if (this->map)
+        return this->map->debug;
+    return false;
+}
+
+QString MapfileParser::getDebugFile() {
+    if (this->map)
+        return msLookupHashTable( &(this->map->configoptions), "MS_ERRORFILE");
+    return NULL;
+}
+
+QString MapfileParser::getShapepath() {
+    if (this->map)
+        //return this->map->shapepath;
+        return msLookupHashTable( &(this->map->configoptions), "MS_SHAPEPATH");
+    return NULL;
+}
+
+QString MapfileParser::getSymbolSet() {
+    if (this->map)
+        return this->map->symbolset.filename;
+    return NULL;
+}
+
+QString MapfileParser::getFontSet() {
+    if (this->map)
+        return this->map->fontset.filename;
+    return NULL;
+}
+
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
 QString MapfileParser::getMapfileName() { return QString(this->filename); }
 
@@ -156,6 +193,10 @@ bool MapfileParser::saveMapfile(const QString & filename) {
     }
   }
   return (ret == 0);
+}
+
+QString MapfileParser::browseDebugFile() {
+   return "";
 }
 
 // Destructor

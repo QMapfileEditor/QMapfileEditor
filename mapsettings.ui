@@ -71,9 +71,6 @@
       <number>4</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Main configuration settings for the map object.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
       <attribute name="title">
        <string>Main</string>
       </attribute>
@@ -150,7 +147,7 @@
          <x>10</x>
          <y>40</y>
          <width>521</width>
-         <height>28</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -248,7 +245,7 @@
          <x>10</x>
          <y>10</y>
          <width>521</width>
-         <height>27</height>
+         <height>31</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -314,7 +311,7 @@
          <x>10</x>
          <y>70</y>
          <width>201</width>
-         <height>27</height>
+         <height>31</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -575,9 +572,6 @@
       </widget>
      </widget>
      <widget class="QWidget" name="pathTabForm">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path configuration for the map object.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
       <attribute name="title">
        <string>Path</string>
       </attribute>
@@ -691,9 +685,6 @@
       </widget>
      </widget>
      <widget class="QWidget" name="advancedTabForm">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Advanced settings for map object (Other configuration parameters, pattern, resolution, background color).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
       <property name="accessibleName">
        <string/>
       </property>
@@ -763,7 +754,7 @@
          <x>4</x>
          <y>7</y>
          <width>521</width>
-         <height>28</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -971,7 +962,7 @@
          <x>30</x>
          <y>250</y>
          <width>481</width>
-         <height>29</height>
+         <height>33</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -1046,9 +1037,6 @@
       </widget>
      </widget>
      <widget class="QWidget" name="outputFormatTabForm">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Managing custom output formats.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
       <attribute name="title">
        <string>Output Format</string>
       </attribute>
@@ -1060,7 +1048,7 @@
         <rect>
          <x>0</x>
          <y>10</y>
-         <width>151</width>
+         <width>168</width>
          <height>311</height>
         </rect>
        </property>
@@ -1165,7 +1153,7 @@
           <x>10</x>
           <y>10</y>
           <width>380</width>
-          <height>281</height>
+          <height>308</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1432,9 +1420,6 @@
       </widget>
      </widget>
      <widget class="QWidget" name="ogcTabForm">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OGC standards configuration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
       <attribute name="title">
        <string>OGC Standards</string>
       </attribute>
@@ -1464,7 +1449,7 @@
          <rect>
           <x>3</x>
           <y>0</y>
-          <width>543</width>
+          <width>547</width>
           <height>351</height>
          </rect>
         </property>
@@ -1821,9 +1806,6 @@
       </widget>
      </widget>
      <widget class="QWidget" name="debugTabForm">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Debug parameters (on/off, level, error file)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
       <attribute name="title">
        <string>Debug</string>
       </attribute>
@@ -1836,7 +1818,7 @@
          <x>10</x>
          <y>10</y>
          <width>238</width>
-         <height>28</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_28">

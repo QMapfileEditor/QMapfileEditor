@@ -6,7 +6,14 @@ MAP
   SIZE 600 300
   STATUS ON
   UNITS DD
-
+  DEBUG 0
+  CONFIG
+   "MS_ERRORFILE" "mapserver.log"
+  END
+  SHAPEPATH /home/yjacolin/Documents/Dev/QMapfileEditor/data/
+  FONTSET test.font
+  SYMBOLSET test.sym
+  
   OUTPUTFORMAT
     NAME "png24"
     MIMETYPE "image/png"
