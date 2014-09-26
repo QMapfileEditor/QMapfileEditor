@@ -13,7 +13,7 @@ To Be Defined, but definitevely an OSI one.
 
 ## Contact
 
-To Be Definied. Please don't use the issues trackers for this purpose.
+To Be Defined. Please don't use the issues trackers for this purpose.
 
 ## Related links
 

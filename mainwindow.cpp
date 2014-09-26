@@ -15,6 +15,8 @@ void MainWindow::reinitMapfile() {
   delete this->mapfile;
   this->mapfile = new MapfileParser(QString());
 
+  // re-init map preview
+  this->mapScene->clear(); 
 }
 
 // public
@@ -31,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
   layersItem = new QStandardItem(QString("Layers"));
   mfStructureModel->appendRow(layersItem);
   ui->mf_structure->setModel(mfStructureModel);
+
+  this->mapScene = new QGraphicsScene(this);
+  ui->mf_preview->setScene(this->mapScene);
 
   // connects extra actions
   this->showInfo("Activate actions");
@@ -99,6 +104,18 @@ void MainWindow::openMapfile()
   }
 
   ui->mf_structure->expandAll();
+
+
+  // rendering the map preview
+  QPixmap mapRepr = QPixmap();
+  unsigned char * mapImage = this->mapfile->getCurrentMapImage();
+  int mapImageSize = this->mapfile->getCurrentMapImageSize();
+
+  mapRepr.loadFromData(mapImage, mapImageSize);
+
+  // TODO: use after free ?
+  free(mapImage);
+  this->mapScene->addPixmap(mapRepr);
 }
 
 /**
@@ -164,6 +181,11 @@ MainWindow::~MainWindow()
 
   if (this->settings) {
     delete this->settings;
+  }
+  // TODO: since mapScene is added to an UI element,
+  // is there a risk of double free here ?
+  if (this->mapScene) {
+    delete this->mapScene;
   }
   // This *should* destroy the children objects
   delete ui;

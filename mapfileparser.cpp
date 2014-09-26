@@ -38,7 +38,7 @@ extern "C" {
  *
  */
 MapfileParser::MapfileParser(const QString & fname) :
-    filename(fname)
+    filename(fname), currentImageSize(0)
 {
   this->map = umnms_new_map((char *) filename.toStdString().c_str());
   if (this->map == NULL) {
@@ -50,6 +50,30 @@ MapfileParser::MapfileParser(const QString & fname) :
     QString curStr = QString(this->map->layers[i]->name);
     this->layers->append(curStr);
   }
+}
+
+/**
+ * Creates an image representation of the current map
+ */
+unsigned char * MapfileParser::getCurrentMapImage() {
+  if (! this->map)
+    return NULL;
+  // image already loaded
+  if (this->currentImage)
+    return this->currentImage->img.raw_byte;
+
+  // TODO: ERROR HERE, leaking memory ...
+  // just meant to try out
+  imageObj * ret = msDrawMap(this->map, MS_FALSE);
+  if (ret != NULL) {
+    this->currentImage = ret;
+    return msSaveImageBuffer(this->currentImage, &this->currentImageSize, this->currentImage->format);
+  }
+  return NULL;
+}
+
+int MapfileParser::getCurrentMapImageSize() {
+  return this->currentImageSize;
 }
 
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
@@ -262,9 +286,12 @@ QString MapfileParser::browseDebugFile() {
 
 MapfileParser::~MapfileParser() {
   if (this->map) {
-    free(this->map);
+    msFreeMap(this->map);
+  }
+  if (this->currentImage) {
+    msFreeImage(this->currentImage);
   }
   if (this->layers) {
     delete this->layers;
   }
-};
+}

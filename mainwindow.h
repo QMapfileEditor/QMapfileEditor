@@ -5,8 +5,10 @@
 
 #include <QDir>
 #include <QFileDialog>
+#include <QGraphicsScene>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QPixmap>
 #include <QStandardItem>
 #include <QStandardItemModel>
 
@@ -35,13 +37,18 @@ class MainWindow : public QMainWindow
 
  private:
       Ui::MainWindow *ui;
-      MapfileParser * mapfile = NULL;
-      MapfileParser * filename = NULL;
 
+      MapfileParser * mapfile = NULL;
+
+      // Map structure (layers)
       QStandardItemModel * mfStructureModel = NULL;
       QStandardItem * layersItem = NULL;
 
       MapSettings * settings = NULL;
+
+      // Objects related to the map preview
+      QGraphicsScene * mapScene = NULL;
+
 
       // some internal methods
       void reinitMapfile();
