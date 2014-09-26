@@ -20,6 +20,8 @@ void MainWindow::reinitMapfile() {
   // then recreates the UI elements
   this->mfStructureModel = new QStandardItemModel();
   this->layersItem = new QStandardItem(tr("Layers"));
+
+  this->layersItem->setEditable(false);
   this->mfStructureModel->appendRow(this->layersItem);
   ui->mf_structure->setModel(this->mfStructureModel);
 
