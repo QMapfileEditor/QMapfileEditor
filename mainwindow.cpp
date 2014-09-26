@@ -28,9 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
 
   // init default mapfile structure model
-  this->showInfo("Initializing default mapfile");
+  this->showInfo(tr("Initializing default mapfile"));
+
   mfStructureModel = new QStandardItemModel();
-  layersItem = new QStandardItem(QString("Layers"));
+  layersItem = new QStandardItem(tr("Layers"));
   mfStructureModel->appendRow(layersItem);
   ui->mf_structure->setModel(mfStructureModel);
 
@@ -48,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
-  this->showInfo("Initialisation process: succeed!");
+  this->showInfo(tr("Initialisation process: success !"));
 }
 
 void MainWindow::newMapfile()
