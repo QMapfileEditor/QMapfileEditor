@@ -9,7 +9,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       /** Constants **/
       this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << "dd" << "pixels" << "pourcentages" << "nauticalmiles";
       this->imageTypes << "jpeg" << "pdf" << "png" << "svg";
-      this->missingdata << "FAIL" << "LOG" << "IGNORE";
+      this->missingdata << "" << "FAIL" << "LOG" << "IGNORE";
 
       //TODO: create Slots and Signal on extent auto/manual to enabling forms
       
@@ -49,6 +49,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_extent_bottom->setText(QString::number(this->mapfile->getMapExtentMinY()));
       ui->mf_map_extent_right->setText(QString::number(this->mapfile->getMapExtentMaxX()));
       ui->mf_map_extent_left->setText(QString::number(this->mapfile->getMapExtentMinX()));
+
       /** Path tab **/
       ui->mf_map_shapepath->setText(this->mapfile->getShapepath());
       ui->mf_map_symbolset->setText(this->mapfile->getSymbolSet());
@@ -70,12 +71,6 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       } else {
           ui->mf_map_config_squarepixel_yes->setChecked(false);
           ui->mf_map_config_squarepixel_off->setChecked(true);
-      }
-
-      if (this->mapfile->getConfigMissingData() != NULL ) {
-          ui->mf_map_config_missingdata->addItems(this->missingdata);
-          //TODO: select correct item in the combobox
-          //ui->mf_map_config_missingdata->setCurrentIndex(this->mapfile->getConfigMissingData());
       }
 
       ui->mf_map_config_projlib->setText(this->mapfile->getConfigProjLib());
@@ -103,6 +98,15 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       //TODO: Test if file exist or form is empty, if not warn user
       this->connect(ui->mf_map_config_errorFile_browse, SIGNAL(clicked()), SLOT(browseDebugFile()));
       ui->mf_map_config_errorFile->setText(this->mapfile->getDebugFile());
+
+      ui->mf_map_config_missingdata->addItems(this->missingdata);
+      if (this->mapfile->getConfigMissingData() != NULL ) {
+          //TODO: select correct item in the combobox
+          //ui->mf_map_config_missingdata->setCurrentIndex(2);
+          //ui->mf_map_config_missingdata->setCurrentIndex(this->missingdata.lastIndexOf("LOG"));
+          ui->mf_map_config_missingdata->setCurrentIndex(this->missingdata.lastIndexOf(this->mapfile->getConfigMissingData()));
+      }
+
 }
 
 /** Following method should be refactored **/

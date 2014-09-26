@@ -65,7 +65,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -943,13 +943,13 @@
          <widget class="QLabel" name="mf_map_config_contexturl_label">
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>110</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>110</width>
             <height>16777215</height>
            </size>
           </property>
@@ -977,13 +977,13 @@
          <widget class="QLabel" name="mf_map_config_encryption_label">
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>110</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>110</width>
             <height>30</height>
            </size>
           </property>
@@ -1035,6 +1035,18 @@
        <layout class="QHBoxLayout" name="horizontalLayout_17">
         <item>
          <widget class="QLabel" name="mf_map_config_squarepixel_label">
+          <property name="minimumSize">
+           <size>
+            <width>110</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>110</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;allow non-square pixels (meaning that the pixels represent non-square regions). Has no effect for WMS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
@@ -1045,6 +1057,18 @@
         </item>
         <item>
          <widget class="QRadioButton" name="mf_map_config_squarepixel_yes">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>Yes</string>
           </property>
@@ -1052,24 +1076,35 @@
         </item>
         <item>
          <widget class="QRadioButton" name="mf_map_config_squarepixel_off">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>No</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_18">
-          <item>
-           <widget class="QLabel" name="mf_map_config_missingdata_label">
-            <property name="text">
-             <string>Missing data</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="mf_map_config_missingdata"/>
-          </item>
-         </layout>
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -1087,13 +1122,13 @@
          <widget class="QLabel" name="mf_map_config_projlib_label">
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>110</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>110</width>
             <height>16777215</height>
            </size>
           </property>
@@ -1896,13 +1931,31 @@
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>238</width>
+         <width>250</width>
          <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_28">
         <item>
          <widget class="QLabel" name="mf_map_debug_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>90</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>Debug</string>
           </property>
@@ -1945,6 +1998,25 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_29">
         <item>
+         <widget class="QLabel" name="label_3">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>90</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Debug file</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLineEdit" name="mf_map_config_errorFile"/>
         </item>
         <item>
@@ -1953,6 +2025,40 @@
            <string>Browse</string>
           </property>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>184</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_18">
+        <item>
+         <widget class="QLabel" name="mf_map_config_missingdata_label">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>90</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Missing data</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="mf_map_config_missingdata"/>
         </item>
        </layout>
       </widget>

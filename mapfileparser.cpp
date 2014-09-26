@@ -248,12 +248,12 @@ QString MapfileParser::getConfigNonsquare() {
 
 QString MapfileParser::getConfigMissingData() {
     if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "MS_MISSING_DATA");
+        return msLookupHashTable( &(this->map->configoptions), "ON_MISSING_DATA");
     return NULL;
 }
 QString MapfileParser::getConfigProjLib() {
     if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "MS_PROJ_LIB");
+        return msLookupHashTable( &(this->map->configoptions), "PROJ_LIB");
     return NULL;
 }
 
