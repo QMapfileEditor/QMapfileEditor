@@ -7,14 +7,11 @@ MAP
   STATUS ON
   UNITS DD
   DEBUG 0
-  CONFIG
-   "MS_ERRORFILE" "mapserver.log"
-  END
+  CONFIG "MS_ERRORFILE" "mapserver.log"
   ANGLE 45
-  SHAPEPATH "/home/yjacolin/Documents/Dev/QMapfileEditor/data/"
-  FONTSET test.font
-  SYMBOLSET test.sym
-  TEMPLATE ttt.html
+  SHAPEPATH "/home/yves/Documents/Developpement/Yjacolin/QMapfileEditor/data/"
+  FONTSET "test.font"
+  SYMBOLSET "symbol.sym"
   
   OUTPUTFORMAT
     NAME "png24"
