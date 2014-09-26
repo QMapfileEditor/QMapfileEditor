@@ -11,12 +11,22 @@ void MainWindow::reinitMapfile() {
     this->settings = NULL;
   }
 
-  this->layersItem->removeRows(0, layersItem->rowCount());
+  // deletes / restores the model for layer tree
+  // (should also delete every children)
+  delete this->mfStructureModel;
+  // frees objects related to mapfileparser
   delete this->mapfile;
+
+  // then recreates the UI elements
+  this->mfStructureModel = new QStandardItemModel();
+  this->layersItem = new QStandardItem(tr("Layers"));
+  this->mfStructureModel->appendRow(this->layersItem);
+  ui->mf_structure->setModel(this->mfStructureModel);
+
   this->mapfile = new MapfileParser(QString());
 
   // re-init map preview
-  this->mapScene->clear(); 
+  this->mapScene->clear();
 }
 
 // public
@@ -30,10 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
   // init default mapfile structure model
   this->showInfo(tr("Initializing default mapfile"));
 
-  mfStructureModel = new QStandardItemModel();
-  layersItem = new QStandardItem(tr("Layers"));
-  mfStructureModel->appendRow(layersItem);
-  ui->mf_structure->setModel(mfStructureModel);
+  this->mfStructureModel = new QStandardItemModel();
+  this->layersItem = new QStandardItem(tr("Layers"));
+  this->mfStructureModel->appendRow(this->layersItem);
+  ui->mf_structure->setModel(this->mfStructureModel);
 
   this->mapScene = new QGraphicsScene(this);
   ui->mf_preview->setScene(this->mapScene);
@@ -95,13 +105,15 @@ void MainWindow::openMapfile()
         tr("Error occured while loading the mapfile.")
         );
     this->reinitMapfile();
-    this->showInfo("Mapfile openend vwith success.");
+    this->showInfo(tr("Mapfile openend with success."));
     return;
   }
 
-  QVector<QString> * layers = this->mapfile->getLayers();
-  for (int i = 0; i < layers->size(); ++i) {
-    layersItem->appendRow(new  QStandardItem(layers->at(i)));
+  QStringList layers = this->mapfile->getLayers();
+  for (int i = 0; i < layers.size(); ++i) {
+    QStandardItem * si = new QStandardItem(layers.at(i));
+    si->setEditable(false);
+    layersItem->appendRow(si);
   }
 
   ui->mf_structure->expandAll();
@@ -178,6 +190,7 @@ MainWindow::~MainWindow()
     delete this->mapfile;
   }
 
+  // children items are also destroyed
   delete this->mfStructureModel;
 
   if (this->settings) {

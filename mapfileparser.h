@@ -1,8 +1,7 @@
 #ifndef MAPFILEPARSER_H
 #define MAPFILEPARSER_H
 
-#include <QVector>
-#include <QString>
+#include <QStringList>
 
 #include <string>
 #include <iostream>
@@ -19,7 +18,7 @@ class MapfileParser
   QString getMapfilePath();
   QString getMapfileName();
 
-  QVector<QString> * getLayers(void);
+  QStringList getLayers(void);
 
   bool getMapStatus();
   int getMapWidth();
@@ -74,9 +73,6 @@ class MapfileParser
   struct imageObj * currentImage = NULL;
   int currentImageSize;
   // map name and extent are directly accessible
-
-  // layers list
-  QVector<QString> * layers = NULL;
 
 };
 

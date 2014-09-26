@@ -44,12 +44,6 @@ MapfileParser::MapfileParser(const QString & fname) :
   if (this->map == NULL) {
     return;
   }
-  // Loads layers into an array of QString
-  this->layers = new QVector<QString>();
-  for (int i = 0; i <  this->map->numlayers ; i++) {
-    QString curStr = QString(this->map->layers[i]->name);
-    this->layers->append(curStr);
-  }
 }
 
 /**
@@ -79,10 +73,17 @@ int MapfileParser::getCurrentMapImageSize() {
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
 bool MapfileParser::isLoaded() { return (this->map != NULL); }
 
-// Layers
-QVector<QString> * MapfileParser::getLayers() {
-  return this->layers;
+// get layers
+QStringList MapfileParser::getLayers() {
+  QStringList ret = QStringList();
+  if (this->map) {
+    for (int i = 0; i <  this->map->numlayers ; i++) {
+      ret << this->map->layers[i]->name;
+    }
+  }
+  return ret;
 }
+
 // Map name
 QString MapfileParser::getMapName() {
   if (this->map)
@@ -290,8 +291,5 @@ MapfileParser::~MapfileParser() {
   }
   if (this->currentImage) {
     msFreeImage(this->currentImage);
-  }
-  if (this->layers) {
-    delete this->layers;
   }
 }
