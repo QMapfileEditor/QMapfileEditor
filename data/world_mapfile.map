@@ -8,8 +8,14 @@ MAP
   UNITS DD
   DEBUG 0
   CONFIG "MS_ERRORFILE" "mapserver.log"
+  CONFIG "ON_MISSING_DATA" "LOG"
+  CONFIG "CGI_CONTEXT_URL" "http://log"
+  CONFIG "MS_ENCRYPTION_KEY" "mapserver.log"
+  CONFIG "PROJ_LIB" "/usr/local/share/proj/"
+  CONFIG "MS_NONSQUARE" "YES"
+  
   ANGLE 45
-  SHAPEPATH "/home/yves/Documents/Developpement/Yjacolin/QMapfileEditor/data/"
+  SHAPEPATH "./"
   FONTSET "test.font"
   SYMBOLSET "symbol.sym"
   
