@@ -188,21 +188,30 @@ void MapSettings::enableDebugBox(bool checked) {
 }
 
 void MapSettings::angleSliderChanged(int value) {
-    ui->mf_map_angle->setValue(value); 
+    ui->mf_map_angle->setValue(value);
 }
 void MapSettings::angleSpinChanged(int value) {
-    ui->mf_map_angle_slider->setValue(value); 
+    ui->mf_map_angle_slider->setValue(value);
 }
 
 void MapSettings::addNewOgcMetadata() {
     QString value = ui->mf_map_web_md_option_value->text();
     QString optionName = ui->mf_map_web_md_option_name->currentText();
 
-    if( value != "" and optionName != "" ) {
-        this->addConfigOptionsToModel(optionName, value /*, tableView */);
+    if ((! value.isEmpty()) && (! optionName.isEmpty()) &&
+      (! alreadyInModel(optionName))) {
+
+        this->addConfigOptionsToModel(optionName, value);
         ui->mf_map_web_md_option_name->currentText();
         ui->mf_map_web_md_option_value->setText("");
     }
+}
+
+bool MapSettings::alreadyInModel(const QString & key) {
+  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_map_web_md_options_list->model();
+  // should not happen
+  if (! mod) return false;
+  return (! mod->findItems(key).isEmpty());
 }
 
 void MapSettings::addConfigOptionsToModel(const QString & name, const QString & value) {
@@ -230,7 +239,7 @@ void MapSettings::browseProjlibFile() {
             return;
       }
       //TODO: should we used relatif or absolute path?
-      ui->mf_map_config_projlib->setText((char *) dirName.toStdString().c_str());
+      ui->mf_map_config_projlib->setText(dirName);
 }
 
 void MapSettings::browseEncryptionFile() {
@@ -244,7 +253,7 @@ void MapSettings::browseEncryptionFile() {
             return;
       }
       //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
-      ui->mf_map_config_encryption->setText((char *) fileName.toStdString().c_str());
+      ui->mf_map_config_encryption->setText(fileName);
 }
 
 
@@ -259,7 +268,7 @@ void MapSettings::browseDebugFile() {
             return;
       }
       //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
-      ui->mf_map_config_errorFile->setText((char *) fileName.toStdString().c_str());
+      ui->mf_map_config_errorFile->setText(fileName);
 }
 
 void MapSettings::browseSymbolsetFile() {
@@ -273,7 +282,7 @@ void MapSettings::browseSymbolsetFile() {
             return;
       }
       //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
-      ui->mf_map_symbolset->setText((char *) fileName.toStdString().c_str());
+      ui->mf_map_symbolset->setText(fileName);
 }
 
 void MapSettings::browseFontsetFile() {
@@ -287,7 +296,7 @@ void MapSettings::browseFontsetFile() {
             return;
       }
       //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
-      ui->mf_map_fontset->setText((char *) fileName.toStdString().c_str());
+      ui->mf_map_fontset->setText(fileName);
 }
 
 void MapSettings::browseShapepath() {
@@ -300,7 +309,7 @@ void MapSettings::browseShapepath() {
             return;
       }
       //TODO: should we used relatif or absolute path?
-      ui->mf_map_shapepath->setText((char *) dirName.toStdString().c_str());
+      ui->mf_map_shapepath->setText(dirName);
 }
 /** End refactoring **/
 
