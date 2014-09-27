@@ -138,13 +138,34 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
 }
 
 //Methods
-void MapSettings::createOgcOptionsModel() {
+bool MapSettings::createOgcOptionsModel() {
     QStandardItemModel ogcOptions_model(1, 2);
     QStringList header;
     header << "Name" << "Value";
     ogcOptions_model.setHorizontalHeaderLabels(header);
 
     ui->mf_map_web_md_options_list->setModel( &ogcOptions_model );
+    return true;
+}
+
+bool MapSettings::addConfigOptionsToModel(QString name, QString value, QTableView * & tableView) {
+    if( tableView != NULL ) {
+        QString test = name;
+        QString test2 = value;
+        
+        tableView->model()->setData(tableView->model()->index(0, 0), "name", Qt::EditRole);
+        //tableView->model()->setData(tableView->model()->index(0, 1), "value", Qt::DisplayRole);
+        //QStandardItem outputFormatOptionNameItem = new QStandardItem(name);
+        //outputFormatOptionNameItem.setEditable(false);
+        //QStandardItem outputFormatOptionValueItem = new QStandardItem(value);
+
+        //tableView->setItem(1, 0, outputFormatOptionNameItem);
+        //tableView->setItem(1, 1, outputFormatOptionValueItem);
+
+        //outputOptionsParentItem->appendRow(row);
+        //tableView->resizeRowsToContents();
+    }
+    return true;
 }
 
 //SLOTS
@@ -175,23 +196,6 @@ void MapSettings::addNewOgcMetadata() {
     }
 }
 
-void MapSettings::addConfigOptionsToModel(QString name, QString value, QTableView * & tableView) {
-    if( tableView != NULL ) {
-        
-        tableView->model()->setData(tableView->model()->index(1, 1), "name", Qt::DisplayRole);
-        //tableView->model()->setData(tableView->model()->index(0, 1), "value", Qt::DisplayRole);
-        //QStandardItem outputFormatOptionNameItem = new QStandardItem(name);
-        //outputFormatOptionNameItem.setEditable(false);
-        //QStandardItem outputFormatOptionValueItem = new QStandardItem(value);
-
-        //tableView->setItem(1, 0, outputFormatOptionNameItem);
-        //tableView->setItem(1, 1, outputFormatOptionValueItem);
-
-        //outputOptionsParentItem->appendRow(row);
-        //tableView->resizeRowsToContents();
-    }
-
-}
 
 /** Following method should be refactored **/
 void MapSettings::browseProjlibFile() {
