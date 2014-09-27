@@ -177,6 +177,7 @@ void MapSettings::createOgcOptionsModel() {
     ui->mf_map_web_md_options_list->setModel(ogcOptions_model);
 }
 
+
 //SLOTS
 void MapSettings::enableOgcStandardFrame(bool checked) {
     ui->mf_ogc_frame->setEnabled(checked);
@@ -194,7 +195,6 @@ void MapSettings::angleSpinChanged(int value) {
 }
 
 void MapSettings::addNewOgcMetadata() {
-//    QTableView * tableView = ui->mf_map_web_md_options_list;
     QString value = ui->mf_map_web_md_option_value->text();
     QString optionName = ui->mf_map_web_md_option_name->currentText();
 
@@ -219,25 +219,6 @@ void MapSettings::addConfigOptionsToModel(const QString & name, const QString & 
   mod->appendRow(row);
 
 }
-
-//void MapSettings::addConfigOptionsToModel(QString & name, QString & value, QTableView * tableView) {
-//    if( tableView != NULL ) {
-//        tableView->model()->setData(tableView->model()->index(1, 1), "name", Qt::DisplayRole);
-//        tableView->model()->setData(tableView->model()->index(0, 1), "value", Qt::DisplayRole);
-//        QStandardItem * outputFormatOptionNameItem = new QStandardItem(name);
-//        outputFormatOptionNameItem.setEditable(false);
-//        QStandardItem * outputFormatOptionValueItem = new QStandardItem(value);
-//
-//        QStandardItem * row = new QStandardItem();
-//
-//        tableView->setItem(1, 0, outputFormatOptionNameItem);
-//        tableView->setItem(1, 1, outputFormatOptionValueItem);
-//
-//        //outputOptionsParentItem->appendRow(row);
-//        tableView->resizeRowsToContents();
-//    }
-//
-//}
 
 /** Following method should be refactored **/
 void MapSettings::browseProjlibFile() {
