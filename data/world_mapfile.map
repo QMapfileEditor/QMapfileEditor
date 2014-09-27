@@ -13,6 +13,8 @@ MAP
   CONFIG "MS_ENCRYPTION_KEY" "mapserver.log"
   CONFIG "PROJ_LIB" "/usr/local/share/proj/"
   CONFIG "MS_NONSQUARE" "YES"
+  DATAPATTERN "(/a-zA-Z0-9/)"
+  TEMPLATEPATTERN "(/a-zA-Z0-9/)"
   
   ANGLE 45
   SHAPEPATH "./"
@@ -43,6 +45,7 @@ MAP
     "datum=WGS84"
     "no_defs"
   END # PROJECTION
+  
   LEGEND
     KEYSIZE 18 12
     KEYSPACING 5 5
@@ -82,6 +85,7 @@ MAP
       "wms_srs"	"EPSG:4326"
       "wms_onlineresource"	"http://localhost/cgi-bin/mapserv.exe?map=wms.map&"
       "wms_title"	"World Map"
+      "ows_title"	"Test OWS"
       "wms_enable_request" "GetCapabilities GetMap"
     END # METADATA
   END # WEB
