@@ -9,25 +9,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
+    <width>600</width>
     <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>560</width>
+    <width>600</width>
     <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>560</width>
+    <width>600</width>
     <height>500</height>
    </size>
   </property>
   <property name="baseSize">
    <size>
-    <width>560</width>
+    <width>600</width>
     <height>450</height>
    </size>
   </property>
@@ -56,6 +56,16 @@
      </item>
     </layout>
    </item>
+   <item row="2" column="0">
+    <widget class="QDialogButtonBox" name="mapSettingButtonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
     <widget class="QTabWidget" name="settingsForm">
      <property name="maximumSize">
@@ -76,12 +86,12 @@
       </attribute>
       <widget class="QLineEdit" name="mf_map_extent_top">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>190</x>
-         <y>230</y>
+         <x>210</x>
+         <y>240</y>
          <width>113</width>
          <height>23</height>
         </rect>
@@ -92,12 +102,12 @@
       </widget>
       <widget class="QLineEdit" name="mf_map_extent_right">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>310</x>
-         <y>260</y>
+         <x>330</x>
+         <y>270</y>
          <width>113</width>
          <height>23</height>
         </rect>
@@ -108,12 +118,12 @@
       </widget>
       <widget class="QLineEdit" name="mf_map_extent_bottom">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>190</x>
-         <y>290</y>
+         <x>210</x>
+         <y>300</y>
          <width>113</width>
          <height>23</height>
         </rect>
@@ -124,12 +134,12 @@
       </widget>
       <widget class="QLineEdit" name="mf_map_extent_left">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>70</x>
-         <y>260</y>
+         <x>90</x>
+         <y>270</y>
          <width>113</width>
          <height>23</height>
         </rect>
@@ -141,8 +151,8 @@
       <widget class="QWidget" name="layoutWidget1">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>40</y>
+         <x>30</x>
+         <y>50</y>
          <width>521</width>
          <height>29</height>
         </rect>
@@ -239,8 +249,8 @@
       <widget class="QWidget" name="layoutWidget2">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>10</y>
+         <x>30</x>
+         <y>20</y>
          <width>521</width>
          <height>31</height>
         </rect>
@@ -305,8 +315,8 @@
       <widget class="QWidget" name="layoutWidget3">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>70</y>
+         <x>30</x>
+         <y>80</y>
          <width>201</width>
          <height>31</height>
         </rect>
@@ -346,10 +356,10 @@
       <widget class="QWidget" name="layoutWidget4">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>190</y>
+         <x>30</x>
+         <y>200</y>
          <width>521</width>
-         <height>26</height>
+         <height>27</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -370,23 +380,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="mf_map_extent_auto">
-          <property name="text">
-           <string>Auto</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="mf_map_extent_manuel">
-          <property name="text">
-           <string>Manuel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -399,13 +392,20 @@
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QPushButton" name="mf_map_extent_update">
+          <property name="text">
+           <string>Update</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="layoutWidget5">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>100</y>
+         <x>30</x>
+         <y>110</y>
          <width>521</width>
          <height>97</height>
         </rect>
@@ -578,7 +578,7 @@
       <widget class="QWidget" name="layoutWidget6">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>20</x>
          <y>100</y>
          <width>531</width>
          <height>29</height>
@@ -613,7 +613,7 @@
       <widget class="QWidget" name="layoutWidget7">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>20</x>
          <y>70</y>
          <width>531</width>
          <height>29</height>
@@ -648,7 +648,7 @@
       <widget class="QWidget" name="layoutWidget8">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>20</x>
          <y>40</y>
          <width>531</width>
          <height>29</height>
@@ -698,9 +698,9 @@
       <widget class="QWidget" name="layoutWidget_2">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>37</y>
-         <width>256</width>
+         <x>20</x>
+         <y>40</y>
+         <width>231</width>
          <height>52</height>
         </rect>
        </property>
@@ -755,9 +755,9 @@
       <widget class="QWidget" name="layoutWidget_3">
        <property name="geometry">
         <rect>
-         <x>4</x>
-         <y>7</y>
-         <width>521</width>
+         <x>20</x>
+         <y>10</y>
+         <width>531</width>
          <height>29</height>
         </rect>
        </property>
@@ -808,7 +808,7 @@
       <widget class="QWidget" name="layoutWidget9">
        <property name="geometry">
         <rect>
-         <x>260</x>
+         <x>280</x>
          <y>40</y>
          <width>271</width>
          <height>29</height>
@@ -845,8 +845,8 @@
       <widget class="QLabel" name="mf_map_config_label">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>160</y>
+         <x>20</x>
+         <y>170</y>
          <width>141</width>
          <height>20</height>
         </rect>
@@ -864,8 +864,8 @@
       <widget class="QWidget" name="layoutWidget10">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>90</y>
+         <x>20</x>
+         <y>100</y>
          <width>531</width>
          <height>29</height>
         </rect>
@@ -898,8 +898,8 @@
       <widget class="QWidget" name="layoutWidget11">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>120</y>
+         <x>20</x>
+         <y>130</y>
          <width>531</width>
          <height>29</height>
         </rect>
@@ -929,223 +929,203 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget12">
+      <widget class="QWidget" name="verticalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>190</y>
+         <x>40</x>
+         <y>200</y>
          <width>481</width>
-         <height>29</height>
+         <height>131</height>
         </rect>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_15">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QLabel" name="mf_map_config_contexturl_label">
-          <property name="minimumSize">
-           <size>
-            <width>110</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>110</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>cgi context url</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_17">
+          <item>
+           <widget class="QLabel" name="mf_map_config_squarepixel_label">
+            <property name="minimumSize">
+             <size>
+              <width>110</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>110</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;allow non-square pixels (meaning that the pixels represent non-square regions). Has no effect for WMS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Non Square pixel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="mf_map_config_squarepixel_yes">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Yes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="mf_map_config_squarepixel_off">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>No</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLineEdit" name="mf_map_config_contexturl"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="layoutWidget13">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>220</y>
-         <width>481</width>
-         <height>29</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_16">
-        <item>
-         <widget class="QLabel" name="mf_map_config_encryption_label">
-          <property name="minimumSize">
-           <size>
-            <width>110</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>110</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Encryption key</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="mf_map_config_encryption">
-          <property name="maximumSize">
-           <size>
-            <width>300</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_19">
+          <item>
+           <widget class="QLabel" name="mf_map_config_projlib_label">
+            <property name="minimumSize">
+             <size>
+              <width>110</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>110</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Proj Lib path</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mf_map_config_projlib"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="mf_map_config_projlib_browse">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="mf_map_config_encryption_browse">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Browse</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="layoutWidget14">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>250</y>
-         <width>481</width>
-         <height>33</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_17">
-        <item>
-         <widget class="QLabel" name="mf_map_config_squarepixel_label">
-          <property name="minimumSize">
-           <size>
-            <width>110</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>110</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;allow non-square pixels (meaning that the pixels represent non-square regions). Has no effect for WMS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string>Non Square pixel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="mf_map_config_squarepixel_yes">
-          <property name="minimumSize">
-           <size>
-            <width>50</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Yes</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_16">
+          <item>
+           <widget class="QLabel" name="mf_map_config_encryption_label">
+            <property name="minimumSize">
+             <size>
+              <width>110</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>110</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Encryption key</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mf_map_config_encryption">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="mf_map_config_encryption_browse">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QRadioButton" name="mf_map_config_squarepixel_off">
-          <property name="minimumSize">
-           <size>
-            <width>50</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>No</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="layoutWidget15">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>280</y>
-         <width>481</width>
-         <height>29</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_19">
-        <item>
-         <widget class="QLabel" name="mf_map_config_projlib_label">
-          <property name="minimumSize">
-           <size>
-            <width>110</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>110</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Proj Lib path</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="mf_map_config_projlib"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="mf_map_config_projlib_browse">
-          <property name="text">
-           <string>Browse</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QLabel" name="mf_map_config_contexturl_label">
+            <property name="minimumSize">
+             <size>
+              <width>110</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>110</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>cgi context url</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mf_map_config_contexturl"/>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -1160,10 +1140,10 @@
       <widget class="QWidget" name="layoutWidget16">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>3</x>
          <y>10</y>
          <width>168</width>
-         <height>311</height>
+         <height>313</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1245,7 +1225,20 @@
          </layout>
         </item>
         <item>
-         <widget class="QTreeView" name="mf_outputformat_list"/>
+         <widget class="QTreeView" name="mf_outputformat_list">
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>280</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>280</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -1255,97 +1248,234 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>30</y>
-         <width>381</width>
-         <height>291</height>
+         <x>169</x>
+         <y>40</y>
+         <width>405</width>
+         <height>301</height>
         </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>405</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>405</width>
+         <height>16777215</height>
+        </size>
        </property>
        <widget class="QWidget" name="layoutWidget17">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>380</width>
-          <height>308</height>
+          <x>0</x>
+          <y>0</y>
+          <width>402</width>
+          <height>294</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetFixedSize</enum>
+         </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <layout class="QHBoxLayout" name="name_layout">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetFixedSize</enum>
+           </property>
            <item>
             <widget class="QLabel" name="mf_outputformat_name_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>Name</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="mf_outputformat_name"/>
+            <widget class="QLineEdit" name="mf_outputformat_name">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
            </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_26">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_25">
-             <item>
-              <widget class="QLabel" name="mf_outputformat_driver_label">
-               <property name="text">
-                <string>Driver</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="mf_outputformat_driver">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>80</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>GDAL/OGR Driver</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="mf_gdal_ogr_driver">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>120</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>120</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <layout class="QHBoxLayout" name="driver_layout">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetFixedSize</enum>
+           </property>
+           <item>
+            <widget class="QLabel" name="mf_outputformat_driver_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Driver</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="mf_outputformat_driver">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>2</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="gdaldriver_label">
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>GDAL Driver</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="mf_gdal_ogr_driver">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="transparent_extension_layout">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetFixedSize</enum>
+           </property>
            <item>
             <widget class="QLabel" name="mf_outputformat_transparent_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>Transparent</string>
              </property>
@@ -1353,6 +1483,18 @@
            </item>
            <item>
             <widget class="QRadioButton" name="mf_outputformat_transparent_on">
+             <property name="minimumSize">
+              <size>
+               <width>45</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>45</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>On</string>
              </property>
@@ -1363,8 +1505,234 @@
            </item>
            <item>
             <widget class="QRadioButton" name="mf_outputformat_transparent_off">
+             <property name="minimumSize">
+              <size>
+               <width>45</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>45</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>Off</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>2</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="mf_outputformat_extension_label">
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Extension</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="mf_outputformat_extension">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="image_type_layout">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetFixedSize</enum>
+           </property>
+           <item>
+            <widget class="QLabel" name="mf_outputformat_imagemode_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Image mode</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="mf_outputformat_imagemode">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>2</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="mf_outputformat_mimetype_label">
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Mime type</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="mf_outputformat_mimetype">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="formatoption_layout">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetFixedSize</enum>
+           </property>
+           <item>
+            <widget class="QLabel" name="mf_outputformat_options_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Format option</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="mf_outputformat_option_name">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="mf_outputformat_option_value">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -1375,90 +1743,26 @@
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>5</width>
                <height>20</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_24">
-             <item>
-              <widget class="QLabel" name="mf_outputformat_extension_label">
-               <property name="text">
-                <string>Extension</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="mf_outputformat_extension">
-               <property name="minimumSize">
-                <size>
-                 <width>50</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>50</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_27">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_22">
-             <item>
-              <widget class="QLabel" name="mf_outputformat_imagemode_label">
-               <property name="text">
-                <string>Image mode</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="mf_outputformat_imagemode"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_21">
-             <item>
-              <widget class="QLabel" name="mf_outputformat_mimetype_label">
-               <property name="text">
-                <string>Mime type</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="mf_outputformat_mimetype"/>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_23">
-           <item>
-            <widget class="QLabel" name="mf_outputformat_options_label">
-             <property name="text">
-              <string>Format option</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="mf_outputformat_option_name"/>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="mf_outputformat_option_value"/>
-           </item>
-           <item>
             <widget class="QToolButton" name="mf_outputformat_options_add">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>...</string>
              </property>
@@ -1470,6 +1774,18 @@
            </item>
            <item>
             <widget class="QToolButton" name="mf_outputformat_options_del">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>...</string>
              </property>
@@ -1485,8 +1801,14 @@
           <widget class="QTableView" name="mf_outputformat_formatoptions_list">
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>0</height>
+             <width>400</width>
+             <height>120</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>120</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -1511,6 +1833,21 @@
          </item>
          <item>
           <widget class="QDialogButtonBox" name="mf_outputformat_form_buttons">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="standardButtons">
             <set>QDialogButtonBox::Abort|QDialogButtonBox::Save</set>
            </property>
@@ -1522,9 +1859,9 @@
       <widget class="QLabel" name="mf_outputformat_message">
        <property name="geometry">
         <rect>
-         <x>160</x>
+         <x>170</x>
          <y>10</y>
-         <width>371</width>
+         <width>401</width>
          <height>20</height>
         </rect>
        </property>
@@ -1532,6 +1869,10 @@
         <string/>
        </property>
       </widget>
+      <zorder>layoutWidget16</zorder>
+      <zorder>outputFormatForm</zorder>
+      <zorder>mf_outputformat_message</zorder>
+      <zorder>mf_outputformat_formatoptions_list</zorder>
      </widget>
      <widget class="QWidget" name="ogcTabForm">
       <attribute name="title">
@@ -1546,25 +1887,40 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>8</x>
          <y>30</y>
-         <width>531</width>
+         <width>560</width>
          <height>351</height>
         </rect>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>560</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>560</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
+        <enum>QFrame::Box</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
        <widget class="QWidget" name="layoutWidget18">
         <property name="geometry">
          <rect>
-          <x>3</x>
-          <y>0</y>
-          <width>547</width>
-          <height>351</height>
+          <x>5</x>
+          <y>4</y>
+          <width>551</width>
+          <height>341</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -2065,16 +2421,6 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QDialogButtonBox" name="mapSettingButtonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <tabstops>
@@ -2088,8 +2434,6 @@
   <tabstop>mf_map_status_on</tabstop>
   <tabstop>mf_map_status_off</tabstop>
   <tabstop>mf_map_maxsize</tabstop>
-  <tabstop>mf_map_extent_auto</tabstop>
-  <tabstop>mf_map_extent_manuel</tabstop>
   <tabstop>mf_map_extent_top</tabstop>
   <tabstop>mf_map_extent_right</tabstop>
   <tabstop>mf_map_extent_bottom</tabstop>
