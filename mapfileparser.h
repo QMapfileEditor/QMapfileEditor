@@ -53,7 +53,12 @@ class MapfileParser
   QString getConfigMissingData();
   QString getConfigProjLib();
 
-
+  QString getMetadataWmsTitle();
+  QString getMetadataWfsTitle();
+  QString getMetadataWmsOnlineresource();
+  QString getMetadataWfsOnlineresource();
+  QString getMetadataWmsSrs();
+  QString getMetadataWfsSrs();
 
   int getResolution();
   int getDefResolution();

@@ -257,6 +257,75 @@ QString MapfileParser::getConfigProjLib() {
         return msLookupHashTable( &(this->map->configoptions), "PROJ_LIB");
     return NULL;
 }
+QString MapfileParser::getMetadataWmsTitle() {
+    if (this->map) {
+        if( msLookupHashTable( &(this->map->web.metadata), "WMS_TITLE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "WMS_TITLE");
+        }
+        if (msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE");
+        }
+    }
+    return NULL;
+}
+QString MapfileParser::getMetadataWfsTitle() {
+    if (this->map) {
+        if( msLookupHashTable( &(this->map->web.metadata), "WFS_TITLE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "WFS_TITLE");
+        }
+        if (msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE");
+        }
+    }
+    return NULL;
+}
+
+QString MapfileParser::getMetadataWmsOnlineresource() {
+    if (this->map) {
+        if( msLookupHashTable( &(this->map->web.metadata), "WMS_ONLINERESOURCE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "WMS_ONLINERESOURCE");
+        }
+        if (msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE");
+        }
+    }
+    return NULL;
+}
+
+QString MapfileParser::getMetadataWfsOnlineresource() {
+    if (this->map) {
+        if( msLookupHashTable( &(this->map->web.metadata), "WFS_ONLINERESOURCE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "WFS_ONLINERESOURCE");
+        }
+        if (msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE")) {
+            return msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE");
+        }
+    }
+    return NULL;
+}
+
+QString MapfileParser::getMetadataWmsSrs() {
+    if (this->map) {
+        if( msLookupHashTable( &(this->map->web.metadata), "WMS_SRS")) {
+            return msLookupHashTable( &(this->map->web.metadata), "WMS_SRS");
+        }
+        if (msLookupHashTable( &(this->map->web.metadata), "OWS_SRS")) {
+            return msLookupHashTable( &(this->map->web.metadata), "OWS_SRS");
+        }
+    }
+    return NULL;
+}
+QString MapfileParser::getMetadataWfsSrs() {
+    if (this->map) {
+        if( msLookupHashTable( &(this->map->web.metadata), "WFS_SRS")) {
+            return msLookupHashTable( &(this->map->web.metadata), "WFS_SRS");
+        }
+        if (msLookupHashTable( &(this->map->web.metadata), "OWS_SRS")) {
+            return msLookupHashTable( &(this->map->web.metadata), "OWS_SRS");
+        }
+    }
+    return NULL;
+}
 
 
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }

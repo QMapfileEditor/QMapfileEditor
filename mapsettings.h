@@ -4,6 +4,9 @@
 #include <QDialog>
 #include <QDir>
 #include <QFileDialog>
+#include <QStandardItem>
+#include <QStandardItemModel>
+#include <QTableView>
 
 #include "mapfileparser.h"
 
@@ -24,6 +27,15 @@ class MapSettings : public QDialog
       void browseShapepath();
       void browseSymbolsetFile();
       void browseFontsetFile();
+      void browseProjlibFile();
+      void browseEncryptionFile();
+      void angleSliderChanged(int);
+      void angleSpinChanged(int);
+      void enableDebugBox(bool);
+      void enableOgcStandardFrame(bool);
+      void createOgcOptionsModel();
+      void addNewOgcMetadata();
+      void addConfigOptionsToModel(QString, QString, QTableView * &);
 
  private:
       Ui::MapSettings * ui;
@@ -31,6 +43,7 @@ class MapSettings : public QDialog
       QStringList units;
       QStringList imageTypes;
       QStringList missingdata;
+      QStringList ogcMapOptions;
 };
 
 #endif // MAPSETTINGS_H
