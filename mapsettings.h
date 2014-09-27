@@ -46,6 +46,7 @@ class MapSettings : public QDialog
       QStringList missingdata;
       QStringList ogcMapOptions;
       void createOgcOptionsModel();
+      bool alreadyInModel(const QString &);
 };
 
 #endif // MAPSETTINGS_H
