@@ -167,7 +167,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
 
 //Methods
 void MapSettings::createOgcOptionsModel() {
-    QStandardItemModel  * ogcOptions_model = new QStandardItemModel(1, 2);
+    QStandardItemModel  * ogcOptions_model = new QStandardItemModel(0, 2);
     QStringList header;
     header << "Name" << "Value";
     ogcOptions_model->setHorizontalHeaderLabels(header);
@@ -217,7 +217,6 @@ void MapSettings::addConfigOptionsToModel(const QString & name, const QString & 
   row << new QStandardItem(value);
 
   mod->appendRow(row);
-
 }
 
 /** Following method should be refactored **/
