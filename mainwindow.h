@@ -33,6 +33,7 @@ class MainWindow : public QMainWindow
       void  saveMapfile();
       void  saveAsMapfile();
       void  showMapSettings();
+      void  showAbout();
       void  showInfo( QString message = NULL);
 
  private:

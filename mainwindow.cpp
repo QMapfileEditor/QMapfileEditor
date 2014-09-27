@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionSave, SIGNAL(triggered()), SLOT(saveMapfile()));
   this->connect(ui->actionSaveAs, SIGNAL(triggered()), SLOT(saveAsMapfile()));
   this->connect(ui->actionMapSetting, SIGNAL(triggered()), SLOT(showMapSettings()));
+  this->connect(ui->actionAbout, SIGNAL(triggered()), SLOT(showAbout()));
 
 
   //creates a default empty mapfileparser
@@ -150,6 +151,11 @@ void MainWindow::showMapSettings() {
   this->settings->show();
 }
 
+
+void MainWindow::showAbout() { 
+    QMessageBox::about(this, tr("About"), tr("<h1><b>About</b></h1><h2>Author:</h2><h2>Licence:<h2><h2>Links:</h2>"));
+   return;
+}
 
 void MainWindow::saveMapfile()
 {
