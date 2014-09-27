@@ -34,6 +34,7 @@ class MapSettings : public QDialog
       void enableDebugBox(bool);
       void enableOgcStandardFrame(bool);
       void addNewOgcMetadata();
+      void addConfigOptionsToModel(const QString &, const QString &);
 
  private:
       Ui::MapSettings * ui;
@@ -42,9 +43,7 @@ class MapSettings : public QDialog
       QStringList imageTypes;
       QStringList missingdata;
       QStringList ogcMapOptions;
-      bool createOgcOptionsModel();
-      bool addConfigOptionsToModel(QString, QString, QTableView * &);
-
+      void createOgcOptionsModel();
 };
 
 #endif // MAPSETTINGS_H
