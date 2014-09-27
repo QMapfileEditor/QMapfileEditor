@@ -352,6 +352,16 @@ QString MapfileParser::browseDebugFile() {
    return "";
 }
 
+QList<int> MapfileParser::getImageColor() {
+   QList<int> color;
+
+   if (this->map) {
+     colorObj colorObj = this->map->imagecolor;
+     color << colorObj.red << colorObj.green << colorObj.blue;
+   }
+   return color;
+}
+
 // Destructor
 
 MapfileParser::~MapfileParser() {

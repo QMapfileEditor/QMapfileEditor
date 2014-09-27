@@ -88,7 +88,6 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_fontset->setText(this->mapfile->getFontSet());
       
       /** Advanced tab **/
-      //TODO: ImageColor see https://github.com/yjacolin/MapfileEditor/blob/master/src/mapSettings.py#L145
 
       //connect angle value
       this->connect(ui->mf_map_angle_slider, SIGNAL(valueChanged(int)), SLOT(angleSliderChanged(int)));
@@ -97,11 +96,18 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       this->connect(ui->mf_map_config_projlib_browse, SIGNAL(clicked()), SLOT(browseProjlibFile()));
       //connect encryption key browser
       this->connect(ui->mf_map_config_encryption_browse, SIGNAL(clicked()), SLOT(browseEncryptionFile()));
+      //connect imagecolor
+      this->connect(ui->mf_map_imagecolor, SIGNAL(clicked()), SLOT(setImageColor()));
 
       //fill in form
       ui->mf_map_resolution->setValue(this->mapfile->getResolution());
       ui->mf_map_defresolution->setValue(this->mapfile->getDefResolution());
       ui->mf_map_angle_slider->setValue(this->mapfile->getAngle());
+
+      QList<int> colorList = this->mapfile->getImageColor();
+      QColor curColor = QColor(colorList.at(0), colorList.at(1), colorList.at(2));
+      ui->mf_map_imagecolor->setPalette(QPalette(curColor));
+
       ui->mf_map_angle->setValue(this->mapfile->getAngle());
       ui->mf_map_templatepattern->setText(this->mapfile->getTemplatePattern());
       ui->mf_map_datapattern->setText(this->mapfile->getDataPattern());
@@ -179,6 +185,14 @@ void MapSettings::createOgcOptionsModel() {
 
 
 //SLOTS
+void MapSettings::setImageColor() {
+    QColor curColor = ui->mf_map_imagecolor->palette().color(QWidget::backgroundRole());
+    QColor color = QColorDialog::getColor(curColor, this);
+    if (color.isValid()) {
+        ui->mf_map_imagecolor->setPalette(QPalette(color));
+    }
+}
+
 void MapSettings::enableOgcStandardFrame(bool checked) {
     ui->mf_ogc_frame->setEnabled(checked);
 }

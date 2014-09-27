@@ -7,6 +7,7 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QTableView>
+#include <QColorDialog>
 
 #include "mapfileparser.h"
 
@@ -35,6 +36,7 @@ class MapSettings : public QDialog
       void enableOgcStandardFrame(bool);
       void addNewOgcMetadata();
       void addConfigOptionsToModel(const QString &, const QString &);
+      void setImageColor();
 
  private:
       Ui::MapSettings * ui;

@@ -2,6 +2,7 @@
 #define MAPFILEPARSER_H
 
 #include <QStringList>
+#include <QList>
 
 #include <string>
 #include <iostream>
@@ -63,6 +64,7 @@ class MapfileParser
   int getResolution();
   int getDefResolution();
   float getAngle();
+  QList<int> getImageColor();
 
   bool isLoaded();
   bool isNew();
