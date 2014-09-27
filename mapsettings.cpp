@@ -6,17 +6,45 @@
 
 MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
     QDialog(parent), ui(new Ui::MapSettings), mapfile(mf) {
+
       ui->setupUi(this); 
+
       this->mapfile = mf;
-      
+
       /** Constants **/
-      this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << "dd" << "pixels" << "pourcentages" << "nauticalmiles";
+      this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << 
+          "dd" << "pixels" << "pourcentages" << "nauticalmiles";
+
       this->imageTypes << "jpeg" << "pdf" << "png" << "svg";
       this->missingdata << "" << "FAIL" << "LOG" << "IGNORE";
-      this->ogcMapOptions << "" << "ows_http_max_age" << "ows_schemas_location" << "ows_sld_enabled" << "ows_updatesequence" << "wms_abstract" << "wms_accessconstraints" << "wms_addresstype" << "wms_address" << "wms_city" << "wms_stateorprovince" << "wms_postcode" << "wms_country" << "wms_attribution_logourl_format" << "wms_attribution_logourl_height" << "wms_attribution_logourl_href" << "wms_attribution_logourl_width" << "wms_attribution_onlineresource" << "wms_attribution_title" << "wms_bbox_extended" << "wms_contactelectronicmailaddress" << "wms_contactfacsimiletelephone" << "wms_contactperson" << "wms_contactorganization" << "wms_contactposition" << "wms_contactvoicetelephone" << "wms_encoding" << "wms_feature_info_mime_type" << "wms_fees" << "wms_getcapabilities_version" << "wms_getlegendgraphic_formatlist" << "wms_getmap_formatlist" << "wms_keywordlist" << "wms_keywordlist_vocabulary" << "wms_keywordlist_[vocabulary name]_items" << "wms_languages" << "wms_layerlimit" << "wms_resx" << "wms_resy" << "wms_rootlayer_abstract" << "wms_rootlayer_keywordlist" << "wms_rootlayer_title" << "wms_service_onlineresource" << "wms_timeformat" << "ows_schemas_location" << "ows_updatesequence" << "wfs_abstract" << "wfs_accessconstraints" << "wfs_encoding" << "wfs_feature_collection" << "wfs_fees" << "wfs_getcapabilities_version" << "wfs_keywordlist" << "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" << "wfs_service_onlineresource";
 
-//TODO: create Slots and Signal on extent auto/manual to enabling forms
-      
+      this->ogcMapOptions << "" << "ows_http_max_age" << "ows_schemas_location" << 
+          "ows_sld_enabled" << "ows_updatesequence" << "wms_abstract" <<
+          "wms_accessconstraints" << "wms_addresstype" << "wms_address" <<
+          "wms_city" << "wms_stateorprovince" << "wms_postcode" << "wms_country" << 
+          "wms_attribution_logourl_format" <<
+          "wms_attribution_logourl_height" << "wms_attribution_logourl_href" <<
+          "wms_attribution_logourl_width" << "wms_attribution_onlineresource" <<
+          "wms_attribution_title" << "wms_bbox_extended" <<
+          "wms_contactelectronicmailaddress" << "wms_contactfacsimiletelephone" << 
+          "wms_contactperson" << "wms_contactorganization" <<
+          "wms_contactposition" << "wms_contactvoicetelephone" << "wms_encoding" << 
+          "wms_feature_info_mime_type" << "wms_fees" <<
+          "wms_getcapabilities_version" << "wms_getlegendgraphic_formatlist" <<
+          "wms_getmap_formatlist" << "wms_keywordlist" <<
+          "wms_keywordlist_vocabulary" << "wms_keywordlist_[vocabulary name]_items" <<
+          "wms_languages" << "wms_layerlimit" << "wms_resx" <<
+          "wms_resy" << "wms_rootlayer_abstract" << "wms_rootlayer_keywordlist" << 
+          "wms_rootlayer_title" << "wms_service_onlineresource" <<
+          "wms_timeformat" << "ows_schemas_location" << "ows_updatesequence" <<
+          "wfs_abstract" << "wfs_accessconstraints" << "wfs_encoding" <<
+          "wfs_feature_collection" << "wfs_fees" <<
+          "wfs_getcapabilities_version" << "wfs_keywordlist" <<
+          "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
+          "wfs_service_onlineresource";
+
+      //TODO: create Slots and Signal on extent auto/manual to enabling forms
+
       /** General Tab **/
       //Name
       ui->mf_map_name->setText(this->mapfile->getMapName());
@@ -125,7 +153,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
           ui->mf_map_debug->setValue(this->mapfile->debug);
           ui->mf_map_debug->setEnabled(false);
       }
-      //TODO: add option for relativ/absolute debug file in forms.
+      //TODO: add option for relative/absolute debug file in forms.
       //TODO: Test if file exist or form is empty, if not warn user
       this->connect(ui->mf_map_config_errorFile_browse, SIGNAL(clicked()), SLOT(browseDebugFile()));
       ui->mf_map_config_errorFile->setText(this->mapfile->getDebugFile());
@@ -139,12 +167,14 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
 
 //Methods
 void MapSettings::createOgcOptionsModel() {
-    QStandardItemModel ogcOptions_model(1, 2);
+    QStandardItemModel  * ogcOptions_model = new QStandardItemModel(1, 2);
     QStringList header;
     header << "Name" << "Value";
-    ogcOptions_model.setHorizontalHeaderLabels(header);
+    ogcOptions_model->setHorizontalHeaderLabels(header);
 
-    ui->mf_map_web_md_options_list->setModel( &ogcOptions_model );
+    // TODO check for memory leak
+    // ensures that the model is destroy along with ui objects (see doc)
+    ui->mf_map_web_md_options_list->setModel(ogcOptions_model);
 }
 
 //SLOTS
@@ -164,34 +194,50 @@ void MapSettings::angleSpinChanged(int value) {
 }
 
 void MapSettings::addNewOgcMetadata() {
-    QTableView * tableView = ui->mf_map_web_md_options_list;
+//    QTableView * tableView = ui->mf_map_web_md_options_list;
     QString value = ui->mf_map_web_md_option_value->text();
     QString optionName = ui->mf_map_web_md_option_name->currentText();
 
     if( value != "" and optionName != "" ) {
-        this->addConfigOptionsToModel(optionName, value, tableView);
+        this->addConfigOptionsToModel(optionName, value /*, tableView */);
         ui->mf_map_web_md_option_name->currentText();
         ui->mf_map_web_md_option_value->setText("");
     }
 }
 
-void MapSettings::addConfigOptionsToModel(QString name, QString value, QTableView * & tableView) {
-    if( tableView != NULL ) {
-        
-        tableView->model()->setData(tableView->model()->index(1, 1), "name", Qt::DisplayRole);
-        //tableView->model()->setData(tableView->model()->index(0, 1), "value", Qt::DisplayRole);
-        //QStandardItem outputFormatOptionNameItem = new QStandardItem(name);
-        //outputFormatOptionNameItem.setEditable(false);
-        //QStandardItem outputFormatOptionValueItem = new QStandardItem(value);
+void MapSettings::addConfigOptionsToModel(const QString & name, const QString & value) {
+  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_map_web_md_options_list->model();
+  if (! mod) {
+    return;
+  }
 
-        //tableView->setItem(1, 0, outputFormatOptionNameItem);
-        //tableView->setItem(1, 1, outputFormatOptionValueItem);
+  QList<QStandardItem *> row;
 
-        //outputOptionsParentItem->appendRow(row);
-        //tableView->resizeRowsToContents();
-    }
+  row << new QStandardItem(name);
+  row << new QStandardItem(value);
+
+  mod->appendRow(row);
 
 }
+
+//void MapSettings::addConfigOptionsToModel(QString & name, QString & value, QTableView * tableView) {
+//    if( tableView != NULL ) {
+//        tableView->model()->setData(tableView->model()->index(1, 1), "name", Qt::DisplayRole);
+//        tableView->model()->setData(tableView->model()->index(0, 1), "value", Qt::DisplayRole);
+//        QStandardItem * outputFormatOptionNameItem = new QStandardItem(name);
+//        outputFormatOptionNameItem.setEditable(false);
+//        QStandardItem * outputFormatOptionValueItem = new QStandardItem(value);
+//
+//        QStandardItem * row = new QStandardItem();
+//
+//        tableView->setItem(1, 0, outputFormatOptionNameItem);
+//        tableView->setItem(1, 1, outputFormatOptionValueItem);
+//
+//        //outputOptionsParentItem->appendRow(row);
+//        tableView->resizeRowsToContents();
+//    }
+//
+//}
 
 /** Following method should be refactored **/
 void MapSettings::browseProjlibFile() {

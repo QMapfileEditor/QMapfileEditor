@@ -33,9 +33,9 @@ class MapSettings : public QDialog
       void angleSpinChanged(int);
       void enableDebugBox(bool);
       void enableOgcStandardFrame(bool);
-      void createOgcOptionsModel();
       void addNewOgcMetadata();
-      void addConfigOptionsToModel(QString, QString, QTableView * &);
+      //void addConfigOptionsToModel(QString &, QString &, QTableView *);
+      void addConfigOptionsToModel(const QString &, const QString &);
 
  private:
       Ui::MapSettings * ui;
@@ -44,6 +44,7 @@ class MapSettings : public QDialog
       QStringList imageTypes;
       QStringList missingdata;
       QStringList ogcMapOptions;
+      void createOgcOptionsModel();
 };
 
 #endif // MAPSETTINGS_H
