@@ -51,7 +51,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       //Status
       if( this->mapfile->getMapStatus() )
       {
-        ui->mf_map_status_off->setChecked(false);  
+        ui->mf_map_status_off->setChecked(false);
 	    ui->mf_map_status_on->setChecked(true);
       } else {
         ui->mf_map_status_off->setChecked(true);
@@ -65,17 +65,17 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       //Units
       ui->mf_map_units->addItems(this->units);
       ui->mf_map_units->setCurrentIndex(this->mapfile->getMapUnits());
-      
+
       //Outpuformat
       ui->mf_map_outputformat->addItems(this->imageTypes);
       //TODO: add custom outputformat
       //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
-      
+
       //Projection
       //TODO: create autocompleter for projection
       //QCompleter *epsgCompleter = new QCompleter(, this);
       ui->mf_map_projection->addItem(QString::number(this->mapfile->getMapProjection()));
-      
+
       //Extent
       ui->mf_map_extent_top->setText(QString::number(this->mapfile->getMapExtentMaxY()));
       ui->mf_map_extent_bottom->setText(QString::number(this->mapfile->getMapExtentMinY()));
@@ -86,7 +86,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       ui->mf_map_shapepath->setText(this->mapfile->getShapepath());
       ui->mf_map_symbolset->setText(this->mapfile->getSymbolSet());
       ui->mf_map_fontset->setText(this->mapfile->getFontSet());
-      
+
       /** Advanced tab **/
 
       //connect angle value
@@ -168,7 +168,15 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
       if (this->mapfile->getConfigMissingData() != NULL ) {
           ui->mf_map_config_missingdata->setCurrentIndex(this->missingdata.lastIndexOf(this->mapfile->getConfigMissingData()));
       }
+      
+      // TODO: to be removed, obviously
+      // just here for debugging purposes
+      QHash<QString, QString> metadatas = this->mapfile->getMetadatas();
+      QStringList ks = metadatas.keys();
 
+      for (int i = 0;  i < ks.size(); ++i) {
+        std::cout << "Key: " << ks.at(i).toStdString() << " Value: " <<  metadatas.value(ks.at(i)).toStdString() << std::endl;
+      }
 }
 
 //Methods

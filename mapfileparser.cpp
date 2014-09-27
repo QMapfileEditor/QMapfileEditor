@@ -34,8 +34,15 @@ extern "C" {
 
 
 /**
- * Loads a mapfile from an existing path.
+ * Loads a mapfile from an existing path, or from scratch, depending on the
+ * value of the parameter fname.
  *
+ * - if fname is empty, a new mapfile is asked for creation to libmapserver,
+ *   preparing an object in memory.
+ *
+ * - if fname is not empty (and points to an existing path), then the
+ *   libmapserver is asked to load a map object, relying on this existing
+ *   mapfile.
  */
 MapfileParser::MapfileParser(const QString & fname) :
     filename(fname), currentImageSize(0)
@@ -257,6 +264,26 @@ QString MapfileParser::getConfigProjLib() {
         return msLookupHashTable( &(this->map->configoptions), "PROJ_LIB");
     return NULL;
 }
+
+QHash<QString, QString> MapfileParser::getMetadatas() {
+  QHash<QString, QString> ret;
+  if (! this->map) {
+    return ret;
+  }
+
+  const char * tmpkey = msFirstKeyFromHashTable(& this->map->web.metadata);
+  const char * tmpval;
+
+  while ((tmpval = msLookupHashTable(& this->map->web.metadata, tmpkey))) {
+      ret.insert(QString(tmpkey), QString(tmpval));
+      // next key
+      tmpkey = msNextKeyFromHashTable(& this->map->web.metadata, tmpkey);
+  }
+
+  return ret;
+}
+
+
 QString MapfileParser::getMetadataWmsTitle() {
     if (this->map) {
         if( msLookupHashTable( &(this->map->web.metadata), "WMS_TITLE")) {

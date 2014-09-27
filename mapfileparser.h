@@ -1,6 +1,7 @@
 #ifndef MAPFILEPARSER_H
 #define MAPFILEPARSER_H
 
+#include <QHash>
 #include <QStringList>
 #include <QList>
 
@@ -60,6 +61,9 @@ class MapfileParser
   QString getMetadataWfsOnlineresource();
   QString getMetadataWmsSrs();
   QString getMetadataWfsSrs();
+
+  QHash<QString, QString> getMetadatas();
+
 
   int getResolution();
   int getDefResolution();
