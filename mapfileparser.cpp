@@ -40,7 +40,7 @@ extern "C" {
 MapfileParser::MapfileParser(const QString & fname) :
     filename(fname), currentImageSize(0)
 {
-  this->map = umnms_new_map((char *) filename.toStdString().c_str());
+  this->map = umnms_new_map(fname.isEmpty() ? NULL :  (char *) filename.toStdString().c_str());
   if (this->map == NULL) {
     return;
   }
