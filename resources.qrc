@@ -16,8 +16,10 @@
         <file>images/icons/document-close.png</file>
         <file>images/icons/dialog-ok-apply.png</file>
         <file>images/icons/dialog-cancel.png</file>
+        <file>images/icons/edit-table-delete-row.png</file>
+        <file>images/icons/edit-table-insert-row-below.png</file>
     </qresource>
-    <qresource>
+    <qresource prefix="/">
         <file>lang/en_US.qm</file>
         <file>lang/fr_FR.qm</file>
     </qresource>
