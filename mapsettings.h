@@ -37,6 +37,7 @@ class MapSettings : public QDialog
       void addNewOgcMetadata();
       void addConfigOptionsToModel(const QString &, const QString &);
       void setImageColor();
+      void accept();
 
  private:
       Ui::MapSettings * ui;
@@ -47,6 +48,7 @@ class MapSettings : public QDialog
       QStringList ogcMapOptions;
       void createOgcOptionsModel();
       bool alreadyInModel(const QString &);
+      void saveMapSettings();
 };
 
 #endif // MAPSETTINGS_H
