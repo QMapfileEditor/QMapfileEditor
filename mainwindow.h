@@ -11,6 +11,7 @@
 #include <QPixmap>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <QLabel>
 
 #include "mapsettings.h"
 

@@ -153,8 +153,18 @@ void MainWindow::showMapSettings() {
 
 
 void MainWindow::showAbout() { 
-    QMessageBox::about(this, tr("About"), tr("<h1><b>About</b></h1><h2>Author:</h2><h2>Licence:<h2><h2>Links:</h2>"));
-   return;
+    QDialog* aboutDialog = new QDialog (this, Qt::Dialog);
+    //aboutDialog->setWindowFlags( Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint );
+    aboutDialog->setWindowTitle(tr("About"));
+    aboutDialog->setFixedSize(400,300);
+    aboutDialog->setModal(true);
+    QGridLayout* layout = new QGridLayout (aboutDialog);
+    QLabel *content = new QLabel("<h1><b>About</b></h1><h2>Author:</h2><ul><li>Yves Jacolin</li><li>Pierre Mauduit</li></ul><h2>Licence:<h2><h2>Links:</h2><ul><li><a href='http://mapserver.org'>MapServer Project</a></li><li><a href=''>Sheetah</a></li></ul>");
+    content->setTextFormat(Qt::RichText);
+    //content->setText(tr("<h1><b>About</b></h1><h2>Author:</h2><h2>Licence:<h2><h2>Links:</h2>"));
+    layout->addWidget(content, 0, 0);
+    aboutDialog->setLayout(layout);
+    aboutDialog->show();
 }
 
 void MainWindow::saveMapfile()
