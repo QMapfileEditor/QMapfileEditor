@@ -129,7 +129,6 @@ void MainWindow::openMapfile()
 
   mapRepr.loadFromData(mapImage, mapImageSize);
 
-  // TODO: use after free ?
   free(mapImage);
   this->mapScene->addPixmap(mapRepr);
 }

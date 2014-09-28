@@ -63,9 +63,26 @@ unsigned char * MapfileParser::getCurrentMapImage() {
   if (this->currentImage)
     return this->currentImage->img.raw_byte;
 
-  // TODO: ERROR HERE, leaking memory ...
-  // just meant to try out
+  // issue #13:
+  //
+  // mapserver will internally adjust the extent when calling msDrawMap, since
+  // we do not want to alter the original parameters, we need to save them, then
+  // restore once called.
+  //
+  // See msAdjustExtent() in maputil.c for more info.
+
+  double tmpXMax = this->map->extent.maxx,
+         tmpXMin = this->map->extent.minx,
+         tmpYMax = this->map->extent.maxy,
+         tmpYMin = this->map->extent.miny;
+
   imageObj * ret = msDrawMap(this->map, MS_FALSE);
+
+  this->map->extent.maxx = tmpXMax;
+  this->map->extent.minx = tmpXMin;
+  this->map->extent.maxy = tmpYMax;
+  this->map->extent.miny = tmpYMin;
+
   if (ret != NULL) {
     this->currentImage = ret;
     return msSaveImageBuffer(this->currentImage, &this->currentImageSize, this->currentImage->format);
