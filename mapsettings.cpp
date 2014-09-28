@@ -339,6 +339,8 @@ void MapSettings::browseShapepath() {
 
 void MapSettings::accept() {
     this->saveMapSettings();
+
+    QDialog::accept();
 }
 
 /** End SLOTS **/
