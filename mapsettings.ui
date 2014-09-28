@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -863,8 +863,17 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -1909,10 +1918,6 @@
         <string/>
        </property>
       </widget>
-      <zorder>layoutWidget16</zorder>
-      <zorder>outputFormatForm</zorder>
-      <zorder>mf_outputformat_message</zorder>
-      <zorder>mf_outputformat_formatoptions_list</zorder>
      </widget>
      <widget class="QWidget" name="ogcTabForm">
       <attribute name="title">

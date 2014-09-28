@@ -98,6 +98,16 @@ QString MapfileParser::getMapName() {
   return QString("");
 }
 
+bool MapfileParser::setMapName( const QString & name) {
+  if (this->map){
+    const char * mapName = name.toStdString().c_str();
+    //this->map->name = "Test";//(char*) mapName;
+    //writeString(this->map, 0 , "NAME", NULL, mapName);
+    return true;
+  }
+  return false;
+}
+
 // Status parameters
 bool MapfileParser::getMapStatus() {
   if (this->map)

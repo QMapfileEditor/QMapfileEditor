@@ -17,6 +17,7 @@ class MapfileParser
   ~MapfileParser();
 
   QString getMapName();
+  bool setMapName(const QString & name);
   QString getMapfilePath();
   QString getMapfileName();
 

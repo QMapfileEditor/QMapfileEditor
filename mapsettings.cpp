@@ -43,10 +43,9 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
           "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
           "wfs_service_onlineresource";
 
-      //TODO: create Slots and Signal on extent auto/manual to enabling forms
-
-      /** General Tab **/
-      //Name
+     /** General Tab **/
+     //TODO: create Slots and Signal on extent on update button
+     //Name
       ui->mf_map_name->setText(this->mapfile->getMapName());
       //Status
       if( this->mapfile->getMapStatus() )
@@ -191,6 +190,9 @@ void MapSettings::createOgcOptionsModel() {
     ui->mf_map_web_md_options_list->setModel(ogcOptions_model);
 }
 
+void MapSettings::saveMapSettings() {
+    this->mapfile->setMapName(ui->mf_map_name->text());
+}
 
 //SLOTS
 void MapSettings::setImageColor() {
@@ -334,6 +336,12 @@ void MapSettings::browseShapepath() {
       ui->mf_map_shapepath->setText(dirName);
 }
 /** End refactoring **/
+
+void MapSettings::accept() {
+    this->saveMapSettings();
+}
+
+/** End SLOTS **/
 
 MapSettings::~MapSettings() {
   // mapfile lifecycle should be managed elsewhere
