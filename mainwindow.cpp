@@ -153,8 +153,8 @@ void MainWindow::showMapSettings() {
 
 
 void MainWindow::showAbout() { 
-    QDialog* aboutDialog = new QDialog (this, Qt::Dialog);
-    //aboutDialog->setWindowFlags( Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint );
+    QDialog* aboutDialog = new QDialog (this);
+    aboutDialog->setWindowFlags( Qt::WindowCancelButtonHint | Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowCloseButtonHint );
     aboutDialog->setWindowTitle(tr("About"));
     aboutDialog->setFixedSize(400,300);
     aboutDialog->setModal(true);
