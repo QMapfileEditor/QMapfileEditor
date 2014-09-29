@@ -253,6 +253,7 @@ void MapSettings::addConfigOptionsToModel(const QString & name, const QString & 
   row << new QStandardItem(value);
 
   mod->appendRow(row);
+  ui->mf_map_web_md_options_list->resizeColumnsToContents();
 }
 
 /** Following method should be refactored **/
