@@ -20,9 +20,11 @@ POST_TARGETDEPS +=
 
 
 LIBS += ../debug/mapfileparser.o \
-      -L/usr/lib/x86_64-linux-gnu/ -lmapserver
+      -L/usr/lib/x86_64-linux-gnu/ -lmapserver -lgcov
+
 
 
 # Input
 HEADERS += testmapfileparser.h
 SOURCES += testmapfileparser.cpp
+
