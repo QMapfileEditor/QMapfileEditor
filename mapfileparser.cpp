@@ -451,6 +451,24 @@ QList<int> MapfileParser::getImageColor() {
    return color;
 }
 
+QList<OutputFormat> MapfileParser::getOutputFormats() {
+   QList<OutputFormat> ret = QList<OutputFormat>();
+   if (! this->map)
+     return ret;
+
+   for (int i = 0; i < this->map->numoutputformats ; i++) {
+     ret << OutputFormat(this->map->outputformatlist[i]->name,
+                         this->map->outputformatlist[i]->mimetype,
+                         this->map->outputformatlist[i]->driver,
+                         this->map->outputformatlist[i]->extension,
+                         this->map->outputformatlist[i]->imagemode,
+                         this->map->outputformatlist[i]->transparent);
+   }
+
+   return ret;
+}
+
+
 // Destructor
 
 MapfileParser::~MapfileParser() {

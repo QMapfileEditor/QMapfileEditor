@@ -12,16 +12,16 @@ class OutputFormat {
    QString driver;
    QString extension;
 
-   QString imageMode;
+   int imageMode;
 
    bool transparent;
 
   public:
    OutputFormat(const QString & name,
-                const QString &mimeType,
+                const QString & mimeType,
                 const QString & driver,
                 const QString & extension,
-                const QString & imageMode,
+                const int  & imageMode,
                 const bool & transparent);
 
    /** getters */
@@ -29,7 +29,7 @@ class OutputFormat {
    QString & getMimeType();
    QString & getDriver();
    QString & getExtension();
-   QString & getImageMode();
+   int     & getImageMode();
    bool    & getTransparent();
 
 
@@ -38,7 +38,7 @@ class OutputFormat {
    void setMimeType(const QString &);
    void setDriver(const QString &);
    void setExtension(const QString &);
-   void setImageMode(const QString &);
+   void setImageMode(const int &);
    void setTransparent(const bool &);
 };
 
