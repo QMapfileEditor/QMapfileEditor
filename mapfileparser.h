@@ -24,9 +24,12 @@ class MapfileParser
   QStringList getLayers(void);
 
   bool getMapStatus();
+  bool setMapStatus(const int & status);
   int getMapWidth();
   int getMapHeight();
-  int getMapSize();
+  bool setMapSize(const int & width, const int & height);
+  int getMapMaxsize();
+  bool setMapMaxsize(const int & maxsize);
   int getMapUnits();
   QString getMapImageType();
   int getMapProjection();
@@ -35,6 +38,7 @@ class MapfileParser
   int getMapExtentMinY();
   int getMapExtentMaxX();
   int getMapExtentMaxY();
+  bool setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy);
   unsigned char * getCurrentMapImage();
   int getCurrentMapImageSize();
   bool saveMapfile(const QString & filename);

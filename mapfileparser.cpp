@@ -134,6 +134,14 @@ bool MapfileParser::getMapStatus() {
   return -1;
 }
 
+bool MapfileParser::setMapStatus( const int & status) {
+  if (this->map) {
+    this->map->status = status;
+    return true;
+  }
+  return false;
+}
+
 // Width/Height parameters
 int MapfileParser::getMapWidth() {
   if (this->map)
@@ -147,10 +155,27 @@ int MapfileParser::getMapHeight() {
   return -1;
 }
 
-int MapfileParser::getMapSize() {
+bool  MapfileParser::setMapSize(const int & width, const int & height) {
+   if (this->map) {
+    this->map->width = width;
+    this->map->height = height;
+    return true;
+  }
+  return false;
+}
+
+int MapfileParser::getMapMaxsize() {
   if (this->map)
     return this->map->maxsize;
   return -1;
+}
+
+bool MapfileParser::setMapMaxsize(const int & maxsize) {
+  if (this->map) {
+    this->map->maxsize = maxsize;
+    return true;
+  }
+  return false;
 }
 
 // units parameter
@@ -197,6 +222,17 @@ int MapfileParser::getMapExtentMaxY() {
   if (this->map)
     return this->map->extent.maxy;
   return -1;
+}
+
+bool MapfileParser::setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy) {
+  if (this->map) {
+    this->map->extent.minx = minx;
+    this->map->extent.miny = miny;
+    this->map->extent.maxx = maxx;
+    this->map->extent.maxy = maxy;
+    return true;
+  }
+  return false;
 }
 
 bool MapfileParser::getDebugStatus() {

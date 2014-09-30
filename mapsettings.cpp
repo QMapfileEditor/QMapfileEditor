@@ -61,7 +61,7 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
     //MapSizes
     ui->mf_map_size_width->setValue(this->mapfile->getMapWidth());
     ui->mf_map_size_height->setValue(this->mapfile->getMapHeight());
-    ui->mf_map_maxsize->setValue(this->mapfile->getMapSize());
+    ui->mf_map_maxsize->setValue(this->mapfile->getMapMaxsize());
     //Units
     ui->mf_map_units->addItems(this->units);
     ui->mf_map_units->setCurrentIndex(this->mapfile->getMapUnits());
@@ -195,6 +195,19 @@ void MapSettings::createOgcOptionsModel() {
 
 void MapSettings::saveMapSettings() {
     this->mapfile->setMapName(ui->mf_map_name->text());
+    /** General tab **/
+    if (ui->mf_map_status_on->isChecked() ) {
+      this->mapfile->setMapStatus(1);
+    } else if (ui->mf_map_status_off->isChecked() ) {
+      this->mapfile->setMapStatus(0);
+    }
+    this->mapfile->setMapSize(ui->mf_map_size_width->value(), ui->mf_map_size_height->value());
+    this->mapfile->setMapMaxsize(ui->mf_map_maxsize->value());
+    //TODO: units
+    //TODO: outputformat
+    //TODO: projection
+    //TODO: extent
+    this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(), ui->mf_map_extent_top->text().toFloat(),ui->mf_map_extent_right->text().toFloat(),ui->mf_map_extent_top->text().toFloat());
 }
 
 //SLOTS
