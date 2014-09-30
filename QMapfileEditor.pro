@@ -12,6 +12,7 @@ CONFIG += debug_and_release
 TARGET = QMapfileEditor
 TEMPLATE = app
 
+QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage -O0
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -29,7 +30,7 @@ FORMS    += mainwindow.ui \
 INCLUDEPATH += "/usr/include/mapserver" \
   "/usr/include/gdal"
 
-LIBS += -lmapserver
+LIBS += -lmapserver -lgcov
 
 RESOURCES += \
     resources.qrc
