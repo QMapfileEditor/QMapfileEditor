@@ -12,17 +12,19 @@ CONFIG += debug_and_release
 TARGET = QMapfileEditor
 TEMPLATE = app
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-        mapsettings.cpp \
-        mapfileparser.cpp
+SOURCES += main.cpp         \
+        mainwindow.cpp      \
+        mapsettings.cpp     \
+        mapfileparser.cpp   \
+        outputformat.cpp
 
-HEADERS  += mainwindow.h \
-    mapsettings.h \
-    mapfileparser.h
+HEADERS  += mainwindow.h    \
+    mapsettings.h           \
+    mapfileparser.h         \
+    outputformat.h
 
-FORMS    += mainwindow.ui \
-    mapsettings.ui \
+FORMS    += mainwindow.ui   \
+    mapsettings.ui          \
     layersettings.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
