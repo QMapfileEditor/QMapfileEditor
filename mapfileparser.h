@@ -13,7 +13,7 @@
 class MapfileParser
 {
  public:
-  MapfileParser(const QString & filename);
+  MapfileParser(const QString & filename = "");
   ~MapfileParser();
 
   QString getMapName();

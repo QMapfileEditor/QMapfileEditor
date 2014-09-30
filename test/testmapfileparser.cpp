@@ -18,7 +18,7 @@ void TestMapfileParser::initMapfileParser()
 
 /** test getters / setters for the map name */
 void TestMapfileParser::testMapName() {
-  MapfileParser * p = new MapfileParser("");
+  MapfileParser * p = new MapfileParser();
 
   QVERIFY(p->getMapName() == "MS");
 
@@ -35,7 +35,7 @@ void TestMapfileParser::testFilePath() {
   QVERIFY(p->getMapfilePath().size() > 0);
   delete p;
 
-  p = new MapfileParser("");
+  p = new MapfileParser();
   QVERIFY(p->getMapfilePath().isEmpty());
   delete p;
 
