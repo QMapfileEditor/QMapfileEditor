@@ -84,9 +84,12 @@ MAP
     METADATA
       "wms_srs"	"EPSG:4326"
       "wms_onlineresource"	"http://localhost/cgi-bin/mapserv.exe?map=wms.map&"
-      "wms_title"	"World Map"
-      "ows_title"	"Test OWS"
-      "wms_enable_request" "GetCapabilities GetMap"
+      "wms_title"	        "World Map"
+      "ows_title"	        "Test OWS"
+      "wms_enable_request"      "GetCapabilities GetMap"
+      "wms_city"                "Aix-les-Bains"
+      "wms_country"             "France"
+      "wms_languages"           "english"
     END # METADATA
   END # WEB
 
