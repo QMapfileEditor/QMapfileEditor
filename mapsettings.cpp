@@ -13,12 +13,13 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
     this->mapfile = mf;
 
     /** Constants **/
+    //TODO: to move in MapfileParser::getUnitsList()
     this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << 
         "dd" << "pixels" << "pourcentages" << "nauticalmiles";
-
+    //TODO: to move in MapfileParser::getImageTypesList()
     this->imageTypes << "jpeg" << "pdf" << "png" << "svg";
     this->missingdata << "" << "FAIL" << "LOG" << "IGNORE";
-
+    //TODO: to move in MapfileParser::getOgcOptionsList()
     this->ogcMapOptions << "" << "ows_http_max_age" << "ows_schemas_location" << 
         "ows_sld_enabled" << "ows_updatesequence" << "wms_abstract" <<
         "wms_accessconstraints" << "wms_addresstype" << "wms_address" <<
@@ -204,6 +205,7 @@ void MapSettings::saveMapSettings() {
     this->mapfile->setMapSize(ui->mf_map_size_width->value(), ui->mf_map_size_height->value());
     this->mapfile->setMapMaxsize(ui->mf_map_maxsize->value());
     //TODO: units
+    this->mapfile->setMapUnits(ui->mf_map_units->currentText());
     //TODO: outputformat
     //TODO: projection
     //TODO: extent

@@ -31,8 +31,10 @@ class MapfileParser
   int getMapMaxsize();
   bool setMapMaxsize(const int & maxsize);
   int getMapUnits();
+  bool setMapUnits(const QString & units);
   QString getMapImageType();
   int getMapProjection();
+  bool setMapProjection(const QString & projection);
 
   int getMapExtentMinX();
   int getMapExtentMinY();
@@ -84,6 +86,10 @@ class MapfileParser
   // Private plain mapserver object
   struct mapObj * map = NULL;
   QString filename;
+  QStringList units;
+  QStringList imageTypes;
+  QStringList missingData;
+  QStringList ogcMapOptions;
 
   // accessible objects (via getters/setters)
   struct imageObj * currentImage = NULL;
