@@ -35,25 +35,21 @@ class MainWindow : public QMainWindow
       void  saveAsMapfile();
       void  showMapSettings();
       void  showAbout();
-      void  showInfo( QString message = NULL);
+      void  showInfo(const QString & message);
 
  private:
       Ui::MainWindow *ui;
 
       MapfileParser * mapfile = NULL;
 
-      // Map structure (layers)
-      QStandardItemModel * mfStructureModel = NULL;
-      QStandardItem * layersItem = NULL;
-
+      // Dialog which handles the mapfile settings
       MapSettings * settings = NULL;
 
-      // Objects related to the map preview
-      QGraphicsScene * mapScene = NULL;
-
-
-      // some internal methods
+      QStandardItem * layersItem = NULL;
+      // internal methods
       void reinitMapfile();
+      void reinitMapfileStructure();
+      QMessageBox::StandardButton warnIfActiveSession(void);
 };
 
 #endif // MAINWINDOW_H

@@ -183,9 +183,12 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
 
     // output formats
     QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
+    QStandardItemModel * outputFmtModel = new QStandardItemModel(this);
+    outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
+    this->ui->mf_outputformat_list->setModel(outputFmtModel);
     for (int i = 0 ; i < outputFmtList.size(); ++i) {
       OutputFormat fmt = outputFmtList.at(i);
-      // TODO: fill in the output format tab
+      outputFmtModel->appendRow(new QStandardItem(fmt.getName()));
     }
 }
 

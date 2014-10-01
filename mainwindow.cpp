@@ -1,37 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-// private
-
-void MainWindow::reinitMapfile() {
-  // if a MapSettings window has been opened, closes and destroys it
-  if (this->settings) {
-    this->settings->close();
-    delete this->settings;
-    this->settings = NULL;
-  }
-
-  // deletes / restores the model for layer tree
-  // (should also delete every children)
-  delete this->mfStructureModel;
-  // frees objects related to mapfileparser
-  delete this->mapfile;
-
-  // then recreates the UI elements
-  this->mfStructureModel = new QStandardItemModel();
-  this->layersItem = new QStandardItem(tr("Layers"));
-
-  this->layersItem->setEditable(false);
-  this->mfStructureModel->appendRow(this->layersItem);
-  ui->mf_structure->setModel(this->mfStructureModel);
-
-  this->mapfile = new MapfileParser(QString());
-
-  // re-init map preview
-  this->mapScene->clear();
-}
-
-// public
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,16 +8,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  // init default mapfile structure model
   this->showInfo(tr("Initializing default mapfile"));
 
-  this->mfStructureModel = new QStandardItemModel();
+  // inits the model for the mapfile structure
+  QStandardItemModel * mfStructureModel = new QStandardItemModel(ui->mf_structure);
+  ui->mf_structure->setModel(mfStructureModel);
   this->layersItem = new QStandardItem(tr("Layers"));
-  this->mfStructureModel->appendRow(this->layersItem);
-  ui->mf_structure->setModel(this->mfStructureModel);
+  mfStructureModel->appendRow(this->layersItem);
 
-  this->mapScene = new QGraphicsScene(this);
-  ui->mf_preview->setScene(this->mapScene);
+  // inits the graphics scene
+  QGraphicsScene * mapScene = new QGraphicsScene(ui->mf_preview);
+  ui->mf_preview->setScene(mapScene);
 
   // connects extra actions
   this->showInfo("Activate actions");
@@ -59,20 +29,49 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionMapSetting, SIGNAL(triggered()), SLOT(showMapSettings()));
   this->connect(ui->actionAbout, SIGNAL(triggered()), SLOT(showAbout()));
 
-
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
+}
+
+void MainWindow::reinitMapfileStructure() {
+  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_structure->model();
+  mod->clear();
+  // Keeping the pointer for future use (filling the layer tree)
+  this->layersItem = new QStandardItem(tr("Layers"));
+  mod->appendRow(this->layersItem);
+}
+
+void MainWindow::reinitMapfile() {
+  // if a MapSettings window has been opened, closes and destroys it
+  if (this->settings) {
+    this->settings->close();
+    delete this->settings;
+    this->settings = NULL;
+  }
+
+  this->reinitMapfileStructure();
+  // Creates a new mapfileparser from scratch
+  delete this->mapfile;
+  this->mapfile = new MapfileParser(QString());
+
+  // re-init map preview
+  this->ui->mf_preview->scene()->clear();
+}
+
+QMessageBox::StandardButton MainWindow::warnIfActiveSession() {
+  return QMessageBox::question(this, tr("Warning: currently editing"),
+                               tr("You are currently editing a mapfile. "
+                                  "Opening another one will discard your "
+                                  "current changes. Are you sure ?"),
+                               QMessageBox::Yes | QMessageBox::No);
 }
 
 void MainWindow::newMapfile()
 {
   // check if a mapfile is already opened
   if ((this->mapfile) &&  (this->mapfile->isLoaded())) {
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Currently editing an existing mapfile", "Discard current modifications ?",
-                                  QMessageBox::Yes|QMessageBox::No);
-    if (reply == QMessageBox::Yes) {
+    if (warnIfActiveSession() == QMessageBox::Yes) {
       this->reinitMapfile();
     }
     else {
@@ -85,7 +84,11 @@ void MainWindow::openMapfile()
 {
   QString prevFilePath = QDir::homePath();
 
-  // TODO: if modifications made on a new / opened mapfile, warns the user
+  // TODO: check if current session has unsaved modifications instead
+  if (this->mapfile->isLoaded()) {
+    if (warnIfActiveSession() == QMessageBox::No)
+      return;
+  }
 
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
 
@@ -116,7 +119,7 @@ void MainWindow::openMapfile()
   for (int i = 0; i < layers.size(); ++i) {
     QStandardItem * si = new QStandardItem(layers.at(i));
     si->setEditable(false);
-    layersItem->appendRow(si);
+    this->layersItem->appendRow(si);
   }
 
   ui->mf_structure->expandAll();
@@ -130,7 +133,7 @@ void MainWindow::openMapfile()
   mapRepr.loadFromData(mapImage, mapImageSize);
 
   free(mapImage);
-  this->mapScene->addPixmap(mapRepr);
+  this->ui->mf_preview->scene()->addPixmap(mapRepr);
 }
 
 /**
@@ -194,7 +197,7 @@ void MainWindow::saveAsMapfile()
   }
 }
 
-void MainWindow::showInfo( QString message )
+void MainWindow::showInfo(const QString & message)
 {
    //TODO: if statusBar is on so:
    ui->statusbar->showMessage(message);
@@ -207,17 +210,9 @@ MainWindow::~MainWindow()
     delete this->mapfile;
   }
 
-  // children items are also destroyed
-  delete this->mfStructureModel;
-
   if (this->settings) {
     delete this->settings;
   }
-  // TODO: since mapScene is added to an UI element,
-  // is there a risk of double free here ?
-  if (this->mapScene) {
-    delete this->mapScene;
-  }
-  // This *should* destroy the children objects
+
   delete ui;
 }
