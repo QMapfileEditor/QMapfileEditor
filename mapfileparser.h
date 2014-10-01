@@ -53,14 +53,17 @@ class MapfileParser
   bool setDebug(const int & debug);
   QString getDebugFile();
   bool setMetadata(const QString & name, const QString & value);
-  QString browseDebugFile();
   QString getShapepath();
   bool setShapepath(const QString & shapepath);
   QString getSymbolSet();
+  bool setSymbolSet(const QString & symbolset);
   QString getFontSet();
+  bool setFontSet(const QString & fontset);
 
   QString getTemplatePattern();
+  bool setTemplatePattern(const QString & pattern);
   QString getDataPattern();
+  bool setDataPattern(const QString & pattern);
   QString getConfigContextUrl();
   QString getConfigEncryptionKey();
 
@@ -79,9 +82,14 @@ class MapfileParser
 
 
   int getResolution();
+  bool setResolution(const int & resolution);
   int getDefResolution();
+  bool setDefResolution(const int & resolution);
   float getAngle();
+  bool setAngle(const int & angle);
+
   QList<int> getImageColor();
+  bool setImageColor( const int & red, const int & green, const int & blue);
 
   bool isLoaded();
   bool isNew();

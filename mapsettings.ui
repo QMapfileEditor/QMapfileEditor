@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -1026,7 +1026,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="mf_map_config_squarepixel_yes">
+           <widget class="QRadioButton" name="mf_map_config_squarepixel_on">
             <property name="minimumSize">
              <size>
               <width>50</width>

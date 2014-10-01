@@ -246,7 +246,7 @@ int MapfileParser::getMapProjection() {
 bool MapfileParser::setMapProjection(const QString & projection) {
     if (this->map) {
         if (this->map->projection.wellknownprojection) {
-            //free (this->map->projection.wellknownprojection);
+            this->map->projection.wellknownprojection = 0;
         }
         //this->map->projection = (char *) strdup(projection.toString().c_str());
         return true;
@@ -316,13 +316,10 @@ QString MapfileParser::getDebugFile() {
     return NULL;
 }
 
-//TODO: make a method using haskTable?
-bool MapfileParser::setMetadata(const QString & name, const QString & value) {
-    if (this->map) {
-        //this->map->metadata->msHashTable(name, value);
-        return true;
-    }
-    return false;
+QString MapfileParser::getConfigMissingData() {
+    if (this->map)
+        return msLookupHashTable( &(this->map->configoptions), "ON_MISSING_DATA");
+    return NULL;
 }
 
 QString MapfileParser::getShapepath() {
@@ -348,16 +345,47 @@ QString MapfileParser::getSymbolSet() {
     return NULL;
 }
 
+bool MapfileParser::setSymbolSet(const QString & symbolset) {
+    if (this->map) {
+        if (this->map->symbolset.filename) {
+            free(this->map->symbolset.filename);
+        }
+        this->map->symbolset.filename = (char *) strdup(symbolset.toStdString().c_str());
+        return true;
+    }
+    return false;
+}
+
 QString MapfileParser::getFontSet() {
     if (this->map)
         return this->map->fontset.filename;
     return NULL;
 }
 
+bool MapfileParser::setFontSet(const QString & fontset) {
+    if (this->map) {
+        if (this->map->fontset.filename) {
+            free(this->map->fontset.filename);
+        }
+        this->map->fontset.filename = (char *) strdup(fontset.toStdString().c_str());
+        return true;
+    }
+    return false;
+}
+
+
 int MapfileParser::getResolution() {
     if (this->map)
         return this->map->resolution;
     return -1;
+}
+
+bool MapfileParser::setResolution(const int & resolution) {
+    if (this->map) {
+        this->map->resolution = resolution;
+        return true;
+    }
+    return false;
 }
 
 int MapfileParser::getDefResolution() {
@@ -366,10 +394,26 @@ int MapfileParser::getDefResolution() {
     return -1;
 }
 
+bool MapfileParser::setDefResolution(const int & resolution) {
+    if (this->map) {
+        this->map->defresolution = resolution;
+        return true;
+    }
+    return false;
+}
+
 float MapfileParser::getAngle() {
     if (this->map)
         return this->map->gt.rotation_angle;
     return -1.0;
+}
+
+bool MapfileParser::setAngle( const int & angle) {
+    if (this->map) {
+        this->map->gt.rotation_angle = angle;
+        return true;
+    }
+    return false;
 }
 
 QString MapfileParser::getTemplatePattern() {
@@ -378,10 +422,32 @@ QString MapfileParser::getTemplatePattern() {
     return NULL;
 }
 
+bool MapfileParser::setTemplatePattern(const QString & pattern) {
+    if (this->map) {
+        if (this->map->templatepattern) {
+            free(this->map->templatepattern);
+        }
+        this->map->templatepattern = (char *) strdup(pattern.toStdString().c_str());
+        return true;
+    }
+    return false;
+}
+
 QString MapfileParser::getDataPattern() {
     if (this->map)
         return this->map->datapattern;
     return NULL;
+}
+
+bool MapfileParser::setDataPattern(const QString & pattern) {
+    if (this->map) {
+        if (this->map->datapattern) {
+            free(this->map->datapattern);
+        }
+        this->map->datapattern = (char *) strdup(pattern.toStdString().c_str());
+        return true;
+    }
+    return false;
 }
 
 QString MapfileParser::getConfigContextUrl() {
@@ -402,11 +468,6 @@ QString MapfileParser::getConfigNonsquare() {
     return NULL;
 }
 
-QString MapfileParser::getConfigMissingData() {
-    if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "ON_MISSING_DATA");
-    return NULL;
-}
 QString MapfileParser::getConfigProjLib() {
     if (this->map)
         return msLookupHashTable( &(this->map->configoptions), "PROJ_LIB");
@@ -431,6 +492,14 @@ QHash<QString, QString> MapfileParser::getMetadatas() {
   return ret;
 }
 
+//TODO: make a method using haskTable?
+bool MapfileParser::setMetadata(const QString & name, const QString & value) {
+    if (this->map) {
+        //this->map->metadata->msHashTable(name, value);
+        return true;
+    }
+    return false;
+}
 
 QString MapfileParser::getMetadataWmsTitle() {
     if (this->map) {
@@ -523,10 +592,6 @@ bool MapfileParser::saveMapfile(const QString & filename) {
   return (ret == 0);
 }
 
-QString MapfileParser::browseDebugFile() {
-   return "";
-}
-
 QList<int> MapfileParser::getImageColor() {
    QList<int> color;
 
@@ -535,6 +600,16 @@ QList<int> MapfileParser::getImageColor() {
      color << colorObj.red << colorObj.green << colorObj.blue;
    }
    return color;
+}
+
+bool MapfileParser::setImageColor(const int & red, const int & green, const int & blue ) {
+    if (this->map) {
+        this->map->imagecolor.red = red;
+        this->map->imagecolor.green = green;
+        this->map->imagecolor.blue = blue;
+        return true;
+    }
+    return false;
 }
 
 QList<OutputFormat> MapfileParser::getOutputFormats() {

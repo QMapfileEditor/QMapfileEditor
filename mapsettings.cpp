@@ -116,10 +116,10 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
     ui->mf_map_config_encryption->setText(this->mapfile->getConfigEncryptionKey());
 
     if (this->mapfile->getConfigNonsquare() != NULL ) {
-        ui->mf_map_config_squarepixel_yes->setChecked(true);
+        ui->mf_map_config_squarepixel_on->setChecked(true);
         ui->mf_map_config_squarepixel_off->setChecked(false);
     } else {
-        ui->mf_map_config_squarepixel_yes->setChecked(false);
+        ui->mf_map_config_squarepixel_on->setChecked(false);
         ui->mf_map_config_squarepixel_off->setChecked(true);
     }
 
@@ -231,6 +231,25 @@ void MapSettings::saveMapSettings() {
     
     /** Path tab **/
     this->mapfile->setShapepath(ui->mf_map_shapepath->text());
+    this->mapfile->setSymbolSet(ui->mf_map_symbolset->text());
+    this->mapfile->setFontSet(ui->mf_map_fontset->text());
+
+    /** Advanced tab **/
+    this->mapfile->setResolution(ui->mf_map_resolution->value());
+    this->mapfile->setDefResolution(ui->mf_map_defresolution->value());
+    this->mapfile->setAngle(ui->mf_map_angle->value());
+    QColor imageColor = ui->mf_map_imagecolor->palette().color(QWidget::backgroundRole());
+    this->mapfile->setImageColor(imageColor.red(), imageColor.green(), imageColor.blue());
+    this->mapfile->setTemplatePattern(ui->mf_map_templatepattern->text());
+    this->mapfile->setDataPattern(ui->mf_map_datapattern->text());
+    this->mapfile->setMetadata("CGI_CONTEXT_URL", ui->mf_map_config_contexturl->text());
+    this->mapfile->setMetadata("MS_ENCRYPTION_KEY", ui->mf_map_config_encryption->text());
+    if (ui->mf_map_config_squarepixel_on->isChecked()) {
+        this->mapfile->setMetadata("MS_NONSQUARE", "ON");
+    } else if (ui->mf_map_config_squarepixel_off->isChecked()) {
+        this->mapfile->setMetadata("MS_NONSQUARE", "OFF");
+    }
+    this->mapfile->setMetadata("PROJ_LIB", ui->mf_map_config_projlib->text());
 }
 
 //SLOTS
