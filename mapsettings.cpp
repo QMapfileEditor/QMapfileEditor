@@ -207,9 +207,19 @@ void MapSettings::saveMapSettings() {
     //TODO: units
     this->mapfile->setMapUnits(ui->mf_map_units->currentText());
     //TODO: outputformat
+    //this->mapfile->setOutputformat(ui->mf_map_ouputformat->currentText());
     //TODO: projection
+    this->mapfile->setMapProjection(ui->mf_map_projection->text());
     //TODO: extent
     this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(), ui->mf_map_extent_top->text().toFloat(),ui->mf_map_extent_right->text().toFloat(),ui->mf_map_extent_top->text().toFloat());
+    
+    /** Debug tab **/
+    if(ui->mf_map_debug_status_on->isChecked()) {
+        this->mapfile->setDebug(ui->mf_map_debug->value());
+    } else if (ui->mf_map_debug_status_off->ischecked()) {
+        this->mapfile->setDebug(0);
+    }
+
 }
 
 //SLOTS

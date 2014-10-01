@@ -33,6 +33,7 @@ class MapfileParser
   int getMapUnits();
   bool setMapUnits(const QString & units);
   QString getMapImageType();
+  bool setMapImageType(const QString & imageType);
   int getMapProjection();
   bool setMapProjection(const QString & projection);
 
@@ -47,6 +48,7 @@ class MapfileParser
 
   bool getDebugStatus();
   int getDebug();
+  bool setDebug(const int & debug);
   QString getDebugFile();
   QString browseDebugFile();
   QString getShapepath();

@@ -211,9 +211,8 @@ int MapfileParser::getMapUnits() {
   return -1;
 }
 
+//TODO
 bool MapfileParser::setMapUnits(const QString & units) {
-
-  
   if (this->map) {
       //TODO: needs to use MS_UNITS type
       //this->map->units = this->units.indexOf(units);
@@ -226,6 +225,14 @@ QString MapfileParser::getMapImageType() {
   if (this->map)
     return this->map->imagetype;
   return "";
+}
+
+//TODO
+bool MapfileParser::setMapImageType( const QString & imageType) {
+    if (this->map) {
+        return true;
+    }
+    return false;
 }
 
 //projection parameters
@@ -292,6 +299,14 @@ bool MapfileParser::getDebugStatus() {
 int MapfileParser::getDebug() {
     if (this->map)
         return this->map->debug;
+    return false;
+}
+
+bool MapfileParser::setDebug(const int & debug) {
+    if(this->map) {
+        this->map->debug = debug;
+        return true;
+    }
     return false;
 }
 
