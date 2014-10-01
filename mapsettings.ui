@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -2130,9 +2130,15 @@
             <layout class="QVBoxLayout" name="verticalLayout_7">
              <item>
               <widget class="QCheckBox" name="mf_map_web_md_wms_enable_gm">
+               <property name="minimumSize">
+                <size>
+                 <width>180</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>70</width>
+                 <width>180</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2143,9 +2149,15 @@
              </item>
              <item>
               <widget class="QCheckBox" name="mf_map_web_md_wms_enable_gc">
+               <property name="minimumSize">
+                <size>
+                 <width>180</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>120</width>
+                 <width>180</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2160,9 +2172,15 @@
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <item>
               <widget class="QCheckBox" name="mf_map_web_md_wms_enable_glg">
+               <property name="minimumSize">
+                <size>
+                 <width>180</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
+                 <width>180</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2173,9 +2191,15 @@
              </item>
              <item>
               <widget class="QCheckBox" name="mf_map_web_md_wms_enable_gfi">
+               <property name="minimumSize">
+                <size>
+                 <width>180</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>115</width>
+                 <width>180</width>
                  <height>16777215</height>
                 </size>
                </property>

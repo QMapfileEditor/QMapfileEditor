@@ -250,6 +250,34 @@ void MapSettings::saveMapSettings() {
         this->mapfile->setMetadata("MS_NONSQUARE", "OFF");
     }
     this->mapfile->setMetadata("PROJ_LIB", ui->mf_map_config_projlib->text());
+
+    /** Outputformat tab **/
+
+    /** OGC tab **/
+
+    if (ui->mf_map_web_md_wms_title != ui->mf_map_web_md_wfs_title) {
+      this->mapfile->setMetadata("WMS_TITLE", ui->mf_map_web_md_wms_title->text());
+      this->mapfile->setMetadata("WFS_TITLE", ui->mf_map_web_md_wfs_title->text());
+
+    } else {
+      this->mapfile->setMetadata("OWS_TITLE", ui->mf_map_web_md_wms_title->text());
+    }
+    //TODO: wms_enabled_request and wfs_enabled_request
+
+    if (ui->mf_map_web_md_wms_onlineresource->text() != ui->mf_map_web_md_wfs_onlineresource->text()) {
+        this->mapfile->setMetadata("WMS_ONLINERESOURCE", ui->mf_map_web_md_wms_onlineresource->text());
+        this->mapfile->setMetadata("WFS_ONLINERESOURCE", ui->mf_map_web_md_wfs_onlineresource->text());
+    } else {
+        this->mapfile->setMetadata("OWS_ONLINERESOURCE", ui->mf_map_web_md_wms_onlineresource->text());
+    }
+    
+    if (ui->mf_map_web_md_wms_srs->text() != ui->mf_map_web_md_wfs_srs->text()) {
+        this->mapfile->setMetadata("WMS_SRS", ui->mf_map_web_md_wms_srs->text());
+        this->mapfile->setMetadata("WFS_SRS", ui->mf_map_web_md_wfs_srs->text());
+    } else { 
+        this->mapfile->setMetadata("OWS_SRS", ui->mf_map_web_md_wms_srs->text());
+    }
+    //TODO: boucle on custom metadata list
 }
 
 //SLOTS
