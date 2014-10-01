@@ -277,7 +277,13 @@ void MapSettings::saveMapSettings() {
     } else { 
         this->mapfile->setMetadata("OWS_SRS", ui->mf_map_web_md_wms_srs->text());
     }
-    //TODO: boucle on custom metadata list
+    
+    QStandardItemModel * mod = (QStandardItemModel *) ui->mf_map_web_md_options_list->model();
+    if (mod) {
+        //TODO: boucle on custom metadata list
+    }
+
+
 }
 
 //SLOTS
