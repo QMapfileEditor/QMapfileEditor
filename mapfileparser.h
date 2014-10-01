@@ -8,7 +8,7 @@
 #include <string>
 #include <iostream>
 
-
+#include "outputformat.h"
 
 class MapfileParser
 {
@@ -22,6 +22,8 @@ class MapfileParser
   QString getMapfileName();
 
   QStringList getLayers(void);
+
+  QList<OutputFormat> getOutputFormats(void);
 
   bool getMapStatus();
   bool setMapStatus(const int & status);

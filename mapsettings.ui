@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -359,7 +359,7 @@
          <x>30</x>
          <y>200</y>
          <width>521</width>
-         <height>27</height>
+         <height>29</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -410,7 +410,7 @@
          <x>30</x>
          <y>110</y>
          <width>521</width>
-         <height>93</height>
+         <height>97</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="projectionLayout">
@@ -1217,7 +1217,7 @@
          <x>3</x>
          <y>10</y>
          <width>168</width>
-         <height>313</height>
+         <height>320</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1346,7 +1346,7 @@
           <x>0</x>
           <y>0</y>
           <width>402</width>
-          <height>294</height>
+          <height>309</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1989,7 +1989,7 @@
          <rect>
           <x>5</x>
           <y>4</y>
-          <width>551</width>
+          <width>555</width>
           <height>341</height>
          </rect>
         </property>
@@ -2349,6 +2349,12 @@
          </item>
          <item>
           <widget class="QTableView" name="mf_map_web_md_options_list">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+             <horstretch>255</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -2361,6 +2367,15 @@
              <height>100</height>
             </size>
            </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="verticalHeaderStretchLastSection">
+            <bool>false</bool>
+           </attribute>
           </widget>
          </item>
         </layout>
@@ -2520,8 +2535,8 @@
         <rect>
          <x>10</x>
          <y>90</y>
-         <width>184</width>
-         <height>27</height>
+         <width>185</width>
+         <height>31</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_18">

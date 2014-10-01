@@ -180,6 +180,13 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
             this->addConfigOptionsToModel(key, value);
         }
     }
+
+    // output formats
+    QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
+    for (int i = 0 ; i < outputFmtList.size(); ++i) {
+      OutputFormat fmt = outputFmtList.at(i);
+      // TODO: fill in the output format tab
+    }
 }
 
 //Methods
