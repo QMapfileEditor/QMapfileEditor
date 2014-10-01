@@ -59,16 +59,19 @@ void MainWindow::reinitMapfile() {
   this->ui->mf_preview->scene()->clear();
 }
 
-
+QMessageBox::StandardButton MainWindow::warnIfActiveSession() {
+  return QMessageBox::question(this, tr("Warning: currently editing"),
+                               tr("You are currently editing a mapfile. "
+                                  "Opening another one will discard your "
+                                  "current changes. Are you sure ?"),
+                               QMessageBox::Yes | QMessageBox::No);
+}
 
 void MainWindow::newMapfile()
 {
   // check if a mapfile is already opened
   if ((this->mapfile) &&  (this->mapfile->isLoaded())) {
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Currently editing an existing mapfile", "Discard current modifications ?",
-                                  QMessageBox::Yes|QMessageBox::No);
-    if (reply == QMessageBox::Yes) {
+    if (warnIfActiveSession() == QMessageBox::Yes) {
       this->reinitMapfile();
     }
     else {
@@ -81,14 +84,9 @@ void MainWindow::openMapfile()
 {
   QString prevFilePath = QDir::homePath();
 
-  // TODO: check if current sessions has unsaved modifications instead
+  // TODO: check if current session has unsaved modifications instead
   if (this->mapfile->isLoaded()) {
-    QMessageBox::StandardButton t = QMessageBox::question(this, tr("Warning: currently editing"),
-                                                          tr("You are currently editing a mapfile. "
-                                                             "Opening another one will discard your "
-                                                             "current changes. Are you sure ?"),
-                                                          QMessageBox::Yes | QMessageBox::No);
-    if (t == QMessageBox::No)
+    if (warnIfActiveSession() == QMessageBox::No)
       return;
   }
 

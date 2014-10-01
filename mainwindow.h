@@ -49,6 +49,7 @@ class MainWindow : public QMainWindow
       // internal methods
       void reinitMapfile();
       void reinitMapfileStructure();
+      QMessageBox::StandardButton warnIfActiveSession(void);
 };
 
 #endif // MAINWINDOW_H
