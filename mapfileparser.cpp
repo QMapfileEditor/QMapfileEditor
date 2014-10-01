@@ -245,11 +245,11 @@ int MapfileParser::getMapProjection() {
 //TODO: not correct, need to manage if startwith epsg, if so add +init=
 bool MapfileParser::setMapProjection(const QString & projection) {
     if (this->map) {
-        if (this->map->projection) {
-            free (this->map->projection);
+        if (this->map->projection.wellknownprojection) {
+            //free (this->map->projection.wellknownprojection);
         }
-        this->map->projection = (char *) strdup(projection.toString().c_str());
-        retrun true;
+        //this->map->projection = (char *) strdup(projection.toString().c_str());
+        return true;
     }
     return false;
 }
@@ -278,7 +278,7 @@ int MapfileParser::getMapExtentMaxY() {
     return this->map->extent.maxy;
   return -1;
 }
-
+//TODO: not working
 bool MapfileParser::setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy) {
   if (this->map) {
     this->map->extent.minx = minx;
@@ -316,10 +316,30 @@ QString MapfileParser::getDebugFile() {
     return NULL;
 }
 
+//TODO: make a method using haskTable?
+bool MapfileParser::setMetadata(const QString & name, const QString & value) {
+    if (this->map) {
+        //this->map->metadata->msHashTable(name, value);
+        return true;
+    }
+    return false;
+}
+
 QString MapfileParser::getShapepath() {
     if (this->map)
         return this->map->shapepath;
     return NULL;
+}
+
+bool MapfileParser::setShapepath(const QString & shapepath) {
+    if (this->map) {
+        if (this->map->shapepath) {
+            free(this->map->shapepath);
+        }
+        this->map->shapepath = (char *) strdup(shapepath.toStdString().c_str());
+        return true;
+    }
+    return false;
 }
 
 QString MapfileParser::getSymbolSet() {

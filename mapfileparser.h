@@ -52,8 +52,10 @@ class MapfileParser
   int getDebug();
   bool setDebug(const int & debug);
   QString getDebugFile();
+  bool setMetadata(const QString & name, const QString & value);
   QString browseDebugFile();
   QString getShapepath();
+  bool setShapepath(const QString & shapepath);
   QString getSymbolSet();
   QString getFontSet();
 

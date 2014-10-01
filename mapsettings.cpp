@@ -211,22 +211,26 @@ void MapSettings::saveMapSettings() {
     }
     this->mapfile->setMapSize(ui->mf_map_size_width->value(), ui->mf_map_size_height->value());
     this->mapfile->setMapMaxsize(ui->mf_map_maxsize->value());
-    //TODO: units
+    //units
     this->mapfile->setMapUnits(ui->mf_map_units->currentText());
     //TODO: outputformat
     //this->mapfile->setOutputformat(ui->mf_map_ouputformat->currentText());
-    //TODO: projection
-    this->mapfile->setMapProjection(ui->mf_map_projection->text());
-    //TODO: extent
+    //projection
+    this->mapfile->setMapProjection(ui->mf_map_projection->currentText());
+    //extent
     this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(), ui->mf_map_extent_top->text().toFloat(),ui->mf_map_extent_right->text().toFloat(),ui->mf_map_extent_top->text().toFloat());
     
     /** Debug tab **/
-    if(ui->mf_map_debug_status_on->isChecked()) {
+    if(ui->mf_map_debug_on->isChecked()) {
         this->mapfile->setDebug(ui->mf_map_debug->value());
-    } else if (ui->mf_map_debug_status_off->ischecked()) {
+    } else if (ui->mf_map_debug_off->isChecked()) {
         this->mapfile->setDebug(0);
     }
-
+    this->mapfile->setMetadata("ms_errorfile", ui->mf_map_config_errorFile->text());
+    this->mapfile->setMetadata("missingdata", ui->mf_map_config_missingdata->currentText());
+    
+    /** Path tab **/
+    this->mapfile->setShapepath(ui->mf_map_shapepath->text());
 }
 
 //SLOTS
