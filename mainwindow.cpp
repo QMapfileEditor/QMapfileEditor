@@ -81,7 +81,16 @@ void MainWindow::openMapfile()
 {
   QString prevFilePath = QDir::homePath();
 
-  // TODO: if modifications made on a new / opened mapfile, warns the user
+  // TODO: check if current sessions has unsaved modifications instead
+  if (this->mapfile->isLoaded()) {
+    QMessageBox::StandardButton t = QMessageBox::question(this, tr("Warning: currently editing"),
+                                                          tr("You are currently editing a mapfile. "
+                                                             "Opening another one will discard your "
+                                                             "current changes. Are you sure ?"),
+                                                          QMessageBox::Yes | QMessageBox::No);
+    if (t == QMessageBox::No)
+      return;
+  }
 
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
 
