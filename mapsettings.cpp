@@ -69,6 +69,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_outputformat->addItems(this->imageTypes);
     //TODO: add custom outputformat
     //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
+    this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
 
     //Projection
     //TODO: create autocompleter for projection
@@ -180,13 +181,13 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     }
 
     // output formats
-    QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
+    QList<OutputFormat *> * outputFmtList = this->mapfile->getOutputFormats();
     QStandardItemModel * outputFmtModel = new QStandardItemModel(this->ui->mf_outputformat_list);
     outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
     this->ui->mf_outputformat_list->setModel(outputFmtModel);
-    for (int i = 0 ; i < outputFmtList.size(); ++i) {
-      OutputFormat fmt = outputFmtList.at(i);
-      QStandardItem * item = new QStandardItem(fmt.getName());
+    for (int i = 0 ; i < outputFmtList->size(); ++i) {
+      OutputFormat * fmt = outputFmtList->at(i);
+      QStandardItem * item = new QStandardItem(fmt->getName());
       item->setEditable(false);
       outputFmtModel->appendRow(item);
     }
@@ -431,12 +432,30 @@ void MapSettings::browseShapepath() {
       //TODO: should we used relatif or absolute path?
       ui->mf_map_shapepath->setText(dirName);
 }
-/** End refactoring **/
 
 void MapSettings::accept() {
     this->saveMapSettings();
 
     QDialog::accept();
+}
+
+void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
+    std::cout << i.row() << ":" << i.column() << std::endl;
+    QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
+    if (item != NULL) {
+      std::cout << item->text().toStdString() << std::endl;
+      OutputFormat * selFmt = this->mapfile->getOutputFormat(item->text());
+      if (selFmt) {
+        this->ui->mf_outputformat_name->setText(selFmt->getName());
+        this->ui->mf_outputformat_transparent_on->setChecked(selFmt->getTransparent());
+        this->ui->mf_outputformat_transparent_off->setChecked(! selFmt->getTransparent());
+
+        this->ui->mf_outputformat_extension->setText(selFmt->getExtension());
+        this->ui->mf_outputformat_mimetype->setText(selFmt->getMimeType());
+
+        // TODO: comboboxes driver / imagemode
+      }
+    }
 }
 
 /** End SLOTS **/

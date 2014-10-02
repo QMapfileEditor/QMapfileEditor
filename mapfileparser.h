@@ -23,7 +23,8 @@ class MapfileParser
 
   QStringList getLayers(void);
 
-  QList<OutputFormat> getOutputFormats(void);
+  QList<OutputFormat *> * getOutputFormats(void);
+  OutputFormat * getOutputFormat(const QString &);
 
   bool getMapStatus();
   bool setMapStatus(const int & status);
@@ -104,6 +105,8 @@ class MapfileParser
   QStringList imageTypes;
   QStringList missingData;
   QStringList ogcMapOptions;
+
+  QList<OutputFormat *> * outputformats;
 
   // accessible objects (via getters/setters)
   struct imageObj * currentImage = NULL;
