@@ -77,6 +77,15 @@ MapfileParser::MapfileParser(const QString & fname) :
         "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
         "wfs_service_onlineresource";
 
+  this->outputformats = new QList<OutputFormat *>();
+  for (int i = 0; i < this->map->numoutputformats ; i++) {
+     this->outputformats->append(new OutputFormat(this->map->outputformatlist[i]->name,
+                                                  this->map->outputformatlist[i]->mimetype,
+                                                  this->map->outputformatlist[i]->driver,
+                                                  this->map->outputformatlist[i]->extension,
+                                                  this->map->outputformatlist[i]->imagemode,
+                                                  this->map->outputformatlist[i]->transparent));
+   }
 }
 
 /**
@@ -612,25 +621,17 @@ bool MapfileParser::setImageColor(const int & red, const int & green, const int 
     return false;
 }
 
-QList<OutputFormat> MapfileParser::getOutputFormats() {
-   QList<OutputFormat> ret = QList<OutputFormat>();
-   if (! this->map)
-     return ret;
-
-   for (int i = 0; i < this->map->numoutputformats ; i++) {
-     ret << OutputFormat(this->map->outputformatlist[i]->name,
-                         this->map->outputformatlist[i]->mimetype,
-                         this->map->outputformatlist[i]->driver,
-                         this->map->outputformatlist[i]->extension,
-                         this->map->outputformatlist[i]->imagemode,
-                         this->map->outputformatlist[i]->transparent);
-   }
-
-   return ret;
+QList<OutputFormat *> * MapfileParser::getOutputFormats() {
+  return this->outputformats;
 }
 
-
-// Destructor
+OutputFormat * MapfileParser::getOutputFormat(const QString & key) {
+  for (int i = 0; i < this->outputformats->size(); ++i) {
+    if (key == this->outputformats->at(i)->getName())
+      return this->outputformats->at(i);
+  }
+  return NULL;
+}
 
 MapfileParser::~MapfileParser() {
   if (this->map) {
@@ -638,5 +639,11 @@ MapfileParser::~MapfileParser() {
   }
   if (this->currentImage) {
     msFreeImage(this->currentImage);
+  }
+  if (this->outputformats) {
+    for (int i = 0 ; i < this->outputformats->size(); ++i) {
+      delete this->outputformats->at(i);
+    }
+    delete this->outputformats;
   }
 }

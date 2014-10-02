@@ -24,20 +24,21 @@ class MapSettings : public QDialog
       explicit MapSettings(QWidget * parent, MapfileParser *);
       ~MapSettings();
  public slots:
-      void browseDebugFile();
-      void browseShapepath();
-      void browseSymbolsetFile();
-      void browseFontsetFile();
-      void browseProjlibFile();
-      void browseEncryptionFile();
+      void accept();
+      void addConfigOptionsToModel(const QString &, const QString &);
+      void addNewOgcMetadata();
       void angleSliderChanged(int);
       void angleSpinChanged(int);
       void enableDebugBox(bool);
       void enableOgcStandardFrame(bool);
-      void addNewOgcMetadata();
-      void addConfigOptionsToModel(const QString &, const QString &);
+      void browseDebugFile();
+      void browseEncryptionFile();
+      void browseFontsetFile();
+      void browseProjlibFile();
+      void browseShapepath();
+      void browseSymbolsetFile();
+      void refreshOutputFormatTab(const QModelIndex &);
       void setImageColor();
-      void accept();
 
  private:
       Ui::MapSettings * ui;
