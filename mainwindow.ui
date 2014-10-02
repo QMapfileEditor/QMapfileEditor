@@ -232,21 +232,15 @@
    <addaction name="actionPan"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
    <property name="minimumSize">
     <size>
-     <width>210</width>
+     <width>200</width>
      <height>500</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>524287</width>
+     <width>800</width>
      <height>524287</height>
     </size>
    </property>
@@ -263,24 +257,36 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>800</width>
+      <height>16777215</height>
+     </size>
+    </property>
     <widget class="QTreeView" name="mf_structure">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>0</y>
        <width>200</width>
-       <height>530</height>
+       <height>800</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>200</width>
-       <height>530</height>
+       <height>800</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>800</width>
        <height>530</height>
       </size>
      </property>
@@ -292,9 +298,6 @@
      </property>
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
