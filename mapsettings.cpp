@@ -4,13 +4,11 @@
 #include "mapsettings.h"
 #include "ui_mapsettings.h"
 
-MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
+MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
   QDialog(parent), ui(new Ui::MapSettings), mapfile(mf)
 {
 
     ui->setupUi(this);
-
-    this->mapfile = mf;
 
     /** Constants **/
     //TODO: to move in MapfileParser::getUnitsList()
@@ -183,12 +181,14 @@ MapSettings::MapSettings(QWidget *parent, MapfileParser *mf) :
 
     // output formats
     QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
-    QStandardItemModel * outputFmtModel = new QStandardItemModel(this);
+    QStandardItemModel * outputFmtModel = new QStandardItemModel(this->ui->mf_outputformat_list);
     outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
     this->ui->mf_outputformat_list->setModel(outputFmtModel);
     for (int i = 0 ; i < outputFmtList.size(); ++i) {
       OutputFormat fmt = outputFmtList.at(i);
-      outputFmtModel->appendRow(new QStandardItem(fmt.getName()));
+      QStandardItem * item = new QStandardItem(fmt.getName());
+      item->setEditable(false);
+      outputFmtModel->appendRow(item);
     }
 }
 
