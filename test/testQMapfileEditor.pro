@@ -20,7 +20,7 @@ POST_TARGETDEPS +=
 
 
 LIBS += ../debug/mapfileparser.o \
-      -L/usr/lib/x86_64-linux-gnu/ -lmapserver -lgcov
+      -L/usr/lib/x86_64-linux-gnu/ -lmapserver -lgdal -lgcov
 
 
 

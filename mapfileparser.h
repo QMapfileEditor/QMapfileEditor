@@ -101,6 +101,7 @@ class MapfileParser
   // Private plain mapserver object
   struct mapObj * map = NULL;
   QString filename;
+  QStringList gdalOgrDrivers;
   QStringList units;
   QStringList imageTypes;
   QStringList missingData;

@@ -1,5 +1,6 @@
 #include <mapserver.h>
 #include <mapfile.h>
+#include <gdal.h>
 
 #include <string>
 #include <iostream>
@@ -77,6 +78,21 @@ MapfileParser::MapfileParser(const QString & fname) :
         "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
         "wfs_service_onlineresource";
 
+  // TODO: might be relevant to have this calculated
+  // on the mainwindow object instead of having it here,
+  // and calculate each time we create a new mapfile project.
+
+  for (int i = 0; i < GDALGetDriverCount(); ++i) {
+    GDALDriverH d = GDALGetDriver(i);
+    this->gdalOgrDrivers << GDALGetDriverShortName(d) ;
+  }
+  for (int i = 0; i < OGRGetDriverCount(); ++i) {
+    OGRSFDriverH d = OGRGetDriver(i);
+    this->gdalOgrDrivers << OGR_Dr_GetName(d);
+  }
+
+
+    
   this->outputformats = new QList<OutputFormat *>();
   for (int i = 0; i < this->map->numoutputformats ; i++) {
      this->outputformats->append(new OutputFormat(this->map->outputformatlist[i]->name,
@@ -86,6 +102,11 @@ MapfileParser::MapfileParser(const QString & fname) :
                                                   this->map->outputformatlist[i]->imagemode,
                                                   this->map->outputformatlist[i]->transparent));
    }
+
+  // debug purposes.
+  for (int i = 0 ; i < this->gdalOgrDrivers.size(); ++i) {
+    std::cout << this->gdalOgrDrivers.at(i).toStdString() << std::endl;
+  }
 }
 
 /**
