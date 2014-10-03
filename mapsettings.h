@@ -45,6 +45,7 @@ class MapSettings : public QDialog
 
       MapfileParser * mapfile;
 
+      QStringList drivers;
       QStringList imageTypes;
       QStringList missingdata;
       QStringList ogcMapOptions;

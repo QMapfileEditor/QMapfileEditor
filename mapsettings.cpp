@@ -43,6 +43,8 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
         "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
         "wfs_service_onlineresource";
 
+    this->drivers << "" << "AGG/PNG" << "AGG/JPEG" <<  "GD/GIF" << "GD/PNG" << "TEMPLATE" << "GDAL"<< "OGR";
+
     /** General Tab **/
     //TODO: create Slots and Signal on extent on update button
     //Name
@@ -67,6 +69,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
 
     //Outpuformat
     ui->mf_map_outputformat->addItems(this->imageTypes);
+    ui->mf_outputformat_driver->addItems(this->drivers);
     //TODO: add custom outputformat
     //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
@@ -450,8 +453,10 @@ void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
 
         this->ui->mf_outputformat_extension->setText(selFmt->getExtension());
         this->ui->mf_outputformat_mimetype->setText(selFmt->getMimeType());
-
-        // TODO: comboboxes driver / imagemode
+        
+        int driIdx = this->ui->mf_outputformat_driver->findText(selFmt->getDriver());
+        if (driIdx != -1) this->ui->mf_outputformat_driver->setCurrentIndex(driIdx);
+        
         this->toggleOutputFormatsWidgets(true);
       }
     }
