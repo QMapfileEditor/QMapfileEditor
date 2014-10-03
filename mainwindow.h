@@ -45,10 +45,8 @@ class MainWindow : public QMainWindow
       // Dialog which handles the mapfile settings
       MapSettings * settings = NULL;
 
-      QStandardItem * layersItem = NULL;
       // internal methods
       void reinitMapfile();
-      void reinitMapfileStructure();
       QMessageBox::StandardButton warnIfActiveSession(void);
 };
 

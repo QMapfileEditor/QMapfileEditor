@@ -13,8 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
   // inits the model for the mapfile structure
   QStandardItemModel * mfStructureModel = new QStandardItemModel(ui->mf_structure);
   ui->mf_structure->setModel(mfStructureModel);
-  this->layersItem = new QStandardItem(tr("Layers"));
-  mfStructureModel->appendRow(this->layersItem);
 
   // inits the graphics scene
   QGraphicsScene * mapScene = new QGraphicsScene(ui->mf_preview);
@@ -34,14 +32,6 @@ MainWindow::MainWindow(QWidget *parent) :
   this->showInfo(tr("Initialisation process: success !"));
 }
 
-void MainWindow::reinitMapfileStructure() {
-  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_structure->model();
-  mod->clear();
-  // Keeping the pointer for future use (filling the layer tree)
-  this->layersItem = new QStandardItem(tr("Layers"));
-  mod->appendRow(this->layersItem);
-}
-
 void MainWindow::reinitMapfile() {
   // if a MapSettings window has been opened, closes and destroys it
   if (this->settings) {
@@ -50,7 +40,8 @@ void MainWindow::reinitMapfile() {
     this->settings = NULL;
   }
 
-  this->reinitMapfileStructure();
+  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_structure->model();
+  mod->clear();
   // Creates a new mapfileparser from scratch
   delete this->mapfile;
   this->mapfile = new MapfileParser(QString());
@@ -119,7 +110,7 @@ void MainWindow::openMapfile()
   for (int i = 0; i < layers.size(); ++i) {
     QStandardItem * si = new QStandardItem(layers.at(i));
     si->setEditable(false);
-    this->layersItem->appendRow(si);
+    ((QStandardItemModel *) this->ui->mf_structure->model())->appendRow(si);
   }
 
   ui->mf_structure->expandAll();
