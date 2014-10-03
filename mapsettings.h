@@ -42,14 +42,19 @@ class MapSettings : public QDialog
 
  private:
       Ui::MapSettings * ui;
+
       MapfileParser * mapfile;
-      QStringList units;
+
       QStringList imageTypes;
       QStringList missingdata;
       QStringList ogcMapOptions;
-      void createOgcOptionsModel();
+      QStringList units;
+
       bool alreadyInModel(const QString &);
+      void createOgcOptionsModel();
       void saveMapSettings();
+      void toggleOutputFormatsWidgets(const bool &);
+
 };
 
 #endif // MAPSETTINGS_H

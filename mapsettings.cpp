@@ -452,10 +452,15 @@ void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
         this->ui->mf_outputformat_mimetype->setText(selFmt->getMimeType());
 
         // TODO: comboboxes driver / imagemode
+        this->toggleOutputFormatsWidgets(true);
       }
     }
 }
 
+void MapSettings::toggleOutputFormatsWidgets(const bool &enable) {
+  this->ui->outputFormatForm->setEnabled(enable);
+  this->ui->mf_outputformat_form_buttons->setEnabled(enable);
+}
 /** End SLOTS **/
 
 MapSettings::~MapSettings() {
