@@ -440,10 +440,8 @@ void MapSettings::accept() {
 }
 
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
-    std::cout << i.row() << ":" << i.column() << std::endl;
     QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
     if (item != NULL) {
-      std::cout << item->text().toStdString() << std::endl;
       OutputFormat * selFmt = this->mapfile->getOutputFormat(item->text());
       if (selFmt) {
         this->ui->mf_outputformat_name->setText(selFmt->getName());
