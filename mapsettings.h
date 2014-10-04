@@ -37,6 +37,7 @@ class MapSettings : public QDialog
       void browseProjlibFile();
       void browseShapepath();
       void browseSymbolsetFile();
+      void refreshGdalOgrDriverCombo(const QString &);
       void refreshOutputFormatTab(const QModelIndex &);
       void setImageColor();
 

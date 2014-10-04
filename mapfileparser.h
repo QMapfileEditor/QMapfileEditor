@@ -22,6 +22,8 @@ class MapfileParser
   QString getMapfileName();
 
   QStringList getLayers(void);
+  QStringList getGdalGdalDrivers(void) { return gdalGdalDrivers; };
+  QStringList getGdalOgrDrivers(void) { return gdalOgrDrivers; };
 
   QList<OutputFormat *> * getOutputFormats(void);
   OutputFormat * getOutputFormat(const QString &);
@@ -101,6 +103,7 @@ class MapfileParser
   // Private plain mapserver object
   struct mapObj * map = NULL;
   QString filename;
+  QStringList gdalGdalDrivers;
   QStringList gdalOgrDrivers;
   QStringList units;
   QStringList imageTypes;

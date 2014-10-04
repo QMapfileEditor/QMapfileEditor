@@ -81,19 +81,23 @@ MapfileParser::MapfileParser(const QString & fname) :
   // TODO: might be relevant to have this calculated
   // on the mainwindow object instead of having it here,
   // and calculate each time we create a new mapfile project.
+  this->gdalGdalDrivers.clear();
   this->gdalOgrDrivers.clear();
+  this->gdalGdalDrivers << "";
+  this->gdalOgrDrivers << "";
 
   for (int i = 0; i < GDALGetDriverCount(); ++i) {
     GDALDriverH d = GDALGetDriver(i);
-    this->gdalOgrDrivers << GDALGetDriverShortName(d) ;
+    this->gdalGdalDrivers << GDALGetDriverShortName(d) ;
   }
   for (int i = 0; i < OGRGetDriverCount(); ++i) {
     OGRSFDriverH d = OGRGetDriver(i);
     this->gdalOgrDrivers << OGR_Dr_GetName(d);
   }
-
   this->gdalOgrDrivers.removeDuplicates();
   this->gdalOgrDrivers.sort();
+  this->gdalGdalDrivers.removeDuplicates();
+  this->gdalGdalDrivers.sort();
 
   this->outputformats = new QList<OutputFormat *>();
   for (int i = 0; i < this->map->numoutputformats ; i++) {
@@ -105,11 +109,6 @@ MapfileParser::MapfileParser(const QString & fname) :
                                                   this->map->outputformatlist[i]->transparent));
    }
 
-  // debug purposes.
-  for (int i = 0 ; i < this->gdalOgrDrivers.size(); ++i) {
-    std::cout << this->gdalOgrDrivers.at(i).toStdString() << std::endl;
-  }
-  std::cout << this->gdalOgrDrivers.size() << " GDAL/OGR drivers loaded" << std::endl;
 }
 
 /**

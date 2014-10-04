@@ -73,6 +73,8 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     //TODO: add custom outputformat
     //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
+    this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
+
 
     //Projection
     //TODO: create autocompleter for projection
@@ -441,6 +443,24 @@ void MapSettings::accept() {
 
     QDialog::accept();
 }
+void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
+    if ((s == "GDAL") || (s == "OGR")) {
+      this->ui->gdaldriver_label->setEnabled(true);
+      this->ui->mf_gdal_ogr_driver->setEnabled(true);
+      if (s == "GDAL") {
+        this->ui->mf_gdal_ogr_driver->clear();
+        this->ui->mf_gdal_ogr_driver->addItems(this->mapfile->getGdalGdalDrivers());
+      } else {
+        this->ui->mf_gdal_ogr_driver->clear();
+        this->ui->mf_gdal_ogr_driver->addItems(this->mapfile->getGdalOgrDrivers());
+      }
+    } else {
+      this->ui->gdaldriver_label->setDisabled(true);
+      this->ui->mf_gdal_ogr_driver->setDisabled(true);
+      this->ui->mf_gdal_ogr_driver->setCurrentIndex(0);
+    }
+}
+
 
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
     QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
@@ -453,10 +473,10 @@ void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
 
         this->ui->mf_outputformat_extension->setText(selFmt->getExtension());
         this->ui->mf_outputformat_mimetype->setText(selFmt->getMimeType());
-        
+
         int driIdx = this->ui->mf_outputformat_driver->findText(selFmt->getDriver());
         if (driIdx != -1) this->ui->mf_outputformat_driver->setCurrentIndex(driIdx);
-        
+
         this->toggleOutputFormatsWidgets(true);
       }
     }
