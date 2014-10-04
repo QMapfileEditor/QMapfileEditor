@@ -99,16 +99,18 @@ class MapfileParser
 
   int debug;
 
+  static QStringList drivers;
+  static QStringList imageTypes;
+  static QStringList missingData;
+  static QStringList ogcMapOptions;
+  static QStringList units;
+
  private:
   // Private plain mapserver object
   struct mapObj * map = NULL;
   QString filename;
   QStringList gdalGdalDrivers;
   QStringList gdalOgrDrivers;
-  QStringList units;
-  QStringList imageTypes;
-  QStringList missingData;
-  QStringList ogcMapOptions;
 
   QList<OutputFormat *> * outputformats;
 

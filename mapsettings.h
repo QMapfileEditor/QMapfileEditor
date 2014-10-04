@@ -49,15 +49,7 @@ class MapSettings : public QDialog
 
       MapfileParser * mapfile;
 
-      QStringList drivers;
-      QStringList imageTypes;
-      QStringList missingdata;
-      QStringList ogcMapOptions;
-      QStringList units;
-
       QUndoStack * settingsUndoStack;
-
-
 
       bool alreadyInModel(const QString &);
       void createOgcOptionsModel();

@@ -12,41 +12,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
 
     this->settingsUndoStack = new QUndoStack(this);
 
-    /** Constants **/
-    //TODO: to move in MapfileParser::getUnitsList()
-    this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << 
-        "dd" << "pixels" << "pourcentages" << "nauticalmiles";
-    //TODO: to move in MapfileParser::getImageTypesList()
-    this->imageTypes << "jpeg" << "pdf" << "png" << "svg";
-    this->missingdata << "" << "FAIL" << "LOG" << "IGNORE";
-    //TODO: to move in MapfileParser::getOgcOptionsList()
-    this->ogcMapOptions << "" << "ows_http_max_age" << "ows_schemas_location" << 
-        "ows_sld_enabled" << "ows_updatesequence" << "wms_abstract" <<
-        "wms_accessconstraints" << "wms_addresstype" << "wms_address" <<
-        "wms_city" << "wms_stateorprovince" << "wms_postcode" << "wms_country" << 
-        "wms_attribution_logourl_format" <<
-        "wms_attribution_logourl_height" << "wms_attribution_logourl_href" <<
-        "wms_attribution_logourl_width" << "wms_attribution_onlineresource" <<
-        "wms_attribution_title" << "wms_bbox_extended" <<
-        "wms_contactelectronicmailaddress" << "wms_contactfacsimiletelephone" << 
-        "wms_contactperson" << "wms_contactorganization" <<
-        "wms_contactposition" << "wms_contactvoicetelephone" << "wms_encoding" << 
-        "wms_feature_info_mime_type" << "wms_fees" <<
-        "wms_getcapabilities_version" << "wms_getlegendgraphic_formatlist" <<
-        "wms_getmap_formatlist" << "wms_keywordlist" <<
-        "wms_keywordlist_vocabulary" << "wms_keywordlist_[vocabulary name]_items" <<
-        "wms_languages" << "wms_layerlimit" << "wms_resx" <<
-        "wms_resy" << "wms_rootlayer_abstract" << "wms_rootlayer_keywordlist" << 
-        "wms_rootlayer_title" << "wms_service_onlineresource" <<
-        "wms_timeformat" << "ows_schemas_location" << "ows_updatesequence" <<
-        "wfs_abstract" << "wfs_accessconstraints" << "wfs_encoding" <<
-        "wfs_feature_collection" << "wfs_fees" <<
-        "wfs_getcapabilities_version" << "wfs_keywordlist" <<
-        "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
-        "wfs_service_onlineresource";
-
-    this->drivers << "" << "AGG/PNG" << "AGG/JPEG" <<  "GD/GIF" << "GD/PNG" << "TEMPLATE" << "GDAL"<< "OGR";
-
     /** General Tab **/
     //TODO: create Slots and Signal on extent on update button
     //Name
@@ -67,12 +32,12 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_size_height->setValue(this->mapfile->getMapHeight());
     ui->mf_map_maxsize->setValue(this->mapfile->getMapMaxsize());
     //Units
-    ui->mf_map_units->addItems(this->units);
+    ui->mf_map_units->addItems(MapfileParser::units);
     ui->mf_map_units->setCurrentIndex(this->mapfile->getMapUnits());
 
     //Outpuformat
-    ui->mf_map_outputformat->addItems(this->imageTypes);
-    ui->mf_outputformat_driver->addItems(this->drivers);
+    ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
+    ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
     //TODO: add custom outputformat
     //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
@@ -146,7 +111,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_web_md_wms_srs->setText(this->mapfile->getMetadataWmsSrs());
     ui->mf_map_web_md_wfs_srs->setText(this->mapfile->getMetadataWfsSrs());
 
-    ui->mf_map_web_md_option_name->addItems(this->ogcMapOptions);
+    ui->mf_map_web_md_option_name->addItems(MapfileParser::ogcMapOptions);
     this->createOgcOptionsModel();
 
     /** Debug tab **/
@@ -172,9 +137,9 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->connect(ui->mf_map_config_errorFile_browse, SIGNAL(clicked()), SLOT(browseDebugFile()));
     ui->mf_map_config_errorFile->setText(this->mapfile->getDebugFile());
 
-    ui->mf_map_config_missingdata->addItems(this->missingdata);
+    ui->mf_map_config_missingdata->addItems(MapfileParser::missingData);
     if (this->mapfile->getConfigMissingData() != NULL ) {
-        ui->mf_map_config_missingdata->setCurrentIndex(this->missingdata.lastIndexOf(this->mapfile->getConfigMissingData()));
+        ui->mf_map_config_missingdata->setCurrentIndex(MapfileParser::missingData.lastIndexOf(this->mapfile->getConfigMissingData()));
     }
 
     // Filling the table by known OGC metadata from the mapfile
@@ -183,7 +148,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     for (int i = 0;  i < ks.size(); ++i) {
         QString key = ks.at(i);
         QString value = metadatas.value(key);
-        if (this->ogcMapOptions.contains(key)) {
+        if (MapfileParser::ogcMapOptions.contains(key)) {
             this->addConfigOptionsToModel(key, value);
         }
     }

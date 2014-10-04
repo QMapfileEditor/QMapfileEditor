@@ -49,34 +49,7 @@ MapfileParser::MapfileParser(const QString & fname) :
     filename(fname), currentImageSize(0)
 {
   this->map = umnms_new_map(fname.isEmpty() ? NULL :  (char *) filename.toStdString().c_str());
-  this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << 
-       "dd" << "pixels" << "pourcentages" << "nauticalmiles";
-  this->imageTypes << "jpeg" << "pdf" << "png" << "svg";
-  this->missingData << "" << "FAIL" << "LOG" << "IGNORE";
-  this->ogcMapOptions << "" << "ows_http_max_age" << "ows_schemas_location" << 
-        "ows_sld_enabled" << "ows_updatesequence" << "wms_abstract" <<
-        "wms_accessconstraints" << "wms_addresstype" << "wms_address" <<
-        "wms_city" << "wms_stateorprovince" << "wms_postcode" << "wms_country" << 
-        "wms_attribution_logourl_format" <<
-        "wms_attribution_logourl_height" << "wms_attribution_logourl_href" <<
-        "wms_attribution_logourl_width" << "wms_attribution_onlineresource" <<
-        "wms_attribution_title" << "wms_bbox_extended" <<
-        "wms_contactelectronicmailaddress" << "wms_contactfacsimiletelephone" << 
-        "wms_contactperson" << "wms_contactorganization" <<
-        "wms_contactposition" << "wms_contactvoicetelephone" << "wms_encoding" << 
-        "wms_feature_info_mime_type" << "wms_fees" <<
-        "wms_getcapabilities_version" << "wms_getlegendgraphic_formatlist" <<
-        "wms_getmap_formatlist" << "wms_keywordlist" <<
-        "wms_keywordlist_vocabulary" << "wms_keywordlist_[vocabulary name]_items" <<
-        "wms_languages" << "wms_layerlimit" << "wms_resx" <<
-        "wms_resy" << "wms_rootlayer_abstract" << "wms_rootlayer_keywordlist" << 
-        "wms_rootlayer_title" << "wms_service_onlineresource" <<
-        "wms_timeformat" << "ows_schemas_location" << "ows_updatesequence" <<
-        "wfs_abstract" << "wfs_accessconstraints" << "wfs_encoding" <<
-        "wfs_feature_collection" << "wfs_fees" <<
-        "wfs_getcapabilities_version" << "wfs_keywordlist" <<
-        "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
-        "wfs_service_onlineresource";
+
 
   // TODO: might be relevant to have this calculated
   // on the mainwindow object instead of having it here,
@@ -689,3 +662,42 @@ MapfileParser::~MapfileParser() {
     delete this->outputformats;
   }
 }
+
+/**
+ * Static variables
+ */
+
+QStringList MapfileParser::units = QStringList() << "inches" << "feet" << "miles" << "meters" << "kilometers" <<
+                   "dd" << "pixels" << "pourcentages" << "nauticalmiles";
+
+QStringList MapfileParser::imageTypes = QStringList() << "jpeg" << "pdf" << "png" << "svg";
+
+QStringList MapfileParser::missingData = QStringList() << "" << "FAIL" << "LOG" << "IGNORE";
+
+QStringList MapfileParser::ogcMapOptions = QStringList() << "" << "ows_http_max_age" << "ows_schemas_location" <<
+                   "ows_sld_enabled" << "ows_updatesequence" << "wms_abstract" <<
+                   "wms_accessconstraints" << "wms_addresstype" << "wms_address" <<
+                   "wms_city" << "wms_stateorprovince" << "wms_postcode" << "wms_country" <<
+                   "wms_attribution_logourl_format" <<
+                   "wms_attribution_logourl_height" << "wms_attribution_logourl_href" <<
+                   "wms_attribution_logourl_width" << "wms_attribution_onlineresource" <<
+                   "wms_attribution_title" << "wms_bbox_extended" <<
+                   "wms_contactelectronicmailaddress" << "wms_contactfacsimiletelephone" <<
+                   "wms_contactperson" << "wms_contactorganization" <<
+                   "wms_contactposition" << "wms_contactvoicetelephone" << "wms_encoding" <<
+                   "wms_feature_info_mime_type" << "wms_fees" <<
+                   "wms_getcapabilities_version" << "wms_getlegendgraphic_formatlist" <<
+                   "wms_getmap_formatlist" << "wms_keywordlist" <<
+                   "wms_keywordlist_vocabulary" << "wms_keywordlist_[vocabulary name]_items" <<
+                   "wms_languages" << "wms_layerlimit" << "wms_resx" <<
+                   "wms_resy" << "wms_rootlayer_abstract" << "wms_rootlayer_keywordlist" <<
+                   "wms_rootlayer_title" << "wms_service_onlineresource" <<
+                   "wms_timeformat" << "ows_schemas_location" << "ows_updatesequence" <<
+                   "wfs_abstract" << "wfs_accessconstraints" << "wfs_encoding" <<
+                   "wfs_feature_collection" << "wfs_fees" <<
+                   "wfs_getcapabilities_version" << "wfs_keywordlist" <<
+                   "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
+                   "wfs_service_onlineresource";
+
+QStringList MapfileParser::drivers = QStringList() << "" << "AGG/PNG" <<
+                   "AGG/JPEG" <<  "GD/GIF" << "GD/PNG" << "TEMPLATE" << "GDAL"<< "OGR";
