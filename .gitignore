@@ -1,7 +1,11 @@
-Makefile
+Makefile*
 QMapfileEditor
 QMapfileEditor.pro.user
 moc_*
 *.o
 ui_*
 data/mapserver.log
+test/test
+.gdbinit
+build/
+debug/
