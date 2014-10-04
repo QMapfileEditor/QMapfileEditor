@@ -118,7 +118,8 @@ void MainWindow::openMapfile()
 
   // rendering the map preview
   QPixmap mapRepr = QPixmap();
-  unsigned char * mapImage = this->mapfile->getCurrentMapImage();
+  int w = this->ui->mf_preview->viewport()->width(), h = this->ui->mf_preview->viewport()->height();
+  unsigned char * mapImage = this->mapfile->getCurrentMapImage(w, h);
   int mapImageSize = this->mapfile->getCurrentMapImageSize();
 
   mapRepr.loadFromData(mapImage, mapImageSize);

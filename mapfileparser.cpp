@@ -114,7 +114,7 @@ MapfileParser::MapfileParser(const QString & fname) :
 /**
  * Creates an image representation of the current map
  */
-unsigned char * MapfileParser::getCurrentMapImage() {
+unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int & height) {
   if (! this->map)
     return NULL;
   // image already loaded
@@ -134,8 +134,16 @@ unsigned char * MapfileParser::getCurrentMapImage() {
          tmpYMax = this->map->extent.maxy,
          tmpYMin = this->map->extent.miny;
 
-  imageObj * ret = msDrawMap(this->map, MS_FALSE);
+  // set querymap options to be coherent with the interface state
+  imageObj * ret = NULL;
 
+  if (width > 0 && height > 0) {
+    this->map->querymap.width  = width;
+    this->map->querymap.height = height;
+    ret = msDrawMap(this->map, MS_TRUE);
+  } else {
+    ret = msDrawMap(this->map, MS_FALSE);
+  }
   this->map->extent.maxx = tmpXMax;
   this->map->extent.minx = tmpXMin;
   this->map->extent.maxy = tmpYMax;

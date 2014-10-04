@@ -47,7 +47,7 @@ class MapfileParser
   int getMapExtentMaxX();
   int getMapExtentMaxY();
   bool setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy);
-  unsigned char * getCurrentMapImage();
+  unsigned char * getCurrentMapImage(const int & width = -1, const int & height = -1);
   int getCurrentMapImageSize();
   bool saveMapfile(const QString & filename);
 
