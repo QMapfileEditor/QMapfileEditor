@@ -487,7 +487,7 @@
      <normaloff>:/ui/images/icons/zoom-original.png</normaloff>:/ui/images/icons/zoom-original.png</iconset>
    </property>
    <property name="text">
-    <string>Zoom to Extend</string>
+    <string>Zoom to Extent</string>
    </property>
   </action>
   <action name="actionZoom">

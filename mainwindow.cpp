@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
+  this->undoStack = new QUndoStack(this);
+
   this->showInfo(tr("Initializing default mapfile"));
 
   // inits the model for the mapfile structure
@@ -43,6 +45,8 @@ void MainWindow::reinitMapfile() {
 
   QStandardItemModel * mod = (QStandardItemModel *) ui->mf_structure->model();
   mod->clear();
+  ui->mf_preview->scene()->clear();
+
   // Creates a new mapfileparser from scratch
   delete this->mapfile;
   this->mapfile = new MapfileParser(QString());
@@ -152,7 +156,7 @@ void MainWindow::showMapSettings() {
 }
 
 
-void MainWindow::showAbout() { 
+void MainWindow::showAbout() {
     QDialog* aboutDialog = new QDialog (this);
     aboutDialog->setWindowFlags( Qt::WindowCancelButtonHint | Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowCloseButtonHint );
     aboutDialog->setWindowTitle(tr("About"));

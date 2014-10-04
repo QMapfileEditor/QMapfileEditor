@@ -13,10 +13,11 @@
 #include <QResizeEvent>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <QUndoStack>
 
 #include "mapsettings.h"
-
 #include "mapfileparser.h"
+
 
 namespace Ui {
   class MainWindow;
@@ -47,6 +48,8 @@ class MainWindow : public QMainWindow
 
       // Dialog which handles the mapfile settings
       MapSettings * settings = NULL;
+
+      QUndoStack * undoStack;
 
       // internal methods
       void reinitMapfile();

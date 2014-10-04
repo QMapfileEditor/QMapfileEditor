@@ -10,6 +10,8 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
 
     ui->setupUi(this);
 
+    this->settingsUndoStack = new QUndoStack(this);
+
     /** Constants **/
     //TODO: to move in MapfileParser::getUnitsList()
     this->units << "inches" << "feet" << "miles" << "meters" << "kilometers" << 
@@ -49,6 +51,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     //TODO: create Slots and Signal on extent on update button
     //Name
     ui->mf_map_name->setText(this->mapfile->getMapName());
+    this->connect(ui->mf_map_name, SIGNAL(editingFinished()), SLOT(changeMapName()));
     //Status
     if( this->mapfile->getMapStatus() )
     {
@@ -485,6 +488,16 @@ void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
 void MapSettings::toggleOutputFormatsWidgets(const bool &enable) {
   this->ui->outputFormatForm->setEnabled(enable);
   this->ui->mf_outputformat_form_buttons->setEnabled(enable);
+}
+
+
+void MapSettings::changeMapName() {
+  // if the map name has been left unchanged, do nothing
+  if (this->mapfile->getMapName() == this->ui->mf_map_name->text())
+    return;
+
+  ChangeMapNameCommand * cmd = new ChangeMapNameCommand(this->ui->mf_map_name->text(), this->mapfile);
+  settingsUndoStack->push(cmd);
 }
 /** End SLOTS **/
 

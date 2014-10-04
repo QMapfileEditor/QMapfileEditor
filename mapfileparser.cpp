@@ -100,15 +100,17 @@ MapfileParser::MapfileParser(const QString & fname) :
   this->gdalGdalDrivers.sort();
 
   this->outputformats = new QList<OutputFormat *>();
-  for (int i = 0; i < this->map->numoutputformats ; i++) {
-     this->outputformats->append(new OutputFormat(this->map->outputformatlist[i]->name,
-                                                  this->map->outputformatlist[i]->mimetype,
-                                                  this->map->outputformatlist[i]->driver,
-                                                  this->map->outputformatlist[i]->extension,
-                                                  this->map->outputformatlist[i]->imagemode,
-                                                  this->map->outputformatlist[i]->transparent));
-   }
 
+  if (this->map) {
+    for (int i = 0; i < this->map->numoutputformats ; i++) {
+      this->outputformats->append(new OutputFormat(this->map->outputformatlist[i]->name,
+                                                   this->map->outputformatlist[i]->mimetype,
+                                                   this->map->outputformatlist[i]->driver,
+                                                   this->map->outputformatlist[i]->extension,
+                                                   this->map->outputformatlist[i]->imagemode,
+                                                   this->map->outputformatlist[i]->transparent));
+    }
+  }
 }
 
 /**
@@ -190,7 +192,7 @@ QString MapfileParser::getMapName() {
   return QString("");
 }
 
-bool MapfileParser::setMapName( const QString & name) {
+bool MapfileParser::setMapName(const QString & name) {
   if (this->map) {
     if (this->map->name) {
       free (this->map->name);

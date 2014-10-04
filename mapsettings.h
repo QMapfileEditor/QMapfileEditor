@@ -1,16 +1,18 @@
 #ifndef MAPSETTINGS_H
 #define MAPSETTINGS_H
 
+
+#include <QColorDialog>
 #include <QDialog>
 #include <QDir>
 #include <QFileDialog>
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QTableView>
-#include <QColorDialog>
 
 #include "mapfileparser.h"
 
+#include "commands/changemapnamecommand.h"
 
 namespace Ui {
 class MapSettings;
@@ -37,6 +39,7 @@ class MapSettings : public QDialog
       void browseProjlibFile();
       void browseShapepath();
       void browseSymbolsetFile();
+      void changeMapName();
       void refreshGdalOgrDriverCombo(const QString &);
       void refreshOutputFormatTab(const QModelIndex &);
       void setImageColor();
@@ -51,6 +54,10 @@ class MapSettings : public QDialog
       QStringList missingdata;
       QStringList ogcMapOptions;
       QStringList units;
+
+      QUndoStack * settingsUndoStack;
+
+
 
       bool alreadyInModel(const QString &);
       void createOgcOptionsModel();
