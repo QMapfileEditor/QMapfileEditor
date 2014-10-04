@@ -192,7 +192,7 @@ QString MapfileParser::getMapName() {
   return QString("");
 }
 
-bool MapfileParser::setMapName( const QString & name) {
+bool MapfileParser::setMapName(const QString & name) {
   if (this->map) {
     if (this->map->name) {
       free (this->map->name);

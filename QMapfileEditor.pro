@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-09-14T17:22:30
-#
-#-------------------------------------------------
-
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -12,23 +6,27 @@ CONFIG += debug_and_release
 TARGET = QMapfileEditor
 TEMPLATE = app
 
-SOURCES += main.cpp         \
-        mainwindow.cpp      \
-        mapsettings.cpp     \
-        mapfileparser.cpp   \
-        outputformat.cpp
+QMAKE_CLEAN += $(TARGET)
 
-HEADERS  += mainwindow.h    \
-    mapsettings.h           \
-    mapfileparser.h         \
-    outputformat.h
+SOURCES += main.cpp                         \
+        mainwindow.cpp                      \
+        mapsettings.cpp                     \
+        mapfileparser.cpp                   \
+        outputformat.cpp                    \
+        commands/changemapnamecommand.cpp
+
+HEADERS  += mainwindow.h                    \
+    mapsettings.h                           \
+    mapfileparser.h                         \
+    outputformat.h                          \
+    commands/changemapnamecommand.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
     layersettings.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
-  "/usr/include/gdal"
+               "/usr/include/gdal"
 
 LIBS += -lmapserver -lgdal
 
