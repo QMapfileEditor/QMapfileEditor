@@ -30,7 +30,7 @@ FORMS    += mainwindow.ui   \
 INCLUDEPATH += "/usr/include/mapserver" \
   "/usr/include/gdal"
 
-LIBS += -lmapserver
+LIBS += -lmapserver -lgdal
 
 RESOURCES += \
     resources.qrc
