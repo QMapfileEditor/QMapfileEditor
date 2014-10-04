@@ -115,11 +115,16 @@ MapfileParser::MapfileParser(const QString & fname) :
  * Creates an image representation of the current map
  */
 unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int & height) {
-  if (! this->map)
+  if (! this->map) {
     return NULL;
-  // image already loaded
-  if (this->currentImage)
-    return this->currentImage->img.raw_byte;
+  }
+
+  // invalidates previous data
+  if (this->currentImageBuffer) {
+    free(this->currentImageBuffer);
+    this->currentImageBuffer = NULL;
+    this->currentImageSize = 0;
+  }
 
   // issue #13:
   //
@@ -135,23 +140,27 @@ unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int &
          tmpYMin = this->map->extent.miny;
 
   // set querymap options to be coherent with the interface state
-  imageObj * ret = NULL;
+  imageObj * img = NULL;
 
   if (width > 0 && height > 0) {
     this->map->querymap.width  = width;
     this->map->querymap.height = height;
-    ret = msDrawMap(this->map, MS_TRUE);
+    img = msDrawMap(this->map, MS_TRUE);
   } else {
-    ret = msDrawMap(this->map, MS_FALSE);
+    img = msDrawMap(this->map, MS_FALSE);
   }
+
   this->map->extent.maxx = tmpXMax;
   this->map->extent.minx = tmpXMin;
   this->map->extent.maxy = tmpYMax;
   this->map->extent.miny = tmpYMin;
 
-  if (ret != NULL) {
-    this->currentImage = ret;
-    return msSaveImageBuffer(this->currentImage, &this->currentImageSize, this->currentImage->format);
+  if (img != NULL) {
+    this->currentImageBuffer = msSaveImageBuffer(img, & this->currentImageSize, img->format);
+    // we do not need img anymore
+    msFreeImage(img);
+
+    return this->currentImageBuffer;
   }
   return NULL;
 }
@@ -668,8 +677,8 @@ MapfileParser::~MapfileParser() {
   if (this->map) {
     msFreeMap(this->map);
   }
-  if (this->currentImage) {
-    msFreeImage(this->currentImage);
+  if (this->currentImageBuffer) {
+    free(this->currentImageBuffer);
   }
   if (this->outputformats) {
     for (int i = 0 ; i < this->outputformats->size(); ++i) {

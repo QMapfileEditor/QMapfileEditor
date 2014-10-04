@@ -6,12 +6,13 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QGraphicsScene>
+#include <QLabel>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QPixmap>
+#include <QResizeEvent>
 #include <QStandardItem>
 #include <QStandardItemModel>
-#include <QLabel>
 
 #include "mapsettings.h"
 
@@ -28,14 +29,16 @@ class MainWindow : public QMainWindow
  public:
       explicit MainWindow(QWidget *parent = 0);
       ~MainWindow();
+
  public slots:
-      void  openMapfile();
-      void  newMapfile();
-      void  saveMapfile();
-      void  saveAsMapfile();
-      void  showMapSettings();
-      void  showAbout();
-      void  showInfo(const QString & message);
+      void openMapfile();
+      void newMapfile();
+      void saveMapfile();
+      void saveAsMapfile();
+      void showMapSettings();
+      void showAbout();
+      void showInfo(const QString & message);
+      void updateMapPreview(void);
 
  private:
       Ui::MainWindow *ui;
@@ -47,6 +50,7 @@ class MainWindow : public QMainWindow
 
       // internal methods
       void reinitMapfile();
+      void updateMapPreview(const int &, const int &);
       QMessageBox::StandardButton warnIfActiveSession(void);
 };
 

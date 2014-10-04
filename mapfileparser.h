@@ -92,7 +92,7 @@ class MapfileParser
   bool setAngle(const int & angle);
 
   QList<int> getImageColor();
-  bool setImageColor( const int & red, const int & green, const int & blue);
+  bool setImageColor(const int & red, const int & green, const int & blue);
 
   bool isLoaded();
   bool isNew();
@@ -113,7 +113,7 @@ class MapfileParser
   QList<OutputFormat *> * outputformats;
 
   // accessible objects (via getters/setters)
-  struct imageObj * currentImage = NULL;
+  unsigned char * currentImageBuffer = NULL;
   int currentImageSize;
   // map name and extent are directly accessible
 

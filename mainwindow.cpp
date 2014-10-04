@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionSaveAs, SIGNAL(triggered()), SLOT(saveAsMapfile()));
   this->connect(ui->actionMapSetting, SIGNAL(triggered()), SLOT(showMapSettings()));
   this->connect(ui->actionAbout, SIGNAL(triggered()), SLOT(showAbout()));
+  this->connect(ui->actionRefresh, SIGNAL(triggered()), SLOT(updateMapPreview()));
 
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
@@ -45,9 +46,6 @@ void MainWindow::reinitMapfile() {
   // Creates a new mapfileparser from scratch
   delete this->mapfile;
   this->mapfile = new MapfileParser(QString());
-
-  // re-init map preview
-  this->ui->mf_preview->scene()->clear();
 }
 
 QMessageBox::StandardButton MainWindow::warnIfActiveSession() {
@@ -115,16 +113,24 @@ void MainWindow::openMapfile()
 
   ui->mf_structure->expandAll();
 
+  this->updateMapPreview();
+}
 
-  // rendering the map preview
-  QPixmap mapRepr = QPixmap();
+void MainWindow::updateMapPreview(void) {
   int w = this->ui->mf_preview->viewport()->width(), h = this->ui->mf_preview->viewport()->height();
+  this->updateMapPreview(w, h);
+}
+
+void MainWindow::updateMapPreview(const int & w, const int &h) {
+  // re-init map preview
+  this->ui->mf_preview->scene()->clear();
+  // rendering the map
+  QPixmap mapRepr = QPixmap();
+  // it is mapfileparser's class role to manage the allocated
+  // memory
   unsigned char * mapImage = this->mapfile->getCurrentMapImage(w, h);
   int mapImageSize = this->mapfile->getCurrentMapImageSize();
-
   mapRepr.loadFromData(mapImage, mapImageSize);
-
-  free(mapImage);
   this->ui->mf_preview->scene()->addPixmap(mapRepr);
 }
 
