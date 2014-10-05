@@ -5,7 +5,7 @@ moc_*
 *.o
 ui_*
 data/mapserver.log
-test/test
+test/testsuite
 .gdbinit
 build/
 debug/
