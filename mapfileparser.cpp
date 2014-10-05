@@ -296,14 +296,6 @@ void MapfileParser::setMapExtent(const double & minx, const double & miny, const
   }
 }
 
-bool MapfileParser::getDebugStatus() {
-    if (this->map) {
-        // TODO to be checked against mapserver code
-        return this->map->debug == 1;
-    }
-    return false;
-}
-
 int MapfileParser::getDebug() {
     if (this->map)
         return this->map->debug;

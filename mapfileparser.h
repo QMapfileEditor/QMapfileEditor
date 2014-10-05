@@ -58,7 +58,6 @@ class MapfileParser
 
   bool saveMapfile(const QString & filename);
 
-  bool  getDebugStatus();
   int   getDebug();
   void  setDebug(const int & debug);
 
