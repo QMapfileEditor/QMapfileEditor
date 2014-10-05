@@ -266,4 +266,24 @@ void TestMapfileParser::testMetadata() {
   if (p) delete p;
 }
 
+/** test shape path */
+void TestMapfileParser::testShapePath() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
 
+  QVERIFY(p->getShapepath() == "./");
+
+  p->setShapepath("/usr/share/mapserver/shapepath/");
+
+  QVERIFY(p->getShapepath() == "/usr/share/mapserver/shapepath/");
+
+  if (p) delete p;
+}
+
+/** test shape path */
+void TestMapfileParser::testSymbolSet() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+  QVERIFY(p->getSymbolSet() == "symbol.sym");
+  p->setSymbolSet("/usr/share/mapserver/symbol.sym");
+  QVERIFY(p->getSymbolSet() == "/usr/share/mapserver/symbol.sym");
+  if (p) delete p;
+}
