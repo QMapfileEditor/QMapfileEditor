@@ -33,7 +33,6 @@ extern "C" {
   }
 }
 
-
 /**
  * Loads a mapfile from an existing path, or from scratch, depending on the
  * value of the parameter fname.
@@ -49,7 +48,6 @@ MapfileParser::MapfileParser(const QString & fname) :
     filename(fname), currentImageSize(0)
 {
   this->map = umnms_new_map(fname.isEmpty() ? NULL :  (char *) filename.toStdString().c_str());
-
 
   // TODO: might be relevant to have this calculated
   // on the mainwindow object instead of having it here,
