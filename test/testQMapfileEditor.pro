@@ -10,7 +10,7 @@ CONFIG += debug \
 
 QT += testlib gui
 TEMPLATE = app
-TARGET = test
+TARGET = testsuite
 DEPENDPATH += -L/usr/lib/x86_64-linux-gnu  \
               ../   \
               ./

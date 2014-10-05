@@ -13,6 +13,7 @@ class TestMapfileParser: public QObject
       void testFilePath();
       void testGetCurrentMapImage();
       void testLayers();
+      void testStatus();
 
 };
 

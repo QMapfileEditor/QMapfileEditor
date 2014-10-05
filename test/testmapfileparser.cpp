@@ -87,3 +87,19 @@ void TestMapfileParser::testLayers() {
 
   if (p) delete p;
 }
+
+/** test map status */
+void TestMapfileParser::testStatus() {
+  MapfileParser * p  = new MapfileParser();
+
+  // initial state: Map status is true
+  QVERIFY(p->getMapStatus());
+
+  //p->setStatus
+
+}
+
+
+
+
+

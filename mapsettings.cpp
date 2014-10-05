@@ -129,7 +129,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     } else {
         ui->mf_map_debug_off->setChecked(true);
         ui->mf_map_debug_off->setChecked(false);
-        ui->mf_map_debug->setValue(this->mapfile->debug);
+        ui->mf_map_debug->setValue(this->mapfile->getDebug());
         ui->mf_map_debug->setEnabled(false);
     }
     //TODO: add option for relative/absolute debug file in forms.

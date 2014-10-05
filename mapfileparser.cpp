@@ -162,34 +162,29 @@ QStringList MapfileParser::getLayers() {
 QString MapfileParser::getMapName() {
   if (this->map)
     return QString(this->map->name);
-  return QString("");
+  return QString();
 }
 
-bool MapfileParser::setMapName(const QString & name) {
+void MapfileParser::setMapName(const QString & name) {
   if (this->map) {
     if (this->map->name) {
       free (this->map->name);
     }
     this->map->name = (char *) strdup(name.toStdString().c_str());
-
-    return true;
   }
-  return false;
 }
 
 // Status parameters
 bool MapfileParser::getMapStatus() {
   if (this->map)
     return this->map->status;
-  return -1;
+  return false;
 }
 
-bool MapfileParser::setMapStatus( const int & status) {
+void MapfileParser::setMapStatus(const bool & status) {
   if (this->map) {
-    this->map->status = status;
-    return true;
+    this->map->status = (status == true ? 1 : 0);
   }
-  return false;
 }
 
 // Width/Height parameters
@@ -198,20 +193,17 @@ int MapfileParser::getMapWidth() {
     return this->map->width;
   return -1;
 }
-
 int MapfileParser::getMapHeight() {
   if (this->map)
     return this->map->height;
   return -1;
 }
 
-bool  MapfileParser::setMapSize(const int & width, const int & height) {
+void MapfileParser::setMapSize(const int & width, const int & height) {
    if (this->map) {
     this->map->width = width;
     this->map->height = height;
-    return true;
   }
-  return false;
 }
 
 int MapfileParser::getMapMaxsize() {
@@ -220,12 +212,10 @@ int MapfileParser::getMapMaxsize() {
   return -1;
 }
 
-bool MapfileParser::setMapMaxsize(const int & maxsize) {
+void MapfileParser::setMapMaxsize(const int & maxsize) {
   if (this->map) {
     this->map->maxsize = maxsize;
-    return true;
   }
-  return false;
 }
 
 // units parameter
@@ -235,14 +225,11 @@ int MapfileParser::getMapUnits() {
   return -1;
 }
 
-//TODO
-bool MapfileParser::setMapUnits(const QString & units) {
+void MapfileParser::setMapUnits(const QString & units) {
   if (this->map) {
       //TODO: needs to use MS_UNITS type
       //this->map->units = this->units.indexOf(units);
-      return true;
   }
-  return false;
 }
 // imageType parameter
 QString MapfileParser::getMapImageType() {
@@ -252,11 +239,9 @@ QString MapfileParser::getMapImageType() {
 }
 
 //TODO
-bool MapfileParser::setMapImageType( const QString & imageType) {
+void MapfileParser::setMapImageType( const QString & imageType) {
     if (this->map) {
-        return true;
     }
-    return false;
 }
 
 //projection parameters
@@ -267,15 +252,13 @@ int MapfileParser::getMapProjection() {
 }
 
 //TODO: not correct, need to manage if startwith epsg, if so add +init=
-bool MapfileParser::setMapProjection(const QString & projection) {
+void MapfileParser::setMapProjection(const QString & projection) {
     if (this->map) {
         if (this->map->projection.wellknownprojection) {
             this->map->projection.wellknownprojection = 0;
         }
         //this->map->projection = (char *) strdup(projection.toString().c_str());
-        return true;
     }
-    return false;
 }
 
 // Extent object parameters
@@ -303,20 +286,20 @@ int MapfileParser::getMapExtentMaxY() {
   return -1;
 }
 //TODO: not working
-bool MapfileParser::setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy) {
+void MapfileParser::setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy) {
   if (this->map) {
     this->map->extent.minx = minx;
     this->map->extent.miny = miny;
     this->map->extent.maxx = maxx;
     this->map->extent.maxy = maxy;
-    return true;
   }
-  return false;
 }
 
 bool MapfileParser::getDebugStatus() {
-    if (this->map)
-        return this->map->debug;
+    if (this->map) {
+        // TODO to be checked against mapserver code
+        return this->map->debug == 1;
+    }
     return false;
 }
 
@@ -326,12 +309,10 @@ int MapfileParser::getDebug() {
     return false;
 }
 
-bool MapfileParser::setDebug(const int & debug) {
+void MapfileParser::setDebug(const int & debug) {
     if(this->map) {
         this->map->debug = debug;
-        return true;
     }
-    return false;
 }
 
 QString MapfileParser::getDebugFile() {
@@ -352,64 +333,58 @@ QString MapfileParser::getShapepath() {
     return NULL;
 }
 
-bool MapfileParser::setShapepath(const QString & shapepath) {
+void MapfileParser::setShapepath(const QString & shapepath) {
     if (this->map) {
         if (this->map->shapepath) {
             free(this->map->shapepath);
         }
         this->map->shapepath = (char *) strdup(shapepath.toStdString().c_str());
-        return true;
     }
-    return false;
 }
 
 QString MapfileParser::getSymbolSet() {
-    if (this->map)
+    if (this->map) {
         return this->map->symbolset.filename;
-    return NULL;
+    }
+    return QString();
 }
 
-bool MapfileParser::setSymbolSet(const QString & symbolset) {
+void MapfileParser::setSymbolSet(const QString & symbolset) {
     if (this->map) {
         if (this->map->symbolset.filename) {
             free(this->map->symbolset.filename);
         }
         this->map->symbolset.filename = (char *) strdup(symbolset.toStdString().c_str());
-        return true;
     }
-    return false;
 }
 
 QString MapfileParser::getFontSet() {
     if (this->map)
         return this->map->fontset.filename;
-    return NULL;
+    return QString();
 }
 
-bool MapfileParser::setFontSet(const QString & fontset) {
+void MapfileParser::setFontSet(const QString & fontset) {
     if (this->map) {
         if (this->map->fontset.filename) {
             free(this->map->fontset.filename);
         }
         this->map->fontset.filename = (char *) strdup(fontset.toStdString().c_str());
-        return true;
     }
-    return false;
 }
 
 
 int MapfileParser::getResolution() {
-    if (this->map)
+    if (this->map) {
         return this->map->resolution;
+    }
     return -1;
 }
 
-bool MapfileParser::setResolution(const int & resolution) {
+void MapfileParser::setResolution(const int & resolution) {
     if (this->map) {
         this->map->resolution = resolution;
-        return true;
     }
-    return false;
 }
 
 int MapfileParser::getDefResolution() {
@@ -418,12 +393,10 @@ int MapfileParser::getDefResolution() {
     return -1;
 }
 
-bool MapfileParser::setDefResolution(const int & resolution) {
+void MapfileParser::setDefResolution(const int & resolution) {
     if (this->map) {
         this->map->defresolution = resolution;
-        return true;
     }
-    return false;
 }
 
 float MapfileParser::getAngle() {
@@ -432,46 +405,42 @@ float MapfileParser::getAngle() {
     return -1.0;
 }
 
-bool MapfileParser::setAngle( const int & angle) {
+void MapfileParser::setAngle(const float & angle) {
     if (this->map) {
         this->map->gt.rotation_angle = angle;
-        return true;
     }
-    return false;
 }
 
 QString MapfileParser::getTemplatePattern() {
-    if (this->map)
+    if (this->map) {
         return this->map->templatepattern;
-    return NULL;
+    }
+    return QString();
 }
 
-bool MapfileParser::setTemplatePattern(const QString & pattern) {
+void MapfileParser::setTemplatePattern(const QString & pattern) {
     if (this->map) {
         if (this->map->templatepattern) {
             free(this->map->templatepattern);
         }
         this->map->templatepattern = (char *) strdup(pattern.toStdString().c_str());
-        return true;
     }
-    return false;
 }
 
 QString MapfileParser::getDataPattern() {
-    if (this->map)
+    if (this->map) {
         return this->map->datapattern;
-    return NULL;
+    }
+    return QString();
 }
 
-bool MapfileParser::setDataPattern(const QString & pattern) {
+void MapfileParser::setDataPattern(const QString & pattern) {
     if (this->map) {
         if (this->map->datapattern) {
             free(this->map->datapattern);
         }
         this->map->datapattern = (char *) strdup(pattern.toStdString().c_str());
-        return true;
     }
-    return false;
 }
 
 QString MapfileParser::getConfigContextUrl() {
@@ -509,20 +478,15 @@ QHash<QString, QString> MapfileParser::getMetadatas() {
 
   while ((tmpval = msLookupHashTable(& this->map->web.metadata, tmpkey))) {
       ret.insert(QString(tmpkey), QString(tmpval));
-      // next key
       tmpkey = msNextKeyFromHashTable(& this->map->web.metadata, tmpkey);
   }
-
   return ret;
 }
 
 //TODO: make a method using haskTable?
-bool MapfileParser::setMetadata(const QString & name, const QString & value) {
+void MapfileParser::setMetadata(const QString & name, const QString & value) {
     if (this->map) {
-        //this->map->metadata->msHashTable(name, value);
-        return true;
     }
-    return false;
 }
 
 QString MapfileParser::getMetadataWmsTitle() {
@@ -534,7 +498,7 @@ QString MapfileParser::getMetadataWmsTitle() {
             return msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE");
         }
     }
-    return NULL;
+    return QString();
 }
 QString MapfileParser::getMetadataWfsTitle() {
     if (this->map) {
@@ -545,7 +509,7 @@ QString MapfileParser::getMetadataWfsTitle() {
             return msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE");
         }
     }
-    return NULL;
+    return QString();
 }
 
 QString MapfileParser::getMetadataWmsOnlineresource() {
@@ -557,7 +521,7 @@ QString MapfileParser::getMetadataWmsOnlineresource() {
             return msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE");
         }
     }
-    return NULL;
+    return QString();
 }
 
 QString MapfileParser::getMetadataWfsOnlineresource() {
@@ -569,7 +533,7 @@ QString MapfileParser::getMetadataWfsOnlineresource() {
             return msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE");
         }
     }
-    return NULL;
+    return QString();
 }
 
 QString MapfileParser::getMetadataWmsSrs() {
@@ -581,8 +545,9 @@ QString MapfileParser::getMetadataWmsSrs() {
             return msLookupHashTable( &(this->map->web.metadata), "OWS_SRS");
         }
     }
-    return NULL;
+    return QString();
 }
+
 QString MapfileParser::getMetadataWfsSrs() {
     if (this->map) {
         if( msLookupHashTable( &(this->map->web.metadata), "WFS_SRS")) {
@@ -592,11 +557,11 @@ QString MapfileParser::getMetadataWfsSrs() {
             return msLookupHashTable( &(this->map->web.metadata), "OWS_SRS");
         }
     }
-    return NULL;
+    return QString();
 }
 
-
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
+
 QString MapfileParser::getMapfileName() { return QString(this->filename); }
 
 bool MapfileParser::saveMapfile(const QString & filename) {
@@ -626,14 +591,12 @@ QList<int> MapfileParser::getImageColor() {
    return color;
 }
 
-bool MapfileParser::setImageColor(const int & red, const int & green, const int & blue ) {
+void MapfileParser::setImageColor(const int & red, const int & green, const int & blue ) {
     if (this->map) {
         this->map->imagecolor.red = red;
         this->map->imagecolor.green = green;
         this->map->imagecolor.blue = blue;
-        return true;
     }
-    return false;
 }
 
 QList<OutputFormat *> * MapfileParser::getOutputFormats() {
@@ -642,6 +605,7 @@ QList<OutputFormat *> * MapfileParser::getOutputFormats() {
 
 OutputFormat * MapfileParser::getOutputFormat(const QString & key) {
   for (int i = 0; i < this->outputformats->size(); ++i) {
+    // In Mapserver, the name of the outputformat is used as primary key
     if (key == this->outputformats->at(i)->getName())
       return this->outputformats->at(i);
   }
@@ -701,3 +665,5 @@ QStringList MapfileParser::ogcMapOptions = QStringList() << "" << "ows_http_max_
 
 QStringList MapfileParser::drivers = QStringList() << "" << "AGG/PNG" <<
                    "AGG/JPEG" <<  "GD/GIF" << "GD/PNG" << "TEMPLATE" << "GDAL"<< "OGR";
+
+

@@ -17,7 +17,7 @@ class MapfileParser
   ~MapfileParser();
 
   QString getMapName();
-  bool setMapName(const QString & name);
+  void setMapName(const QString & name);
   QString getMapfilePath();
   QString getMapfileName();
 
@@ -29,76 +29,98 @@ class MapfileParser
   OutputFormat * getOutputFormat(const QString &);
 
   bool getMapStatus();
-  bool setMapStatus(const int & status);
-  int getMapWidth();
-  int getMapHeight();
-  bool setMapSize(const int & width, const int & height);
-  int getMapMaxsize();
-  bool setMapMaxsize(const int & maxsize);
-  int getMapUnits();
-  bool setMapUnits(const QString & units);
+  void setMapStatus(const bool & status);
+
+  int  getMapWidth();
+  int  getMapHeight();
+  void setMapSize(const int & width, const int & height);
+
+  int  getMapMaxsize();
+  void setMapMaxsize(const int & maxsize);
+
+  int  getMapUnits();
+  void setMapUnits(const QString & units);
+
   QString getMapImageType();
-  bool setMapImageType(const QString & imageType);
-  int getMapProjection();
-  bool setMapProjection(const QString & projection);
+  void    setMapImageType(const QString & imageType);
+
+  int  getMapProjection();
+  void setMapProjection(const QString & projection);
 
   int getMapExtentMinX();
   int getMapExtentMinY();
   int getMapExtentMaxX();
   int getMapExtentMaxY();
-  bool setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy);
+  void setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy);
+
   unsigned char * getCurrentMapImage(const int & width = -1, const int & height = -1);
-  int getCurrentMapImageSize();
+  int             getCurrentMapImageSize();
+
   bool saveMapfile(const QString & filename);
 
-  bool getDebugStatus();
-  int getDebug();
-  bool setDebug(const int & debug);
+  bool  getDebugStatus();
+  int   getDebug();
+  void  setDebug(const int & debug);
   QString getDebugFile();
-  bool setMetadata(const QString & name, const QString & value);
+
+  void setMetadata(const QString & name, const QString & value);
+
   QString getShapepath();
-  bool setShapepath(const QString & shapepath);
+  void    setShapepath(const QString & shapepath);
+
   QString getSymbolSet();
-  bool setSymbolSet(const QString & symbolset);
+  void    setSymbolSet(const QString & symbolset);
+
   QString getFontSet();
-  bool setFontSet(const QString & fontset);
+  void    setFontSet(const QString & fontset);
 
   QString getTemplatePattern();
-  bool setTemplatePattern(const QString & pattern);
+  void    setTemplatePattern(const QString & pattern);
+
   QString getDataPattern();
-  bool setDataPattern(const QString & pattern);
+  void    setDataPattern(const QString & pattern);
+
   QString getConfigContextUrl();
+
   QString getConfigEncryptionKey();
 
   QString getConfigNonsquare();
+
   QString getConfigMissingData();
+
   QString getConfigProjLib();
 
   QString getMetadataWmsTitle();
+
   QString getMetadataWfsTitle();
+
   QString getMetadataWmsOnlineresource();
+
   QString getMetadataWfsOnlineresource();
+
   QString getMetadataWmsSrs();
+
   QString getMetadataWfsSrs();
 
   QHash<QString, QString> getMetadatas();
 
 
-  int getResolution();
-  bool setResolution(const int & resolution);
-  int getDefResolution();
-  bool setDefResolution(const int & resolution);
+  int   getResolution();
+  void  setResolution(const int & resolution);
+
+  int   getDefResolution();
+  void  setDefResolution(const int & resolution);
+
   float getAngle();
-  bool setAngle(const int & angle);
+  void setAngle(const float & angle);
 
   QList<int> getImageColor();
-  bool setImageColor(const int & red, const int & green, const int & blue);
+  void setImageColor(const int & red, const int & green, const int & blue);
 
   bool isLoaded();
   bool isNew();
 
-  int debug;
-
+  // constants (mainly used to fill in the interface forms)
   static QStringList drivers;
   static QStringList imageTypes;
   static QStringList missingData;
@@ -108,16 +130,15 @@ class MapfileParser
  private:
   // Private plain mapserver object
   struct mapObj * map = NULL;
+
   QString filename;
   QStringList gdalGdalDrivers;
   QStringList gdalOgrDrivers;
 
   QList<OutputFormat *> * outputformats;
 
-  // accessible objects (via getters/setters)
   unsigned char * currentImageBuffer = NULL;
   int currentImageSize;
-  // map name and extent are directly accessible
 
 };
 
