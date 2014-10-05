@@ -8,7 +8,7 @@ CONFIG += debug \
           create_prl \
           link_prl
 
-QT += testlib gui
+QT += testlib gui widgets
 TEMPLATE = app
 TARGET = testsuite
 DEPENDPATH += -L/usr/lib/x86_64-linux-gnu  \
