@@ -21,8 +21,9 @@ POST_TARGETDEPS +=
 
 QMAKE_CLEAN += $(TARGET)
 
-LIBS += ../debug/mapfileparser.o \
-        ../debug/outputformat.o  \
+LIBS += ../debug/mapfileparser.o            \
+        ../debug/outputformat.o             \
+        ../debug/changemapnamecommand.o     \
         -L/usr/lib/x86_64-linux-gnu/ -lmapserver -lgdal -lgcov
 
 
@@ -30,9 +31,11 @@ LIBS += ../debug/mapfileparser.o \
 # Input
 HEADERS += testmapfileparser.h      \
            testoutputformat.h       \
+           testcommands.h           \
            autotest.h
 
 SOURCES += testmapfileparser.cpp    \
            testoutputformat.cpp     \
+           testcommands.cpp         \
            main.cpp
 
