@@ -1,6 +1,8 @@
 #ifndef AUTOTEST_H
 #define AUTOTEST_H
 
+#include <iostream>
+
 // Code courtesy of qtcreator.blogspot.com, see:
 // http://qtcreator.blogspot.fr/2009/10/running-multiple-unit-tests.html
 
@@ -52,6 +54,7 @@ namespace AutoTest
   foreach (QObject* test, testList())
   {
    ret += QTest::qExec(test, argc, argv);
+   std::cout << std::endl;
   }
 
   return ret;
