@@ -586,27 +586,9 @@ void MapfileParser::setDataPattern(const QString & pattern) {
 }
 
 
-
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
 
 QString MapfileParser::getMapfileName() { return QString(this->filename); }
-
-bool MapfileParser::saveMapfile(const QString & filename) {
-  int ret = -1;
-  if (this->map) {
-    // mapfile is a new one ("create mapfile" action)
-    // filename argument should be "valid"  then
-    if (! filename.isEmpty()) {
-      ret = msSaveMap(this->map, (char *) filename.toStdString().c_str());
-    }
-    // using existing file (already existing mapfile loaded)
-    // ("save" action)
-    else if (! this->filename.isEmpty()) {
-      ret = msSaveMap(this->map, (char *) filename.toStdString().c_str());
-    }
-  }
-  return (ret == 0);
-}
 
 QList<int> MapfileParser::getImageColor() {
    QList<int> color;
@@ -623,6 +605,7 @@ void MapfileParser::setImageColor(const int & red, const int & green, const int 
         this->map->imagecolor.red = red;
         this->map->imagecolor.green = green;
         this->map->imagecolor.blue = blue;
+        // TODO alpha ?
     }
 }
 
@@ -637,6 +620,23 @@ OutputFormat * MapfileParser::getOutputFormat(const QString & key) {
       return this->outputformats->at(i);
   }
   return NULL;
+}
+
+bool MapfileParser::saveMapfile(const QString & filename) {
+  int ret = -1;
+  if (this->map) {
+    // mapfile is a new one ("create mapfile" action)
+    // filename argument should be "valid"  then
+    if (! filename.isEmpty()) {
+      ret = msSaveMap(this->map, (char *) filename.toStdString().c_str());
+    }
+    // using existing file (already existing mapfile loaded)
+    // ("save" action)
+    else if (! this->filename.isEmpty()) {
+      ret = msSaveMap(this->map, (char *) filename.toStdString().c_str());
+    }
+  }
+  return (ret == 0);
 }
 
 MapfileParser::~MapfileParser() {

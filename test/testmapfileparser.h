@@ -30,6 +30,8 @@ class TestMapfileParser: public QObject
       void testAngle();
       void testTemplatePattern();
       void testDataPattern();
+      void testMapfilePath();
+      void testImageColor();
 
 };
 

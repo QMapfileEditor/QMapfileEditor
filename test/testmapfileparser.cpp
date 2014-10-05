@@ -1,6 +1,7 @@
 #include "testmapfileparser.h"
 #include "../mapfileparser.h"
 
+#include <QDir>
 
 /** tests construtor */
 void TestMapfileParser::testInitMapfileParser()
@@ -353,4 +354,47 @@ void TestMapfileParser::testDataPattern() {
   delete p;
 }
 
+/** test mapfile path */
+void TestMapfileParser::testMapfilePath() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+  QVERIFY(QDir(p->getMapfilePath()).exists());
+  delete p;
 
+  // on a brand new (not saved yet) mapfile
+  p = new MapfileParser();
+  QVERIFY(p->getMapfilePath().isEmpty());
+  delete p;
+
+}
+
+void TestMapfileParser::testImageColor() {
+  MapfileParser * p = new MapfileParser();
+
+  QList<int> l = p->getImageColor();
+  QVERIFY(l.size() == 3);
+  QVERIFY(l[0] == 0xff);
+  QVERIFY(l[1] == 0xff);
+  QVERIFY(l[2] == 0xff);
+
+  // TODO: what if setting to integers so that the colour could not fit ? (e.g. > 0xff)
+  p->setImageColor(0xddddde, 0xad, 0xef);
+  l = p->getImageColor();
+  QVERIFY(l.size() == 3);
+  QVERIFY(l[0] == 0xddddde);
+  QVERIFY(l[1] == 0xad);
+  QVERIFY(l[2] == 0xef);
+
+
+
+  delete p;
+
+  p = new MapfileParser("../data/world_mapfile.map");
+
+  l = p->getImageColor();
+  QVERIFY(l.size() == 3);
+  QVERIFY(l[0] == 0xfa);
+  QVERIFY(l[1] == 0x00);
+  QVERIFY(l[2] == 0x00);
+  delete p;
+
+}
