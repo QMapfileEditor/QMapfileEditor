@@ -95,11 +95,38 @@ void TestMapfileParser::testStatus() {
   // initial state: Map status is true
   QVERIFY(p->getMapStatus());
 
-  //p->setStatus
+  p->setMapStatus(false);
+
+  QVERIFY(! p->getMapStatus());
+
+  if (p) delete p;
 
 }
+/** test map width / height */
+void TestMapfileParser::testWidthHeight() {
+  MapfileParser * p  = new MapfileParser();
+  QVERIFY(p->getMapWidth() == -1);
+  QVERIFY(p->getMapHeight() == -1);
 
+  p->setMapSize(500,500);
 
+  QVERIFY(p->getMapWidth() == 500);
+  QVERIFY(p->getMapHeight() == 500);
 
+  if (p) delete p;
+}
 
+/** test max size */
+void TestMapfileParser::testMapMaxSize() {
+
+  MapfileParser * p  = new MapfileParser();
+
+  QVERIFY(p->getMapMaxsize() == 2048);
+
+  p->setMapMaxsize(1024);
+
+  QVERIFY(p->getMapMaxsize() == 1024);
+
+  if (p) delete p;
+}
 
