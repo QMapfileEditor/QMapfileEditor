@@ -3,7 +3,8 @@
 ## Description
 
 This projects aims to create a nice graphic user interface to edit mapfile. 
-This project is related to MapServer project but are not inside.
+This project is related to MapServer project but is not supported by the
+official Mapserver community.
 
 Pull Request and issue are very welcome!
 
