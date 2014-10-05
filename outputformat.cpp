@@ -21,6 +21,8 @@ QString OutputFormat::getExtension()   { return extension;   }
 int     OutputFormat::getImageMode()   { return imageMode;   }
 bool    OutputFormat::getTransparent() { return transparent; }
 
+bool OutputFormat::isEmpty() { return name.isEmpty(); };
+
 void OutputFormat::setName(const QString &v)      { name        = v; }
 void OutputFormat::setMimeType(const QString &v)  { mimeType    = v; }
 void OutputFormat::setDriver(const QString &v)    { driver      = v; }

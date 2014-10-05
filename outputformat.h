@@ -32,7 +32,7 @@ class OutputFormat {
    int     getImageMode();
    bool    getTransparent();
 
-   bool isEmpty() { return name.isEmpty(); };
+   bool isEmpty();
 
    /** setters */
    void setName(const QString &);
