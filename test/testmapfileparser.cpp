@@ -322,5 +322,17 @@ void TestMapfileParser::testDefResolution() {
   if (p) delete p;
 }
 
+/** test get/set angle */
+void TestMapfileParser::testAngle() {
+  MapfileParser * p  = new MapfileParser();
+  QVERIFY(p->getAngle() == 0);
+  delete p;
+  p = new MapfileParser("../data/world_mapfile.map");
+  QVERIFY(p->getAngle() == 45);
+  p->setAngle(90);
+  QVERIFY(p->getAngle() == 90);
+  delete p;
+
+}
 
 

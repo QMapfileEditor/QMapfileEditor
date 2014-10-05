@@ -27,6 +27,7 @@ class TestMapfileParser: public QObject
       void testFontSet();
       void testResolution();
       void testDefResolution();
+      void testAngle();
 
 };
 
