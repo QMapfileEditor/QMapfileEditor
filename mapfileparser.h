@@ -47,11 +47,11 @@ class MapfileParser
   int  getMapProjection();
   void setMapProjection(const QString & projection);
 
-  int getMapExtentMinX();
-  int getMapExtentMinY();
-  int getMapExtentMaxX();
-  int getMapExtentMaxY();
-  void setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy);
+  double getMapExtentMinX();
+  double getMapExtentMinY();
+  double getMapExtentMaxX();
+  double getMapExtentMaxY();
+  void setMapExtent(const double & minx, const double & miny, const double & maxx, const double & maxy);
 
   unsigned char * getCurrentMapImage(const int & width = -1, const int & height = -1);
   int             getCurrentMapImageSize();

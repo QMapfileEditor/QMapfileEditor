@@ -130,3 +130,57 @@ void TestMapfileParser::testMapMaxSize() {
   if (p) delete p;
 }
 
+/** test map units */
+void TestMapfileParser::testMapUnits() {
+
+  MapfileParser * p  = new MapfileParser();
+
+  QVERIFY(MapfileParser::units.at(p->getMapUnits()) == "meters");
+
+  p->setMapUnits("nauticalmiles");
+
+  QVERIFY(MapfileParser::units.at(p->getMapUnits()) == "nauticalmiles");
+
+  if (p) delete p;
+}
+
+/** test imagetype */
+void TestMapfileParser::testImageType() {
+
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+
+  QVERIFY(p->getMapImageType() == "png24");
+
+  p->setMapImageType("jpeg");
+
+  QVERIFY(p->getMapImageType() == "jpeg");
+
+  if (p) delete p;
+}
+
+// TODO test map projections
+
+/** test map extent */
+void TestMapfileParser::testMapExtent() {
+
+  MapfileParser * p  = new MapfileParser();
+
+  // initial values are -1, -1, -1, -1
+
+  QVERIFY(p->getMapExtentMinX() == -1);
+  QVERIFY(p->getMapExtentMinY() == -1);
+  QVERIFY(p->getMapExtentMaxX() == -1);
+  QVERIFY(p->getMapExtentMaxY() == -1);
+
+  p->setMapExtent(-180, -90, 180, 90);
+
+  QVERIFY(p->getMapExtentMinX() == -180);
+  QVERIFY(p->getMapExtentMinY() == -90);
+  QVERIFY(p->getMapExtentMaxX() == 180);
+  QVERIFY(p->getMapExtentMaxY() == 90);
+
+  if (p) delete p;
+
+}
+
+

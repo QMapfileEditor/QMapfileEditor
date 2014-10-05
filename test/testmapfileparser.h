@@ -16,6 +16,9 @@ class TestMapfileParser: public QObject
       void testStatus();
       void testWidthHeight();
       void testMapMaxSize();
+      void testMapUnits();
+      void testImageType();
+      void testMapExtent();
 
 };
 

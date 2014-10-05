@@ -263,31 +263,31 @@ void MapfileParser::setMapProjection(const QString & projection) {
 }
 
 // Extent object parameters
-int MapfileParser::getMapExtentMinX() {
+double MapfileParser::getMapExtentMinX() {
   if (this->map)
     return this->map->extent.minx;
   return -1;
 }
 
-int MapfileParser::getMapExtentMinY() {
+double MapfileParser::getMapExtentMinY() {
   if (this->map)
     return this->map->extent.miny;
   return -1;
 }
 
-int MapfileParser::getMapExtentMaxX() {
+double MapfileParser::getMapExtentMaxX() {
   if (this->map)
     return this->map->extent.maxx;
   return -1;
 }
 
-int MapfileParser::getMapExtentMaxY() {
+double MapfileParser::getMapExtentMaxY() {
   if (this->map)
     return this->map->extent.maxy;
   return -1;
 }
-//TODO: not working
-void MapfileParser::setMapExtent(const int & minx, const int & miny, const int & maxx, const int & maxy) {
+
+void MapfileParser::setMapExtent(const double & minx, const double & miny, const double & maxx, const double & maxy) {
   if (this->map) {
     this->map->extent.minx = minx;
     this->map->extent.miny = miny;
