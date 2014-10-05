@@ -25,8 +25,8 @@ class MapfileParser
   QStringList getGdalGdalDrivers(void) { return gdalGdalDrivers; };
   QStringList getGdalOgrDrivers(void) { return gdalOgrDrivers; };
 
-  QList<OutputFormat *> * getOutputFormats(void);
-  OutputFormat * getOutputFormat(const QString &);
+  QList<OutputFormat> getOutputFormats(void);
+  OutputFormat getOutputFormat(const QString &);
 
   bool getMapStatus();
   void setMapStatus(const bool & status);
@@ -138,8 +138,6 @@ class MapfileParser
   QString filename;
   QStringList gdalGdalDrivers;
   QStringList gdalOgrDrivers;
-
-  QList<OutputFormat *> * outputformats;
 
   unsigned char * currentImageBuffer = NULL;
   int currentImageSize;

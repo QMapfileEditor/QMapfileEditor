@@ -69,19 +69,6 @@ MapfileParser::MapfileParser(const QString & fname) :
   this->gdalOgrDrivers.sort();
   this->gdalGdalDrivers.removeDuplicates();
   this->gdalGdalDrivers.sort();
-
-  this->outputformats = new QList<OutputFormat *>();
-
-  if (this->map) {
-    for (int i = 0; i < this->map->numoutputformats ; i++) {
-      this->outputformats->append(new OutputFormat(this->map->outputformatlist[i]->name,
-                                                   this->map->outputformatlist[i]->mimetype,
-                                                   this->map->outputformatlist[i]->driver,
-                                                   this->map->outputformatlist[i]->extension,
-                                                   this->map->outputformatlist[i]->imagemode,
-                                                   this->map->outputformatlist[i]->transparent));
-    }
-  }
 }
 
 /**
@@ -609,17 +596,31 @@ void MapfileParser::setImageColor(const int & red, const int & green, const int 
     }
 }
 
-QList<OutputFormat *> * MapfileParser::getOutputFormats() {
-  return this->outputformats;
+QList<OutputFormat> MapfileParser::getOutputFormats() {
+  QList<OutputFormat> ret = QList<OutputFormat>();
+  if (!this->map)
+    return ret;
+  for (int i = 0; i < this->map->numoutputformats ; i++) {
+    ret.append(OutputFormat(this->map->outputformatlist[i]->name,
+                            this->map->outputformatlist[i]->mimetype,
+                            this->map->outputformatlist[i]->driver,
+                            this->map->outputformatlist[i]->extension,
+                            this->map->outputformatlist[i]->imagemode,
+                            this->map->outputformatlist[i]->transparent));
+  }
+  return ret;
 }
 
-OutputFormat * MapfileParser::getOutputFormat(const QString & key) {
-  for (int i = 0; i < this->outputformats->size(); ++i) {
+OutputFormat MapfileParser::getOutputFormat(const QString & key) {
+  QList<OutputFormat> lst = this->getOutputFormats();
+  for (int i = 0; i < lst.size(); ++i) {
+    OutputFormat cur = lst.at(i);
     // In Mapserver, the name of the outputformat is used as primary key
-    if (key == this->outputformats->at(i)->getName())
-      return this->outputformats->at(i);
+    if (key == cur.getName())
+      return cur;
   }
-  return NULL;
+  return OutputFormat();
+
 }
 
 bool MapfileParser::saveMapfile(const QString & filename) {
@@ -645,12 +646,6 @@ MapfileParser::~MapfileParser() {
   }
   if (this->currentImageBuffer) {
     free(this->currentImageBuffer);
-  }
-  if (this->outputformats) {
-    for (int i = 0 ; i < this->outputformats->size(); ++i) {
-      delete this->outputformats->at(i);
-    }
-    delete this->outputformats;
   }
 }
 

@@ -154,13 +154,13 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     }
 
     // output formats
-    QList<OutputFormat *> * outputFmtList = this->mapfile->getOutputFormats();
+    QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
     QStandardItemModel * outputFmtModel = new QStandardItemModel(this->ui->mf_outputformat_list);
     outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
     this->ui->mf_outputformat_list->setModel(outputFmtModel);
-    for (int i = 0 ; i < outputFmtList->size(); ++i) {
-      OutputFormat * fmt = outputFmtList->at(i);
-      QStandardItem * item = new QStandardItem(fmt->getName());
+    for (int i = 0 ; i < outputFmtList.size(); ++i) {
+      OutputFormat fmt = outputFmtList.at(i);
+      QStandardItem * item = new QStandardItem(fmt.getName());
       item->setEditable(false);
       outputFmtModel->appendRow(item);
     }
@@ -433,16 +433,16 @@ void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
     QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
     if (item != NULL) {
-      OutputFormat * selFmt = this->mapfile->getOutputFormat(item->text());
-      if (selFmt) {
-        this->ui->mf_outputformat_name->setText(selFmt->getName());
-        this->ui->mf_outputformat_transparent_on->setChecked(selFmt->getTransparent());
-        this->ui->mf_outputformat_transparent_off->setChecked(! selFmt->getTransparent());
+      OutputFormat selFmt = this->mapfile->getOutputFormat(item->text());
+      if (! selFmt.isEmpty()) {
+        this->ui->mf_outputformat_name->setText(selFmt.getName());
+        this->ui->mf_outputformat_transparent_on->setChecked(selFmt.getTransparent());
+        this->ui->mf_outputformat_transparent_off->setChecked(! selFmt.getTransparent());
 
-        this->ui->mf_outputformat_extension->setText(selFmt->getExtension());
-        this->ui->mf_outputformat_mimetype->setText(selFmt->getMimeType());
+        this->ui->mf_outputformat_extension->setText(selFmt.getExtension());
+        this->ui->mf_outputformat_mimetype->setText(selFmt.getMimeType());
 
-        int driIdx = this->ui->mf_outputformat_driver->findText(selFmt->getDriver());
+        int driIdx = this->ui->mf_outputformat_driver->findText(selFmt.getDriver());
         if (driIdx != -1) this->ui->mf_outputformat_driver->setCurrentIndex(driIdx);
 
         this->toggleOutputFormatsWidgets(true);

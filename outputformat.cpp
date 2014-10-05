@@ -14,17 +14,17 @@ extension(extension),
 imageMode(imageMode),
 transparent(transparent) {}
 
-QString & OutputFormat::getName()        { return this->name;        }
-QString & OutputFormat::getMimeType()    { return this->mimeType;    }
-QString & OutputFormat::getDriver()      { return this->driver;      }
-QString & OutputFormat::getExtension()   { return this->extension;   }
-int     & OutputFormat::getImageMode()   { return this->imageMode;   }
-bool    & OutputFormat::getTransparent() { return this->transparent; }
+QString OutputFormat::getName()        { return name;        }
+QString OutputFormat::getMimeType()    { return mimeType;    }
+QString OutputFormat::getDriver()      { return driver;      }
+QString OutputFormat::getExtension()   { return extension;   }
+int     OutputFormat::getImageMode()   { return imageMode;   }
+bool    OutputFormat::getTransparent() { return transparent; }
 
-void OutputFormat::setName(const QString &v)      { this->name        = v; }
-void OutputFormat::setMimeType(const QString &v)  { this->mimeType    = v; }
-void OutputFormat::setDriver(const QString &v)    { this->driver      = v; }
-void OutputFormat::setExtension(const QString &v) { this->extension   = v; }
-void OutputFormat::setImageMode(const   int &v)   { this->imageMode   = v; }
-void OutputFormat::setTransparent(const bool &v)  { this->transparent = v; }
+void OutputFormat::setName(const QString &v)      { name        = v; }
+void OutputFormat::setMimeType(const QString &v)  { mimeType    = v; }
+void OutputFormat::setDriver(const QString &v)    { driver      = v; }
+void OutputFormat::setExtension(const QString &v) { extension   = v; }
+void OutputFormat::setImageMode(const   int &v)   { imageMode   = v; }
+void OutputFormat::setTransparent(const bool &v)  { transparent = v; }
 

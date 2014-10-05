@@ -17,21 +17,22 @@ class OutputFormat {
    bool transparent;
 
   public:
-   OutputFormat(const QString & name,
-                const QString & mimeType,
-                const QString & driver,
-                const QString & extension,
-                const int  & imageMode,
-                const bool & transparent);
+   OutputFormat(const QString & name = 0,
+                const QString & mimeType = 0,
+                const QString & driver = 0,
+                const QString & extension = 0,
+                const int  & imageMode = 0,
+                const bool & transparent = 0);
 
    /** getters */
-   QString & getName();
-   QString & getMimeType();
-   QString & getDriver();
-   QString & getExtension();
-   int     & getImageMode();
-   bool    & getTransparent();
+   QString getName();
+   QString getMimeType();
+   QString getDriver();
+   QString getExtension();
+   int     getImageMode();
+   bool    getTransparent();
 
+   bool isEmpty() { return name.isEmpty(); };
 
    /** setters */
    void setName(const QString &);
