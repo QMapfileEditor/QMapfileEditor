@@ -28,6 +28,10 @@ void TestOutputFormat::testInitOutputFormat() {
 
    if (f) delete f;
 
+   // Test creating on the stack
+   OutputFormat fs = OutputFormat();
+   QVERIFY(fs.isEmpty());
+
 }
 
 

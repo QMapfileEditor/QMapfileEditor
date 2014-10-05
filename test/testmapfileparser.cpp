@@ -384,8 +384,6 @@ void TestMapfileParser::testImageColor() {
   QVERIFY(l[1] == 0xad);
   QVERIFY(l[2] == 0xef);
 
-
-
   delete p;
 
   p = new MapfileParser("../data/world_mapfile.map");
