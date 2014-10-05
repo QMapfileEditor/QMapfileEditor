@@ -315,17 +315,126 @@ void MapfileParser::setDebug(const int & debug) {
     }
 }
 
+/**
+ * Private method allowing the mapping between hashtables from MS and Qt
+ * objects.
+ */
+QHash<QString, QString> MapfileParser::populateMapFromMs(void *table) {
+
+  QHash<QString, QString> ret = QHash<QString, QString> ();
+
+  const char * tmpkey = msFirstKeyFromHashTable((hashTableObj *) table);
+  const char * tmpval;
+
+  while ((tmpval = msLookupHashTable((hashTableObj *) table, tmpkey))) {
+      ret.insert(QString(tmpkey), QString(tmpval));
+      tmpkey = msNextKeyFromHashTable((hashTableObj *) table, tmpkey);
+  }
+  return ret;
+}
+
+/**
+ * map configuration options (nested into map->configoptions)
+ */
+QHash<QString, QString> MapfileParser::getConfigOptions() {
+  if (! this->map)
+    return QHash<QString, QString>();
+  return populateMapFromMs(& (this->map->configoptions));
+}
+
+// TODO
+void MapfileParser::setConfigOptions(const QString & name, const QString & value) {}
+
 QString MapfileParser::getDebugFile() {
-    if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "MS_ERRORFILE");
-    return NULL;
+  return this->getConfigOptions().value("MS_ERRORFILE", QString());
 }
 
 QString MapfileParser::getConfigMissingData() {
-    if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "ON_MISSING_DATA");
-    return NULL;
+  return this->getConfigOptions().value("ON_MISSING_DATA", QString());
 }
+
+QString MapfileParser::getConfigContextUrl() {
+  return this->getConfigOptions().value("CGI_CONTEXT_URL", QString());
+}
+
+QString MapfileParser::getConfigEncryptionKey() {
+  return this->getConfigOptions().value("MS_ENCRYPTION_KEY", QString());
+}
+
+QString MapfileParser::getConfigNonsquare() {
+  return this->getConfigOptions().value("MS_NONSQUARE", QString());
+}
+
+QString MapfileParser::getConfigProjLib() {
+  return this->getConfigOptions().value("PROJ_LIB", QString());
+}
+
+/**
+ * metadatas (nested into map->web).
+ */
+
+QHash<QString, QString> MapfileParser::getMetadatas() {
+  if (! this->map)
+    return QHash<QString, QString>();
+  return populateMapFromMs(& (this->map->web.metadata));
+}
+
+// TODO
+void MapfileParser::setMetadata(const QString & name, const QString & value) {
+    if (this->map) {
+    }
+}
+
+QString MapfileParser::getMetadataWmsTitle() {
+  QString ret = this->getMetadatas().value("WMS_TITLE", QString());
+  // Empty, lets try with OWS_TITLE
+  if (ret.isEmpty()) {
+    return this->getMetadatas().value("OWS_TITLE", QString());
+  }
+  return ret;
+}
+
+QString MapfileParser::getMetadataWfsTitle() {
+  QString ret = this->getMetadatas().value("WFS_TITLE", QString());
+  if (ret.isEmpty()) {
+    return this->getMetadatas().value("OWS_TITLE", QString());
+  }
+  return ret;
+}
+
+QString MapfileParser::getMetadataWmsOnlineresource() {
+  QString ret = this->getMetadatas().value("WMS_ONLINERESOURCE", QString());
+  if (ret.isEmpty()) {
+    return this->getMetadatas().value("OWS_ONLINERESOURCE", QString());
+  }
+  return ret;
+}
+
+QString MapfileParser::getMetadataWfsOnlineresource() {
+  QString ret = this->getMetadatas().value("WFS_ONLINERESOURCE", QString());
+  if (ret.isEmpty()) {
+    return this->getMetadatas().value("OWS_ONLINERESOURCE", QString());
+  }
+  return ret;
+}
+
+QString MapfileParser::getMetadataWmsSrs() {
+  QString ret = this->getMetadatas().value("WMS_SRS", QString());
+  if (ret.isEmpty()) {
+    return this->getMetadatas().value("OWS_SRS", QString());
+  }
+  return ret;
+}
+
+QString MapfileParser::getMetadataWfsSrs() {
+  QString ret = this->getMetadatas().value("WFS_SRS", QString());
+  if (ret.isEmpty()) {
+    return this->getMetadatas().value("OWS_SRS", QString());
+  }
+  return ret;
+}
+
+
 
 QString MapfileParser::getShapepath() {
     if (this->map)
@@ -443,122 +552,7 @@ void MapfileParser::setDataPattern(const QString & pattern) {
     }
 }
 
-QString MapfileParser::getConfigContextUrl() {
-    if (this->map)
-        return  msLookupHashTable( &(this->map->configoptions), "CGI_CONTEXT_URL");
-    return NULL;
-}
 
-QString MapfileParser::getConfigEncryptionKey() {
-    if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "MS_ENCRYPTION_KEY");
-    return NULL;
-}
-
-QString MapfileParser::getConfigNonsquare() {
-    if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "MS_NONSQUARE");
-    return NULL;
-}
-
-QString MapfileParser::getConfigProjLib() {
-    if (this->map)
-        return msLookupHashTable( &(this->map->configoptions), "PROJ_LIB");
-    return NULL;
-}
-
-QHash<QString, QString> MapfileParser::getMetadatas() {
-  QHash<QString, QString> ret;
-  if (! this->map) {
-    return ret;
-  }
-
-  const char * tmpkey = msFirstKeyFromHashTable(& this->map->web.metadata);
-  const char * tmpval;
-
-  while ((tmpval = msLookupHashTable(& this->map->web.metadata, tmpkey))) {
-      ret.insert(QString(tmpkey), QString(tmpval));
-      tmpkey = msNextKeyFromHashTable(& this->map->web.metadata, tmpkey);
-  }
-  return ret;
-}
-
-//TODO: make a method using haskTable?
-void MapfileParser::setMetadata(const QString & name, const QString & value) {
-    if (this->map) {
-    }
-}
-
-QString MapfileParser::getMetadataWmsTitle() {
-    if (this->map) {
-        if( msLookupHashTable( &(this->map->web.metadata), "WMS_TITLE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "WMS_TITLE");
-        }
-        if (msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE");
-        }
-    }
-    return QString();
-}
-QString MapfileParser::getMetadataWfsTitle() {
-    if (this->map) {
-        if( msLookupHashTable( &(this->map->web.metadata), "WFS_TITLE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "WFS_TITLE");
-        }
-        if (msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "OWS_TITLE");
-        }
-    }
-    return QString();
-}
-
-QString MapfileParser::getMetadataWmsOnlineresource() {
-    if (this->map) {
-        if( msLookupHashTable( &(this->map->web.metadata), "WMS_ONLINERESOURCE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "WMS_ONLINERESOURCE");
-        }
-        if (msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE");
-        }
-    }
-    return QString();
-}
-
-QString MapfileParser::getMetadataWfsOnlineresource() {
-    if (this->map) {
-        if( msLookupHashTable( &(this->map->web.metadata), "WFS_ONLINERESOURCE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "WFS_ONLINERESOURCE");
-        }
-        if (msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE")) {
-            return msLookupHashTable( &(this->map->web.metadata), "OWS_ONLINERESOURCE");
-        }
-    }
-    return QString();
-}
-
-QString MapfileParser::getMetadataWmsSrs() {
-    if (this->map) {
-        if( msLookupHashTable( &(this->map->web.metadata), "WMS_SRS")) {
-            return msLookupHashTable( &(this->map->web.metadata), "WMS_SRS");
-        }
-        if (msLookupHashTable( &(this->map->web.metadata), "OWS_SRS")) {
-            return msLookupHashTable( &(this->map->web.metadata), "OWS_SRS");
-        }
-    }
-    return QString();
-}
-
-QString MapfileParser::getMetadataWfsSrs() {
-    if (this->map) {
-        if( msLookupHashTable( &(this->map->web.metadata), "WFS_SRS")) {
-            return msLookupHashTable( &(this->map->web.metadata), "WFS_SRS");
-        }
-        if (msLookupHashTable( &(this->map->web.metadata), "OWS_SRS")) {
-            return msLookupHashTable( &(this->map->web.metadata), "OWS_SRS");
-        }
-    }
-    return QString();
-}
 
 QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
 

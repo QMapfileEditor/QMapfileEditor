@@ -61,9 +61,9 @@ class MapfileParser
   bool  getDebugStatus();
   int   getDebug();
   void  setDebug(const int & debug);
+
   QString getDebugFile();
 
-  void setMetadata(const QString & name, const QString & value);
 
   QString getShapepath();
   void    setShapepath(const QString & shapepath);
@@ -102,8 +102,11 @@ class MapfileParser
 
   QString getMetadataWfsSrs();
 
-  QHash<QString, QString> getMetadatas();
+  QHash<QString, QString> getConfigOptions(void);
+  void setConfigOptions(const QString & name, const QString & value);
 
+  QHash<QString, QString> getMetadatas(void);
+  void setMetadata(const QString & name, const QString & value);
 
   int   getResolution();
   void  setResolution(const int & resolution);
@@ -139,6 +142,9 @@ class MapfileParser
 
   unsigned char * currentImageBuffer = NULL;
   int currentImageSize;
+
+  QHash<QString, QString> populateMapFromMs(void *);
+
 
 };
 
