@@ -28,6 +28,8 @@ class TestMapfileParser: public QObject
       void testResolution();
       void testDefResolution();
       void testAngle();
+      void testTemplatePattern();
+      void testDataPattern();
 
 };
 

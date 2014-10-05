@@ -335,4 +335,22 @@ void TestMapfileParser::testAngle() {
 
 }
 
+/** test template pattern */
+void TestMapfileParser::testTemplatePattern() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+  QVERIFY(p->getTemplatePattern() == "(/a-zA-Z0-9/)");
+  p->setTemplatePattern("(/a-z/)");
+  QVERIFY(p->getTemplatePattern() == "(/a-z/)");
+  delete p;
+}
+
+/* test data pattern */
+void TestMapfileParser::testDataPattern() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+  QVERIFY(p->getDataPattern() == "(/a-zA-Z0-9/)");
+  p->setDataPattern("(/a-z/)");
+  QVERIFY(p->getDataPattern() == "(/a-z/)");
+  delete p;
+}
+
 
