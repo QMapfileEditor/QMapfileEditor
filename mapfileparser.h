@@ -102,7 +102,8 @@ class MapfileParser
   QString getMetadataWfsSrs();
 
   QHash<QString, QString> getConfigOptions(void);
-  void setConfigOptions(const QString & name, const QString & value);
+  void setConfigOption(const QString & name, const QString & value);
+  void removeConfigOption(const QString & name);
 
   QHash<QString, QString> getMetadatas(void);
   void setMetadata(const QString & name, const QString & value);
@@ -144,6 +145,7 @@ class MapfileParser
 
   QHash<QString, QString> populateMapFromMs(void *);
   void insertIntoMsMap(void *, const QString &, const QString &);
+  void removeFromMsMap(void *, const QString &);
 
 
 };

@@ -334,6 +334,10 @@ void MapfileParser::insertIntoMsMap(void *table, const QString &name, const QStr
   msInsertHashTable((hashTableObj *) table, name.toStdString().c_str(), value.toStdString().c_str());
 }
 
+void MapfileParser::removeFromMsMap(void *table, const QString &name) {
+  msRemoveHashTable((hashTableObj *) table, name.toStdString().c_str());
+}
+
 /**
  * map configuration options (nested into map->configoptions)
  */
@@ -343,13 +347,19 @@ QHash<QString, QString> MapfileParser::getConfigOptions() {
   return populateMapFromMs(& (this->map->configoptions));
 }
 
-void MapfileParser::setConfigOptions(const QString & name, const QString & value) {
+void MapfileParser::setConfigOption(const QString & name, const QString & value) {
   if (! this->map)
     return;
   // Doing nothing if current config option is already set to the given value
   if (this->getConfigOptions().value(name) == value)
     return;
   insertIntoMsMap(& (this->map->configoptions), name, value);
+}
+
+void MapfileParser::removeConfigOption(const QString & name) {
+  if (! this->map)
+    return;
+  removeFromMsMap(& (this->map->configoptions), name);
 }
 
 QString MapfileParser::getDebugFile() {

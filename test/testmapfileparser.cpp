@@ -183,4 +183,50 @@ void TestMapfileParser::testMapExtent() {
 
 }
 
+/** test debug
+ *  (6 debug levels, stored as integer, from 0 to 5)
+ */
+void TestMapfileParser::testDebug() {
+  MapfileParser * p  = new MapfileParser();
+  // default is 0
+  QVERIFY(p->getDebug() == 0);
 
+  p->setDebug(5);
+
+  QVERIFY(p->getDebug() == 5);
+
+  if (p) delete p;
+}
+
+/** test configuration options
+ */
+void TestMapfileParser::testConfigOptions() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+
+  QHash<QString,QString> l = p->getConfigOptions();
+
+  QVERIFY(l.size() == 6);
+
+  QVERIFY(p->getDebugFile()           == l.value("MS_ERRORFILE"));
+  QVERIFY(p->getConfigMissingData()   == l.value("ON_MISSING_DATA"));
+  QVERIFY(p->getConfigContextUrl()    == l.value("CGI_CONTEXT_URL"));
+  QVERIFY(p->getConfigEncryptionKey() == l.value("MS_ENCRYPTION_KEY"));
+  QVERIFY(p->getConfigNonsquare()     == l.value("MS_NONSQUARE"));
+  QVERIFY(p->getConfigProjLib()       == l.value("PROJ_LIB"));
+
+  QVERIFY(p->getConfigOptions().value("PROJ_LIB") == "/usr/local/share/proj/");
+  p->setConfigOption("PROJ_LIB", "/usr/share/proj/");
+  // size should not have changed
+  QVERIFY(p->getConfigOptions().size() == 6);
+  // but there should be a new value for PROJ_LIB
+  QVERIFY(p->getConfigProjLib() == "/usr/share/proj/");
+
+  p->setConfigOption("MY_CUSTOM_PROPERTY", "a random value");
+  QVERIFY(p->getConfigOptions().size() == 7);
+  QVERIFY(p->getConfigOptions().value("MY_CUSTOM_PROPERTY") == "a random value");
+
+  p->removeConfigOption("MY_CUSTOM_PROPERTY");
+  QVERIFY(p->getConfigOptions().size() == 6);
+
+  if (p) delete p;
+}
