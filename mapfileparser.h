@@ -144,6 +144,7 @@ class MapfileParser
   int currentImageSize;
 
   QHash<QString, QString> populateMapFromMs(void *);
+  void insertIntoMsMap(void *, const QString &, const QString &);
 
 
 };

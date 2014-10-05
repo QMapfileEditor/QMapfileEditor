@@ -227,21 +227,24 @@ int MapfileParser::getMapUnits() {
 
 void MapfileParser::setMapUnits(const QString & units) {
   if (this->map) {
-      //TODO: needs to use MS_UNITS type
-      //this->map->units = this->units.indexOf(units);
+    this->map->units = (enum MS_UNITS) this->units.indexOf(units);
   }
 }
+
 // imageType parameter
 QString MapfileParser::getMapImageType() {
   if (this->map)
     return this->map->imagetype;
-  return "";
+  return QString();
 }
 
-//TODO
-void MapfileParser::setMapImageType( const QString & imageType) {
-    if (this->map) {
-    }
+void MapfileParser::setMapImageType(const QString & imageType) {
+  if (! this->map)
+    return;
+  if (this->map->imagetype) {
+    free(this->map->imagetype);
+  }
+  this->map->imagetype = (char *) strdup(imageType.toStdString().c_str());
 }
 
 //projection parameters
@@ -333,6 +336,14 @@ QHash<QString, QString> MapfileParser::populateMapFromMs(void *table) {
   return ret;
 }
 
+void MapfileParser::insertIntoMsMap(void *table, const QString &name, const QString &value) {
+  // - msInsertHashTable replaces the current element (memory is freed).
+  // - the value is strdup'ed.
+  //
+  // So it should be safe to pass std::string's char* pointers.
+  msInsertHashTable((hashTableObj *) table, name.toStdString().c_str(), value.toStdString().c_str());
+}
+
 /**
  * map configuration options (nested into map->configoptions)
  */
@@ -342,8 +353,14 @@ QHash<QString, QString> MapfileParser::getConfigOptions() {
   return populateMapFromMs(& (this->map->configoptions));
 }
 
-// TODO
-void MapfileParser::setConfigOptions(const QString & name, const QString & value) {}
+void MapfileParser::setConfigOptions(const QString & name, const QString & value) {
+  if (! this->map)
+    return;
+  // Doing nothing if current config option is already set to the given value
+  if (this->getConfigOptions().value(name) == value)
+    return;
+  insertIntoMsMap(& (this->map->configoptions), name, value);
+}
 
 QString MapfileParser::getDebugFile() {
   return this->getConfigOptions().value("MS_ERRORFILE", QString());
@@ -379,10 +396,12 @@ QHash<QString, QString> MapfileParser::getMetadatas() {
   return populateMapFromMs(& (this->map->web.metadata));
 }
 
-// TODO
 void MapfileParser::setMetadata(const QString & name, const QString & value) {
-    if (this->map) {
-    }
+  if (! this->map)
+    return;
+  if (this->getMetadatas().value(name) == value)
+    return;
+  insertIntoMsMap(& (this->map->web.metadata), name, value);
 }
 
 QString MapfileParser::getMetadataWmsTitle() {
@@ -433,7 +452,6 @@ QString MapfileParser::getMetadataWfsSrs() {
   }
   return ret;
 }
-
 
 
 QString MapfileParser::getShapepath() {
@@ -626,7 +644,7 @@ MapfileParser::~MapfileParser() {
  */
 
 QStringList MapfileParser::units = QStringList() << "inches" << "feet" << "miles" << "meters" << "kilometers" <<
-                   "dd" << "pixels" << "pourcentages" << "nauticalmiles";
+                   "dd" << "pixels" << "percentages" << "nauticalmiles";
 
 QStringList MapfileParser::imageTypes = QStringList() << "jpeg" << "pdf" << "png" << "svg";
 
