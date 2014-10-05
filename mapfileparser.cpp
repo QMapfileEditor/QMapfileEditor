@@ -309,8 +309,16 @@ void MapfileParser::setDebug(const int & debug) {
 }
 
 /**
- * Private method allowing the mapping between hashtables from MS and Qt
- * objects.
+ * Private methods allowing the mapping between hashtables from MS and Qt
+ * objects:
+ *
+ * - populateMapFromMs does the translation between Mapserver internals
+ *   and plain Qt objects.
+ *
+ * - insertIntoMsMap permits to create or update a record in the hashtable
+ *   mapserver side.
+ *
+ * - removeFromMsMap permits to remove an entry from the MS hashtables.
  */
 QHash<QString, QString> MapfileParser::populateMapFromMs(void *table) {
 
@@ -337,6 +345,7 @@ void MapfileParser::insertIntoMsMap(void *table, const QString &name, const QStr
 void MapfileParser::removeFromMsMap(void *table, const QString &name) {
   msRemoveHashTable((hashTableObj *) table, name.toStdString().c_str());
 }
+
 
 /**
  * map configuration options (nested into map->configoptions)
@@ -404,51 +413,57 @@ void MapfileParser::setMetadata(const QString & name, const QString & value) {
   insertIntoMsMap(& (this->map->web.metadata), name, value);
 }
 
+void MapfileParser::removeMetadata(const QString & name) {
+  if (! this->map)
+    return;
+  removeFromMsMap(& (this->map->web.metadata), name);
+}
+
 QString MapfileParser::getMetadataWmsTitle() {
-  QString ret = this->getMetadatas().value("WMS_TITLE", QString());
+  QString ret = this->getMetadatas().value("wms_title", QString());
   // Empty, lets try with OWS_TITLE
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("OWS_TITLE", QString());
+    return this->getMetadatas().value("ows_title", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWfsTitle() {
-  QString ret = this->getMetadatas().value("WFS_TITLE", QString());
+  QString ret = this->getMetadatas().value("wfs_title", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("OWS_TITLE", QString());
+    return this->getMetadatas().value("ows_title", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWmsOnlineresource() {
-  QString ret = this->getMetadatas().value("WMS_ONLINERESOURCE", QString());
+  QString ret = this->getMetadatas().value("wms_onlineresource", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("OWS_ONLINERESOURCE", QString());
+    return this->getMetadatas().value("ows_onlineresource", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWfsOnlineresource() {
-  QString ret = this->getMetadatas().value("WFS_ONLINERESOURCE", QString());
+  QString ret = this->getMetadatas().value("wfs_onlineresource", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("OWS_ONLINERESOURCE", QString());
+    return this->getMetadatas().value("ows_onlineresource", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWmsSrs() {
-  QString ret = this->getMetadatas().value("WMS_SRS", QString());
+  QString ret = this->getMetadatas().value("wms_srs", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("OWS_SRS", QString());
+    return this->getMetadatas().value("ows_srs", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWfsSrs() {
-  QString ret = this->getMetadatas().value("WFS_SRS", QString());
+  QString ret = this->getMetadatas().value("wfs_srs", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("OWS_SRS", QString());
+    return this->getMetadatas().value("ows_srs", QString());
   }
   return ret;
 }

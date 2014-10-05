@@ -230,3 +230,40 @@ void TestMapfileParser::testConfigOptions() {
 
   if (p) delete p;
 }
+
+/** test metadata related methods
+ *
+ */
+void TestMapfileParser::testMetadata() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+
+  QVERIFY(p->getMetadatas().size() == 8);
+
+
+  QVERIFY(p->getMetadataWmsTitle() == "World Map");
+  QVERIFY(p->getMetadataWfsTitle() == "Test OWS");  // the ows one
+  QVERIFY(p->getMetadataWmsOnlineresource() == "http://localhost/cgi-bin/mapserv.exe?map=wms.map&");
+  QVERIFY(p->getMetadataWfsOnlineresource().isEmpty()); // no ows_onlineresource defined in the sample mapfile
+  QVERIFY(p->getMetadataWmsSrs() == "EPSG:4326");
+  QVERIFY(p->getMetadataWfsSrs().isEmpty());
+
+  // Testing insertion
+  p->setMetadata("ows_srs", "EPSG:2154");
+
+  QVERIFY(p->getMetadatas().size() == 9);
+  QVERIFY(p->getMetadataWfsSrs() == "EPSG:2154");
+
+  // testing update
+  p->setMetadata("wms_srs", "EPSG:3857");
+  QVERIFY(p->getMetadataWmsSrs() == "EPSG:3857");
+  QVERIFY(p->getMetadatas().size() == 9);
+
+  // testing removal
+  p->removeMetadata("ows_srs");
+  QVERIFY(p->getMetadatas().size() == 8);
+  QVERIFY(p->getMetadataWfsSrs().isEmpty());
+
+  if (p) delete p;
+}
+
+

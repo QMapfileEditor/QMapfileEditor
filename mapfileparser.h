@@ -107,6 +107,7 @@ class MapfileParser
 
   QHash<QString, QString> getMetadatas(void);
   void setMetadata(const QString & name, const QString & value);
+  void removeMetadata(const QString &);
 
   int   getResolution();
   void  setResolution(const int & resolution);
