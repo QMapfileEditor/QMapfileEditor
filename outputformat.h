@@ -2,7 +2,7 @@
 #define __OUTPUTFORMAT_H
 
 #include <QString>
-
+#include <QHash>
 
 class OutputFormat {
   private:
@@ -15,6 +15,8 @@ class OutputFormat {
    int imageMode;
 
    bool transparent;
+
+   QHash<QString,QString> formatOptions;
 
   public:
    OutputFormat(const QString & name = 0,
@@ -31,6 +33,11 @@ class OutputFormat {
    QString getExtension();
    int     getImageMode();
    bool    getTransparent();
+   QHash<QString, QString>  getFormatOptions();
+
+
+   void addFormatOption(const QString &k, const QString &v);
+   void removeFormatOption(const QString &k);
 
    bool isEmpty();
 

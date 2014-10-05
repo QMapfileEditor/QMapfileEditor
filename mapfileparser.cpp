@@ -601,12 +601,18 @@ QList<OutputFormat> MapfileParser::getOutputFormats() {
   if (!this->map)
     return ret;
   for (int i = 0; i < this->map->numoutputformats ; i++) {
-    ret.append(OutputFormat(this->map->outputformatlist[i]->name,
+    OutputFormat item = OutputFormat(this->map->outputformatlist[i]->name,
                             this->map->outputformatlist[i]->mimetype,
                             this->map->outputformatlist[i]->driver,
                             this->map->outputformatlist[i]->extension,
                             this->map->outputformatlist[i]->imagemode,
-                            this->map->outputformatlist[i]->transparent));
+                            this->map->outputformatlist[i]->transparent);
+    for (int j = 0 ; j < this->map->outputformatlist[i]->numformatoptions; ++j) {
+      QStringList kv = QString(this->map->outputformatlist[i]->formatoptions[j]).split("=");
+      if (kv.size() == 2)
+        item.addFormatOption(kv[0], kv[1]);
+    }
+    ret.append(item);
   }
   return ret;
 }
