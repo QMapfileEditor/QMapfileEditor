@@ -1,7 +1,6 @@
 #include "testmapfileparser.h"
 #include "../mapfileparser.h"
 
-QTEST_MAIN(TestMapfileParser)
 
 /** tests construtor */
 void TestMapfileParser::testInitMapfileParser()
@@ -59,12 +58,12 @@ void TestMapfileParser::testGetCurrentMapImage() {
   QVERIFY(buffer != NULL);
   QVERIFY(p->getCurrentMapImageSize() > 0);
   QVERIFY(buffer[0] == 0x89 && buffer[1] == 0x50 && buffer[2] == 0x4e);
-  QPixmap *px = new QPixmap();
-  px->loadFromData(buffer, p->getCurrentMapImageSize());
+  QImage *im = new QImage();
+  im->loadFromData(buffer, p->getCurrentMapImageSize());
   // Makes sure the generated PNG is 500x500
-  QVERIFY(px->width() == 500 && px->height() == 500);
+  QVERIFY(im->width() == 500 && im->height() == 500);
 
-  if (px) delete px;
+  if (im) delete im;
   if (p) delete p;
 
 }

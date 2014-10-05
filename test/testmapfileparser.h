@@ -1,4 +1,8 @@
-#include <QtTest/QtTest>
+#ifndef TESTMAPFILEPARSER_H
+#define TESTMAPFILEPARSER_H
+
+#include "autotest.h"
+
 
 class TestMapfileParser: public QObject
 {
@@ -11,3 +15,8 @@ class TestMapfileParser: public QObject
       void testLayers();
 
 };
+
+DECLARE_TEST(TestMapfileParser)
+
+
+#endif // TESTMAPFILEPARSER_H

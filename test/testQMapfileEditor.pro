@@ -8,7 +8,7 @@ CONFIG += debug \
           create_prl \
           link_prl
 
-QT += testlib
+QT += testlib gui
 TEMPLATE = app
 TARGET = test
 DEPENDPATH += -L/usr/lib/x86_64-linux-gnu  \
@@ -19,6 +19,7 @@ INCLUDEPATH += ../  \
 
 POST_TARGETDEPS += 
 
+QMAKE_CLEAN += $(TARGET)
 
 LIBS += ../debug/mapfileparser.o \
         ../debug/outputformat.o  \
@@ -27,6 +28,11 @@ LIBS += ../debug/mapfileparser.o \
 
 
 # Input
-HEADERS += testmapfileparser.h
-SOURCES += testmapfileparser.cpp
+HEADERS += testmapfileparser.h      \
+           testoutputformat.h       \
+           autotest.h
+
+SOURCES += testmapfileparser.cpp    \
+           testoutputformat.cpp     \
+           main.cpp
 
