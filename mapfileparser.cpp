@@ -516,26 +516,26 @@ void MapfileParser::setFontSet(const QString & fontset) {
 }
 
 
-int MapfileParser::getResolution() {
+double MapfileParser::getResolution() {
     if (this->map) {
         return this->map->resolution;
     }
     return -1;
 }
 
-void MapfileParser::setResolution(const int & resolution) {
+void MapfileParser::setResolution(const double & resolution) {
     if (this->map) {
         this->map->resolution = resolution;
     }
 }
 
-int MapfileParser::getDefResolution() {
+double MapfileParser::getDefResolution() {
     if (this->map)
         return this->map->defresolution;
     return -1;
 }
 
-void MapfileParser::setDefResolution(const int & resolution) {
+void MapfileParser::setDefResolution(const double & resolution) {
     if (this->map) {
         this->map->defresolution = resolution;
     }

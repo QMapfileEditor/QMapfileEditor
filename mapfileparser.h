@@ -109,11 +109,11 @@ class MapfileParser
   void setMetadata(const QString & name, const QString & value);
   void removeMetadata(const QString &);
 
-  int   getResolution();
-  void  setResolution(const int & resolution);
+  double getResolution();
+  void   setResolution(const double & resolution);
 
-  int   getDefResolution();
-  void  setDefResolution(const int & resolution);
+  double getDefResolution();
+  void   setDefResolution(const double & resolution);
 
   float getAngle();
   void setAngle(const float & angle);

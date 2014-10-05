@@ -279,7 +279,7 @@ void TestMapfileParser::testShapePath() {
   if (p) delete p;
 }
 
-/** test shape path */
+/** test symbol set */
 void TestMapfileParser::testSymbolSet() {
   MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
   QVERIFY(p->getSymbolSet() == "symbol.sym");
@@ -287,3 +287,40 @@ void TestMapfileParser::testSymbolSet() {
   QVERIFY(p->getSymbolSet() == "/usr/share/mapserver/symbol.sym");
   if (p) delete p;
 }
+
+/** test font set */
+void TestMapfileParser::testFontSet() {
+  MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
+  QVERIFY(p->getFontSet() == "test.font");
+  p->setFontSet("/usr/share/mapserver/default.font");
+  QVERIFY(p->getFontSet() == "/usr/share/mapserver/default.font");
+  if (p) delete p;
+}
+
+/** test resolution */
+void TestMapfileParser::testResolution() {
+  MapfileParser * p  = new MapfileParser();
+  // default is 72
+  QVERIFY(p->getResolution() == 72);
+
+  p->setResolution(48);
+
+  QVERIFY(p->getResolution() == 48);
+
+  if (p) delete p;
+}
+
+/** test defresolution */
+void TestMapfileParser::testDefResolution() {
+  MapfileParser * p  = new MapfileParser();
+  QVERIFY(p->getDefResolution() == 72);
+
+  p->setDefResolution(48);
+
+  QVERIFY(p->getDefResolution() == 48);
+
+  if (p) delete p;
+}
+
+
+

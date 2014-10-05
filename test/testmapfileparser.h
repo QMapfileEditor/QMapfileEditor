@@ -24,6 +24,9 @@ class TestMapfileParser: public QObject
       void testMetadata();
       void testShapePath();
       void testSymbolSet();
+      void testFontSet();
+      void testResolution();
+      void testDefResolution();
 
 };
 
