@@ -195,7 +195,7 @@ void MapSettings::saveMapSettings() {
     //projection
     this->mapfile->setMapProjection(ui->mf_map_projection->currentText());
     //extent
-    this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(), ui->mf_map_extent_top->text().toFloat(),ui->mf_map_extent_right->text().toFloat(),ui->mf_map_extent_top->text().toFloat());
+    this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(), ui->mf_map_extent_bottom->text().toFloat(),ui->mf_map_extent_right->text().toFloat(),ui->mf_map_extent_top->text().toFloat());
     
     /** Debug tab **/
     if(ui->mf_map_debug_on->isChecked()) {

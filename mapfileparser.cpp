@@ -105,10 +105,6 @@ unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int &
   if (width > 0 && height > 0) {
     this->map->querymap.width  = width;
     this->map->querymap.height = height;
-    // TODO: The second time it is called, msDrawMap returns
-    // NULL.
-    // Somehow the first call (or something elsewhere) makes
-    // the map object inconsistent.
     img = msDrawMap(this->map, MS_TRUE);
   } else {
     img = msDrawMap(this->map, MS_FALSE);
