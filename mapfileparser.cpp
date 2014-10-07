@@ -343,6 +343,10 @@ QHash<QString, QString> MapfileParser::getConfigOptions() {
   return populateMapFromMs(& (this->map->configoptions));
 }
 
+QString MapfileParser::getConfigOption(const QString &key) {
+  return this->getConfigOptions().value(key, QString());
+}
+
 void MapfileParser::setConfigOption(const QString & name, const QString & value) {
   if (! this->map)
     return;
@@ -356,30 +360,6 @@ void MapfileParser::removeConfigOption(const QString & name) {
   if (! this->map)
     return;
   removeFromMsMap(& (this->map->configoptions), name);
-}
-
-QString MapfileParser::getDebugFile() {
-  return this->getConfigOptions().value("MS_ERRORFILE", QString());
-}
-
-QString MapfileParser::getConfigMissingData() {
-  return this->getConfigOptions().value("ON_MISSING_DATA", QString());
-}
-
-QString MapfileParser::getConfigContextUrl() {
-  return this->getConfigOptions().value("CGI_CONTEXT_URL", QString());
-}
-
-QString MapfileParser::getConfigEncryptionKey() {
-  return this->getConfigOptions().value("MS_ENCRYPTION_KEY", QString());
-}
-
-QString MapfileParser::getConfigNonsquare() {
-  return this->getConfigOptions().value("MS_NONSQUARE", QString());
-}
-
-QString MapfileParser::getConfigProjLib() {
-  return this->getConfigOptions().value("PROJ_LIB", QString());
 }
 
 /**

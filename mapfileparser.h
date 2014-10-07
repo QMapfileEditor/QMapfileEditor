@@ -61,7 +61,6 @@ class MapfileParser
   int   getDebug();
   void  setDebug(const int & debug);
 
-  QString getDebugFile();
 
 
   QString getShapepath();
@@ -79,31 +78,17 @@ class MapfileParser
   QString getDataPattern();
   void    setDataPattern(const QString & pattern);
 
-  QString getConfigContextUrl();
-
-  QString getConfigEncryptionKey();
-
-  QString getConfigNonsquare();
-
-  QString getConfigMissingData();
-
-  QString getConfigProjLib();
-
   QString getMetadataWmsTitle();
-
   QString getMetadataWfsTitle();
-
   QString getMetadataWmsOnlineresource();
-
   QString getMetadataWfsOnlineresource();
-
   QString getMetadataWmsSrs();
-
   QString getMetadataWfsSrs();
 
   QHash<QString, QString> getConfigOptions(void);
-  void setConfigOption(const QString & name, const QString & value);
-  void removeConfigOption(const QString & name);
+  QString                 getConfigOption(const QString &);
+  void                    setConfigOption(const QString & name, const QString & value);
+  void                    removeConfigOption(const QString & name);
 
   QHash<QString, QString> getMetadatas(void);
   void setMetadata(const QString & name, const QString & value);

@@ -84,10 +84,10 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_angle->setValue(this->mapfile->getAngle());
     ui->mf_map_templatepattern->setText(this->mapfile->getTemplatePattern());
     ui->mf_map_datapattern->setText(this->mapfile->getDataPattern());
-    ui->mf_map_config_contexturl->setText(this->mapfile->getConfigContextUrl());
-    ui->mf_map_config_encryption->setText(this->mapfile->getConfigEncryptionKey());
+    ui->mf_map_config_contexturl->setText(this->mapfile->getConfigOption("CGI_CONTEXT_URL"));
+    ui->mf_map_config_encryption->setText(this->mapfile->getConfigOption("MS_ENCRYPTION_KEY"));
 
-    if (this->mapfile->getConfigNonsquare() != NULL ) {
+    if (! this->mapfile->getConfigOption("MS_NONSQUARE").isEmpty()) {
         ui->mf_map_config_squarepixel_on->setChecked(true);
         ui->mf_map_config_squarepixel_off->setChecked(false);
     } else {
@@ -95,7 +95,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
         ui->mf_map_config_squarepixel_off->setChecked(true);
     }
 
-    ui->mf_map_config_projlib->setText(this->mapfile->getConfigProjLib());
+    ui->mf_map_config_projlib->setText(this->mapfile->getConfigOption("PROJ_LIB"));
 
     /** OGC Standard tab **/
     //connect
@@ -135,11 +135,11 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     //TODO: add option for relative/absolute debug file in forms.
     //TODO: Test if file exist or form is empty, if not warn user
     this->connect(ui->mf_map_config_errorFile_browse, SIGNAL(clicked()), SLOT(browseDebugFile()));
-    ui->mf_map_config_errorFile->setText(this->mapfile->getDebugFile());
+    ui->mf_map_config_errorFile->setText(this->mapfile->getConfigOption("MS_ERRORFILE"));
 
     ui->mf_map_config_missingdata->addItems(MapfileParser::missingData);
-    if (this->mapfile->getConfigMissingData() != NULL ) {
-        ui->mf_map_config_missingdata->setCurrentIndex(MapfileParser::missingData.lastIndexOf(this->mapfile->getConfigMissingData()));
+    if (! this->mapfile->getConfigOption("ON_MISSING_DATA").isEmpty()) {
+        ui->mf_map_config_missingdata->setCurrentIndex(MapfileParser::missingData.lastIndexOf(this->mapfile->getConfigOption("ON_MISSING_DATA")));
     }
 
     // Filling the table by known OGC metadata from the mapfile
