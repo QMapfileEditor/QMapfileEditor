@@ -31,6 +31,7 @@ class MapSettings : public QDialog
       void addNewOgcMetadata();
       void angleSliderChanged(int);
       void angleSpinChanged(int);
+      void addNewOutputFormat(void);
       void enableDebugBox(bool);
       void enableOgcStandardFrame(bool);
       void browseDebugFile();
