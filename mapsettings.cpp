@@ -1,5 +1,4 @@
-#include <QStandardItem>
-#include <QStandardItemModel>
+
 
 #include "mapsettings.h"
 #include "ui_mapsettings.h"
@@ -36,6 +35,13 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_units->setCurrentIndex(this->mapfile->getMapUnits());
 
     //Outpuformat
+    this->outputFormatsMapper = new QDataWidgetMapper(this);
+    QAbstractListModel * outputFormatsModel = new QAbstractListModel(this->outputFormatsMapper);
+
+    this->outputFormatsMapper->setModel(outputFormatsModel);
+    //this->outputFormatsMapper->addMapping();
+
+
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
     //TODO: add custom outputformat

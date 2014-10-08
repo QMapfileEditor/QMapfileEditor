@@ -1,8 +1,9 @@
 #ifndef MAPSETTINGS_H
 #define MAPSETTINGS_H
 
-
+#include <QAbstractListModel>
 #include <QColorDialog>
+#include <QDataWidgetMapper>
 #include <QDialog>
 #include <QDir>
 #include <QFileDialog>
@@ -50,6 +51,8 @@ class MapSettings : public QDialog
       MapfileParser * mapfile;
 
       QUndoStack * settingsUndoStack;
+
+      QDataWidgetMapper * outputFormatsMapper;
 
       bool alreadyInModel(const QString &);
       void createOgcOptionsModel();
