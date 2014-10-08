@@ -38,15 +38,14 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->outputFormatsMapper = new QDataWidgetMapper(this);
     OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
 
-    //this->ui->mf_outputformat_list->setModel(outputFormatsModel);
+    outputFormatsModel->setData(this->mapfile->getOutputFormats());
+    ui->mf_outputformat_list->setModel(outputFormatsModel);
     this->outputFormatsMapper->setModel(outputFormatsModel);
-    this->outputFormatsMapper->addMapping(ui->mf_outputformat_list,      OutputFormatsModel::Name);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_name,      OutputFormatsModel::Name);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_driver,    OutputFormatsModel::Driver);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
-    outputFormatsModel->setData(this->mapfile->getOutputFormats());
 
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);

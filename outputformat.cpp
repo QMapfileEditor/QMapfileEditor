@@ -39,7 +39,7 @@ void OutputFormat::setName(QString const &v)      { name        = v; }
 void OutputFormat::setMimeType(QString const &v)  { mimeType    = v; }
 void OutputFormat::setDriver(QString const &v)    { driver      = v; }
 void OutputFormat::setExtension(QString const &v) { extension   = v; }
-void OutputFormat::setImageMode(int const &v)   { imageMode   = v; }
+void OutputFormat::setImageMode(int const &v)     { imageMode   = v; }
 void OutputFormat::setTransparent(bool const &v)  { transparent = v; }
 
 /** related to OutputFormat Model (representation into the UI) */
@@ -74,6 +74,8 @@ void OutputFormatsModel::setData(QList<OutputFormat *> const & items) {
 }
 
 QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
+  if (role != Qt::DisplayRole)
+    return QVariant();
   if (index.row() > entries.size())
     return QVariant();
 
