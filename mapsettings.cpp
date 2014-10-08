@@ -40,6 +40,8 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
 
     outputFormatsModel->setData(this->mapfile->getOutputFormats());
     ui->mf_outputformat_list->setModel(outputFormatsModel);
+    for (int i = 1; i < outputFormatsModel->columnCount(); i++)
+      ui->mf_outputformat_list->hideColumn(i);
     this->outputFormatsMapper->setModel(outputFormatsModel);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_name,      OutputFormatsModel::Name);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_driver,    OutputFormatsModel::Driver);
@@ -52,7 +54,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     //TODO: add custom outputformat
     //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
-    //this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
+    this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
 
 
@@ -448,7 +450,8 @@ void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
 
 
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
-//    QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
+  this->outputFormatsMapper->setCurrentModelIndex(i);
+  //    QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
 //    if (item != NULL) {
 //      OutputFormat selFmt = this->mapfile->getOutputFormat(item->text());
 //      if (! selFmt.isEmpty()) {

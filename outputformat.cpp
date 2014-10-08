@@ -62,11 +62,13 @@ int OutputFormatsModel::columnCount(const QModelIndex &parent) const {
   return OutputFormatsModel::Transparent + 1;
 }
 
-QVariant headerData (int section, Qt::Orientation orientation, int role) {
+QVariant OutputFormatsModel::headerData (int section, Qt::Orientation orientation, int role) const {
   Q_UNUSED(section);
   Q_UNUSED(orientation);
   Q_UNUSED(role);
-  return QVariant("Output formats");
+  if (role != Qt::DisplayRole)
+    return QVariant();
+  return QVariant(QObject::tr("Output formats"));
 }
 
 void OutputFormatsModel::setData(QList<OutputFormat *> const & items) {
