@@ -1,5 +1,4 @@
-#include <QStandardItem>
-#include <QStandardItemModel>
+
 
 #include "mapsettings.h"
 #include "ui_mapsettings.h"
@@ -36,12 +35,25 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_units->setCurrentIndex(this->mapfile->getMapUnits());
 
     //Outpuformat
+    this->outputFormatsMapper = new QDataWidgetMapper(this);
+    OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
+
+    outputFormatsModel->setEntries(this->mapfile->getOutputFormats());
+    ui->mf_outputformat_list->setModel(outputFormatsModel);
+    for (int i = 1; i < outputFormatsModel->columnCount(); i++)
+      ui->mf_outputformat_list->hideColumn(i);
+    this->outputFormatsMapper->setModel(outputFormatsModel);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_name,      OutputFormatsModel::Name);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_driver,    OutputFormatsModel::Driver);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
+
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
-    //TODO: add custom outputformat
-    //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
+    this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
 
 
@@ -154,17 +166,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
         }
     }
 
-    // output formats list
-    QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
-    QStandardItemModel * outputFmtModel = new QStandardItemModel(this->ui->mf_outputformat_list);
-    outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
-    this->ui->mf_outputformat_list->setModel(outputFmtModel);
-    for (int i = 0 ; i < outputFmtList.size(); ++i) {
-      OutputFormat fmt = outputFmtList.at(i);
-      QStandardItem * item = new QStandardItem(fmt.getName());
-      item->setEditable(false);
-      outputFmtModel->appendRow(item);
-    }
 }
 
 void MapSettings::createOgcOptionsModel() {
@@ -324,20 +325,24 @@ void MapSettings::addConfigOptionsToModel(const QString & name, const QString & 
 }
 
 void MapSettings::addNewOutputFormat() {
-  QStandardItemModel * mdl = (QStandardItemModel *) this->ui->mf_outputformat_list->model();
-  QString pattern = QString("newfmt%1");
+  QList<OutputFormat *> lst = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getEntries();
+  QString templ = QString("outfmt%1");
   int idx = 1;
-  QString newof = pattern.arg(idx);
-
-  while (mdl->findItems(newof).size() > 0) {
-    newof = pattern.arg(++idx);
+  QStringList ofNames = QStringList();
+  for (int i = 0; i < lst.size(); ++i) {
+    ofNames.append(lst.at(i)->getName());
   }
-  QStandardItem *newOfItem = new QStandardItem(newof);
-  newOfItem->setEditable(false);
+  QString curGenOf = templ.arg(idx);
+  while (ofNames.contains(curGenOf)) 
+    curGenOf = templ.arg(++idx);
 
-  mdl->appendRow(newOfItem);
+  OutputFormat * of = new OutputFormat(curGenOf);
+  of->setState(OutputFormat::ADDED);
+
+  lst.append(of);
+  ((OutputFormatsModel *) this->outputFormatsMapper->model())->setEntries(lst);
+
 }
-
 
 /** Following method should be refactored **/
 void MapSettings::browseProjlibFile() {
@@ -446,25 +451,12 @@ void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
     }
 }
 
-
+void MapSettings::refreshOutputFormatTab(void) {
+ this->refreshOutputFormatTab(this->ui->mf_outputformat_list->currentIndex());
+}
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
-    QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
-    if (item != NULL) {
-      OutputFormat selFmt = this->mapfile->getOutputFormat(item->text());
-      if (! selFmt.isEmpty()) {
-        this->ui->mf_outputformat_name->setText(selFmt.getName());
-        this->ui->mf_outputformat_transparent_on->setChecked(selFmt.getTransparent());
-        this->ui->mf_outputformat_transparent_off->setChecked(! selFmt.getTransparent());
-
-        this->ui->mf_outputformat_extension->setText(selFmt.getExtension());
-        this->ui->mf_outputformat_mimetype->setText(selFmt.getMimeType());
-
-        int driIdx = this->ui->mf_outputformat_driver->findText(selFmt.getDriver());
-        if (driIdx != -1) this->ui->mf_outputformat_driver->setCurrentIndex(driIdx);
-
-        this->toggleOutputFormatsWidgets(true);
-      }
-    }
+  this->outputFormatsMapper->setCurrentModelIndex(i);
+  this->toggleOutputFormatsWidgets(true);
 }
 
 void MapSettings::toggleOutputFormatsWidgets(const bool &enable) {

@@ -576,38 +576,44 @@ void MapfileParser::setImageColor(const int & red, const int & green, const int 
     }
 }
 
-QList<OutputFormat> MapfileParser::getOutputFormats() {
-  QList<OutputFormat> ret = QList<OutputFormat>();
+/**
+ * Gets the known output format from the Mapfile.
+ * Note: it is the responsability of the caller to free the allocated objects.
+ */
+QList<OutputFormat *> MapfileParser::getOutputFormats() {
+  QList<OutputFormat *> ret = QList<OutputFormat *>();
   if (!this->map)
     return ret;
   for (int i = 0; i < this->map->numoutputformats ; i++) {
-    OutputFormat item = OutputFormat(this->map->outputformatlist[i]->name,
-                            this->map->outputformatlist[i]->mimetype,
-                            this->map->outputformatlist[i]->driver,
-                            this->map->outputformatlist[i]->extension,
-                            this->map->outputformatlist[i]->imagemode,
-                            this->map->outputformatlist[i]->transparent);
+    OutputFormat * item = new OutputFormat(this->map->outputformatlist[i]->name,
+                                           this->map->outputformatlist[i]->mimetype,
+                                           this->map->outputformatlist[i]->driver,
+                                           this->map->outputformatlist[i]->extension,
+                                           this->map->outputformatlist[i]->imagemode,
+                                           this->map->outputformatlist[i]->transparent,
+                                           OutputFormat::UNCHANGED);
+
     for (int j = 0 ; j < this->map->outputformatlist[i]->numformatoptions; ++j) {
       QStringList kv = QString(this->map->outputformatlist[i]->formatoptions[j]).split("=");
       if (kv.size() == 2)
-        item.addFormatOption(kv[0], kv[1]);
+        item->addFormatOption(kv[0], kv[1]);
     }
     ret.append(item);
   }
   return ret;
 }
 
-OutputFormat MapfileParser::getOutputFormat(const QString & key) {
-  QList<OutputFormat> lst = this->getOutputFormats();
-  for (int i = 0; i < lst.size(); ++i) {
-    OutputFormat cur = lst.at(i);
-    // In Mapserver, the name of the outputformat is used as primary key
-    if (key == cur.getName())
-      return cur;
-  }
-  return OutputFormat();
-
-}
+//OutputFormat MapfileParser::getOutputFormat(const QString & key) {
+//  QList<OutputFormat> lst = this->getOutputFormats();
+//  for (int i = 0; i < lst.size(); ++i) {
+//    OutputFormat cur = lst.at(i);
+//    // In Mapserver, the name of the outputformat is used as primary key
+//    if (key == cur.getName())
+//      return cur;
+//  }
+//  return OutputFormat();
+//
+//}
 
 bool MapfileParser::saveMapfile(const QString & filename) {
   int ret = -1;
