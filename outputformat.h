@@ -71,6 +71,8 @@ class OutputFormatsModel : public QAbstractListModel {
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole );
 
+    void setData(QList<OutputFormat *> const &);
+
     enum Column { Name, MimeType, Driver, Extension, ImageMode, Transparent };
   protected:
       QList<OutputFormat *> entries;

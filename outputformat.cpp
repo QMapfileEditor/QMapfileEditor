@@ -66,11 +66,15 @@ QVariant headerData (int section, Qt::Orientation orientation, int role) {
   Q_UNUSED(section);
   Q_UNUSED(orientation);
   Q_UNUSED(role);
-  return QVariant(QObject::tr("Output formats"));
+  return QVariant("Output formats");
+}
+
+void OutputFormatsModel::setData(QList<OutputFormat *> const & items) {
+  entries = items;
 }
 
 QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
-  if (index.row() > entries.size()) 
+  if (index.row() > entries.size())
     return QVariant();
 
   OutputFormat * of = entries.at(index.row());

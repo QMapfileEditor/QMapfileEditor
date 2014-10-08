@@ -25,8 +25,7 @@ class MapfileParser
   QStringList getGdalGdalDrivers(void) { return gdalGdalDrivers; };
   QStringList getGdalOgrDrivers(void) { return gdalOgrDrivers; };
 
-  QList<OutputFormat> getOutputFormats(void);
-  OutputFormat getOutputFormat(const QString &);
+  QList<OutputFormat *> getOutputFormats(void);
 
   bool getMapStatus();
   void setMapStatus(const bool & status);
