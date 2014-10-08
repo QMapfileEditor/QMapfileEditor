@@ -46,6 +46,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
     //TODO: add custom outputformat
     //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
+    this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
 
@@ -159,7 +160,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
         }
     }
 
-    // output formats
+    // output formats list
     QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
     QStandardItemModel * outputFmtModel = new QStandardItemModel(this->ui->mf_outputformat_list);
     outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
@@ -172,7 +173,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     }
 }
 
-//Methods
 void MapSettings::createOgcOptionsModel() {
     QStandardItemModel  * ogcOptions_model = new QStandardItemModel(0, 2);
     QStringList header;
@@ -235,6 +235,7 @@ void MapSettings::saveMapSettings() {
     this->mapfile->setMetadata("PROJ_LIB", ui->mf_map_config_projlib->text());
 
     /** Outputformat tab **/
+
 
     /** OGC tab **/
 
@@ -327,6 +328,22 @@ void MapSettings::addConfigOptionsToModel(const QString & name, const QString & 
   mod->appendRow(row);
   ui->mf_map_web_md_options_list->resizeColumnsToContents();
 }
+
+void MapSettings::addNewOutputFormat() {
+  QStandardItemModel * mdl = (QStandardItemModel *) this->ui->mf_outputformat_list->model();
+  QString pattern = QString("newfmt%1");
+  int idx = 1;
+  QString newof = pattern.arg(idx);
+
+  while (mdl->findItems(newof).size() > 0) {
+    newof = pattern.arg(++idx);
+  }
+  QStandardItem *newOfItem = new QStandardItem(newof);
+  newOfItem->setEditable(false);
+
+  mdl->appendRow(newOfItem);
+}
+
 
 /** Following method should be refactored **/
 void MapSettings::browseProjlibFile() {
