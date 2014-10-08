@@ -6,21 +6,24 @@ OutputFormat::OutputFormat(const QString & name,
                 const QString & driver,
                 const QString & extension,
                 const int  & imageMode,
-                const bool & transparent) :
+                const bool & transparent,
+                const enum State & state) :
 name(name),
 mimeType(mimeType),
 driver(driver),
 extension(extension),
 imageMode(imageMode),
-transparent(transparent) {}
+transparent(transparent),
+state(state) {}
 
-QString OutputFormat::getName()        { return name;        }
-QString OutputFormat::getMimeType()    { return mimeType;    }
-QString OutputFormat::getDriver()      { return driver;      }
-QString OutputFormat::getExtension()   { return extension;   }
-int     OutputFormat::getImageMode()   { return imageMode;   }
-bool    OutputFormat::getTransparent() { return transparent; }
-QHash<QString, QString> OutputFormat::getFormatOptions() { return formatOptions; }
+QString const & OutputFormat::getName()        const { return name;        }
+QString const & OutputFormat::getMimeType()    const { return mimeType;    }
+QString const & OutputFormat::getDriver()      const { return driver;      }
+QString const & OutputFormat::getExtension()   const { return extension;   }
+int     const & OutputFormat::getImageMode()   const { return imageMode;   }
+bool    const & OutputFormat::getTransparent() const { return transparent; }
+
+QHash<QString, QString> const & OutputFormat::getFormatOptions() const { return formatOptions; }
 
 bool OutputFormat::isEmpty() { return name.isEmpty(); };
 
@@ -32,11 +35,62 @@ void OutputFormat::removeFormatOption(const QString &k) {
   formatOptions.remove(k);
 }
 
-void OutputFormat::setName(const QString &v)      { name        = v; }
-void OutputFormat::setMimeType(const QString &v)  { mimeType    = v; }
-void OutputFormat::setDriver(const QString &v)    { driver      = v; }
-void OutputFormat::setExtension(const QString &v) { extension   = v; }
-void OutputFormat::setImageMode(const   int &v)   { imageMode   = v; }
-void OutputFormat::setTransparent(const bool &v)  { transparent = v; }
+void OutputFormat::setName(QString const &v)      { name        = v; }
+void OutputFormat::setMimeType(QString const &v)  { mimeType    = v; }
+void OutputFormat::setDriver(QString const &v)    { driver      = v; }
+void OutputFormat::setExtension(QString const &v) { extension   = v; }
+void OutputFormat::setImageMode(int const &v)   { imageMode   = v; }
+void OutputFormat::setTransparent(bool const &v)  { transparent = v; }
 
+/** related to OutputFormat Model (representation into the UI) */
 
+OutputFormatsModel::OutputFormatsModel(QObject * parent) : QAbstractListModel(parent) {}
+
+OutputFormatsModel::~OutputFormatsModel() {
+  for (int i = 0; i < entries.count(); ++i) {
+    delete entries.at(i);
+  }
+}
+
+int OutputFormatsModel::rowCount(const QModelIndex & parent) const {
+  Q_UNUSED(parent);
+  return entries.count();
+}
+
+int OutputFormatsModel::columnCount(const QModelIndex &parent) const {
+  Q_UNUSED(parent);
+  return OutputFormatsModel::Transparent + 1;
+}
+
+QVariant headerData (int section, Qt::Orientation orientation, int role) {
+  Q_UNUSED(section);
+  Q_UNUSED(orientation);
+  Q_UNUSED(role);
+  return QVariant(QObject::tr("Output formats"));
+}
+
+QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
+  if (index.row() > entries.size()) 
+    return QVariant();
+
+  OutputFormat * of = entries.at(index.row());
+
+  if (of == NULL)
+    return QVariant();
+
+  switch (index.column()) {
+    case OutputFormatsModel::Name:
+      return QVariant(of->getName());
+    case OutputFormatsModel::MimeType:
+      return QVariant(of->getMimeType());
+    case OutputFormatsModel::Driver:
+      return QVariant(of->getDriver());
+    case OutputFormatsModel::Extension:
+      return QVariant(of->getExtension());
+    case OutputFormatsModel::ImageMode:
+      return QVariant(of->getImageMode());
+    case OutputFormatsModel::Transparent:
+      return QVariant(of->getTransparent());
+  }
+  return QVariant();
+}

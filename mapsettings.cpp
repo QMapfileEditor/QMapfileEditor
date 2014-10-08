@@ -36,10 +36,24 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
 
     //Outpuformat
     this->outputFormatsMapper = new QDataWidgetMapper(this);
-    QAbstractListModel * outputFormatsModel = new QAbstractListModel(this->outputFormatsMapper);
-
+    OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this->outputFormatsMapper);
     this->outputFormatsMapper->setModel(outputFormatsModel);
-    //this->outputFormatsMapper->addMapping();
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_name,      OutputFormatsModel::Name);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_driver,    OutputFormatsModel::Driver);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
+    // TODO
+    QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
+    QStandardItemModel * outputFmtModel = new QStandardItemModel(this->ui->mf_outputformat_list);
+    outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
+    this->ui->mf_outputformat_list->setModel(outputFmtModel);
+    for (int i = 0 ; i < outputFmtList.size(); ++i) {
+      OutputFormat fmt = outputFmtList.at(i);
+      QStandardItem * item = new QStandardItem(fmt.getName());
+      item->setEditable(false);
+      outputFmtModel->appendRow(item);
+    }
 
 
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
@@ -160,17 +174,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
         }
     }
 
-    // output formats list
-    QList<OutputFormat> outputFmtList = this->mapfile->getOutputFormats();
-    QStandardItemModel * outputFmtModel = new QStandardItemModel(this->ui->mf_outputformat_list);
-    outputFmtModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Format name")));
-    this->ui->mf_outputformat_list->setModel(outputFmtModel);
-    for (int i = 0 ; i < outputFmtList.size(); ++i) {
-      OutputFormat fmt = outputFmtList.at(i);
-      QStandardItem * item = new QStandardItem(fmt.getName());
-      item->setEditable(false);
-      outputFmtModel->appendRow(item);
-    }
 }
 
 void MapSettings::createOgcOptionsModel() {
