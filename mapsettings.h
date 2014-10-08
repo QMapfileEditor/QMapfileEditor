@@ -44,6 +44,7 @@ class MapSettings : public QDialog
       void changeMapName();
       void refreshGdalOgrDriverCombo(const QString &);
       void refreshOutputFormatTab(const QModelIndex &);
+      void refreshOutputFormatTab(void);
       void setImageColor();
 
  private:

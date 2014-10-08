@@ -1329,15 +1329,12 @@
           </size>
          </property>
          <widget class="QWidget" name="layoutWidget17">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
             <width>402</width>
-            <height>388</height>
+            <height>325</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1357,9 +1354,6 @@
              </property>
              <item>
               <widget class="QLabel" name="mf_outputformat_name_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1385,9 +1379,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="mf_outputformat_name">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1404,9 +1395,6 @@
              </item>
              <item>
               <spacer name="horizontalSpacer_9">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1430,9 +1418,6 @@
              </property>
              <item>
               <widget class="QLabel" name="mf_outputformat_driver_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1458,9 +1443,6 @@
              </item>
              <item>
               <widget class="QComboBox" name="mf_outputformat_driver">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1477,9 +1459,6 @@
              </item>
              <item>
               <spacer name="horizontalSpacer_10">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1493,9 +1472,6 @@
              </item>
              <item>
               <widget class="QLabel" name="gdaldriver_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>90</width>
@@ -1515,9 +1491,6 @@
              </item>
              <item>
               <widget class="QComboBox" name="mf_gdal_ogr_driver">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1544,9 +1517,6 @@
              </property>
              <item>
               <widget class="QLabel" name="mf_outputformat_transparent_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1572,9 +1542,6 @@
              </item>
              <item>
               <widget class="QRadioButton" name="mf_outputformat_transparent_on">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>45</width>
@@ -1597,9 +1564,6 @@
              </item>
              <item>
               <widget class="QRadioButton" name="mf_outputformat_transparent_off">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>45</width>
@@ -1619,9 +1583,6 @@
              </item>
              <item>
               <spacer name="horizontalSpacer_11">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1635,9 +1596,6 @@
              </item>
              <item>
               <widget class="QLabel" name="mf_outputformat_extension_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>90</width>
@@ -1657,9 +1615,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="mf_outputformat_extension">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1686,9 +1641,6 @@
              </property>
              <item>
               <widget class="QLabel" name="mf_outputformat_imagemode_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1714,9 +1666,6 @@
              </item>
              <item>
               <widget class="QComboBox" name="mf_outputformat_imagemode">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1733,9 +1682,6 @@
              </item>
              <item>
               <spacer name="horizontalSpacer_12">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1771,9 +1717,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="mf_outputformat_mimetype">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1800,9 +1743,6 @@
              </property>
              <item>
               <widget class="QLabel" name="mf_outputformat_options_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1828,9 +1768,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="mf_outputformat_option_name">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1847,9 +1784,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="mf_outputformat_option_value">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1866,9 +1800,6 @@
              </item>
              <item>
               <spacer name="horizontalSpacer_7">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1882,9 +1813,6 @@
              </item>
              <item>
               <widget class="QToolButton" name="mf_outputformat_options_add">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>25</width>
@@ -1908,9 +1836,6 @@
              </item>
              <item>
               <widget class="QToolButton" name="mf_outputformat_options_del">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>25</width>
@@ -1936,9 +1861,6 @@
            </item>
            <item>
             <widget class="QTableView" name="mf_outputformat_formatoptions_list">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
              <property name="minimumSize">
               <size>
                <width>400</width>
@@ -1973,9 +1895,6 @@
            </item>
            <item>
             <widget class="QDialogButtonBox" name="mf_outputformat_form_buttons">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
              <property name="minimumSize">
               <size>
                <width>30</width>

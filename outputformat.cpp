@@ -76,7 +76,7 @@ void OutputFormatsModel::setData(QList<OutputFormat *> const & items) {
 }
 
 QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
-  if (role != Qt::DisplayRole)
+  if ((role != Qt::DisplayRole) && (role != Qt::EditRole))
     return QVariant();
   if (index.row() > entries.size())
     return QVariant();

@@ -51,10 +51,9 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
 
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
-    //TODO: add custom outputformat
-    //ui->mf_map_outputformat->setCurrentIndex(this->mapfile->getMapImageTypes());
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
+    this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
 
 
@@ -448,26 +447,12 @@ void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
     }
 }
 
-
+void MapSettings::refreshOutputFormatTab(void) {
+ this->refreshOutputFormatTab(this->ui->mf_outputformat_list->currentIndex());
+}
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
   this->outputFormatsMapper->setCurrentModelIndex(i);
-  //    QStandardItem * item = ((QStandardItemModel *) ui->mf_outputformat_list->model())->itemFromIndex(i);
-//    if (item != NULL) {
-//      OutputFormat selFmt = this->mapfile->getOutputFormat(item->text());
-//      if (! selFmt.isEmpty()) {
-//        this->ui->mf_outputformat_name->setText(selFmt.getName());
-//        this->ui->mf_outputformat_transparent_on->setChecked(selFmt.getTransparent());
-//        this->ui->mf_outputformat_transparent_off->setChecked(! selFmt.getTransparent());
-//
-//        this->ui->mf_outputformat_extension->setText(selFmt.getExtension());
-//        this->ui->mf_outputformat_mimetype->setText(selFmt.getMimeType());
-//
-//        int driIdx = this->ui->mf_outputformat_driver->findText(selFmt.getDriver());
-//        if (driIdx != -1) this->ui->mf_outputformat_driver->setCurrentIndex(driIdx);
-//
-//        this->toggleOutputFormatsWidgets(true);
-//      }
-//    }
+  this->toggleOutputFormatsWidgets(true);
 }
 
 void MapSettings::toggleOutputFormatsWidgets(const bool &enable) {
