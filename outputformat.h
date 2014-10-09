@@ -83,7 +83,7 @@ class OutputFormatsModel : public QAbstractListModel {
 };
 
 // secondary model for format options
-class OutputFormatOptionsModel : public QAbstractListModel {
+class OutputFormatOptionsModel : public QAbstractTableModel {
   public:
     OutputFormatOptionsModel(QObject *parent = 0);
     ~OutputFormatOptionsModel();
@@ -92,14 +92,14 @@ class OutputFormatOptionsModel : public QAbstractListModel {
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex &index, int role) const;
-//    QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+    QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
-    void setEntries(QHash<QString, QString>);
-    QHash<QString, QString> const & getEntries() const;
+    void setData(OutputFormat * const &);
+    OutputFormat * const & getData() const;
 
     enum Column { Key, Value };
   protected:
-      QHash<QString, QString> entries;
+    OutputFormat * dataSrc;
 
 };
 

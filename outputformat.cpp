@@ -66,7 +66,6 @@ int OutputFormatsModel::columnCount(const QModelIndex &parent) const {
 QVariant OutputFormatsModel::headerData (int section, Qt::Orientation orientation, int role) const {
   Q_UNUSED(section);
   Q_UNUSED(orientation);
-  Q_UNUSED(role);
   if (role != Qt::DisplayRole)
     return QVariant();
   return QVariant(QObject::tr("Output formats"));
@@ -115,16 +114,18 @@ QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
 }
 
 /** format options model */
-OutputFormatOptionsModel::OutputFormatOptionsModel(QObject * parent) : QAbstractListModel(parent) {}
+OutputFormatOptionsModel::OutputFormatOptionsModel(QObject * parent) : QAbstractTableModel(parent), dataSrc(0) {}
 
 OutputFormatOptionsModel::~OutputFormatOptionsModel() {}
 
 #include <iostream>
 int OutputFormatOptionsModel::rowCount(const QModelIndex & parent) const {
   Q_UNUSED(parent);
-  std::cout << "into rowCount, " << this->entries.keys().size() << " rows" <<  std::endl;
-  return 4;
-  return this->entries.keys().size();
+  if (dataSrc == NULL)
+    return 0;
+  int ret = this->dataSrc->getFormatOptions().keys().size();
+  std::cout << "into rowCount, " << ret << " rows" <<  std::endl;
+  return ret;
 }
 
 int OutputFormatOptionsModel::columnCount(const QModelIndex &parent) const {
@@ -132,40 +133,46 @@ int OutputFormatOptionsModel::columnCount(const QModelIndex &parent) const {
   return OutputFormatOptionsModel::Value + 1;
 }
 
-//QVariant OutputFormatOptionsModel::headerData (int section, Qt::Orientation orientation, int role) const {
-//  if ((role != Qt::DisplayRole) && (role != 1) && (role != 6) && (role != 7) && (role != 8) && (role != 9) && (role != 13))
-//    return QVariant();
-//  if (orientation == Qt::Vertical)
-//    return QVariant(section);
-//  if (section == OutputFormatOptionsModel::Key)
-//    return QVariant(QObject::tr("Key"));
-//  else if (section == OutputFormatOptionsModel::Value)
-//    return QVariant(QObject::tr("Value"));
-//
-//  return QVariant(section);
-//}
-
-void OutputFormatOptionsModel::setEntries(QHash<QString, QString> items) {
-  entries = items;
-  emit dataChanged (QAbstractItemModel::createIndex(0,0), QAbstractItemModel::createIndex(entries.keys().size(), 1));
+QVariant OutputFormatOptionsModel::headerData (int section, Qt::Orientation orientation, int role) const {
+  std::cout << "into headerData()" << std::endl;
+  if (role == Qt::SizeHintRole) {
+    return QVariant(20);
+  }
+  return QVariant("header cell");
+  if (orientation == Qt::Vertical)
+    return QVariant(section);
+  if (section == OutputFormatOptionsModel::Key)
+    return QVariant(QObject::tr("Key"));
+  else if (section == OutputFormatOptionsModel::Value)
+    return QVariant(QObject::tr("Value"));
+  return QVariant(section);
 }
 
-QHash<QString, QString> const & OutputFormatOptionsModel::getEntries(void) const {
-  return entries;
+void OutputFormatOptionsModel::setData(OutputFormat * const & fmt) {
+  dataSrc = fmt;
+  emit dataChanged (QAbstractItemModel::createIndex(0,0), QAbstractItemModel::createIndex(dataSrc->getFormatOptions().keys().size(), 1));
+}
+
+OutputFormat * const & OutputFormatOptionsModel::getData(void) const {
+  return dataSrc;
 }
 
 QVariant OutputFormatOptionsModel::data(const QModelIndex &index, int role) const {
 
-  if ((role != Qt::DisplayRole) && (role != Qt::EditRole))
+  if (dataSrc == NULL) {
     return QVariant();
-  if (index.row() >= entries.keys().size())
+  }
+  if (role != Qt::DisplayRole)
     return QVariant();
-
-  QString key = entries.keys().at(index.row());
+  if (index.row() >= dataSrc->getFormatOptions().keys().size())
+    return QVariant();
+  if (index.column() > OutputFormatOptionsModel::Value)
+    return QVariant();
+  QString key = dataSrc->getFormatOptions().keys().at(index.row());
   if (index.column() == OutputFormatOptionsModel::Key)
     return QVariant(key);
   else if (index.column() == OutputFormatOptionsModel::Value)
-    return QVariant(entries.value(key));
+    return QVariant(dataSrc->getFormatOptions().value(key));
 
   return QVariant();
 }
