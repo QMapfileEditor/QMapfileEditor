@@ -114,6 +114,12 @@ class MapfileParser
   static QStringList missingData;
   static QStringList ogcMapOptions;
   static QStringList units;
+  static QHash<QString, QStringList> imageModes;
+
+  static QStringList defaultImageModes;
+  static QStringList IMgdGifgdPng;
+  static QStringList IMTemplateOgr;
+  static QStringList IMGdal;
 
  private:
   // Private plain mapserver object

@@ -46,8 +46,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
-    // TODO: sub model for the format options ?
-
+    this->ui->mf_outputformat_formatoptions_list->setModel(new OutputFormatOptionsModel(this));
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
@@ -55,22 +54,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
 
-    // ImageMode QComboBox: depends on the format:
-    // PC256/RGB/RGBA/INT16/FLOAT32/FEATURE
-    // * PC256 only for GD/GIF and GD/PNG
-    // * RGB
-    // * RGBA
-    // * BYTE only for RASTER GDAL and WMS
-    // * INT16 only for RASTER GDAL and WMS
-    // * FLOAT32 only for RASTER GDAL and WMS
-    // * FEATURE only via OGR and TEMPLATE
-    //
-    // Note: disable elems of a qcombobox (hackish):
-    // ui.comboBox->model()->setData( index, v, Qt::UserRole -1);
-
-    //Projection
-    //TODO: create autocompleter for projection
-    //QCompleter *epsgCompleter = new QCompleter(, this);
     ui->mf_map_projection->addItem(QString::number(this->mapfile->getMapProjection()));
 
     //Extent
@@ -465,8 +448,24 @@ void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
 void MapSettings::refreshOutputFormatTab(void) {
  this->refreshOutputFormatTab(this->ui->mf_outputformat_list->currentIndex());
 }
+
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
   this->outputFormatsMapper->setCurrentModelIndex(i);
+
+  OutputFormat * fmt = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getOutputFormat(i);
+  OutputFormatOptionsModel * mdl = (OutputFormatOptionsModel *) this->ui->mf_outputformat_formatoptions_list->model();
+  if (fmt != NULL) {
+    mdl->setEntries(fmt->getFormatOptions());
+
+    QHash<QString, QString> opts = fmt->getFormatOptions();
+    for (int i = 0; i < opts.keys().size(); ++i) {
+      std::cout << opts.keys().at(i).toStdString() << std::endl;
+    }
+  } else {
+    mdl->setEntries(QHash<QString, QString>());
+  }
+  std::cout << this->ui->mf_outputformat_formatoptions_list->model()->rowCount() <<  std::endl;
+  this->ui->mf_outputformat_formatoptions_list->reset();
   this->toggleOutputFormatsWidgets(true);
 }
 

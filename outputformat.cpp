@@ -80,6 +80,12 @@ QList<OutputFormat *> const & OutputFormatsModel::getEntries(void) const {
   return entries;
 }
 
+OutputFormat * OutputFormatsModel::getOutputFormat(const QModelIndex &index) const {
+  if (index.row() < 0 || index.row() > entries.size())
+    return NULL;
+  return entries.at(index.row());
+}
+
 QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
   if ((role != Qt::DisplayRole) && (role != Qt::EditRole))
     return QVariant();
@@ -107,3 +113,59 @@ QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
   }
   return QVariant();
 }
+
+/** format options model */
+OutputFormatOptionsModel::OutputFormatOptionsModel(QObject * parent) : QAbstractListModel(parent) {}
+
+OutputFormatOptionsModel::~OutputFormatOptionsModel() {}
+
+int OutputFormatOptionsModel::rowCount(const QModelIndex & parent) const {
+  Q_UNUSED(parent);
+  return entries.keys().count();
+}
+
+int OutputFormatOptionsModel::columnCount(const QModelIndex &parent) const {
+  Q_UNUSED(parent);
+  return OutputFormatOptionsModel::Value + 1;
+}
+
+QVariant OutputFormatOptionsModel::headerData (int section, Qt::Orientation orientation, int role) const {
+  Q_UNUSED(section);
+  Q_UNUSED(orientation);
+  Q_UNUSED(role);
+  if (role != Qt::DisplayRole)
+    return QVariant();
+  if (section == 0)
+    return QVariant(QObject::tr("Key"));
+  else
+    return QVariant(QObject::tr("Value"));
+}
+
+void OutputFormatOptionsModel::setEntries(QHash<QString, QString> const & items) {
+  entries = items;
+  emit dataChanged (QAbstractItemModel::createIndex(0,0), QAbstractItemModel::createIndex(entries.keys().size(), 1));
+}
+
+QHash<QString, QString> const & OutputFormatOptionsModel::getEntries(void) const {
+  return entries;
+}
+
+QVariant OutputFormatOptionsModel::data(const QModelIndex &index, int role) const {
+
+  if ((role != Qt::DisplayRole) && (role != Qt::EditRole))
+    return QVariant();
+  if (index.row() > entries.keys().size())
+    return QVariant();
+
+  QString key = entries.keys().at(index.row());
+  if (index.column() == 0)
+    return QVariant(key);
+  else if (index.column() == 1)
+    return QVariant(entries.value(key));
+
+  return QVariant();
+}
+
+
+
+

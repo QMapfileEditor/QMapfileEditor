@@ -74,9 +74,32 @@ class OutputFormatsModel : public QAbstractListModel {
     void setEntries(QList<OutputFormat *> const &);
     QList<OutputFormat *> const & getEntries() const;
 
+    OutputFormat * getOutputFormat(const QModelIndex &index) const;
+
     enum Column { Name, MimeType, Driver, Extension, ImageMode, Transparent };
   protected:
       QList<OutputFormat *> entries;
+
+};
+
+// secondary model for format options
+class OutputFormatOptionsModel : public QAbstractListModel {
+  public:
+    OutputFormatOptionsModel(QObject *parent = 0);
+    ~OutputFormatOptionsModel();
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+
+    QVariant data(const QModelIndex &index, int role) const;
+    QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+
+    void setEntries(QHash<QString, QString> const &);
+    QHash<QString, QString> const & getEntries() const;
+
+    enum Column { Key, Value };
+  protected:
+      QHash<QString, QString> entries;
 
 };
 
