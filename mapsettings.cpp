@@ -1,5 +1,3 @@
-
-
 #include "mapsettings.h"
 #include "ui_mapsettings.h"
 
@@ -48,6 +46,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
+    // TODO: sub model for the format options ?
 
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
@@ -56,6 +55,18 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
 
+    // ImageMode QComboBox: depends on the format:
+    // PC256/RGB/RGBA/INT16/FLOAT32/FEATURE
+    // * PC256 only for GD/GIF and GD/PNG
+    // * RGB
+    // * RGBA
+    // * BYTE only for RASTER GDAL and WMS
+    // * INT16 only for RASTER GDAL and WMS
+    // * FLOAT32 only for RASTER GDAL and WMS
+    // * FEATURE only via OGR and TEMPLATE
+    //
+    // Note: disable elems of a qcombobox (hackish):
+    // ui.comboBox->model()->setData( index, v, Qt::UserRole -1);
 
     //Projection
     //TODO: create autocompleter for projection

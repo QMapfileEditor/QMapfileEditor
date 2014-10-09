@@ -680,4 +680,4 @@ QStringList MapfileParser::ogcMapOptions = QStringList() << "" << "ows_http_max_
 QStringList MapfileParser::drivers = QStringList() << "" << "AGG/PNG" <<
                    "AGG/JPEG" <<  "GD/GIF" << "GD/PNG" << "TEMPLATE" << "GDAL"<< "OGR";
 
-
+// QHash<QString, QStringList> MapfileParser::ImageMode

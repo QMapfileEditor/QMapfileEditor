@@ -1695,9 +1695,6 @@
              </item>
              <item>
               <widget class="QLabel" name="mf_outputformat_mimetype_label">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>90</width>
