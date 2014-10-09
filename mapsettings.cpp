@@ -46,6 +46,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
+
     this->ui->mf_outputformat_formatoptions_list->setModel(new OutputFormatOptionsModel(this));
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
@@ -451,21 +452,18 @@ void MapSettings::refreshOutputFormatTab(void) {
 
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
   this->outputFormatsMapper->setCurrentModelIndex(i);
-
   OutputFormat * fmt = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getOutputFormat(i);
   OutputFormatOptionsModel * mdl = (OutputFormatOptionsModel *) this->ui->mf_outputformat_formatoptions_list->model();
   if (fmt != NULL) {
     mdl->setEntries(fmt->getFormatOptions());
-
     QHash<QString, QString> opts = fmt->getFormatOptions();
     for (int i = 0; i < opts.keys().size(); ++i) {
       std::cout << opts.keys().at(i).toStdString() << std::endl;
-    }
+    } 
+    std::cout << "after having set format options list, "<< mdl->rowCount() << " rows." << std::endl;
   } else {
     mdl->setEntries(QHash<QString, QString>());
   }
-  std::cout << this->ui->mf_outputformat_formatoptions_list->model()->rowCount() <<  std::endl;
-  this->ui->mf_outputformat_formatoptions_list->reset();
   this->toggleOutputFormatsWidgets(true);
 }
 

@@ -119,9 +119,12 @@ OutputFormatOptionsModel::OutputFormatOptionsModel(QObject * parent) : QAbstract
 
 OutputFormatOptionsModel::~OutputFormatOptionsModel() {}
 
+#include <iostream>
 int OutputFormatOptionsModel::rowCount(const QModelIndex & parent) const {
   Q_UNUSED(parent);
-  return entries.keys().count();
+  std::cout << "into rowCount, " << this->entries.keys().size() << " rows" <<  std::endl;
+  return 4;
+  return this->entries.keys().size();
 }
 
 int OutputFormatOptionsModel::columnCount(const QModelIndex &parent) const {
@@ -129,19 +132,20 @@ int OutputFormatOptionsModel::columnCount(const QModelIndex &parent) const {
   return OutputFormatOptionsModel::Value + 1;
 }
 
-QVariant OutputFormatOptionsModel::headerData (int section, Qt::Orientation orientation, int role) const {
-  Q_UNUSED(section);
-  Q_UNUSED(orientation);
-  Q_UNUSED(role);
-  if (role != Qt::DisplayRole)
-    return QVariant();
-  if (section == 0)
-    return QVariant(QObject::tr("Key"));
-  else
-    return QVariant(QObject::tr("Value"));
-}
+//QVariant OutputFormatOptionsModel::headerData (int section, Qt::Orientation orientation, int role) const {
+//  if ((role != Qt::DisplayRole) && (role != 1) && (role != 6) && (role != 7) && (role != 8) && (role != 9) && (role != 13))
+//    return QVariant();
+//  if (orientation == Qt::Vertical)
+//    return QVariant(section);
+//  if (section == OutputFormatOptionsModel::Key)
+//    return QVariant(QObject::tr("Key"));
+//  else if (section == OutputFormatOptionsModel::Value)
+//    return QVariant(QObject::tr("Value"));
+//
+//  return QVariant(section);
+//}
 
-void OutputFormatOptionsModel::setEntries(QHash<QString, QString> const & items) {
+void OutputFormatOptionsModel::setEntries(QHash<QString, QString> items) {
   entries = items;
   emit dataChanged (QAbstractItemModel::createIndex(0,0), QAbstractItemModel::createIndex(entries.keys().size(), 1));
 }
@@ -154,13 +158,13 @@ QVariant OutputFormatOptionsModel::data(const QModelIndex &index, int role) cons
 
   if ((role != Qt::DisplayRole) && (role != Qt::EditRole))
     return QVariant();
-  if (index.row() > entries.keys().size())
+  if (index.row() >= entries.keys().size())
     return QVariant();
 
   QString key = entries.keys().at(index.row());
-  if (index.column() == 0)
+  if (index.column() == OutputFormatOptionsModel::Key)
     return QVariant(key);
-  else if (index.column() == 1)
+  else if (index.column() == OutputFormatOptionsModel::Value)
     return QVariant(entries.value(key));
 
   return QVariant();
