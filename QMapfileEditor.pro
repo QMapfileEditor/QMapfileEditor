@@ -8,16 +8,20 @@ TEMPLATE = app
 
 QMAKE_CLEAN += $(TARGET)
 
-SOURCES += main.cpp                         \
+SOURCES += \
+        keyvaluemodel.cpp                   \
+        main.cpp                            \
         mainwindow.cpp                      \
-        mapsettings.cpp                     \
         mapfileparser.cpp                   \
+        mapsettings.cpp                     \
         outputformat.cpp                    \
         commands/changemapnamecommand.cpp
 
-HEADERS  += mainwindow.h                    \
-    mapsettings.h                           \
+HEADERS  += \
+    keyvaluemodel.h                         \
+    mainwindow.h                            \
     mapfileparser.h                         \
+    mapsettings.h                           \
     outputformat.h                          \
     commands/changemapnamecommand.h
 
