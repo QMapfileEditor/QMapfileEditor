@@ -136,6 +136,9 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
             this->addConfigOptionsToModel(key, value);
         }
     }
+    ui->mf_map_web_md_options_list->verticalHeader()->hide();
+    ui->mf_map_web_md_options_list->setSelectionBehavior(QAbstractItemView::SelectRows);
+
     /** Debug tab **/
     this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
     this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
@@ -321,6 +324,7 @@ void MapSettings::addConfigOptionsToModel(const QString & name, const QString & 
 
   mod->appendRow(row);
   ui->mf_map_web_md_options_list->resizeColumnsToContents();
+  
 }
 
 void MapSettings::addNewOutputFormat() {
