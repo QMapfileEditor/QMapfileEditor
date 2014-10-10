@@ -48,6 +48,9 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
 
     this->ui->mf_outputformat_formatoptions_list->setModel(new OutputFormatOptionsModel(this));
+    this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
+
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
@@ -122,6 +125,17 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_web_md_option_name->addItems(MapfileParser::ogcMapOptions);
     this->createOgcOptionsModel();
 
+    // TODO: need to use model instead of creating items this way !
+    // Filling the table by known OGC metadata from the mapfile
+    QHash<QString, QString> metadatas = this->mapfile->getMetadatas();
+    QStringList ks = metadatas.keys();
+    for (int i = 0;  i < ks.size(); ++i) {
+        QString key = ks.at(i);
+        QString value = metadatas.value(key);
+        if (MapfileParser::ogcMapOptions.contains(key)) {
+            this->addConfigOptionsToModel(key, value);
+        }
+    }
     /** Debug tab **/
     this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
     this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
@@ -150,16 +164,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
         ui->mf_map_config_missingdata->setCurrentIndex(MapfileParser::missingData.lastIndexOf(this->mapfile->getConfigOption("ON_MISSING_DATA")));
     }
 
-    // Filling the table by known OGC metadata from the mapfile
-    QHash<QString, QString> metadatas = this->mapfile->getMetadatas();
-    QStringList ks = metadatas.keys();
-    for (int i = 0;  i < ks.size(); ++i) {
-        QString key = ks.at(i);
-        QString value = metadatas.value(key);
-        if (MapfileParser::ogcMapOptions.contains(key)) {
-            this->addConfigOptionsToModel(key, value);
-        }
-    }
 
 }
 
