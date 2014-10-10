@@ -1888,6 +1888,9 @@
              <property name="gridStyle">
               <enum>Qt::DotLine</enum>
              </property>
+             <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+             </attribute>
             </widget>
            </item>
            <item>

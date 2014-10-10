@@ -1,5 +1,5 @@
-#ifndef __OUTPUTFORMAT_H
-#define __OUTPUTFORMAT_H
+#ifndef OUTPUTFORMAT_H
+#define OUTPUTFORMAT_H
 
 #include <QHash>
 #include <QModelIndex>
@@ -82,26 +82,4 @@ class OutputFormatsModel : public QAbstractListModel {
 
 };
 
-// secondary model for format options
-class OutputFormatOptionsModel : public QAbstractTableModel {
-
-  public:
-    OutputFormatOptionsModel(QObject *parent = 0);
-    ~OutputFormatOptionsModel();
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-
-    QVariant data(const QModelIndex &index, int role) const;
-    QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-
-    void setData(OutputFormat * const &);
-    OutputFormat * const & getData() const;
-
-    enum Column { Key, Value };
-  protected:
-    OutputFormat * dataSrc;
-
-};
-
-#endif // __OUTPUTFORMAT_H
+#endif // OUTPUTFORMAT_H

@@ -47,7 +47,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
 
-    this->ui->mf_outputformat_formatoptions_list->setModel(new OutputFormatOptionsModel(this));
+    this->ui->mf_outputformat_formatoptions_list->setModel(new KeyValueModel(this));
     this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
 
@@ -235,20 +235,16 @@ void MapSettings::saveMapSettings() {
     } else {
         this->mapfile->setMetadata("OWS_ONLINERESOURCE", ui->mf_map_web_md_wms_onlineresource->text());
     }
-    
     if (ui->mf_map_web_md_wms_srs->text() != ui->mf_map_web_md_wfs_srs->text()) {
         this->mapfile->setMetadata("WMS_SRS", ui->mf_map_web_md_wms_srs->text());
         this->mapfile->setMetadata("WFS_SRS", ui->mf_map_web_md_wfs_srs->text());
     } else { 
         this->mapfile->setMetadata("OWS_SRS", ui->mf_map_web_md_wms_srs->text());
     }
-    
     QStandardItemModel * mod = (QStandardItemModel *) ui->mf_map_web_md_options_list->model();
     if (mod) {
         //TODO: boucle on custom metadata list
     }
-
-
 }
 
 // slots
@@ -262,7 +258,6 @@ void MapSettings::addOgcMetadata() {
   ((KeyValueModel *) this->ui->mf_map_web_md_options_list->model())->addData(key,value);
   this->ui->mf_map_web_md_options_list->resizeColumnsToContents();
 }
-
 
 void MapSettings::removeOgcMetadatas() {
   QModelIndexList selMds = this->ui->mf_map_web_md_options_list->selectionModel()->selectedRows();
@@ -426,8 +421,12 @@ void MapSettings::refreshOutputFormatTab(void) {
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
   this->outputFormatsMapper->setCurrentModelIndex(i);
   OutputFormat * fmt = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getOutputFormat(i);
-  OutputFormatOptionsModel * mdl = (OutputFormatOptionsModel *) this->ui->mf_outputformat_formatoptions_list->model();
-  mdl->setData(fmt);
+  if (! fmt)
+    return;
+
+  // Updating the format options list
+  KeyValueModel * mdl = (KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model();
+  mdl->setData(fmt->getFormatOptions());
   ui->mf_outputformat_formatoptions_list->resizeColumnsToContents();
   this->toggleOutputFormatsWidgets(true);
 }
