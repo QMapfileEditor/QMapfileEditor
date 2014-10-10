@@ -108,10 +108,12 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
 
     ui->mf_map_config_projlib->setText(this->mapfile->getConfigOption("PROJ_LIB"));
 
-    /** OGC Standard tab **/
+    /** OGC Standard / inspire tab **/
+
     //connect
     this->connect(ui->mf_ogc_enable, SIGNAL(toggled(bool)), SLOT(enableOgcStandardFrame(bool)));
-    this->connect(ui->mf_map_web_md_options_add, SIGNAL(clicked()), SLOT(addNewOgcMetadata()));
+    this->connect(ui->mf_map_web_md_options_add, SIGNAL(clicked()), SLOT(addOgcMetadata()));
+    this->connect(ui->mf_map_web_md_options_del, SIGNAL(clicked()), SLOT(removeOgcMetadatas()));
 
     //fill in forms
     ui->mf_map_web_md_wms_title->setText(this->mapfile->getMetadataWmsTitle());
@@ -130,6 +132,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_web_md_options_list->setModel(kvm);
     ui->mf_map_web_md_options_list->verticalHeader()->hide();
     ui->mf_map_web_md_options_list->setSelectionBehavior(QAbstractItemView::SelectRows);
+
 
     /** Debug tab **/
     this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
@@ -250,7 +253,7 @@ void MapSettings::saveMapSettings() {
 
 // slots
 
-void MapSettings::addNewOgcMetadata() {
+void MapSettings::addOgcMetadata() {
   QString key   = this->ui->mf_map_web_md_option_name->currentText();
   if (key.isEmpty())
     return;
@@ -258,6 +261,12 @@ void MapSettings::addNewOgcMetadata() {
   QString value = this->ui->mf_map_web_md_option_value->text();
   ((KeyValueModel *) this->ui->mf_map_web_md_options_list->model())->addData(key,value);
   this->ui->mf_map_web_md_options_list->resizeColumnsToContents();
+}
+
+
+void MapSettings::removeOgcMetadatas() {
+  QModelIndexList selMds = this->ui->mf_map_web_md_options_list->selectionModel()->selectedRows();
+  ((KeyValueModel *) this->ui->mf_map_web_md_options_list->model())->removeDataAt(selMds);
 }
 
 void MapSettings::setImageColor() {

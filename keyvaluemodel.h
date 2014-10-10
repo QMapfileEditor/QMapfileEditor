@@ -23,6 +23,7 @@ class KeyValueModel : public QAbstractTableModel {
     void setData(QHash<QString, QString> const &);
     void addData(QString const &, QString const &);
     void removeData(QString const &);
+    void removeDataAt(QModelIndexList const &);
     QHash<QString, QString> const & getData() const;
 
     enum Column { Key, Value };

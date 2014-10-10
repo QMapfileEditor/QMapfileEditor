@@ -59,6 +59,19 @@ void KeyValueModel::removeData(QString const &k) {
   endResetModel();
 }
 
+void KeyValueModel::removeDataAt(QModelIndexList const & selection) {
+  QStringList toRemove = QStringList();
+  for (int i = 0; i < selection.size(); ++i) {
+    toRemove << m_data.keys().at(selection.at(i).row());
+  }
+  // Doing in 2 passes to avoid messing up with indices offsets
+  beginResetModel();
+  for (int i = 0; i < toRemove.size(); ++i) {
+    m_data.remove(toRemove.at(i));
+  }
+  endResetModel();
+
+}
 
 QVariant KeyValueModel::data(const QModelIndex &index, int role) const {
 
