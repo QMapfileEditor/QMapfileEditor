@@ -13,8 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
   this->showInfo(tr("Initializing default mapfile"));
 
   // inits the model for the mapfile structure
-  QStandardItemModel * mfStructureModel = new QStandardItemModel(ui->mf_structure);
+  QStringListModel * mfStructureModel = new QStringListModel(this);
   ui->mf_structure->setModel(mfStructureModel);
+  ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
   // inits the graphics scene
   QGraphicsScene * mapScene = new QGraphicsScene(ui->mf_preview);
@@ -43,8 +44,8 @@ void MainWindow::reinitMapfile() {
     this->settings = NULL;
   }
 
-  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_structure->model();
-  mod->clear();
+  ((QStringListModel *) ui->mf_structure->model())->setStringList(QStringList());
+
   ui->mf_preview->scene()->clear();
 
   // Creates a new mapfileparser from scratch
@@ -109,12 +110,7 @@ void MainWindow::openMapfile()
     return;
   }
 
-  QStringList layers = this->mapfile->getLayers();
-  for (int i = 0; i < layers.size(); ++i) {
-    QStandardItem * si = new QStandardItem(layers.at(i));
-    si->setEditable(false);
-    ((QStandardItemModel *) this->ui->mf_structure->model())->appendRow(si);
-  }
+  ((QStringListModel *) this->ui->mf_structure->model())->setStringList(this->mapfile->getLayers());
 
   ui->mf_structure->expandAll();
 

@@ -13,6 +13,7 @@
 #include <QResizeEvent>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <QStringListModel>
 #include <QUndoStack>
 
 #include "mapsettings.h"
