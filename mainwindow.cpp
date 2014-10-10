@@ -63,7 +63,8 @@ QMessageBox::StandardButton MainWindow::warnIfActiveSession() {
 void MainWindow::newMapfile()
 {
   // check if a mapfile is already opened
-  if ((this->mapfile) &&  (this->mapfile->isLoaded())) {
+  // and modifications have been done
+  if ((this->mapfile->isLoaded()) &&  (this->undoStack->count() > 0)) {
     if (warnIfActiveSession() == QMessageBox::Yes) {
       this->reinitMapfile();
     }
@@ -78,7 +79,7 @@ void MainWindow::openMapfile()
   QString prevFilePath = QDir::homePath();
 
   // TODO: check if current session has unsaved modifications instead
-  if (this->mapfile->isLoaded()) {
+  if ((this->mapfile->isLoaded()) &&  (this->undoStack->count() > 0)) {
     if (warnIfActiveSession() == QMessageBox::No)
       return;
   }
