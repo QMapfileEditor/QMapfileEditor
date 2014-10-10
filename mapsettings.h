@@ -29,6 +29,7 @@ class MapSettings : public QDialog
       ~MapSettings();
  public slots:
       void accept();
+      void addFormatOption();
       void addOgcMetadata();
       void angleSliderChanged(int);
       void angleSpinChanged(int);
@@ -45,6 +46,7 @@ class MapSettings : public QDialog
       void refreshGdalOgrDriverCombo(const QString &);
       void refreshOutputFormatTab(const QModelIndex &);
       void refreshOutputFormatTab(void);
+      void removeFormatOptions();
       void removeOgcMetadatas();
       void setImageColor();
 

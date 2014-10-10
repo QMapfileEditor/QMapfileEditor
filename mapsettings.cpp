@@ -35,7 +35,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     //Outpuformat
     this->outputFormatsMapper = new QDataWidgetMapper(this);
     OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
-
     outputFormatsModel->setEntries(this->mapfile->getOutputFormats());
     ui->mf_outputformat_list->setModel(outputFormatsModel);
     for (int i = 1; i < outputFormatsModel->columnCount(); i++)
@@ -46,19 +45,19 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
-
     this->ui->mf_outputformat_formatoptions_list->setModel(new KeyValueModel(this));
     this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
-
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
     this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
-
     ui->mf_map_projection->addItem(QString::number(this->mapfile->getMapProjection()));
+    this->connect(ui->mf_outputformat_options_add, SIGNAL(clicked()), SLOT(addFormatOption()));
+    this->connect(ui->mf_outputformat_options_del, SIGNAL(clicked()), SLOT(removeFormatOptions()));
+
 
     //Extent
     ui->mf_map_extent_top->setText(QString::number(this->mapfile->getMapExtentMaxY()));
@@ -262,6 +261,21 @@ void MapSettings::addOgcMetadata() {
 void MapSettings::removeOgcMetadatas() {
   QModelIndexList selMds = this->ui->mf_map_web_md_options_list->selectionModel()->selectedRows();
   ((KeyValueModel *) this->ui->mf_map_web_md_options_list->model())->removeDataAt(selMds);
+}
+
+void MapSettings::addFormatOption() {
+  QString key   = this->ui->mf_outputformat_option_name->text();
+  if (key.isEmpty())
+    return;
+
+  QString value = this->ui->mf_outputformat_option_value->text();
+  ((KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model())->addData(key,value);
+  this->ui->mf_outputformat_formatoptions_list->resizeColumnsToContents();
+}
+
+void MapSettings::removeFormatOptions() {
+  QModelIndexList selMds = this->ui->mf_outputformat_formatoptions_list->selectionModel()->selectedRows();
+  ((KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model())->removeDataAt(selMds);
 }
 
 void MapSettings::setImageColor() {
