@@ -11,6 +11,7 @@
 #include <QStandardItemModel>
 #include <QTableView>
 
+#include "keyvaluemodel.h"
 #include "mapfileparser.h"
 
 #include "commands/changemapnamecommand.h"
@@ -28,7 +29,6 @@ class MapSettings : public QDialog
       ~MapSettings();
  public slots:
       void accept();
-      void addConfigOptionsToModel(const QString &, const QString &);
       void addNewOgcMetadata();
       void angleSliderChanged(int);
       void angleSpinChanged(int);
@@ -56,8 +56,6 @@ class MapSettings : public QDialog
 
       QDataWidgetMapper * outputFormatsMapper;
 
-      bool alreadyInModel(const QString &);
-      void createOgcOptionsModel();
       void saveMapSettings();
       void toggleOutputFormatsWidgets(const bool &);
 

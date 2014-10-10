@@ -123,19 +123,11 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_web_md_wfs_srs->setText(this->mapfile->getMetadataWfsSrs());
 
     ui->mf_map_web_md_option_name->addItems(MapfileParser::ogcMapOptions);
-    this->createOgcOptionsModel();
 
-    // TODO: need to use model instead of creating items this way !
     // Filling the table by known OGC metadata from the mapfile
-    QHash<QString, QString> metadatas = this->mapfile->getMetadatas();
-    QStringList ks = metadatas.keys();
-    for (int i = 0;  i < ks.size(); ++i) {
-        QString key = ks.at(i);
-        QString value = metadatas.value(key);
-        if (MapfileParser::ogcMapOptions.contains(key)) {
-            this->addConfigOptionsToModel(key, value);
-        }
-    }
+    KeyValueModel * kvm = new KeyValueModel(this);
+    kvm->setData(this->mapfile->getMetadatas());
+    ui->mf_map_web_md_options_list->setModel(kvm);
     ui->mf_map_web_md_options_list->verticalHeader()->hide();
     ui->mf_map_web_md_options_list->setSelectionBehavior(QAbstractItemView::SelectRows);
 
@@ -168,17 +160,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     }
 
 
-}
-
-void MapSettings::createOgcOptionsModel() {
-    QStandardItemModel  * ogcOptions_model = new QStandardItemModel(0, 2);
-    QStringList header;
-    header << "Name" << "Value";
-    ogcOptions_model->setHorizontalHeaderLabels(header);
-
-    // TODO check for memory leak
-    // ensures that the model is destroy along with ui objects (see doc)
-    ui->mf_map_web_md_options_list->setModel(ogcOptions_model);
 }
 
 void MapSettings::saveMapSettings() {
@@ -267,7 +248,18 @@ void MapSettings::saveMapSettings() {
 
 }
 
-//SLOTS
+// slots
+
+void MapSettings::addNewOgcMetadata() {
+  QString key   = this->ui->mf_map_web_md_option_name->currentText();
+  if (key.isEmpty())
+    return;
+
+  QString value = this->ui->mf_map_web_md_option_value->text();
+  ((KeyValueModel *) this->ui->mf_map_web_md_options_list->model())->addData(key,value);
+  this->ui->mf_map_web_md_options_list->resizeColumnsToContents();
+}
+
 void MapSettings::setImageColor() {
     QColor curColor = ui->mf_map_imagecolor->palette().color(QWidget::backgroundRole());
     QColor color = QColorDialog::getColor(curColor, this);
@@ -289,42 +281,6 @@ void MapSettings::angleSliderChanged(int value) {
 }
 void MapSettings::angleSpinChanged(int value) {
     ui->mf_map_angle_slider->setValue(value);
-}
-
-void MapSettings::addNewOgcMetadata() {
-    QString value = ui->mf_map_web_md_option_value->text();
-    QString optionName = ui->mf_map_web_md_option_name->currentText();
-
-    if ((! value.isEmpty()) && (! optionName.isEmpty()) &&
-      (! alreadyInModel(optionName))) {
-
-        this->addConfigOptionsToModel(optionName, value);
-        ui->mf_map_web_md_option_name->currentText();
-        ui->mf_map_web_md_option_value->setText("");
-    }
-}
-
-bool MapSettings::alreadyInModel(const QString & key) {
-  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_map_web_md_options_list->model();
-  // should not happen
-  if (! mod) return false;
-  return (! mod->findItems(key).isEmpty());
-}
-
-void MapSettings::addConfigOptionsToModel(const QString & name, const QString & value) {
-  QStandardItemModel * mod = (QStandardItemModel *) ui->mf_map_web_md_options_list->model();
-  if (! mod) {
-    return;
-  }
-
-  QList<QStandardItem *> row;
-
-  row << new QStandardItem(name);
-  row << new QStandardItem(value);
-
-  mod->appendRow(row);
-  ui->mf_map_web_md_options_list->resizeColumnsToContents();
-  
 }
 
 void MapSettings::addNewOutputFormat() {
