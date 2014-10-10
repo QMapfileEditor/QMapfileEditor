@@ -84,6 +84,7 @@ class OutputFormatsModel : public QAbstractListModel {
 
 // secondary model for format options
 class OutputFormatOptionsModel : public QAbstractTableModel {
+
   public:
     OutputFormatOptionsModel(QObject *parent = 0);
     ~OutputFormatOptionsModel();

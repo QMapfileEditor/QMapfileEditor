@@ -118,13 +118,11 @@ OutputFormatOptionsModel::OutputFormatOptionsModel(QObject * parent) : QAbstract
 
 OutputFormatOptionsModel::~OutputFormatOptionsModel() {}
 
-#include <iostream>
 int OutputFormatOptionsModel::rowCount(const QModelIndex & parent) const {
   Q_UNUSED(parent);
   if (dataSrc == NULL)
     return 0;
   int ret = this->dataSrc->getFormatOptions().keys().size();
-  std::cout << "into rowCount, " << ret << " rows" <<  std::endl;
   return ret;
 }
 
@@ -134,11 +132,8 @@ int OutputFormatOptionsModel::columnCount(const QModelIndex &parent) const {
 }
 
 QVariant OutputFormatOptionsModel::headerData (int section, Qt::Orientation orientation, int role) const {
-  std::cout << "into headerData()" << std::endl;
-  if (role == Qt::SizeHintRole) {
-    return QVariant(20);
-  }
-  return QVariant("header cell");
+  if (role != Qt::DisplayRole)
+    return QVariant();
   if (orientation == Qt::Vertical)
     return QVariant(section);
   if (section == OutputFormatOptionsModel::Key)
@@ -149,8 +144,9 @@ QVariant OutputFormatOptionsModel::headerData (int section, Qt::Orientation orie
 }
 
 void OutputFormatOptionsModel::setData(OutputFormat * const & fmt) {
+  beginResetModel();
   dataSrc = fmt;
-  emit dataChanged (QAbstractItemModel::createIndex(0,0), QAbstractItemModel::createIndex(dataSrc->getFormatOptions().keys().size(), 1));
+  endResetModel();
 }
 
 OutputFormat * const & OutputFormatOptionsModel::getData(void) const {

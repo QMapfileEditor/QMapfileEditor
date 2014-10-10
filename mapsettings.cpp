@@ -455,8 +455,7 @@ void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
   OutputFormat * fmt = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getOutputFormat(i);
   OutputFormatOptionsModel * mdl = (OutputFormatOptionsModel *) this->ui->mf_outputformat_formatoptions_list->model();
   mdl->setData(fmt);
-  std::cout << "after having set format options list, "<< mdl->rowCount() << " rows." << std::endl;
-  this->ui->mf_outputformat_formatoptions_list->setModel(mdl);
+  ui->mf_outputformat_formatoptions_list->resizeColumnsToContents();
   this->toggleOutputFormatsWidgets(true);
 }
 
