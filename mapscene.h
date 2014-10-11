@@ -11,6 +11,8 @@ class MapScene : public QGraphicsScene {
   MapScene(QObject * parent = 0);
   ~MapScene();
 
+  void setZoomMode(bool const & v);
+
  protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -19,6 +21,8 @@ class MapScene : public QGraphicsScene {
  private:
   QGraphicsRectItem * zoomInArea;
   bool drawing;
+  bool zoomMode;
+  QPointF pointOrig;
 
 };
 

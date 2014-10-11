@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
   // inits the graphics scene
   MapScene * mapScene = new MapScene(ui->mf_preview);
   ui->mf_preview->setScene(mapScene);
+  ui->mf_preview->setSceneRect(0,0,this->ui->mf_preview->viewport()->width(),this->ui->mf_preview->viewport()->height());
 
   // connects extra actions
   this->showInfo("Activate actions");
@@ -42,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::zoomToggled(bool toggle) {
+  // notify MapScene that a zoom in action is possible or not
+  ((MapScene *) this->ui->mf_preview->scene())->setZoomMode(toggle);
   if (toggle == true) {
     this->ui->actionZoom_2->setChecked(false);
     this->ui->actionPan->setChecked(false);
