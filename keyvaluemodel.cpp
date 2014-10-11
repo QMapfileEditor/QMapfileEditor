@@ -1,10 +1,10 @@
 #include "keyvaluemodel.h"
 
 
-KeyValueModel::KeyValueModel(QObject * parent): 
+KeyValueModel::KeyValueModel(QObject * parent, QStringList extraFilters):
     QAbstractTableModel(parent),
-    m_data(QHash<QString,QString>()) {
-
+    m_data(QHash<QString,QString>()),
+    extra_filters(extraFilters) {
 }
 
 KeyValueModel::~KeyValueModel() {}
@@ -36,8 +36,12 @@ QVariant KeyValueModel::headerData (int section, Qt::Orientation orientation, in
 }
 
 void KeyValueModel::setData(QHash<QString,QString> const & kv) {
+  QHash<QString,QString> cop = QHash<QString,QString>(kv);
+  for (int i = 0 ; i < extra_filters.size(); ++i)
+    cop.remove(extra_filters.at(i));
+
   beginResetModel();
-  m_data = kv;
+  m_data = cop;
   endResetModel();
 }
 
@@ -46,6 +50,8 @@ QHash<QString,QString> const & KeyValueModel::getData(void) const {
 }
 
 void KeyValueModel::addData(QString const & k, QString const &v) {
+  if (extra_filters.contains(k))
+    return;
   // It might appear overkill to reset entirely the model
   // but the interface is not meant to contain hundreds of rows.
   beginResetModel();
@@ -58,6 +64,7 @@ void KeyValueModel::removeData(QString const &k) {
   m_data.remove(k);
   endResetModel();
 }
+
 
 void KeyValueModel::removeDataAt(QModelIndexList const & selection) {
   QStringList toRemove = QStringList();

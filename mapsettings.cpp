@@ -126,7 +126,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_web_md_option_name->addItems(MapfileParser::ogcMapOptions);
 
     // Filling the table by known OGC metadata from the mapfile
-    KeyValueModel * kvm = new KeyValueModel(this);
+    KeyValueModel * kvm = new KeyValueModel(this, MapSettings::OgcFilteredOptions);
     kvm->setData(this->mapfile->getMetadatas());
     ui->mf_map_web_md_options_list->setModel(kvm);
     ui->mf_map_web_md_options_list->verticalHeader()->hide();
@@ -465,3 +465,9 @@ MapSettings::~MapSettings() {
   // mapfile lifecycle should be managed elsewhere
   delete ui;
 }
+
+QStringList MapSettings::OgcFilteredOptions = QStringList() << "wms_title" << "wfs_title"
+  << "wms_enable_request" <<  "wfs_enable_request" << "wms_onlineresource" << "wfs_onlineresource"
+  << "wms_srs" << "wfs_srs";
+
+

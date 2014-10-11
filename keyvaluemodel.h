@@ -11,7 +11,7 @@
 class KeyValueModel : public QAbstractTableModel {
 
   public:
-    KeyValueModel(QObject *parent = 0);
+    KeyValueModel(QObject *parent = 0, QStringList extra_filters = QStringList());
     ~KeyValueModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -26,9 +26,12 @@ class KeyValueModel : public QAbstractTableModel {
     void removeDataAt(QModelIndexList const &);
     QHash<QString, QString> const & getData() const;
 
+    void setExtraFilters(QStringList const &);
+
     enum Column { Key, Value };
   protected:
     QHash<QString, QString>  m_data;
+    QStringList extra_filters;
 
 };
 

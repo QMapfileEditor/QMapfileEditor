@@ -27,6 +27,8 @@ class MapSettings : public QDialog
  public:
       explicit MapSettings(QWidget * parent, MapfileParser *);
       ~MapSettings();
+      static QStringList OgcFilteredOptions;
+
  public slots:
       void accept();
       void addFormatOption();
