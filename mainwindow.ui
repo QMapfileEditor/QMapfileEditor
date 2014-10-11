@@ -503,6 +503,9 @@
    </property>
   </action>
   <action name="actionZoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/ui/images/icons/zoom-in.png</normaloff>:/ui/images/icons/zoom-in.png</iconset>
@@ -512,6 +515,9 @@
    </property>
   </action>
   <action name="actionZoom_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/ui/images/icons/zoom-out.png</normaloff>:/ui/images/icons/zoom-out.png</iconset>
@@ -521,6 +527,9 @@
    </property>
   </action>
   <action name="actionPan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/ui/images/icons/transform-move.png</normaloff>:/ui/images/icons/transform-move.png</iconset>

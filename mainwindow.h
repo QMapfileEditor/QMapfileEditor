@@ -35,12 +35,16 @@ class MainWindow : public QMainWindow
  public slots:
       void openMapfile();
       void newMapfile();
+      void panToggled(bool);
       void saveMapfile();
       void saveAsMapfile();
       void showMapSettings();
       void showAbout();
       void showInfo(const QString & message);
       void updateMapPreview(void);
+      void zoomToggled(bool);
+      void zoom2Toggled(bool);
+
 
  private:
       Ui::MainWindow *ui;

@@ -12,6 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
   this->showInfo(tr("Initializing default mapfile"));
 
+  // inits QAction behaviours
+  this->connect(ui->actionZoom,   SIGNAL(toggled(bool)), SLOT(zoomToggled(bool)));
+  this->connect(ui->actionZoom_2, SIGNAL(toggled(bool)), SLOT(zoom2Toggled(bool)));
+  this->connect(ui->actionPan,    SIGNAL(toggled(bool)), SLOT(panToggled(bool)));
+
   // inits the model for the mapfile structure
   QStringListModel * mfStructureModel = new QStringListModel(this);
   ui->mf_structure->setModel(mfStructureModel);
@@ -34,6 +39,27 @@ MainWindow::MainWindow(QWidget *parent) :
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
+}
+
+void MainWindow::zoomToggled(bool toggle) {
+  if (toggle == true) {
+    this->ui->actionZoom_2->setChecked(false);
+    this->ui->actionPan->setChecked(false);
+  }
+}
+
+void MainWindow::zoom2Toggled(bool toggle) {
+  if (toggle == true) {
+    this->ui->actionZoom->setChecked(false);
+    this->ui->actionPan->setChecked(false);
+  }
+}
+
+void MainWindow::panToggled(bool toggle) {
+  if (toggle == true) {
+    this->ui->actionZoom->setChecked(false);
+    this->ui->actionZoom_2->setChecked(false);
+  }
 }
 
 void MainWindow::reinitMapfile() {
