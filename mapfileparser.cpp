@@ -700,7 +700,7 @@ static QHash<QString,QStringList> initImageModes() {
   ret.insert("GD/PNG", MapfileParser::IMgdGifgdPng);
   ret.insert("TEMPLATE", MapfileParser::IMTemplateOgr);
   ret.insert("GDAL", MapfileParser::IMGdal);
-  ret.insert("ORG", MapfileParser::IMTemplateOgr);
+  ret.insert("OGR", MapfileParser::IMTemplateOgr);
   return ret;
 }
 QHash<QString, QStringList> MapfileParser::imageModes = initImageModes();
