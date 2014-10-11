@@ -56,18 +56,26 @@ void MainWindow::zoomMapPreview(QRectF area) {
          maxx = this->mapfile->getMapExtentMaxX(),
          minx = this->mapfile->getMapExtentMinX();
 
+  std::cout << "extent : " <<  minx  << ":" 
+      << miny << "   "  << maxx << ":" << maxy << std::endl;
+
+
   float rectminx = area.x(),
         rectmaxx = area.x() + area.width(),
         rectminy = area.y(),
         rectmaxy = area.y() + area.height();
 
-  float zonex = ui->mf_preview->sceneRect().x(),
-        zoney = ui->mf_preview->sceneRect().y();
+  float zonex = ui->mf_preview->sceneRect().width(),
+        zoney = ui->mf_preview->sceneRect().height();
 
   double actualminx = (rectminx * ( maxx - minx)) / zonex;
   double actualminy = (rectminy * ( maxy - miny)) / zoney;
   double actualmaxx = (rectmaxx * ( maxx - minx)) / zonex;
   double actualmaxy = (rectmaxy * ( maxy - miny)) / zoney;
+
+  std::cout << "actualminx = " << "(" << rectminx <<  " * " <<
+      "(" << maxx <<  " - " << minx << ")) / " << zonex << std::endl ;
+
 
   std::cout << "converted space : " <<  actualminx  << ":" 
       << actualminy << "   "  << actualmaxx << ":" << actualmaxy << std::endl;
