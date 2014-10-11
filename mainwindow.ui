@@ -76,6 +76,18 @@
           <height>500</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustIgnored</enum>
+        </property>
        </widget>
       </item>
      </layout>
@@ -88,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>875</width>
-     <height>27</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="focusPolicy">

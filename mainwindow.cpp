@@ -118,7 +118,8 @@ void MainWindow::openMapfile()
 }
 
 void MainWindow::updateMapPreview(void) {
-  int w = this->ui->mf_preview->viewport()->width(), h = this->ui->mf_preview->viewport()->height();
+  this->ui->mf_preview->setSceneRect(0,0,this->ui->mf_preview->viewport()->width(),this->ui->mf_preview->viewport()->height());
+  int w = this->ui->mf_preview->frameSize().width(), h = this->ui->mf_preview->frameSize().height();
   this->updateMapPreview(w, h);
 }
 
