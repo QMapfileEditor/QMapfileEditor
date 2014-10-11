@@ -23,9 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
   // inits the graphics scene
-  MapScene * mapScene = new MapScene(ui->mf_preview);
+  MapScene * mapScene = new MapScene(this);
   ui->mf_preview->setScene(mapScene);
   ui->mf_preview->setSceneRect(0,0,this->ui->mf_preview->viewport()->width(),this->ui->mf_preview->viewport()->height());
+  ui->mf_preview->scene()->clear();
+  this->connect(mapScene, SIGNAL(notifyAreaToZoom(QRectF)), this, SLOT(zoomMapPreview(QRectF)));
 
   // connects extra actions
   this->showInfo("Activate actions");
@@ -40,6 +42,37 @@ MainWindow::MainWindow(QWidget *parent) :
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
+}
+
+void MainWindow::zoomMapPreview(QRectF area) {
+  std::cout << "Rectangle     : " <<  area.x()  << ":" << area.y() << "   "  << area.width() << ":" << area.height() << std::endl;
+  std::cout << "complete zone : " <<  ui->mf_preview->sceneRect().x()  << ":" 
+      << ui->mf_preview->sceneRect().y() << "   "  << ui->mf_preview->sceneRect().width() 
+      << ":" << ui->mf_preview->sceneRect().height() << std::endl;
+
+  // calculate final extent
+  double maxy = this->mapfile->getMapExtentMaxY(),
+         miny = this->mapfile->getMapExtentMinY(),
+         maxx = this->mapfile->getMapExtentMaxX(),
+         minx = this->mapfile->getMapExtentMinX();
+
+  float rectminx = area.x(),
+        rectmaxx = area.x() + area.width(),
+        rectminy = area.y(),
+        rectmaxy = area.y() + area.height();
+
+  float zonex = ui->mf_preview->sceneRect().x(),
+        zoney = ui->mf_preview->sceneRect().y();
+
+  double actualminx = (rectminx * ( maxx - minx)) / zonex;
+  double actualminy = (rectminy * ( maxy - miny)) / zoney;
+  double actualmaxx = (rectmaxx * ( maxx - minx)) / zonex;
+  double actualmaxy = (rectmaxy * ( maxy - miny)) / zoney;
+
+  std::cout << "converted space : " <<  actualminx  << ":" 
+      << actualminy << "   "  << actualmaxx << ":" << actualmaxy << std::endl;
+
+  std::cout <<  std::endl;
 }
 
 void MainWindow::zoomToggled(bool toggle) {

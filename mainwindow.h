@@ -43,6 +43,7 @@ class MainWindow : public QMainWindow
       void showAbout();
       void showInfo(const QString & message);
       void updateMapPreview(void);
+      void zoomMapPreview(QRectF);
       void zoomToggled(bool);
       void zoom2Toggled(bool);
 

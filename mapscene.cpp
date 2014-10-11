@@ -42,6 +42,7 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
   if (drawing) {
+    emit notifyAreaToZoom(zoomInArea->rect());
     removeItem(zoomInArea);
     delete zoomInArea;
     zoomInArea = NULL;

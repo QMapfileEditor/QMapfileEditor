@@ -7,11 +7,16 @@
 
 class MapScene : public QGraphicsScene {
 
+ Q_OBJECT
+
  public:
   MapScene(QObject * parent = 0);
   ~MapScene();
 
   void setZoomMode(bool const & v);
+
+ signals:
+  void notifyAreaToZoom(QRectF);
 
  protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);
