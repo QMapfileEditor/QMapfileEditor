@@ -13,6 +13,7 @@ SOURCES += \
         main.cpp                            \
         mainwindow.cpp                      \
         mapfileparser.cpp                   \
+        mapscene.cpp                        \
         mapsettings.cpp                     \
         outputformat.cpp                    \
         commands/changemapnamecommand.cpp
@@ -21,6 +22,7 @@ HEADERS  += \
     keyvaluemodel.h                         \
     mainwindow.h                            \
     mapfileparser.h                         \
+    mapscene.h                              \
     mapsettings.h                           \
     outputformat.h                          \
     commands/changemapnamecommand.h

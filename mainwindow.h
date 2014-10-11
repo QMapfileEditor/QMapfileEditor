@@ -16,6 +16,7 @@
 #include <QStringListModel>
 #include <QUndoStack>
 
+#include "mapscene.h"
 #include "mapsettings.h"
 #include "mapfileparser.h"
 

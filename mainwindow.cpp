@@ -23,18 +23,18 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
   // inits the graphics scene
-  QGraphicsScene * mapScene = new QGraphicsScene(ui->mf_preview);
+  MapScene * mapScene = new MapScene(ui->mf_preview);
   ui->mf_preview->setScene(mapScene);
 
   // connects extra actions
   this->showInfo("Activate actions");
-  this->connect(ui->actionNew, SIGNAL(triggered()), SLOT(newMapfile()));
-  this->connect(ui->actionOpen, SIGNAL(triggered()), SLOT(openMapfile()));
-  this->connect(ui->actionSave, SIGNAL(triggered()), SLOT(saveMapfile()));
-  this->connect(ui->actionSaveAs, SIGNAL(triggered()), SLOT(saveAsMapfile()));
+  this->connect(ui->actionNew,        SIGNAL(triggered()), SLOT(newMapfile()));
+  this->connect(ui->actionOpen,       SIGNAL(triggered()), SLOT(openMapfile()));
+  this->connect(ui->actionSave,       SIGNAL(triggered()), SLOT(saveMapfile()));
+  this->connect(ui->actionSaveAs,     SIGNAL(triggered()), SLOT(saveAsMapfile()));
   this->connect(ui->actionMapSetting, SIGNAL(triggered()), SLOT(showMapSettings()));
-  this->connect(ui->actionAbout, SIGNAL(triggered()), SLOT(showAbout()));
-  this->connect(ui->actionRefresh, SIGNAL(triggered()), SLOT(updateMapPreview()));
+  this->connect(ui->actionAbout,      SIGNAL(triggered()), SLOT(showAbout()));
+  this->connect(ui->actionRefresh,    SIGNAL(triggered()), SLOT(updateMapPreview()));
 
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
