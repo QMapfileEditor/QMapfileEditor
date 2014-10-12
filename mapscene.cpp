@@ -41,12 +41,11 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+  Q_UNUSED(event)
   if (drawing) {
     emit notifyAreaToZoom(zoomInArea->rect());
-    removeItem(zoomInArea);
-    delete zoomInArea;
+    // After having emitted the signal, the scene will be cleared
     zoomInArea = NULL;
     drawing = false;
-    // TODO: triggers onto mainwindow the order to redraw the map
   }
 }

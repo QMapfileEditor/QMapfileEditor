@@ -160,7 +160,7 @@
      <string>Map</string>
     </property>
     <addaction name="actionRefresh"/>
-    <addaction name="actionZoom_to_Extend"/>
+    <addaction name="actionZoom_to_Extent"/>
     <addaction name="actionZoom"/>
     <addaction name="actionZoom_2"/>
     <addaction name="actionPan"/>
@@ -249,7 +249,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionRefresh"/>
-   <addaction name="actionZoom_to_Extend"/>
+   <addaction name="actionZoom_to_Extent"/>
    <addaction name="actionZoom"/>
    <addaction name="actionZoom_2"/>
    <addaction name="actionPan"/>
@@ -493,7 +493,7 @@
     <string>F5</string>
    </property>
   </action>
-  <action name="actionZoom_to_Extend">
+  <action name="actionZoom_to_Extent">
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/ui/images/icons/zoom-original.png</normaloff>:/ui/images/icons/zoom-original.png</iconset>

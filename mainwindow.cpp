@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -13,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
   this->showInfo(tr("Initializing default mapfile"));
 
   // inits QAction behaviours
+  this->connect(ui->actionZoom_to_Extent,   SIGNAL(triggered()), SLOT(zoomToOriginalExtent()));
   this->connect(ui->actionZoom,   SIGNAL(toggled(bool)), SLOT(zoomToggled(bool)));
   this->connect(ui->actionZoom_2, SIGNAL(toggled(bool)), SLOT(zoom2Toggled(bool)));
   this->connect(ui->actionPan,    SIGNAL(toggled(bool)), SLOT(panToggled(bool)));
@@ -45,20 +45,13 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::zoomMapPreview(QRectF area) {
-  std::cout << "Rectangle     : " <<  area.x()  << ":" << area.y() << "   "  << area.width() << ":" << area.height() << std::endl;
-  std::cout << "complete zone : " <<  ui->mf_preview->sceneRect().x()  << ":" 
-      << ui->mf_preview->sceneRect().y() << "   "  << ui->mf_preview->sceneRect().width() 
-      << ":" << ui->mf_preview->sceneRect().height() << std::endl;
-
   // calculate final extent
-  double maxy = this->mapfile->getMapExtentMaxY(),
-         miny = this->mapfile->getMapExtentMinY(),
-         maxx = this->mapfile->getMapExtentMaxX(),
-         minx = this->mapfile->getMapExtentMinX();
-
-  std::cout << "extent : " <<  minx  << ":" 
-      << miny << "   "  << maxx << ":" << maxy << std::endl;
-
+  // Note: This algorithm is far from perfect but
+  // should suffice as for now ...
+  double maxy = this->currentMapMaxY;
+  double miny = this->currentMapMinY;
+  double maxx = this->currentMapMaxX;
+  double minx = this->currentMapMinX;
 
   float rectminx = area.x(),
         rectmaxx = area.x() + area.width(),
@@ -68,19 +61,36 @@ void MainWindow::zoomMapPreview(QRectF area) {
   float zonex = ui->mf_preview->sceneRect().width(),
         zoney = ui->mf_preview->sceneRect().height();
 
-  double actualminx = (rectminx * ( maxx - minx)) / zonex;
-  double actualminy = (rectminy * ( maxy - miny)) / zoney;
-  double actualmaxx = (rectmaxx * ( maxx - minx)) / zonex;
-  double actualmaxy = (rectmaxy * ( maxy - miny)) / zoney;
+  // First, establish the ratio (pixels / MS units)
+  double x1beforetrans = (rectminx * (std::abs(maxx) + std::abs(minx))) / zonex;
+  double x2beforetrans = (rectmaxx * (std::abs(maxx) + std::abs(minx))) / zonex;
+  double y1beforetrans = (rectminy * (std::abs(maxy) + std::abs(miny))) / zoney;
+  double y2beforetrans = (rectmaxy * (std::abs(maxy) + std::abs(miny))) / zoney;
 
-  std::cout << "actualminx = " << "(" << rectminx <<  " * " <<
-      "(" << maxx <<  " - " << minx << ")) / " << zonex << std::endl ;
+  // Then translates so that coordinates are relative to MS origin
+  // (and not Qt scene one)
+  double x1trans = std::abs(minx) - x1beforetrans;
+  double x2trans = std::abs(minx) - x2beforetrans;
+  double y1trans = std::abs(miny) - y1beforetrans;
+  double y2trans = std::abs(miny) - y2beforetrans;
 
+  // saves the current extent of the map
+  this->currentMapMinX = x1trans < x2trans ? x1trans: x2trans,
+  this->currentMapMinY = y1trans < y2trans ? y1trans: y2trans,
+  this->currentMapMaxX = x1trans >= x2trans ? x1trans: x2trans,
+  this->currentMapMaxY = y1trans >= y2trans ? y1trans: y2trans;
 
-  std::cout << "converted space : " <<  actualminx  << ":" 
-      << actualminy << "   "  << actualmaxx << ":" << actualmaxy << std::endl;
+  this->updateMapPreview();
 
-  std::cout <<  std::endl;
+}
+void MainWindow::zoomToOriginalExtent() {
+  // reinits the extent to its original value
+  this->currentMapMinX = this->mapfile->getMapExtentMinX();
+  this->currentMapMinY = this->mapfile->getMapExtentMinY();
+  this->currentMapMaxX = this->mapfile->getMapExtentMaxX();
+  this->currentMapMaxY = this->mapfile->getMapExtentMaxY();
+
+  this->updateMapPreview();
 }
 
 void MainWindow::zoomToggled(bool toggle) {
@@ -121,6 +131,12 @@ void MainWindow::reinitMapfile() {
   // Creates a new mapfileparser from scratch
   delete this->mapfile;
   this->mapfile = new MapfileParser(QString());
+
+  // (re) init default extent
+  this->currentMapMinX = this->mapfile->getMapExtentMinX();
+  this->currentMapMinY = this->mapfile->getMapExtentMinY();
+  this->currentMapMaxX = this->mapfile->getMapExtentMaxX();
+  this->currentMapMaxY = this->mapfile->getMapExtentMaxY();
 }
 
 QMessageBox::StandardButton MainWindow::warnIfActiveSession() {
@@ -184,6 +200,12 @@ void MainWindow::openMapfile()
 
   ui->mf_structure->expandAll();
 
+  // inits the default extent
+  this->currentMapMinX = this->mapfile->getMapExtentMinX();
+  this->currentMapMinY = this->mapfile->getMapExtentMinY();
+  this->currentMapMaxX = this->mapfile->getMapExtentMaxX();
+  this->currentMapMaxY = this->mapfile->getMapExtentMaxY();
+
   this->updateMapPreview();
 }
 
@@ -198,10 +220,27 @@ void MainWindow::updateMapPreview(const int & w, const int &h) {
   this->ui->mf_preview->scene()->clear();
   // rendering the map
   QPixmap mapRepr = QPixmap();
+
+  // Hacks the extent of the map
+
+  // Temporarily hack the map extent
+  double tmpMinx, tmpMiny, tmpMaxx, tmpMaxy;
+  tmpMinx = this->mapfile->getMapExtentMinX();
+  tmpMiny = this->mapfile->getMapExtentMinY();
+  tmpMaxx = this->mapfile->getMapExtentMaxX();
+  tmpMaxy = this->mapfile->getMapExtentMaxY();
+
+  this->mapfile->setMapExtent(this->currentMapMinX, this->currentMapMinY, this->currentMapMaxX, this->currentMapMaxY);
+
   // it is mapfileparser's class role to manage the allocated
   // memory
   unsigned char * mapImage = this->mapfile->getCurrentMapImage(w, h);
   int mapImageSize = this->mapfile->getCurrentMapImageSize();
+
+  // Then restores the original map extent
+ this->mapfile->setMapExtent(tmpMinx, tmpMiny, tmpMaxx, tmpMaxy);
+
+
   mapRepr.loadFromData(mapImage, mapImageSize);
   this->ui->mf_preview->scene()->addPixmap(mapRepr);
 }

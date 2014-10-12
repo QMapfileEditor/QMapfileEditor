@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <iostream>
+#include <cmath>
 
 #include <QDir>
 #include <QFileDialog>
@@ -45,6 +46,7 @@ class MainWindow : public QMainWindow
       void updateMapPreview(void);
       void zoomMapPreview(QRectF);
       void zoomToggled(bool);
+      void zoomToOriginalExtent();
       void zoom2Toggled(bool);
 
 
@@ -62,6 +64,8 @@ class MainWindow : public QMainWindow
       void reinitMapfile();
       void updateMapPreview(const int &, const int &);
       QMessageBox::StandardButton warnIfActiveSession(void);
+
+      double currentMapMinX, currentMapMaxX, currentMapMinY, currentMapMaxY;
 };
 
 #endif // MAINWINDOW_H
