@@ -134,11 +134,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
       ui->mf_ogc_enable->setCheckState(Qt::Checked);
     }
 
-    if ( mapfile->wmsGetCapabilitiesEnabled()) {
-     std::cout<< "cap enabled\n";
-    } else
-     std::cout<< "cap disabled\n";
-
     this->ui->mf_map_web_md_wfs_enable_gc->setCheckState(mapfile->wfsGetCapabilitiesEnabled()      ? Qt::Checked : Qt::Unchecked);
     this->ui->mf_map_web_md_wfs_enable_gf->setCheckState(mapfile->wfsGetFeatureEnabled()           ? Qt::Checked : Qt::Unchecked);
     this->ui->mf_map_web_md_wfs_enable_dft->setCheckState(mapfile->wfsDescribeFeatureTypeEnabled() ? Qt::Checked : Qt::Unchecked);
@@ -485,8 +480,9 @@ MapSettings::~MapSettings() {
   delete ui;
 }
 
-QStringList MapSettings::OgcFilteredOptions = QStringList() << "wms_title" << "wfs_title"
-  << "wms_enable_request" <<  "wfs_enable_request" << "wms_onlineresource" << "wfs_onlineresource"
-  << "wms_srs" << "wfs_srs";
+QStringList MapSettings::OgcFilteredOptions = QStringList() << "wms_title" << "wfs_title" << "ows_title"
+  << "wms_enable_request" <<  "wfs_enable_request" << "ows_enable_request"
+  << "wms_onlineresource" << "wfs_onlineresource" << "ows_onlineresource"
+  << "wms_srs" << "wfs_srs" << "ows_srs";
 
 

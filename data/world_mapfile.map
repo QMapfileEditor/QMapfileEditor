@@ -100,6 +100,7 @@ MAP
       "wms_title"	        "World Map"
       "ows_title"	        "Test OWS"
       "wms_enable_request"      "GetCapabilities GetMap"
+      "ows_enable_request"      "* !DescribeFeatureType"
       "wms_city"                "Aix-les-Bains"
       "wms_country"             "France"
       "wms_languages"           "english"
