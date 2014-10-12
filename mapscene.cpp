@@ -29,6 +29,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     addItem(zoomInArea);
     drawing = true;
   }
+  else if (panning) {
+    pointOrig = QPointF(event->scenePos().x(), event->scenePos().y());
+  }
 }
 
 void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
@@ -54,5 +57,10 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     drawing = false;
   } else if (zoomingOut) {
     emit notifyAreaToZoomOut();
+  } else if (panning) {
+    qreal relatx = event->scenePos().x() - pointOrig.x();
+    qreal relaty = event->scenePos().y() - pointOrig.y();
+
+    emit notifyAreaToPan(relatx, relaty);
   }
 }

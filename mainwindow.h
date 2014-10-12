@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow
  public slots:
       void openMapfile();
       void newMapfile();
+      void panPreview(qreal,qreal);
       void panToggled(bool);
       void saveMapfile();
       void saveAsMapfile();

@@ -20,6 +20,7 @@ class MapScene : public QGraphicsScene {
  signals:
   void notifyAreaToZoomIn(QRectF);
   void notifyAreaToZoomOut();
+  void notifyAreaToPan(qreal, qreal);
 
  protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);

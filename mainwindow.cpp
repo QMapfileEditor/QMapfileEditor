@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_preview->scene()->clear();
   this->connect(mapScene, SIGNAL(notifyAreaToZoomIn(QRectF)), this, SLOT(zoomMapPreview(QRectF)));
   this->connect(mapScene, SIGNAL(notifyAreaToZoomOut()), this, SLOT(zoomOutMapPreview()));
+  this->connect(mapScene, SIGNAL(notifyAreaToPan(qreal, qreal)), this, SLOT(panPreview(qreal, qreal)));
 
 
   // connects extra actions
@@ -58,6 +59,25 @@ void MainWindow::zoomOutMapPreview() {
   this->currentMapMaxY += std::abs(curmaxy - curminy) / 2;
 
   this->updateMapPreview();
+}
+
+void MainWindow::panPreview(qreal relatx, qreal relaty) {
+  double maxx = this->currentMapMaxX, minx = this->currentMapMinX,
+         maxy = this->currentMapMaxY, miny = this->currentMapMinY;
+
+  float zonex = ui->mf_preview->sceneRect().width(),
+        zoney = ui->mf_preview->sceneRect().height();
+
+  double offsetx = ((maxx - minx) / zonex) * relatx;
+  double offsety = ((maxy - miny) / zoney) * - relaty;
+
+  this->currentMapMinX -= offsetx;
+  this->currentMapMinY -= offsety;
+  this->currentMapMaxX -= offsetx;
+  this->currentMapMaxY -= offsety;
+
+  this->updateMapPreview();
+
 }
 
 void MainWindow::zoomMapPreview(QRectF area) {
