@@ -27,7 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_preview->setScene(mapScene);
   ui->mf_preview->setSceneRect(0,0,this->ui->mf_preview->viewport()->width(),this->ui->mf_preview->viewport()->height());
   ui->mf_preview->scene()->clear();
-  this->connect(mapScene, SIGNAL(notifyAreaToZoom(QRectF)), this, SLOT(zoomMapPreview(QRectF)));
+  this->connect(mapScene, SIGNAL(notifyAreaToZoomIn(QRectF)), this, SLOT(zoomMapPreview(QRectF)));
+  this->connect(mapScene, SIGNAL(notifyAreaToZoomOut()), this, SLOT(zoomOutMapPreview()));
+
 
   // connects extra actions
   this->showInfo("Activate actions");
@@ -42,6 +44,20 @@ MainWindow::MainWindow(QWidget *parent) :
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
+}
+
+void MainWindow::zoomOutMapPreview() {
+  double curmaxx = this->currentMapMaxX,
+         curminx = this->currentMapMinX,
+         curmaxy = this->currentMapMaxY,
+         curminy = this->currentMapMinY;
+
+  this->currentMapMinX -= std::abs(curmaxx - curminx) / 2;
+  this->currentMapMinY -= std::abs(curmaxy - curminy) / 2;
+  this->currentMapMaxX += std::abs(curmaxx - curminx) / 2;
+  this->currentMapMaxY += std::abs(curmaxy - curminy) / 2;
+
+  this->updateMapPreview();
 }
 
 void MainWindow::zoomMapPreview(QRectF area) {
@@ -95,7 +111,7 @@ void MainWindow::zoomToOriginalExtent() {
 
 void MainWindow::zoomToggled(bool toggle) {
   // notify MapScene that a zoom in action is possible or not
-  ((MapScene *) this->ui->mf_preview->scene())->setZoomMode(toggle);
+  ((MapScene *) this->ui->mf_preview->scene())->setZoomingIn(toggle);
   if (toggle == true) {
     this->ui->actionZoom_2->setChecked(false);
     this->ui->actionPan->setChecked(false);
@@ -103,6 +119,7 @@ void MainWindow::zoomToggled(bool toggle) {
 }
 
 void MainWindow::zoom2Toggled(bool toggle) {
+  ((MapScene *) this->ui->mf_preview->scene())->setZoomingOut(toggle);
   if (toggle == true) {
     this->ui->actionZoom->setChecked(false);
     this->ui->actionPan->setChecked(false);
@@ -110,6 +127,7 @@ void MainWindow::zoom2Toggled(bool toggle) {
 }
 
 void MainWindow::panToggled(bool toggle) {
+  ((MapScene *) this->ui->mf_preview->scene())->setPanning(toggle);
   if (toggle == true) {
     this->ui->actionZoom->setChecked(false);
     this->ui->actionZoom_2->setChecked(false);

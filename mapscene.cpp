@@ -5,19 +5,23 @@
 MapScene::MapScene(QObject *parent): QGraphicsScene(parent),
     zoomInArea(0),
     drawing(false),
-    zoomMode(false)
+    zoomingIn(false),
+    zoomingOut(false),
+    panning(false)
 {}
 
 
 MapScene::~MapScene() {
 };
 
-void MapScene::setZoomMode(bool const &b) { zoomMode = b; }
+void MapScene::setZoomingIn(bool const &b) { zoomingIn = b; }
+void MapScene::setZoomingOut(bool const &b) { zoomingOut = b; }
+void MapScene::setPanning(bool const &b) { panning = b; }
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
   if (event->button() != Qt::LeftButton)
     return;
-  if (zoomMode) {
+  if (zoomingIn) {
     pointOrig = QPointF(event->scenePos().x(), event->scenePos().y());
     zoomInArea = new QGraphicsRectItem(pointOrig.x(), pointOrig.y(), 1, 1);
     zoomInArea->setBrush(QBrush(QColor(24, 148, 24, 40)));
@@ -41,11 +45,14 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-  Q_UNUSED(event)
-  if (drawing) {
-    emit notifyAreaToZoom(zoomInArea->rect());
+  if (event->button() != Qt::LeftButton)
+    return;
+  if ((drawing) && (zoomingIn)) {
+    emit notifyAreaToZoomIn(zoomInArea->rect());
     // After having emitted the signal, the scene will be cleared
     zoomInArea = NULL;
     drawing = false;
+  } else if (zoomingOut) {
+    emit notifyAreaToZoomOut();
   }
 }

@@ -13,10 +13,13 @@ class MapScene : public QGraphicsScene {
   MapScene(QObject * parent = 0);
   ~MapScene();
 
-  void setZoomMode(bool const & v);
+  void setZoomingIn(bool const & v);
+  void setZoomingOut(bool const & v);
+  void setPanning(bool const & v);
 
  signals:
-  void notifyAreaToZoom(QRectF);
+  void notifyAreaToZoomIn(QRectF);
+  void notifyAreaToZoomOut();
 
  protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -26,7 +29,11 @@ class MapScene : public QGraphicsScene {
  private:
   QGraphicsRectItem * zoomInArea;
   bool drawing;
-  bool zoomMode;
+
+  bool zoomingIn;
+  bool zoomingOut;
+  bool panning;
+
   QPointF pointOrig;
 
 };
