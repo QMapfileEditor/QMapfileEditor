@@ -4,13 +4,11 @@
 MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
   QDialog(parent), ui(new Ui::MapSettings), mapfile(mf)
 {
-
     ui->setupUi(this);
-
     this->settingsUndoStack = new QUndoStack(this);
 
-    /** General Tab **/
-    //TODO: create Slots and Signal on extent on update button
+    /** Main Tab **/
+
     //Name
     ui->mf_map_name->setText(this->mapfile->getMapName());
     this->connect(ui->mf_map_name, SIGNAL(editingFinished()), SLOT(changeMapName()));
@@ -23,7 +21,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
       ui->mf_map_status_off->setChecked(true);
       ui->mf_map_status_on->setChecked(false);
     }
-
     //MapSizes
     ui->mf_map_size_width->setValue(this->mapfile->getMapWidth());
     ui->mf_map_size_height->setValue(this->mapfile->getMapHeight());
@@ -32,7 +29,16 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_units->addItems(MapfileParser::units);
     ui->mf_map_units->setCurrentIndex(this->mapfile->getMapUnits());
 
-    //Outpuformat
+    // Force extent to be numerical
+    ui->mf_map_extent_left->setValidator(new QDoubleValidator(this));
+    ui->mf_map_extent_bottom->setValidator(new QDoubleValidator(this));
+    ui->mf_map_extent_right->setValidator(new QDoubleValidator(this));
+    ui->mf_map_extent_top->setValidator(new QDoubleValidator(this));
+
+
+
+    /** Output formats tab **/
+
     this->outputFormatsMapper = new QDataWidgetMapper(this);
     OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
     outputFormatsModel->setEntries(this->mapfile->getOutputFormats());
@@ -142,9 +148,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     this->ui->mf_map_web_md_wms_enable_gc->setCheckState(mapfile->wmsGetCapabilitiesEnabled()      ? Qt::Checked : Qt::Unchecked);
     this->ui->mf_map_web_md_wms_enable_gfi->setCheckState(mapfile->wmsGetFeatureInfoEnabled()      ? Qt::Checked : Qt::Unchecked);
 
-
-
-
     /** Debug tab **/
 
     
@@ -195,8 +198,11 @@ void MapSettings::saveMapSettings() {
     //projection
     this->mapfile->setMapProjection(ui->mf_map_projection->currentText());
     //extent
-    this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(), ui->mf_map_extent_bottom->text().toFloat(),ui->mf_map_extent_right->text().toFloat(),ui->mf_map_extent_top->text().toFloat());
-    
+    this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(),
+                                ui->mf_map_extent_bottom->text().toFloat(),
+                                ui->mf_map_extent_right->text().toFloat(),
+                                ui->mf_map_extent_top->text().toFloat());
+
     /** Debug tab **/
     if(ui->mf_map_debug_on->isChecked()) {
         this->mapfile->setDebug(ui->mf_map_debug->value());
