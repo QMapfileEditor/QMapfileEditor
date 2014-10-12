@@ -131,7 +131,9 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     ui->mf_map_web_md_options_list->setModel(kvm);
     ui->mf_map_web_md_options_list->verticalHeader()->hide();
     ui->mf_map_web_md_options_list->setSelectionBehavior(QAbstractItemView::SelectRows);
-
+    if (kvm->rowCount() > 0) {
+      ui->mf_ogc_enable->setCheckState(Qt::Checked);
+    }
 
     /** Debug tab **/
     this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
