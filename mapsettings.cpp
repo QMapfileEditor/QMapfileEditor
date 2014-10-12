@@ -117,7 +117,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
     //fill in forms
     ui->mf_map_web_md_wms_title->setText(this->mapfile->getMetadataWmsTitle());
     ui->mf_map_web_md_wfs_title->setText(this->mapfile->getMetadataWfsTitle());
-    //ui->mf_map_web_md_wfs_enable_gc->setChecked(this->mapfile->getMetadataWfsEnabledGc());
     ui->mf_map_web_md_wms_onlineresource->setText(this->mapfile->getMetadataWmsOnlineresource());
     ui->mf_map_web_md_wfs_onlineresource->setText(this->mapfile->getMetadataWfsOnlineresource());
     ui->mf_map_web_md_wms_srs->setText(this->mapfile->getMetadataWmsSrs());
@@ -135,7 +134,25 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser  * mf) :
       ui->mf_ogc_enable->setCheckState(Qt::Checked);
     }
 
+    if ( mapfile->wmsGetCapabilitiesEnabled()) {
+     std::cout<< "cap enabled\n";
+    } else
+     std::cout<< "cap disabled\n";
+
+    this->ui->mf_map_web_md_wfs_enable_gc->setCheckState(mapfile->wfsGetCapabilitiesEnabled()      ? Qt::Checked : Qt::Unchecked);
+    this->ui->mf_map_web_md_wfs_enable_gf->setCheckState(mapfile->wfsGetFeatureEnabled()           ? Qt::Checked : Qt::Unchecked);
+    this->ui->mf_map_web_md_wfs_enable_dft->setCheckState(mapfile->wfsDescribeFeatureTypeEnabled() ? Qt::Checked : Qt::Unchecked);
+    this->ui->mf_map_web_md_wms_enable_gm->setCheckState(mapfile->wmsGetMapEnabled()               ? Qt::Checked : Qt::Unchecked);
+    this->ui->mf_map_web_md_wms_enable_glg->setCheckState(mapfile->wmsGetLegendGraphicEnabled()    ? Qt::Checked : Qt::Unchecked);
+    this->ui->mf_map_web_md_wms_enable_gc->setCheckState(mapfile->wmsGetCapabilitiesEnabled()      ? Qt::Checked : Qt::Unchecked);
+    this->ui->mf_map_web_md_wms_enable_gfi->setCheckState(mapfile->wmsGetFeatureInfoEnabled()      ? Qt::Checked : Qt::Unchecked);
+
+
+
+
     /** Debug tab **/
+
+    
     this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
     this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
     this->connect(ui->mf_map_symbolset_browse, SIGNAL(clicked()), SLOT(browseSymbolsetFile()));

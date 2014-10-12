@@ -84,6 +84,21 @@ class MapfileParser
   QString getMetadataWmsSrs();
   QString getMetadataWfsSrs();
 
+  bool wfsGetCapabilitiesEnabled();
+  bool wfsGetFeatureEnabled();
+  bool wfsDescribeFeatureTypeEnabled();
+  bool wmsGetMapEnabled();
+  bool wmsGetLegendGraphicEnabled();
+  bool wmsGetCapabilitiesEnabled();
+  bool wmsGetFeatureInfoEnabled();
+
+
+
+
+
+
+
+
   QHash<QString, QString> getConfigOptions(void);
   QString                 getConfigOption(const QString &);
   void                    setConfigOption(const QString & name, const QString & value);

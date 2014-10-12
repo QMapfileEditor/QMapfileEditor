@@ -386,6 +386,80 @@ void MapfileParser::removeMetadata(const QString & name) {
   removeFromMsMap(& (this->map->web.metadata), name);
 }
 
+// WFS operations
+
+bool MapfileParser::wfsGetCapabilitiesEnabled() {
+  return (((this->getMetadatas().value("wfs_enable_request").contains("*") ||
+       (this->getMetadatas().value("wfs_enable_request").contains("GetCapabilities")))
+      && (! this->getMetadatas().value("wfs_enable_request").contains("!GetCapabilities")))
+    ||
+    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
+       (this->getMetadatas().value("ows_enable_request").contains("GetCapabilities")))
+      && (! this->getMetadatas().value("ows_enable_request").contains("!GetCapabilities"))));
+}
+
+bool MapfileParser::wfsGetFeatureEnabled() {
+  return (((this->getMetadatas().value("wfs_enable_request").contains("*") ||
+       (this->getMetadatas().value("wfs_enable_request").contains("GetFeature")))
+      && (! this->getMetadatas().value("wfs_enable_request").contains("!GetFeature")))
+    ||
+    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
+       (this->getMetadatas().value("ows_enable_request").contains("GetFeature")))
+      && (! this->getMetadatas().value("ows_enable_request").contains("!GetFeature"))));
+}
+
+bool MapfileParser::wfsDescribeFeatureTypeEnabled() {
+  return (((this->getMetadatas().value("wfs_enable_request").contains("*") ||
+       (this->getMetadatas().value("wfs_enable_request").contains("DescribeFeatureType")))
+      && (! this->getMetadatas().value("wfs_enable_request").contains("!DescribeFeatureType")))
+    ||
+    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
+       (this->getMetadatas().value("ows_enable_request").contains("DescribeFeatureType")))
+      && (! this->getMetadatas().value("ows_enable_request").contains("!DescribeFeatureType"))));
+}
+
+// WMS operations
+
+bool MapfileParser::wmsGetMapEnabled() {
+  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
+       (this->getMetadatas().value("wms_enable_request").contains("GetMap")))
+      && (! this->getMetadatas().value("wms_enable_request").contains("!GetMap")))
+    ||
+    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
+       (this->getMetadatas().value("ows_enable_request").contains("GetMap")))
+      && (! this->getMetadatas().value("ows_enable_request").contains("!GetMap"))));
+}
+
+bool MapfileParser::wmsGetLegendGraphicEnabled() {
+  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
+       (this->getMetadatas().value("wms_enable_request").contains("GetLegendGraphic")))
+      && (! this->getMetadatas().value("wms_enable_request").contains("!GetLegendGraphic")))
+    ||
+    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
+       (this->getMetadatas().value("ows_enable_request").contains("GetLegendGraphic")))
+      && (! this->getMetadatas().value("ows_enable_request").contains("!GetLegendGraphic"))));
+}
+
+bool MapfileParser::wmsGetCapabilitiesEnabled() {
+  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
+       (this->getMetadatas().value("wms_enable_request").contains("GetCapabilities")))
+      && (! this->getMetadatas().value("wms_enable_request").contains("!GetCapabilities")))
+    ||
+    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
+       (this->getMetadatas().value("ows_enable_request").contains("GetCapabilities")))
+      && (! this->getMetadatas().value("ows_enable_request").contains("!GetCapabilities"))));
+}
+
+bool MapfileParser::wmsGetFeatureInfoEnabled() {
+  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
+       (this->getMetadatas().value("wms_enable_request").contains("GetFeatureInfo")))
+      && (! this->getMetadatas().value("wms_enable_request").contains("!GetFeatureInfo")))
+    ||
+    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
+       (this->getMetadatas().value("ows_enable_request").contains("GetFeatureInfo")))
+      && (! this->getMetadatas().value("ows_enable_request").contains("!GetFeatureInfo"))));
+}
+
 QString MapfileParser::getMetadataWmsTitle() {
   QString ret = this->getMetadatas().value("wms_title", QString());
   // Empty, lets try with OWS_TITLE
