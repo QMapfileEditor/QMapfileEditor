@@ -211,8 +211,11 @@ void MainWindow::openMapfile()
 
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
 
-  // open file dialog has been discarded (escape)
-  if (fileName.isEmpty()) {
+  this->openMapfile(fileName);
+}
+
+void MainWindow::openMapfile(const QString & mapfilePath) {
+  if (mapfilePath.isEmpty()) {
     return;
   }
 
@@ -221,7 +224,7 @@ void MainWindow::openMapfile()
     this->reinitMapfile();
   }
 
-  this->mapfile = new MapfileParser(fileName);
+  this->mapfile = new MapfileParser(mapfilePath);
 
   if (! this->mapfile->isLoaded()) {
     QMessageBox::critical(
@@ -230,7 +233,7 @@ void MainWindow::openMapfile()
         tr("Error occured while loading the mapfile.")
         );
     this->reinitMapfile();
-    this->showInfo(tr("Mapfile openend with success."));
+    this->showInfo(tr("Mapfile opened successfully."));
     return;
   }
 
@@ -245,7 +248,9 @@ void MainWindow::openMapfile()
   this->currentMapMaxY = this->mapfile->getMapExtentMaxY();
 
   this->updateMapPreview();
+
 }
+
 
 void MainWindow::updateMapPreview(void) {
   this->ui->mf_preview->setSceneRect(0,0,this->ui->mf_preview->viewport()->width(),this->ui->mf_preview->viewport()->height());

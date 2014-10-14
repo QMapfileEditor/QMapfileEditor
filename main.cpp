@@ -23,7 +23,12 @@ int main(int argc, char *argv[])
   OGRRegisterAll();
 
   MainWindow w;
+  
   w.show();
+  // preloads a mapfile if given as argument
+  if (argc > 1) {
+   w.openMapfile(argv[1]);
+  }
 
   int ret = a.exec();
 
