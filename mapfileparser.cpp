@@ -215,6 +215,12 @@ void MapfileParser::setMapUnits(const QString & units) {
     this->map->units = (enum MS_UNITS) this->units.indexOf(units);
   }
 }
+void MapfileParser::setMapUnits(int const & units) {
+  if (this->map) {
+    this->map->units = (enum MS_UNITS) units;
+  }
+}
+
 
 // imageType parameter
 QString MapfileParser::getMapImageType() {

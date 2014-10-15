@@ -43,8 +43,7 @@ class MapfileParser
 
   int  getMapUnits();
   void setMapUnits(const QString & units);
-
-
+  void setMapUnits(int const & units);
 
   QString getMapImageType();
   void    setMapImageType(const QString & imageType);

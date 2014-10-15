@@ -19,7 +19,8 @@ SOURCES += \
         commands/changemapnamecommand.cpp   \
         commands/changemapstatuscommand.cpp \
         commands/setmapsizecommand.cpp      \
-        commands/setmapmaxsizecommand.cpp
+        commands/setmapmaxsizecommand.cpp   \
+        commands/setmapunitscommand.cpp
 
 HEADERS  += \
     keyvaluemodel.h                         \
@@ -31,7 +32,8 @@ HEADERS  += \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
     commands/setmapsizecommand.h            \
-    commands/setmapmaxsizecommand.h
+    commands/setmapmaxsizecommand.h         \
+    commands/setmapunitscommand.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
