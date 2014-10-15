@@ -26,6 +26,10 @@ class MapfileParser
   QStringList getGdalOgrDrivers(void) { return gdalOgrDrivers; };
 
   QList<OutputFormat *> getOutputFormats(void);
+  //TODO: default output format ? the first being defined
+  // in the mapfile ?
+  //QString const & getDefaultOutputFormat(void);
+  //void setDefaultOutputFormat(QString const &);
 
   bool getMapStatus();
   void setMapStatus(const bool & status);
@@ -39,6 +43,8 @@ class MapfileParser
 
   int  getMapUnits();
   void setMapUnits(const QString & units);
+
+
 
   QString getMapImageType();
   void    setMapImageType(const QString & imageType);
