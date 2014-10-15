@@ -16,7 +16,8 @@ SOURCES += \
         mapscene.cpp                        \
         mapsettings.cpp                     \
         outputformat.cpp                    \
-        commands/changemapnamecommand.cpp
+        commands/changemapnamecommand.cpp   \
+        commands/changemapstatuscommand.cpp
 
 HEADERS  += \
     keyvaluemodel.h                         \
@@ -25,7 +26,8 @@ HEADERS  += \
     mapscene.h                              \
     mapsettings.h                           \
     outputformat.h                          \
-    commands/changemapnamecommand.h
+    commands/changemapnamecommand.h         \
+    commands/changemapstatuscommand.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \

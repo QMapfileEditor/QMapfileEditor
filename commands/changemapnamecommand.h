@@ -19,5 +19,5 @@ class ChangeMapNameCommand : public QUndoCommand {
 };
 
 
-#endif // CHANGEMAPNAMECOMMAN_H
+#endif // CHANGEMAPNAMECOMMAND_H
 
