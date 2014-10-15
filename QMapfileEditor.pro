@@ -17,7 +17,8 @@ SOURCES += \
         mapsettings.cpp                     \
         outputformat.cpp                    \
         commands/changemapnamecommand.cpp   \
-        commands/changemapstatuscommand.cpp
+        commands/changemapstatuscommand.cpp \
+        commands/setmapsizecommand.cpp
 
 HEADERS  += \
     keyvaluemodel.h                         \
@@ -27,7 +28,8 @@ HEADERS  += \
     mapsettings.h                           \
     outputformat.h                          \
     commands/changemapnamecommand.h         \
-    commands/changemapstatuscommand.h
+    commands/changemapstatuscommand.h       \
+    commands/setmapsizecommand.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
