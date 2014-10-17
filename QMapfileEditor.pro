@@ -21,7 +21,8 @@ SOURCES += \
         commands/setmapsizecommand.cpp      \
         commands/setmapmaxsizecommand.cpp   \
         commands/setmapunitscommand.cpp     \
-        commands/setmapextentcommand.cpp
+        commands/setmapextentcommand.cpp    \
+        commands/setshapepathcommand.cpp
 
 HEADERS  += \
     keyvaluemodel.h                         \
@@ -35,7 +36,8 @@ HEADERS  += \
     commands/setmapsizecommand.h            \
     commands/setmapmaxsizecommand.h         \
     commands/setmapunitscommand.h           \
-    commands/setmapextentcommand.h
+    commands/setmapextentcommand.h          \
+    commands/setshapepathcommand.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
