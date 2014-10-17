@@ -178,6 +178,7 @@ int MapfileParser::getMapWidth() {
     return this->map->width;
   return -1;
 }
+
 int MapfileParser::getMapHeight() {
   if (this->map)
     return this->map->height;
@@ -683,17 +684,31 @@ QList<OutputFormat *> MapfileParser::getOutputFormats() {
   return ret;
 }
 
-//OutputFormat MapfileParser::getOutputFormat(const QString & key) {
-//  QList<OutputFormat> lst = this->getOutputFormats();
-//  for (int i = 0; i < lst.size(); ++i) {
-//    OutputFormat cur = lst.at(i);
-//    // In Mapserver, the name of the outputformat is used as primary key
-//    if (key == cur.getName())
-//      return cur;
-//  }
-//  return OutputFormat();
-//
-//}
+void MapfileParser::setOutputFormats(QList<OutputFormat *> const & of) {
+
+  // Note: need to modify several fields in the mapfile
+  // 1. map->outputformatlist (obviously)
+  // 2. map->outputformat (which is a link to the first elem of outputformatlist)
+  //
+  // This should be done by MS internals into mapoutput.c defined functions, and by
+  // avoiding having to fiddle with mapObj by ourselves.
+  //
+  // useful internal functions to fiddle with outputformat internally in MS:
+  //  - msFreeOutputFormat(outputFormatObj *);
+  //  - outputFormatObj *msCreateDefaultOutputFormat(mapObj *map, const char *driver, const char *name);
+  //  - msApplyDefaultOutputFormats(): initializes default output formats depending of compilation options
+  //    from MapServer.
+  //  - int msAppendOutputFormat(mapObj *map, outputFormatObj *format);
+  //  - int msRemoveOutputFormat(mapObj *map, const char *name)
+  //  - outputFormatObj *msSelectOutputFormat( mapObj *map, const char *imagetype )
+  //
+}
+
+void MapfileParser::setDefaultOutputFormat(QString const & of) {
+  // see above: msSelectOutputFormat()
+
+}
+
 
 bool MapfileParser::saveMapfile(const QString & filename) {
   int ret = -1;

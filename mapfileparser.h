@@ -26,10 +26,9 @@ class MapfileParser
   QStringList getGdalOgrDrivers(void) { return gdalOgrDrivers; };
 
   QList<OutputFormat *> getOutputFormats(void);
-  //TODO: default output format ? the first being defined
-  // in the mapfile ?
-  //QString const & getDefaultOutputFormat(void);
-  //void setDefaultOutputFormat(QString const &);
+  void setOutputFormats(QList<OutputFormat *> const & of);
+  QString const & getDefaultOutputFormat(void);
+  void setDefaultOutputFormat(QString const &);
 
   bool getMapStatus();
   void setMapStatus(const bool & status);
