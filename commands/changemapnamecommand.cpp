@@ -1,11 +1,9 @@
 #include "changemapnamecommand.h"
 
 ChangeMapNameCommand::ChangeMapNameCommand(QString title, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent)
+     : QUndoCommand(parent), parser(parser), newName(title)
 {
    oldName = parser->getMapName();
-   this->newName = title;
-   this->parser = parser;
 
    setText(QObject::tr("change title to '%1'").arg(this->newName));
    parser->setMapName(this->newName);
