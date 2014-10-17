@@ -8,7 +8,7 @@
 class ChangeMapNameCommand : public QUndoCommand {
 
  public:
-   ChangeMapNameCommand(QString newName, MapfileParser * parser, QUndoCommand *parent = 0);
+   ChangeMapNameCommand(QString, MapfileParser *, QUndoCommand *parent = 0);
    void undo();
    void redo();
 
