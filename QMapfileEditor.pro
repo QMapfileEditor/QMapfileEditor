@@ -24,7 +24,8 @@ SOURCES += \
         commands/setmapextentcommand.cpp    \
         commands/setshapepathcommand.cpp    \
         commands/setsymbolsetcommand.cpp    \
-        commands/setfontsetcommand.cpp
+        commands/setfontsetcommand.cpp      \
+        commands/setresolutioncommand.cpp
 
 HEADERS  += \
     keyvaluemodel.h                         \
@@ -41,7 +42,8 @@ HEADERS  += \
     commands/setmapextentcommand.h          \
     commands/setshapepathcommand.h          \
     commands/setsymbolsetcommand.h          \
-    commands/setfontsetcommand.h
+    commands/setfontsetcommand.h            \
+    commands/setresolutioncommand.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
