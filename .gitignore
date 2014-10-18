@@ -7,6 +7,6 @@ ui_*
 data/mapserver.log
 test/testsuite
 .gdbinit
-build/
-debug/
-release/
+**/build/
+**/debug/
+**/release/
