@@ -33,14 +33,21 @@ MapfileParser * QGisImporter::importMapFile() {
   qDebug() << "QGis project XML loaded, parsing ...";
 
   MapfileParser * mf = new MapfileParser();
+
+
   // gets the extent
   float xmin, ymin, xmax, ymax;
   QDomNode extent = doc.elementsByTagName("extent").at(0);
   // takes the first extent node
-  qDebug() << extent.firstChildElement("xmin").text();
-  qDebug() << extent.firstChildElement("xmax").text();
-  qDebug() << extent.firstChildElement("ymin").text();
-  qDebug() << extent.firstChildElement("ymax").text();
+  // mapfileparser.setMaxExtent()
+
+  xmin = extent.firstChildElement("xmin").text().toFloat();
+  xmax = extent.firstChildElement("xmax").text().toFloat();
+  ymin = extent.firstChildElement("ymin").text().toFloat();
+  xmax = extent.firstChildElement("ymax").text().toFloat();
+
+  mf->setMapExtent(xmin, ymin, xmax, ymax);
+
 
   f.close();
 
