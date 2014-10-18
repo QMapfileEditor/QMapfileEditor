@@ -13,6 +13,7 @@ CONFIG += console debug_and_release
 
 QMAKE_CLEAN += $(TARGET)
 
+QT += xml
 # Input
 HEADERS += qgisimporter.h ../mapfileparser.h ../outputformat.h
 SOURCES += main.cpp qgisimporter.cpp ../mapfileparser.cpp ../outputformat.cpp

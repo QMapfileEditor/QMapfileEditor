@@ -6,7 +6,9 @@
 #include "../mapfileparser.h"
 
 
-class QGisImporter {
+class QGisImporter  : QObject {
+
+ Q_OBJECT
 
  public:
   QGisImporter(QString const & qgsPath);
