@@ -42,15 +42,19 @@ MapfileParser * QGisImporter::importMapFile() {
   // gets the extent
   float xmin, ymin, xmax, ymax;
   QDomNode extent = doc.elementsByTagName("extent").at(0);
-  // takes the first extent node
-  // mapfileparser.setMaxExtent()
 
   xmin = extent.firstChildElement("xmin").text().toFloat();
   xmax = extent.firstChildElement("xmax").text().toFloat();
   ymin = extent.firstChildElement("ymin").text().toFloat();
-  xmax = extent.firstChildElement("ymax").text().toFloat();
+  ymax = extent.firstChildElement("ymax").text().toFloat();
 
   mf->setMapExtent(xmin, ymin, xmax, ymax);
+
+  // units
+  QDomNode mapcanvasNode = doc.elementsByTagName("mapcanvas").at(0);
+  QString units = mapcanvasNode.firstChildElement("units").text();
+  // TODO: check possible values for units QGis-side
+  mf->setMapUnits(units == "degrees" ? "dd" : units);
 
 
   f.close();
