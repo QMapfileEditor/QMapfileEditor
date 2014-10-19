@@ -34,6 +34,10 @@ MapfileParser * QGisImporter::importMapFile() {
 
   MapfileParser * mf = new MapfileParser();
 
+  // gets the title
+  QDomNode titleNode = doc.elementsByTagName("title").at(0);
+  mf->setMapName(titleNode.toElement().text());
+
 
   // gets the extent
   float xmin, ymin, xmax, ymax;
