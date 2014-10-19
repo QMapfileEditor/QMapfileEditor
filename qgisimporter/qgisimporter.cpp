@@ -30,7 +30,7 @@ MapfileParser * QGisImporter::importMapFile() {
     return NULL;
   }
 
-  qDebug() << "QGis project XML loaded, parsing ...";
+  qDebug() << "QGIS project XML loaded, parsing ...";
 
   MapfileParser * mf = new MapfileParser();
 

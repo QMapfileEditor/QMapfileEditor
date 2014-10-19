@@ -17,7 +17,7 @@ int main(int argc, char ** argv) {
    if (argc > 1) {
      imp = new QGisImporter(argv[1]);
    } else {
-     qDebug() << "Usage: " << argv[0] <<  "<QGis project>";
+     qDebug() << "Usage: " << argv[0] <<  "<QGIS project>";
      return 0;
    }
 
@@ -50,6 +50,6 @@ int main(int argc, char ** argv) {
    if (imp)
      delete imp;
 
-  qDebug() << "QGis importer test about to end";
+  qDebug() << "QGIS importer test about to end";
   return 0;
 }
