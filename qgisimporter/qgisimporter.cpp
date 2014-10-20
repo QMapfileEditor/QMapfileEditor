@@ -56,6 +56,14 @@ MapfileParser * QGisImporter::importMapFile() {
   // TODO: check possible values for units QGis-side
   mf->setMapUnits(units == "degrees" ? "dd" : units);
 
+  // TODO: setting default width / height ? (the information is not
+  // available into QGis XML format)
+
+  // gets the projection
+  QDomNode destinationSrsNode = doc.elementsByTagName("destinationsrs").at(0);
+
+  QString proj4Str = destinationSrsNode.firstChildElement("proj4").text();
+  mf->setMapProjection(proj4Str);
 
   f.close();
 
