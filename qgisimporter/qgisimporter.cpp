@@ -62,7 +62,7 @@ MapfileParser * QGisImporter::importMapFile() {
   // gets the projection
   QDomNode destinationSrsNode = doc.elementsByTagName("destinationsrs").at(0);
 
-  QString proj4Str = destinationSrsNode.firstChildElement("proj4").text();
+  QString proj4Str = destinationSrsNode.firstChildElement("spatialrefsys").firstChildElement("proj4").text();
   mf->setMapProjection(proj4Str);
 
   f.close();

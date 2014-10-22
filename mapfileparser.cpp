@@ -254,9 +254,7 @@ void MapfileParser::setMapProjection(const QString & projection) {
         //if (this->map->projection.wellknownprojection) {
         //    this->map->projection.wellknownprojection = 0;
         //}
-
-        // TODO: something is wrong here
-        msLoadProjectionStringEPSG(&(this->map->projection), projection.toStdString().c_str());
+      msLoadProjectionStringEPSG(& (this->map->projection), projection.toStdString().c_str());
     }
 }
 

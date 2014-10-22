@@ -23,6 +23,12 @@ int main(int argc, char ** argv) {
 
    p = imp->importMapFile();
 
+   if (! p) {
+    qDebug() << "Error parsing mapfile "<< argv[1];
+    if (imp)
+      delete imp;
+    return 1;
+   }
    // Touch'ing a temporary file
    //
    // Doing so, because the Mapserver API to save a mapfile into a char * is
@@ -44,6 +50,7 @@ int main(int argc, char ** argv) {
    QTextStream in(f);
    qDebug() << in.readAll().toStdString().c_str();
    f->close();
+
 
    if (f)
      delete f;
