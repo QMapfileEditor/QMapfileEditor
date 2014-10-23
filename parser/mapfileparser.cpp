@@ -711,6 +711,23 @@ void MapfileParser::setDefaultOutputFormat(QString const & of) {
 
 }
 
+void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr) {
+  layerObj *newLayer = msGrowMapLayers(this->map);
+  newLayer->map = this->map;
+  // TODO: check if unique before doing this
+  if (newLayer->name)
+    free(newLayer->name);
+
+  newLayer->name = strdup(layerName.toStdString().c_str());
+
+  // TODO: relative / absolute path ?
+  if (newLayer->data)
+    free(newLayer->data);
+  newLayer->data = strdup(dataStr.toStdString().c_str());
+
+
+  msLoadProjectionStringEPSG(& (newLayer->projection), projStr.toStdString().c_str());
+}
 
 bool MapfileParser::saveMapfile(const QString & filename) {
   int ret = -1;

@@ -2,6 +2,7 @@
 
 #include <QDomDocument>
 #include <QDomNode>
+#include <QDomNodeList>
 #include <QFile>
 
 // temporary
@@ -64,6 +65,22 @@ MapfileParser * QGisImporter::importMapFile() {
 
   QString proj4Str = destinationSrsNode.firstChildElement("spatialrefsys").firstChildElement("proj4").text();
   mf->setMapProjection(proj4Str);
+
+  // Layers
+  QDomNodeList layersNodes = doc.elementsByTagName("maplayer");
+
+  qDebug() << layersNodes.size() << " layers to parse";
+
+  for (int i = 0 ; i < layersNodes.size(); ++i) {
+    QString layerName = layersNodes.at(i).firstChildElement("layername").text();
+    QString dataStr = layersNodes.at(i).firstChildElement("datasource").text();
+    QString typeStr =  layersNodes.at(i).firstChildElement("provider").text();
+    QString projStr =  layersNodes.at(i).firstChildElement("srs").firstChildElement("spatialrefsys").firstChildElement("proj4").text();
+    qDebug() <<  layerName << dataStr << typeStr << projStr;
+    mf->addLayer(layerName, dataStr, projStr);
+  }
+
+
 
   f.close();
 
