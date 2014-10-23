@@ -1,5 +1,5 @@
 #include "testmapfileparser.h"
-#include "../mapfileparser.h"
+#include "../parser/mapfileparser.h"
 
 #include <QDir>
 

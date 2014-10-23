@@ -3,7 +3,7 @@
 
 #include <QString>
 
-#include "../mapfileparser.h"
+#include "../parser/mapfileparser.h"
 
 
 class QGisImporter  : QObject {

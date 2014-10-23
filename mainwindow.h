@@ -19,7 +19,7 @@
 
 #include "mapscene.h"
 #include "mapsettings.h"
-#include "mapfileparser.h"
+#include "parser/mapfileparser.h"
 
 
 namespace Ui {
