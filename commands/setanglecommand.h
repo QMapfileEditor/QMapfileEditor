@@ -3,7 +3,7 @@
 
 #include <QUndoCommand>
 
-#include "../mapfileparser.h"
+#include "../parser/mapfileparser.h"
 
 class SetAngleCommand : public QUndoCommand {
 

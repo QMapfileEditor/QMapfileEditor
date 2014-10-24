@@ -1,0 +1,72 @@
+MAP
+  EXTENT -4 42 8 54
+  IMAGETYPE "png"
+  NAME "PostGIS sample"
+  SIZE 1448 913
+  STATUS ON
+  UNITS METERS
+  ANGLE 10
+
+  OUTPUTFORMAT
+    NAME "png"
+    MIMETYPE "image/png"
+    DRIVER "AGG/PNG"
+    EXTENSION "png"
+    IMAGEMODE RGB
+    TRANSPARENT FALSE
+  END # OUTPUTFORMAT
+
+  LEGEND
+    KEYSIZE 20 10
+    KEYSPACING 5 5
+    LABEL
+      SIZE MEDIUM
+      OFFSET 0 0
+      SHADOWSIZE 1 1
+      TYPE BITMAP
+    END # LABEL
+    STATUS OFF
+  END # LEGEND
+
+  QUERYMAP
+    SIZE 1448 913
+    STATUS OFF
+    STYLE HILITE
+  END # QUERYMAP
+
+  SCALEBAR
+    INTERVALS 4
+    LABEL
+      SIZE MEDIUM
+      OFFSET 0 0
+      SHADOWSIZE 1 1
+      TYPE BITMAP
+    END # LABEL
+    SIZE 200 3
+    STATUS OFF
+    UNITS MILES
+  END # SCALEBAR
+
+  WEB
+    METADATA
+      "MS_NONSQUARE"	"OFF"
+    END # METADATA
+  END # WEB
+
+  LAYER
+    CONNECTION "user=www-data password=www-data dbname=osm host=localhost"
+    CONNECTIONTYPE POSTGIS
+    DATA "geom FROM regions USING UNIQUE gid"
+    NAME "fr-regions"
+    STATUS ON
+    TILEITEM "location"
+    TYPE POLYGON
+    UNITS METERS
+    CLASS
+      STYLE
+        COLOR 0 0 0
+      END # STYLE
+    END # CLASS
+  END # LAYER
+
+END # MAP

@@ -1,5 +1,5 @@
 #include "testoutputformat.h"
-#include "../outputformat.h"
+#include "../parser/outputformat.h"
 
 /** test OutputFormat constructor */
 

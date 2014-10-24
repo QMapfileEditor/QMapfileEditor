@@ -21,6 +21,8 @@ class MapfileParser
   QString getMapfilePath();
   QString getMapfileName();
 
+  void addLayer(QString const &, QString const &, QString const &);
+
   QStringList getLayers(void);
   QStringList getGdalGdalDrivers(void) { return gdalGdalDrivers; };
   QStringList getGdalOgrDrivers(void) { return gdalOgrDrivers; };

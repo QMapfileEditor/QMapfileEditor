@@ -12,7 +12,6 @@ SOURCES += \
         keyvaluemodel.cpp                   \
         main.cpp                            \
         mainwindow.cpp                      \
-        mapfileparser.cpp                   \
         mapscene.cpp                        \
         mapsettings.cpp                     \
         layersettings.cpp                   \
@@ -27,12 +26,13 @@ SOURCES += \
         commands/setsymbolsetcommand.cpp    \
         commands/setfontsetcommand.cpp      \
         commands/setresolutioncommand.cpp   \
-        commands/setanglecommand.cpp
+        commands/setanglecommand.cpp        \
+        parser/mapfileparser.cpp            \
+        parser/outputformat.cpp
 
 HEADERS  += \
     keyvaluemodel.h                         \
     mainwindow.h                            \
-    mapfileparser.h                         \
     mapscene.h                              \
     mapsettings.h                           \
     layersettings.h                         \
@@ -47,7 +47,9 @@ HEADERS  += \
     commands/setsymbolsetcommand.h          \
     commands/setfontsetcommand.h            \
     commands/setresolutioncommand.h         \
-    commands/setanglecommand.h
+    commands/setanglecommand.h              \
+    parser/mapfileparser.h                  \
+    parser/outputformat.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \

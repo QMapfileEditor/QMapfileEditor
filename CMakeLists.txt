@@ -11,9 +11,9 @@ cmake_minimum_required(VERSION 2.8)
 SET(QT_MIN_VERSION 4.7.0)
 FIND_PACKAGE(Qt4 ${QT_MIN_VERSION} REQUIRED)
 
-SET(QMAPFILEEDITOR_SOURCES main.cpp mainwindow.cpp mapsettings.cpp mapfileparser.cpp outputformat.cpp
+SET(QMAPFILEEDITOR_SOURCES main.cpp mainwindow.cpp mapsettings.cpp parser/mapfileparser.cpp parser/outputformat.cpp
     commands/changemapnamecommand.cpp)
-SET(QMAPFILEEDITOR_HEADERS mainwindow.h mapsettings.h mapfileparser.h outputformat.h
+SET(QMAPFILEEDITOR_HEADERS mainwindow.h mapsettings.h parser/mapfileparser.h parser/outputformat.h
     commands/changemapnamecommand.h)
 SET(QMAPFILEEDITOR_FORMS mainwindow.ui mapsettings.ui)
 SET(QMAPFILEEDITOR_RESOURCES resources.qrc)
