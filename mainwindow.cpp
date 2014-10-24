@@ -244,7 +244,7 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
 
   ((QStringListModel *) this->ui->mf_structure->model())->setStringList(this->mapfile->getLayers());
   //TODO: add slot to layer items
-  this->connect(ui->mf_structure, SIGNAL(activated(const QStringListModel &)), SLOT(showLayerSettings(const QStringListModel &)));
+  this->connect(ui->mf_structure, SIGNAL(activated(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
 
   ui->mf_structure->expandAll();
 
@@ -315,7 +315,7 @@ void MainWindow::showMapSettings() {
 /**
  * Displays the layer settings window.
  */
-void MainWindow::showLayerSettings() {
+void MainWindow::showLayerSettings(const QModelIndex &) {
   // Mapfile not loaded
   if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
     return;

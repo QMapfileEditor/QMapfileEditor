@@ -45,10 +45,10 @@ class MainWindow : public QMainWindow
       void panToggled(bool);
       void saveMapfile();
       void saveAsMapfile();
-      void showMapSettings();
-      void showLayerSettings();
       void showAbout();
       void showInfo(const QString & message);
+      void showLayerSettings(const QModelIndex &);
+      void showMapSettings();
       void updateMapPreview(void);
       void zoomMapPreview(QRectF);
       void zoomOutMapPreview();

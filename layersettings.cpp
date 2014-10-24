@@ -2,9 +2,9 @@
 #include "ui_layersettings.h"
 
 LayerSettings::LayerSettings(QWidget * parent, MapfileParser * mf) :
-  QDialog(parent), ui(new Ui::LayerSettings), mapfile(mf)
+  QTabWidget(parent), ui(new Ui::LayerSettings), mapfile(mf)
 {
-    //ui->setupUi(this);
+    ui->setupUi(this);
     this->settingsUndoStack = new QUndoStack(this);
 
 }
@@ -14,11 +14,10 @@ LayerSettings::LayerSettings(QWidget * parent, MapfileParser * mf) :
 void LayerSettings::accept() {
     //this->saveLayerSettings();
 
-    QDialog::accept();
+    //QDialog::accept();
 }
 /** End SLOTS **/
 
 LayerSettings::~LayerSettings() {
-  // mapfile lifecycle should be managed elsewhere
-  //delete ui;
+  delete ui;
 }

@@ -19,7 +19,7 @@ namespace Ui {
 class LayerSettings;
 }
 
-class LayerSettings : public QDialog
+class LayerSettings : public QTabWidget
 {
   Q_OBJECT
 
