@@ -712,9 +712,8 @@ void MapfileParser::setDefaultOutputFormat(QString const & of) {
 }
 
 void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr) {
-  layerObj *newLayer = msGrowMapLayers(this->map);
+  layerObj *newLayer =  (layerObj *) malloc(sizeof(layerObj));
   initLayer(newLayer, this->map);
-  newLayer->map = this->map;
   // TODO: check if unique before doing this
   if (newLayer->name)
     free(newLayer->name);
@@ -729,8 +728,8 @@ void MapfileParser::addLayer(QString const & layerName, QString const & dataStr,
 
   msLoadProjectionStringEPSG(& (newLayer->projection), projStr.toStdString().c_str());
  
-  map->numlayers++;
-
+  // inserts the layer at the end
+  msInsertLayer(this->map, newLayer, -1);
 }
 
 bool MapfileParser::saveMapfile(const QString & filename) {
