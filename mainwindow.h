@@ -19,12 +19,8 @@
 
 #include "mapscene.h"
 #include "mapsettings.h"
-<<<<<<< HEAD
 #include "layersettings.h"
-#include "mapfileparser.h"
-=======
 #include "parser/mapfileparser.h"
->>>>>>> upstream/master
 
 
 namespace Ui {

@@ -12,9 +12,8 @@
 #include <QTableView>
 
 #include "keyvaluemodel.h"
-#include "mapfileparser.h"
-
 #include "commands/changemapnamecommand.h"
+#include "parser/mapfileparser.h"
 
 namespace Ui {
 class LayerSettings;
