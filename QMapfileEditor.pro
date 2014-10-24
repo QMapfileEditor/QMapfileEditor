@@ -15,7 +15,6 @@ SOURCES += \
         mapscene.cpp                        \
         mapsettings.cpp                     \
         layersettings.cpp                   \
-        outputformat.cpp                    \
         commands/changemapnamecommand.cpp   \
         commands/changemapstatuscommand.cpp \
         commands/setmapsizecommand.cpp      \
@@ -36,7 +35,6 @@ HEADERS  += \
     mapscene.h                              \
     mapsettings.h                           \
     layersettings.h                         \
-    outputformat.h                          \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
     commands/setmapsizecommand.h            \
