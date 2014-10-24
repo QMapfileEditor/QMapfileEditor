@@ -26,6 +26,7 @@ SOURCES += \
         commands/setfontsetcommand.cpp      \
         commands/setresolutioncommand.cpp   \
         commands/setanglecommand.cpp        \
+        parser/layer.cpp                    \
         parser/mapfileparser.cpp            \
         parser/outputformat.cpp
 
@@ -46,6 +47,7 @@ HEADERS  += \
     commands/setfontsetcommand.h            \
     commands/setresolutioncommand.h         \
     commands/setanglecommand.h              \
+    parser/layer.h                          \
     parser/mapfileparser.h                  \
     parser/outputformat.h
 
