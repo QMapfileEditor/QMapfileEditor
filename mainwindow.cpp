@@ -161,6 +161,11 @@ void MainWindow::reinitMapfile() {
     delete this->settings;
     this->settings = NULL;
   }
+  if (this->layerSettings) {
+    this->layerSettings->close();
+    delete this->layerSettings;
+    this->layerSettings = NULL;
+  }
 
   ((QStringListModel *) ui->mf_structure->model())->setStringList(QStringList());
 
@@ -238,6 +243,8 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
   }
 
   ((QStringListModel *) this->ui->mf_structure->model())->setStringList(this->mapfile->getLayers());
+  //TODO: add slot to layer items
+  this->connect(ui->mf_structure, SIGNAL(activated(const QStringListModel &)), SLOT(showLayerSettings(const QStringListModel &)));
 
   ui->mf_structure->expandAll();
 
@@ -305,6 +312,23 @@ void MainWindow::showMapSettings() {
   this->settings->show();
 }
 
+/**
+ * Displays the layer settings window.
+ */
+void MainWindow::showLayerSettings() {
+  // Mapfile not loaded
+  if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
+    return;
+  }
+  // a window has alrady been created
+  if (this->layerSettings) {
+    this->layerSettings->show();
+    return;
+  }
+  //TODO: use layer object instead mapfile object
+  this->layerSettings = new LayerSettings(this, this->mapfile);
+  this->layerSettings->show();
+}
 
 void MainWindow::showAbout() {
     QDialog* aboutDialog = new QDialog (this);
@@ -364,6 +388,9 @@ MainWindow::~MainWindow()
 
   if (this->settings) {
     delete this->settings;
+  }
+  if (this->layerSettings) {
+      delete this->layerSettings;
   }
 
   delete ui;

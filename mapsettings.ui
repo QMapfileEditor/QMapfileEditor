@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -538,7 +538,7 @@
          <x>100</x>
          <y>240</y>
          <width>395</width>
-         <height>83</height>
+         <height>89</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
@@ -1987,7 +1987,7 @@
          <rect>
           <x>5</x>
           <y>4</y>
-          <width>551</width>
+          <width>555</width>
           <height>348</height>
          </rect>
         </property>

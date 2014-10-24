@@ -43,7 +43,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="MainLocation">
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
       </property>
@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>875</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <property name="focusPolicy">

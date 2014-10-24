@@ -15,6 +15,7 @@ SOURCES += \
         mapfileparser.cpp                   \
         mapscene.cpp                        \
         mapsettings.cpp                     \
+        layersettings.cpp                   \
         outputformat.cpp                    \
         commands/changemapnamecommand.cpp   \
         commands/changemapstatuscommand.cpp \
@@ -34,6 +35,7 @@ HEADERS  += \
     mapfileparser.h                         \
     mapscene.h                              \
     mapsettings.h                           \
+    layersettings.h                         \
     outputformat.h                          \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \

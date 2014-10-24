@@ -19,6 +19,7 @@
 
 #include "mapscene.h"
 #include "mapsettings.h"
+#include "layersettings.h"
 #include "mapfileparser.h"
 
 
@@ -45,6 +46,7 @@ class MainWindow : public QMainWindow
       void saveMapfile();
       void saveAsMapfile();
       void showMapSettings();
+      void showLayerSettings();
       void showAbout();
       void showInfo(const QString & message);
       void updateMapPreview(void);
@@ -62,6 +64,7 @@ class MainWindow : public QMainWindow
 
       // Dialog which handles the mapfile settings
       MapSettings * settings = NULL;
+      LayerSettings * layerSettings = NULL;
 
       QUndoStack * undoStack;
 
