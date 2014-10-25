@@ -98,13 +98,6 @@ class MapfileParser
   bool wmsGetCapabilitiesEnabled();
   bool wmsGetFeatureInfoEnabled();
 
-
-
-
-
-
-
-
   QHash<QString, QString> getConfigOptions(void);
   QString                 getConfigOption(const QString &);
   void                    setConfigOption(const QString & name, const QString & value);
