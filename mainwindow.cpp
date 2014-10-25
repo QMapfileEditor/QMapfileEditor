@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
   QStringListModel * mfStructureModel = new QStringListModel(this);
   ui->mf_structure->setModel(mfStructureModel);
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  this->connect(ui->mf_structure, SIGNAL(activated(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
 
   // inits the graphics scene
   MapScene * mapScene = new MapScene(this);
@@ -161,10 +162,10 @@ void MainWindow::reinitMapfile() {
     delete this->settings;
     this->settings = NULL;
   }
-  if (this->layerSettings) {
-    this->layerSettings->close();
-    delete this->layerSettings;
-    this->layerSettings = NULL;
+  if (this->layerSettingsDialog) {
+    this->layerSettingsDialog->close();
+    delete this->layerSettingsDialog;
+    this->layerSettingsDialog = NULL;
   }
 
   ((QStringListModel *) ui->mf_structure->model())->setStringList(QStringList());
@@ -238,13 +239,11 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
         tr("Error occured while loading the mapfile.")
         );
     this->reinitMapfile();
-    this->showInfo(tr("Mapfile opened successfully."));
+    this->showInfo("");
     return;
   }
 
   ((QStringListModel *) this->ui->mf_structure->model())->setStringList(this->mapfile->getLayers());
-  //TODO: add slot to layer items
-  this->connect(ui->mf_structure, SIGNAL(activated(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
 
   ui->mf_structure->expandAll();
 
@@ -316,18 +315,29 @@ void MainWindow::showMapSettings() {
  * Displays the layer settings window.
  */
 void MainWindow::showLayerSettings(const QModelIndex &) {
-  // Mapfile not loaded
   if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
     return;
   }
-  // a window has alrady been created
-  if (this->layerSettings) {
-    this->layerSettings->show();
+
+  if (this->layerSettingsDialog) {
+    this->layerSettingsDialog->show();
     return;
   }
-  //TODO: use layer object instead mapfile object
-  this->layerSettings = new LayerSettings(this, this->mapfile);
-  this->layerSettings->show();
+
+  // TODO: either change the widget nature to be a QDialog,
+  // either find a way to integrate this correctly into the
+  // interface, but the way it is currently done is clearly
+  // not the way to do.
+
+  this->layerSettingsDialog = new QDialog(this);
+  QGridLayout * mainGrid = new QGridLayout(this->layerSettingsDialog);
+
+  LayerSettings * layerSettings = new LayerSettings(this->layerSettingsDialog, this->mapfile);
+  mainGrid->addWidget(layerSettings);
+
+  this->layerSettingsDialog->setLayout(mainGrid);
+  this->layerSettingsDialog->resize(860, 600);
+  this->layerSettingsDialog->show();
 }
 
 void MainWindow::showAbout() {
@@ -389,8 +399,8 @@ MainWindow::~MainWindow()
   if (this->settings) {
     delete this->settings;
   }
-  if (this->layerSettings) {
-      delete this->layerSettings;
+  if (this->layerSettingsDialog) {
+    delete this->layerSettingsDialog;
   }
 
   delete ui;

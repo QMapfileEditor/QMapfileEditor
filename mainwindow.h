@@ -64,7 +64,7 @@ class MainWindow : public QMainWindow
 
       // Dialog which handles the mapfile settings
       MapSettings * settings = NULL;
-      LayerSettings * layerSettings = NULL;
+      QDialog * layerSettingsDialog = NULL;
 
       QUndoStack * undoStack;
 
