@@ -380,6 +380,10 @@ QHash<QString, QString> MapfileParser::getMetadatas() {
   return populateMapFromMs(& (this->map->web.metadata));
 }
 
+QString const & MapfileParser::getMetadata(const QString & name) {
+  return this->getMetadatas().value(name);
+}
+
 void MapfileParser::setMetadata(const QString & name, const QString & value) {
   if (! this->map)
     return;
