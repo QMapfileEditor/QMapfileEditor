@@ -225,17 +225,28 @@ void MapSettings::saveMapSettings() {
     }
 
     //extent
-    this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(),
-                                ui->mf_map_extent_bottom->text().toFloat(),
-                                ui->mf_map_extent_right->text().toFloat(),
-                                ui->mf_map_extent_top->text().toFloat());
+
+    if ((ui->mf_map_extent_left->text().toFloat()      != this->mapfile->getMapExtentMinX())
+        || (ui->mf_map_extent_bottom->text().toFloat() != this->mapfile->getMapExtentMinY())
+        || (ui->mf_map_extent_right->text().toFloat()  != this->mapfile->getMapExtentMaxX())
+        || (ui->mf_map_extent_top->text().toFloat()    != this->mapfile->getMapExtentMaxY())) {
+      this->settingsUndoStack->push(new SetMapExtentCommand(ui->mf_map_extent_left->text().toFloat(),
+                                                            ui->mf_map_extent_bottom->text().toFloat(),
+                                                            ui->mf_map_extent_right->text().toFloat(),
+                                                            ui->mf_map_extent_top->text().toFloat(),
+                                                            this->mapfile));
+
+    }
+
 
     /** Debug tab **/
-    if(ui->mf_map_debug_on->isChecked()) {
-        this->mapfile->setDebug(ui->mf_map_debug->value());
-    } else if (ui->mf_map_debug_off->isChecked()) {
-        this->mapfile->setDebug(0);
+    if ((this->mapfile->getDebug()  == 0 && ui->mf_map_debug_on->isChecked())
+      || (this->mapfile->getDebug() != 0 && ui->mf_map_debug_off->isChecked())) {
+      this->settingsUndoStack->push(new SetMapDebugCommand(ui->mf_map_debug_on->isChecked() ? ui->mf_map_debug->value() : 0,
+                                                           this->mapfile));
     }
+
+
     this->mapfile->setMetadata("ms_errorfile", ui->mf_map_config_errorFile->text());
     this->mapfile->setMetadata("missingdata", ui->mf_map_config_missingdata->currentText());
     

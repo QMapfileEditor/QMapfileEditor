@@ -15,6 +15,8 @@
 
 #include "commands/changemapnamecommand.h"
 #include "commands/changemapstatuscommand.h"
+#include "commands/setmapdebugcommand.h"
+#include "commands/setmapextentcommand.h"
 #include "commands/setmapmaxsizecommand.h"
 #include "commands/setmapprojectioncommand.h"
 #include "commands/setmapsizecommand.h"
