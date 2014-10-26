@@ -28,6 +28,7 @@
 #include "commands/setshapepathcommand.h"
 #include "commands/setfontsetcommand.h"
 #include "commands/setsymbolsetcommand.h"
+#include "commands/settemplatepatterncommand.h"
 
 #include "parser/mapfileparser.h"
 

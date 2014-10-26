@@ -20,3 +20,4 @@ class SetFontSetCommand : public QUndoCommand {
 
 
 #endif // SETFONTSETCOMMAND_H
+

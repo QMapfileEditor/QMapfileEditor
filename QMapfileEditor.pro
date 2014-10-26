@@ -30,6 +30,7 @@ SOURCES += \
         commands/setresolutioncommand.cpp      \
         commands/setshapepathcommand.cpp       \
         commands/setsymbolsetcommand.cpp       \
+        commands/settemplatepatterncommand.cpp \
         parser/layer.cpp                       \
         parser/mapfileparser.cpp               \
         parser/outputformat.cpp
@@ -55,6 +56,7 @@ HEADERS  += \
     commands/setresolutioncommand.h         \
     commands/setshapepathcommand.h          \
     commands/setsymbolsetcommand.h          \
+    commands/settemplatepatterncommand.h    \
     parser/layer.h                          \
     parser/mapfileparser.h                  \
     parser/outputformat.h

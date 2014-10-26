@@ -276,9 +276,14 @@ void MapSettings::saveMapSettings() {
     }
 
 
+    // TODO
     QColor imageColor = ui->mf_map_imagecolor->palette().color(QWidget::backgroundRole());
     this->mapfile->setImageColor(imageColor.red(), imageColor.green(), imageColor.blue());
-    this->mapfile->setTemplatePattern(ui->mf_map_templatepattern->text());
+    
+    if (this->mapfile->getTemplatePattern() != ui->mf_map_templatepattern->text()) {
+     this->settingsUndoStack->push(new SetTemplatePatternCommand(ui->mf_map_templatepattern->text(), this->mapfile));
+    }
+    
     this->mapfile->setDataPattern(ui->mf_map_datapattern->text());
     this->mapfile->setMetadata("CGI_CONTEXT_URL", ui->mf_map_config_contexturl->text());
     this->mapfile->setMetadata("MS_ENCRYPTION_KEY", ui->mf_map_config_encryption->text());
@@ -297,7 +302,6 @@ void MapSettings::saveMapSettings() {
     if (ui->mf_map_web_md_wms_title != ui->mf_map_web_md_wfs_title) {
       this->mapfile->setMetadata("WMS_TITLE", ui->mf_map_web_md_wms_title->text());
       this->mapfile->setMetadata("WFS_TITLE", ui->mf_map_web_md_wfs_title->text());
-
     } else {
       this->mapfile->setMetadata("OWS_TITLE", ui->mf_map_web_md_wms_title->text());
     }
