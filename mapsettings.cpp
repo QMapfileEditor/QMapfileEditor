@@ -216,7 +216,7 @@ void MapSettings::saveMapSettings() {
       this->settingsUndoStack->push(new SetMapUnitsCommand(current_unit, this->mapfile));
     }
 
-    //TODO: outputformat
+    //TODO: default outputformat ?
     //this->mapfile->setOutputformat(ui->mf_map_ouputformat->currentText());
 
     //projection
@@ -265,9 +265,17 @@ void MapSettings::saveMapSettings() {
     }
 
     /** Advanced tab **/
-    this->mapfile->setResolution(ui->mf_map_resolution->value());
-    this->mapfile->setDefResolution(ui->mf_map_defresolution->value());
-    this->mapfile->setAngle(ui->mf_map_angle->value());
+    if (this->mapfile->getResolution() != ui->mf_map_resolution->value()) {
+      this->settingsUndoStack->push(new SetResolutionCommand(ui->mf_map_resolution->value(), this->mapfile));
+    }
+    if (this->mapfile->getDefResolution() != ui->mf_map_defresolution->value()) {
+      this->settingsUndoStack->push(new SetDefResolutionCommand(ui->mf_map_defresolution->value(), this->mapfile));
+    }
+    if (this->mapfile->getAngle() != ui->mf_map_angle->value()) {
+      this->settingsUndoStack->push(new SetAngleCommand(ui->mf_map_angle->value(), this->mapfile));
+    }
+
+
     QColor imageColor = ui->mf_map_imagecolor->palette().color(QWidget::backgroundRole());
     this->mapfile->setImageColor(imageColor.red(), imageColor.green(), imageColor.blue());
     this->mapfile->setTemplatePattern(ui->mf_map_templatepattern->text());

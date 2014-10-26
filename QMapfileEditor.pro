@@ -18,6 +18,7 @@ SOURCES += \
         commands/changemapnamecommand.cpp      \
         commands/changemapstatuscommand.cpp    \
         commands/setanglecommand.cpp           \
+        commands/setdefresolutioncommand.cpp   \
         commands/setfontsetcommand.cpp         \
         commands/setmapdebugcommand.cpp        \
         commands/setmapextentcommand.cpp       \
@@ -42,6 +43,7 @@ HEADERS  += \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
     commands/setanglecommand.h              \
+    commands/setdefresolutioncommand.h      \
     commands/setfontsetcommand.h            \
     commands/setmapdebugcommand.h           \
     commands/setmapextentcommand.h          \

@@ -15,6 +15,8 @@
 
 #include "commands/changemapnamecommand.h"
 #include "commands/changemapstatuscommand.h"
+#include "commands/setanglecommand.h"
+#include "commands/setdefresolutioncommand.h"
 #include "commands/setmapdebugcommand.h"
 #include "commands/setmapextentcommand.h"
 #include "commands/setmapmaxsizecommand.h"
@@ -22,6 +24,7 @@
 #include "commands/setmapsizecommand.h"
 #include "commands/setmapunitscommand.h"
 #include "commands/setmetadatacommand.h"
+#include "commands/setresolutioncommand.h"
 #include "commands/setshapepathcommand.h"
 #include "commands/setfontsetcommand.h"
 #include "commands/setsymbolsetcommand.h"
