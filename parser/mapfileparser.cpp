@@ -240,20 +240,19 @@ void MapfileParser::setMapImageType(const QString & imageType) {
 }
 
 //projection parameters
-int MapfileParser::getMapProjection() {
-  if (this->map)
-    return this->map->projection.wellknownprojection;
-  return -1;
+QString MapfileParser::getMapProjection() {
+  QString ret = QString();
+  if (this->map) {
+    char * tmp = msGetProjectionString(& (this->map->projection));
+    ret = QString(tmp);
+    free(tmp);
+    return ret;
+  }
+  return QString();
 }
 
-//TODO: not correct, need to manage if startwith epsg, if so add +init=
 void MapfileParser::setMapProjection(const QString & projection) {
     if (this->map) {
-        // TODO: @yjacolin : no idea on what was the purpose of this
-        // 3 lines:
-        //if (this->map->projection.wellknownprojection) {
-        //    this->map->projection.wellknownprojection = 0;
-        //}
       msLoadProjectionStringEPSG(& (this->map->projection), projection.toStdString().c_str());
     }
 }

@@ -12,7 +12,14 @@
 #include <QTableView>
 
 #include "keyvaluemodel.h"
+
 #include "commands/changemapnamecommand.h"
+#include "commands/changemapstatuscommand.h"
+#include "commands/setmapmaxsizecommand.h"
+#include "commands/setmapprojectioncommand.h"
+#include "commands/setmapsizecommand.h"
+#include "commands/setmapunitscommand.h"
+
 #include "parser/mapfileparser.h"
 
 namespace Ui {

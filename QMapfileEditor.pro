@@ -9,25 +9,26 @@ TEMPLATE = app
 QMAKE_CLEAN += $(TARGET)
 
 SOURCES += \
-        keyvaluemodel.cpp                   \
-        main.cpp                            \
-        mainwindow.cpp                      \
-        mapscene.cpp                        \
-        mapsettings.cpp                     \
-        layersettings.cpp                   \
-        commands/changemapnamecommand.cpp   \
-        commands/changemapstatuscommand.cpp \
-        commands/setmapsizecommand.cpp      \
-        commands/setmapmaxsizecommand.cpp   \
-        commands/setmapunitscommand.cpp     \
-        commands/setmapextentcommand.cpp    \
-        commands/setshapepathcommand.cpp    \
-        commands/setsymbolsetcommand.cpp    \
-        commands/setfontsetcommand.cpp      \
-        commands/setresolutioncommand.cpp   \
-        commands/setanglecommand.cpp        \
-        parser/layer.cpp                    \
-        parser/mapfileparser.cpp            \
+        keyvaluemodel.cpp                      \
+        main.cpp                               \
+        mainwindow.cpp                         \
+        mapscene.cpp                           \
+        mapsettings.cpp                        \
+        layersettings.cpp                      \
+        commands/changemapnamecommand.cpp      \
+        commands/changemapstatuscommand.cpp    \
+        commands/setanglecommand.cpp           \
+        commands/setfontsetcommand.cpp         \
+        commands/setmapextentcommand.cpp       \
+        commands/setmapmaxsizecommand.cpp      \
+        commands/setmapprojectioncommand.cpp   \
+        commands/setmapsizecommand.cpp         \
+        commands/setmapunitscommand.cpp        \
+        commands/setresolutioncommand.cpp      \
+        commands/setshapepathcommand.cpp       \
+        commands/setsymbolsetcommand.cpp       \
+        parser/layer.cpp                       \
+        parser/mapfileparser.cpp               \
         parser/outputformat.cpp
 
 HEADERS  += \
@@ -38,15 +39,16 @@ HEADERS  += \
     layersettings.h                         \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
-    commands/setmapsizecommand.h            \
-    commands/setmapmaxsizecommand.h         \
-    commands/setmapunitscommand.h           \
+    commands/setanglecommand.h              \
+    commands/setfontsetcommand.h            \
     commands/setmapextentcommand.h          \
+    commands/setmapmaxsizecommand.h         \
+    commands/setmapprojectioncommand.h      \
+    commands/setmapsizecommand.h            \
+    commands/setmapunitscommand.h           \
+    commands/setresolutioncommand.h         \
     commands/setshapepathcommand.h          \
     commands/setsymbolsetcommand.h          \
-    commands/setfontsetcommand.h            \
-    commands/setresolutioncommand.h         \
-    commands/setanglecommand.h              \
     parser/layer.h                          \
     parser/mapfileparser.h                  \
     parser/outputformat.h

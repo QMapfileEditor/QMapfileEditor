@@ -60,7 +60,7 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser * mf) :
     this->connect(ui->mf_outputformat_list, SIGNAL(activated(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
     this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
-    ui->mf_map_projection->addItem(QString::number(this->mapfile->getMapProjection()));
+    ui->mf_map_projection->addItem(this->mapfile->getMapProjection());
     this->connect(ui->mf_outputformat_options_add, SIGNAL(clicked()), SLOT(addFormatOption()));
     this->connect(ui->mf_outputformat_options_del, SIGNAL(clicked()), SLOT(removeFormatOptions()));
 
@@ -182,21 +182,48 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser * mf) :
 }
 
 void MapSettings::saveMapSettings() {
-    this->mapfile->setMapName(ui->mf_map_name->text());
+
+    // TODO: get rid of the settingsUndoStack, and use
+    // directly the one from the main window instead ?
+
+    // name has changed
+    if (ui->mf_map_name->text() != this->mapfile->getMapName())
+      this->settingsUndoStack->push(new ChangeMapNameCommand(ui->mf_map_name->text(), this->mapfile));
+
     /** General tab **/
-    if (ui->mf_map_status_on->isChecked() ) {
-      this->mapfile->setMapStatus(1);
-    } else if (ui->mf_map_status_off->isChecked() ) {
-      this->mapfile->setMapStatus(0);
+
+    // status has changed
+    if ((ui->mf_map_status_on->isChecked() && ! this->mapfile->getMapStatus()) ||
+        (ui->mf_map_status_off->isChecked() && this->mapfile->getMapStatus())) {
+      this->settingsUndoStack->push(new ChangeMapStatusCommand(ui->mf_map_status_on->isChecked(), this->mapfile));
     }
-    this->mapfile->setMapSize(ui->mf_map_size_width->value(), ui->mf_map_size_height->value());
-    this->mapfile->setMapMaxsize(ui->mf_map_maxsize->value());
+
+    // size has changed
+    if ((this->mapfile->getMapWidth() != ui->mf_map_size_width->value()) ||
+        (this->mapfile->getMapHeight() != ui->mf_map_size_height->value()))
+    {
+      this->settingsUndoStack->push(new SetMapSizeCommand(ui->mf_map_size_width->value(), ui->mf_map_size_height->value(), this->mapfile));
+    }
+
+    // Max size has changed
+    if (this->mapfile->getMapMaxsize() != ui->mf_map_maxsize->value()) {
+      this->settingsUndoStack->push(new SetMapMaxSizeCommand(ui->mf_map_maxsize->value(), this->mapfile));
+    }
+
     //units
-    this->mapfile->setMapUnits(ui->mf_map_units->currentText());
+    int current_unit = MapfileParser::units.indexOf(ui->mf_map_units->currentText());
+    if (this->mapfile->getMapUnits() != current_unit) {
+      this->settingsUndoStack->push(new SetMapUnitsCommand(current_unit, this->mapfile));
+    }
+
     //TODO: outputformat
     //this->mapfile->setOutputformat(ui->mf_map_ouputformat->currentText());
+
     //projection
-    this->mapfile->setMapProjection(ui->mf_map_projection->currentText());
+    if (this->mapfile->getMapProjection() != ui->mf_map_projection->currentText()) {
+      this->settingsUndoStack->push(new SetMapProjectionCommand(ui->mf_map_projection->currentText(), this->mapfile));
+    }
+
     //extent
     this->mapfile->setMapExtent(ui->mf_map_extent_left->text().toFloat(),
                                 ui->mf_map_extent_bottom->text().toFloat(),
@@ -262,7 +289,7 @@ void MapSettings::saveMapSettings() {
     }
     QStandardItemModel * mod = (QStandardItemModel *) ui->mf_map_web_md_options_list->model();
     if (mod) {
-        //TODO: boucle on custom metadata list
+        //TODO: loop on custom metadata list
     }
 }
 

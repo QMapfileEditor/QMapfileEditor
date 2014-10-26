@@ -49,7 +49,7 @@ class MapfileParser
   QString getMapImageType();
   void    setMapImageType(const QString & imageType);
 
-  int  getMapProjection();
+  QString getMapProjection();
   void setMapProjection(const QString & projection);
 
   double getMapExtentMinX();
@@ -149,6 +149,10 @@ class MapfileParser
   QHash<QString, QString> populateMapFromMs(void *);
   void insertIntoMsMap(void *, const QString &, const QString &);
   void removeFromMsMap(void *, const QString &);
+
+  // This object is necessary, because msGetProjectionString()
+  // will allocate memory that needs to be freed after call.
+  //QString mapProjection;
 
 
 };
