@@ -247,9 +247,13 @@ void MapSettings::saveMapSettings() {
     }
 
 
-    this->mapfile->setMetadata("ms_errorfile", ui->mf_map_config_errorFile->text());
-    this->mapfile->setMetadata("missingdata", ui->mf_map_config_missingdata->currentText());
-    
+    if (ui->mf_map_config_errorFile->text() != this->mapfile->getMetadata("ms_errorfile")) {
+      this->settingsUndoStack->push(new SetMetadataCommand("ms_errorfile", ui->mf_map_config_errorFile->text(), this->mapfile));
+    }
+    if (ui->mf_map_config_missingdata->currentText() != this->mapfile->getMetadata("missingdata")) {
+      this->settingsUndoStack->push(new SetMetadataCommand("missingdata", ui->mf_map_config_missingdata->currentText(), this->mapfile));
+    }
+
     /** Path tab **/
     this->mapfile->setShapepath(ui->mf_map_shapepath->text());
     this->mapfile->setSymbolSet(ui->mf_map_symbolset->text());

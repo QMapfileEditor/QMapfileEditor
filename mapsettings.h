@@ -21,6 +21,7 @@
 #include "commands/setmapprojectioncommand.h"
 #include "commands/setmapsizecommand.h"
 #include "commands/setmapunitscommand.h"
+#include "commands/setmetadatacommand.h"
 
 #include "parser/mapfileparser.h"
 

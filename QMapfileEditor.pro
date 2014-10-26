@@ -25,6 +25,7 @@ SOURCES += \
         commands/setmapprojectioncommand.cpp   \
         commands/setmapsizecommand.cpp         \
         commands/setmapunitscommand.cpp        \
+        commands/setmetadatacommand.cpp        \
         commands/setresolutioncommand.cpp      \
         commands/setshapepathcommand.cpp       \
         commands/setsymbolsetcommand.cpp       \
@@ -48,6 +49,7 @@ HEADERS  += \
     commands/setmapprojectioncommand.h      \
     commands/setmapsizecommand.h            \
     commands/setmapunitscommand.h           \
+    commands/setmetadatacommand.h           \
     commands/setresolutioncommand.h         \
     commands/setshapepathcommand.h          \
     commands/setsymbolsetcommand.h          \
