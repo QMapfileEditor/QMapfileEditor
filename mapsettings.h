@@ -22,6 +22,9 @@
 #include "commands/setmapsizecommand.h"
 #include "commands/setmapunitscommand.h"
 #include "commands/setmetadatacommand.h"
+#include "commands/setshapepathcommand.h"
+#include "commands/setfontsetcommand.h"
+#include "commands/setsymbolsetcommand.h"
 
 #include "parser/mapfileparser.h"
 

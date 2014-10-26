@@ -246,7 +246,6 @@ void MapSettings::saveMapSettings() {
                                                            this->mapfile));
     }
 
-
     if (ui->mf_map_config_errorFile->text() != this->mapfile->getMetadata("ms_errorfile")) {
       this->settingsUndoStack->push(new SetMetadataCommand("ms_errorfile", ui->mf_map_config_errorFile->text(), this->mapfile));
     }
@@ -255,9 +254,15 @@ void MapSettings::saveMapSettings() {
     }
 
     /** Path tab **/
-    this->mapfile->setShapepath(ui->mf_map_shapepath->text());
-    this->mapfile->setSymbolSet(ui->mf_map_symbolset->text());
-    this->mapfile->setFontSet(ui->mf_map_fontset->text());
+    if (this->mapfile->getShapepath() != ui->mf_map_shapepath->text()) {
+      this->settingsUndoStack->push(new SetShapePathCommand(ui->mf_map_shapepath->text(), this->mapfile));
+    }
+    if (this->mapfile->getSymbolSet() != ui->mf_map_symbolset->text()) {
+      this->settingsUndoStack->push(new SetSymbolSetCommand(ui->mf_map_symbolset->text(), this->mapfile));
+    }
+    if (this->mapfile->getFontSet() != ui->mf_map_fontset->text()) {
+      this->settingsUndoStack->push(new SetFontSetCommand(ui->mf_map_fontset->text(), this->mapfile));
+    }
 
     /** Advanced tab **/
     this->mapfile->setResolution(ui->mf_map_resolution->value());
@@ -307,6 +312,7 @@ void MapSettings::saveMapSettings() {
         //TODO: loop on custom metadata list
     }
 }
+
 
 // slots
 
