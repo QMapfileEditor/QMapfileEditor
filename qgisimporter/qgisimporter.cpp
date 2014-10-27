@@ -1,10 +1,5 @@
 #include "qgisimporter.h"
 
-#include <QDomDocument>
-#include <QDomNode>
-#include <QDomNodeList>
-#include <QFile>
-
 // temporary
 #include <QtCore/QDebug>
 
@@ -77,6 +72,12 @@ MapfileParser * QGisImporter::importMapFile() {
     QString typeStr =  layersNodes.at(i).firstChildElement("provider").text();
     QString projStr =  layersNodes.at(i).firstChildElement("srs").firstChildElement("spatialrefsys").firstChildElement("proj4").text();
     qDebug() <<  layerName << dataStr << typeStr << projStr;
+    /* data is a file - need to check if relative or absolute, if it exists ... */
+    QFileInfo dataFinfo = QFileInfo(dataStr);
+    if (dataFinfo.isRelative()) {
+      dataStr = QFileInfo(qgsPath).dir().absolutePath() + "/" + dataStr;
+    }
+
     mf->addLayer(layerName, dataStr, projStr);
   }
 
