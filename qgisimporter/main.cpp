@@ -1,3 +1,5 @@
+#include <unistd.h>
+
 #include <QApplication>
 #include <QtCore/QDebug>
 #include <QTemporaryFile>
@@ -17,7 +19,7 @@ int main(int argc, char ** argv) {
    if (argc > 1) {
      imp = new QGisImporter(argv[1]);
    } else {
-     qDebug() << "Usage: " << argv[0] <<  "<QGIS project>";
+     qDebug() << "Usage: " << argv[0] <<  "<QGIS project> [optional destination mapfile]";
      return 0;
    }
 
@@ -51,6 +53,10 @@ int main(int argc, char ** argv) {
    qDebug() << in.readAll().toStdString().c_str();
    f->close();
 
+   if (argc > 2) {
+     unlink(argv[2]);
+     f->copy(argv[2]);
+   }
 
    if (f)
      delete f;
