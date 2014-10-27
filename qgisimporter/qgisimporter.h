@@ -26,6 +26,8 @@ class QGisImporter  : QObject {
   QString qgsPath;
   MapfileParser * mapFile;
 
+  // defined in mapserver.h
+  int getGeometryType(QString const &);
 };
 
 

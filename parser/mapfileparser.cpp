@@ -380,7 +380,7 @@ QHash<QString, QString> MapfileParser::getMetadatas() {
   return populateMapFromMs(& (this->map->web.metadata));
 }
 
-QString const & MapfileParser::getMetadata(const QString & name) {
+QString MapfileParser::getMetadata(const QString & name) {
   return this->getMetadatas().value(name);
 }
 
@@ -714,7 +714,7 @@ void MapfileParser::setDefaultOutputFormat(QString const & of) {
 
 }
 
-void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr) {
+void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr, int geomType) {
   layerObj *newLayer =  (layerObj *) malloc(sizeof(layerObj));
   initLayer(newLayer, this->map);
   // TODO: check if unique before doing this
@@ -728,9 +728,10 @@ void MapfileParser::addLayer(QString const & layerName, QString const & dataStr,
     free(newLayer->data);
   newLayer->data = strdup(dataStr.toStdString().c_str());
 
+  newLayer->type = (MS_LAYER_TYPE) geomType;
 
   msLoadProjectionStringEPSG(& (newLayer->projection), projStr.toStdString().c_str());
- 
+
   // inserts the layer at the end
   msInsertLayer(this->map, newLayer, -1);
 }

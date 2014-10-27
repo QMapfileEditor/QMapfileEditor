@@ -1,3 +1,11 @@
+#include "mapserver.h"
+
+
+#include "cpl_progress.h"
+#include "cpl_minixml.h"
+#include "ogr_core.h"
+
+
 #include "qgisimporter.h"
 
 // temporary
@@ -10,6 +18,59 @@ QGisImporter::~QGisImporter() {
   if (mapFile)
     delete mapFile;
 }
+
+int QGisImporter::getGeometryType(QString const & path) {
+  int ret = -1;
+
+  // Well, this code is legacy, but fsck it :-P
+  // Should not be compatible GDAL >= 2.0
+
+  // TODO: Anyway, Mapserver code should provide similar mechanisms,
+  // I'm probably re-inventing the wheel here.
+
+  OGRDataSourceH  hDS;
+  hDS = OGROpen(path.toStdString().c_str(), 0, NULL);
+  if(hDS == NULL)
+  {
+    return -1;
+  }
+
+  int layerCount = OGR_DS_GetLayerCount(hDS);
+
+  if (layerCount <= 0) {
+    OGRReleaseDataSource( hDS );
+    return -1;
+  }
+
+  OGRLayerH layer =  OGR_DS_GetLayer (hDS, 0);
+  OGRwkbGeometryType geomType = OGR_L_GetGeomType(layer);
+
+  // TODO: Might be a little naïve ...
+  switch(geomType) {
+    case wkbUnknown:
+      ret = -1;
+      break;
+    case wkbPoint:
+    case wkbMultiPoint:
+      ret = MS_LAYER_POINT;
+      break;
+    case wkbLineString:
+    case wkbMultiLineString:
+      ret = MS_LAYER_LINE;
+      break;
+    case wkbPolygon:
+    case wkbMultiPolygon:
+    case wkbGeometryCollection:
+      ret = MS_LAYER_POLYGON;
+      break;
+    default:
+      ret = -1;
+  }
+  OGRReleaseDataSource(hDS);
+
+  return ret;
+}
+
 
 MapfileParser * QGisImporter::importMapFile() {
 
@@ -77,8 +138,13 @@ MapfileParser * QGisImporter::importMapFile() {
     if (dataFinfo.isRelative()) {
       dataStr = QFileInfo(qgsPath).dir().absolutePath() + "/" + dataStr;
     }
+    // data is ogr, call the underlying library to determine the type
+    int geomType = MS_LAYER_RASTER;
+    if (typeStr == "ogr") {
+      geomType = getGeometryType(dataStr);
+    }
 
-    mf->addLayer(layerName, dataStr, projStr);
+    mf->addLayer(layerName, dataStr, projStr, geomType);
   }
 
 

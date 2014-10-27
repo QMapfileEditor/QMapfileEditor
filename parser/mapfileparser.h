@@ -21,7 +21,7 @@ class MapfileParser
   QString getMapfilePath();
   QString getMapfileName();
 
-  void addLayer(QString const &, QString const &, QString const &);
+  void addLayer(QString const &, QString const &, QString const &, int);
 
   QStringList getLayers(void);
   QStringList getGdalGdalDrivers(void) { return gdalGdalDrivers; };
@@ -105,7 +105,7 @@ class MapfileParser
 
   QHash<QString, QString> getMetadatas(void);
   void setMetadata(const QString & name, const QString & value);
-  QString const & getMetadata(const QString & name);
+  QString getMetadata(const QString & name);
   void removeMetadata(const QString &);
 
   double getResolution();

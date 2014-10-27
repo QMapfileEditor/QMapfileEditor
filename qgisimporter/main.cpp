@@ -5,9 +5,15 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
+#include "ogrsf_frmts.h"
+
 #include "qgisimporter.h"
 
 int main(int argc, char ** argv) {
+
+  //GDALAllRegister();
+   OGRRegisterAll();
+
    qDebug() << "QGis Importer test launched";
 
    QGisImporter *imp = NULL;
