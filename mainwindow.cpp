@@ -345,10 +345,11 @@ void MainWindow::showLayerSettings(const QModelIndex &) {
   // either find a way to integrate this correctly into the
   // interface, but the way it is currently done is clearly
   // not the way to do.
-
+  //TODO: need ok, cancel button, modal QDialog
   this->layerSettingsDialog = new QDialog(this);
+  this->layerSettingsDialog->setModal(true);
   QGridLayout * mainGrid = new QGridLayout(this->layerSettingsDialog);
-
+  //TODO: give layer to layerSettings
   LayerSettings * layerSettings = new LayerSettings(this->layerSettingsDialog, this->mapfile);
   mainGrid->addWidget(layerSettings);
 
