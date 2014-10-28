@@ -16,6 +16,7 @@
 #include <QStandardItemModel>
 #include <QStringListModel>
 #include <QUndoStack>
+#include <QUndoView>
 
 #include "mapscene.h"
 #include "mapsettings.h"
@@ -37,6 +38,7 @@ class MainWindow : public QMainWindow
       void openMapfile(const QString &);
 
       ~MainWindow();
+      QUndoStack * getUndoStack();
 
  public slots:
       void openMapfile();
@@ -49,6 +51,7 @@ class MainWindow : public QMainWindow
       void showInfo(const QString & message);
       void showLayerSettings(const QModelIndex &);
       void showMapSettings();
+      void showUndoStack();
       void updateMapPreview(void);
       void zoomMapPreview(QRectF);
       void zoomOutMapPreview();
@@ -67,6 +70,7 @@ class MainWindow : public QMainWindow
       QDialog * layerSettingsDialog = NULL;
 
       QUndoStack * undoStack;
+      QUndoView  * undoView = NULL;
 
       // internal methods
       void reinitMapfile();

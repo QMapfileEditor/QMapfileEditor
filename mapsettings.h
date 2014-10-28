@@ -41,7 +41,7 @@ class MapSettings : public QDialog
   Q_OBJECT
 
  public:
-      explicit MapSettings(QWidget * parent, MapfileParser *);
+      explicit MapSettings(QWidget * parent, MapfileParser *, QUndoStack * undoStack);
       ~MapSettings();
       static QStringList OgcFilteredOptions;
 

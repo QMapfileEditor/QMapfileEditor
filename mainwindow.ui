@@ -172,6 +172,7 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="actionShowUndoStack"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -542,6 +543,11 @@
   <action name="actionImport">
    <property name="text">
     <string>Import</string>
+   </property>
+  </action>
+  <action name="actionShowUndoStack">
+   <property name="text">
+    <string>&amp;Show Undo stack</string>
    </property>
   </action>
  </widget>

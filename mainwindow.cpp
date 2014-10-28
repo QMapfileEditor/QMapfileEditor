@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionZoom_2, SIGNAL(toggled(bool)), SLOT(zoom2Toggled(bool)));
   this->connect(ui->actionPan,    SIGNAL(toggled(bool)), SLOT(panToggled(bool)));
 
+  this->connect(ui->actionShowUndoStack, SIGNAL(triggered()), this, SLOT(showUndoStack()));
   // inits the model for the mapfile structure
   QStringListModel * mfStructureModel = new QStringListModel(this);
   ui->mf_structure->setModel(mfStructureModel);
@@ -47,6 +48,18 @@ MainWindow::MainWindow(QWidget *parent) :
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
 }
+
+void MainWindow::showUndoStack() {
+    // open up undo stack window
+  if (undoView == 0)
+  {
+    undoView = new QUndoView(undoStack);
+    undoView->setWindowTitle(tr("Undo stack"));
+    undoView->setAttribute(Qt::WA_QuitOnClose,false);
+  }
+  undoView->show();
+}
+
 
 void MainWindow::zoomOutMapPreview() {
   double curmaxx = this->currentMapMaxX,
@@ -294,6 +307,10 @@ void MainWindow::updateMapPreview(const int & w, const int &h) {
   this->ui->mf_preview->scene()->addPixmap(mapRepr);
 }
 
+
+QUndoStack * MainWindow::getUndoStack() {
+  return undoStack;
+}
 /**
  * Displays the map settings window.
  */
@@ -307,7 +324,7 @@ void MainWindow::showMapSettings() {
     this->settings->show();
     return;
   }
-  this->settings = new MapSettings(this, this->mapfile);
+  this->settings = new MapSettings(this, this->mapfile, this->undoStack);
   this->settings->show();
 }
 

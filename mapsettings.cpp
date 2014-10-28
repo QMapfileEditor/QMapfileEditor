@@ -1,11 +1,14 @@
 #include "mapsettings.h"
 #include "ui_mapsettings.h"
 
-MapSettings::MapSettings(QWidget * parent, MapfileParser * mf) :
-  QDialog(parent), ui(new Ui::MapSettings), mapfile(mf)
+MapSettings::MapSettings(QWidget * parent, MapfileParser * mf, QUndoStack * undoStack) :
+  QDialog(parent), ui(new Ui::MapSettings), mapfile(mf), settingsUndoStack(undoStack)
 {
     ui->setupUi(this);
-    this->settingsUndoStack = new QUndoStack(this);
+    // Hack: this object should disappear
+    // in the next commits
+    this->settingsUndoStack = undoStack;
+    //this->settingsUndoStack = new QUndoStack(this);
 
     /** Main Tab **/
 
@@ -34,7 +37,6 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser * mf) :
     ui->mf_map_extent_bottom->setValidator(new QDoubleValidator(this));
     ui->mf_map_extent_right->setValidator(new QDoubleValidator(this));
     ui->mf_map_extent_top->setValidator(new QDoubleValidator(this));
-
 
 
     /** Output formats tab **/
