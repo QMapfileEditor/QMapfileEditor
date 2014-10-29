@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QDialogButtonBox>
 #include <QPixmap>
 #include <QResizeEvent>
 #include <QStandardItem>
@@ -68,6 +69,7 @@ class MainWindow : public QMainWindow
       // Dialog which handles the mapfile settings
       MapSettings * settings = NULL;
       QDialog * layerSettingsDialog = NULL;
+      QDialogButtonBox *buttonBox;
 
       QUndoStack * undoStack;
       QUndoView  * undoView = NULL;
