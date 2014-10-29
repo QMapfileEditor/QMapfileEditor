@@ -49,6 +49,10 @@ MainWindow::MainWindow(QWidget *parent) :
   this->showInfo(tr("Initialisation process: success !"));
 }
 
+void MainWindow::pushUndoStack(QUndoCommand *c) {
+  this->undoStack->push(c);
+}
+
 void MainWindow::showUndoStack() {
     // open up undo stack window
   if (undoView == 0)
@@ -307,10 +311,6 @@ void MainWindow::updateMapPreview(const int & w, const int &h) {
   this->ui->mf_preview->scene()->addPixmap(mapRepr);
 }
 
-
-QUndoStack * MainWindow::getUndoStack() {
-  return undoStack;
-}
 /**
  * Displays the map settings window.
  */
@@ -324,7 +324,7 @@ void MainWindow::showMapSettings() {
     this->settings->show();
     return;
   }
-  this->settings = new MapSettings(this, this->mapfile, this->undoStack);
+  this->settings = new MapSettings(this, this->mapfile);
   this->settings->show();
 }
 

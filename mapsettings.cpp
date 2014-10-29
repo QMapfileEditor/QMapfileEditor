@@ -1,20 +1,17 @@
+#include "mainwindow.h"
+
 #include "mapsettings.h"
 #include "ui_mapsettings.h"
 
-MapSettings::MapSettings(QWidget * parent, MapfileParser * mf, QUndoStack * undoStack) :
-  QDialog(parent), ui(new Ui::MapSettings), mapfile(mf), settingsUndoStack(undoStack)
+MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
+  QDialog(parent), ui(new Ui::MapSettings), mapfile(mf)
 {
     ui->setupUi(this);
-    // Hack: this object should disappear
-    // in the next commits
-    this->settingsUndoStack = undoStack;
-    //this->settingsUndoStack = new QUndoStack(this);
 
     /** Main Tab **/
 
     //Name
     ui->mf_map_name->setText(this->mapfile->getMapName());
-    this->connect(ui->mf_map_name, SIGNAL(editingFinished()), SLOT(changeMapName()));
     //Status
     if( this->mapfile->getMapStatus() )
     {
@@ -184,38 +181,34 @@ MapSettings::MapSettings(QWidget * parent, MapfileParser * mf, QUndoStack * undo
 }
 
 void MapSettings::saveMapSettings() {
-
-    // TODO: get rid of the settingsUndoStack, and use
-    // directly the one from the main window instead ?
-
     // name has changed
     if (ui->mf_map_name->text() != this->mapfile->getMapName())
-      this->settingsUndoStack->push(new ChangeMapNameCommand(ui->mf_map_name->text(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new ChangeMapNameCommand(ui->mf_map_name->text(), this->mapfile));
 
     /** General tab **/
 
     // status has changed
     if ((ui->mf_map_status_on->isChecked() && ! this->mapfile->getMapStatus()) ||
         (ui->mf_map_status_off->isChecked() && this->mapfile->getMapStatus())) {
-      this->settingsUndoStack->push(new ChangeMapStatusCommand(ui->mf_map_status_on->isChecked(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new ChangeMapStatusCommand(ui->mf_map_status_on->isChecked(), this->mapfile));
     }
 
     // size has changed
     if ((this->mapfile->getMapWidth() != ui->mf_map_size_width->value()) ||
         (this->mapfile->getMapHeight() != ui->mf_map_size_height->value()))
     {
-      this->settingsUndoStack->push(new SetMapSizeCommand(ui->mf_map_size_width->value(), ui->mf_map_size_height->value(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetMapSizeCommand(ui->mf_map_size_width->value(), ui->mf_map_size_height->value(), this->mapfile));
     }
 
     // Max size has changed
     if (this->mapfile->getMapMaxsize() != ui->mf_map_maxsize->value()) {
-      this->settingsUndoStack->push(new SetMapMaxSizeCommand(ui->mf_map_maxsize->value(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetMapMaxSizeCommand(ui->mf_map_maxsize->value(), this->mapfile));
     }
 
     //units
     int current_unit = MapfileParser::units.indexOf(ui->mf_map_units->currentText());
     if (this->mapfile->getMapUnits() != current_unit) {
-      this->settingsUndoStack->push(new SetMapUnitsCommand(current_unit, this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetMapUnitsCommand(current_unit, this->mapfile));
     }
 
     //TODO: default outputformat ?
@@ -223,7 +216,7 @@ void MapSettings::saveMapSettings() {
 
     //projection
     if (this->mapfile->getMapProjection() != ui->mf_map_projection->currentText()) {
-      this->settingsUndoStack->push(new SetMapProjectionCommand(ui->mf_map_projection->currentText(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetMapProjectionCommand(ui->mf_map_projection->currentText(), this->mapfile));
     }
 
     //extent
@@ -232,7 +225,7 @@ void MapSettings::saveMapSettings() {
         || (ui->mf_map_extent_bottom->text().toFloat() != this->mapfile->getMapExtentMinY())
         || (ui->mf_map_extent_right->text().toFloat()  != this->mapfile->getMapExtentMaxX())
         || (ui->mf_map_extent_top->text().toFloat()    != this->mapfile->getMapExtentMaxY())) {
-      this->settingsUndoStack->push(new SetMapExtentCommand(ui->mf_map_extent_left->text().toFloat(),
+      ((MainWindow *) parent())->pushUndoStack(new SetMapExtentCommand(ui->mf_map_extent_left->text().toFloat(),
                                                             ui->mf_map_extent_bottom->text().toFloat(),
                                                             ui->mf_map_extent_right->text().toFloat(),
                                                             ui->mf_map_extent_top->text().toFloat(),
@@ -244,37 +237,37 @@ void MapSettings::saveMapSettings() {
     /** Debug tab **/
     if ((this->mapfile->getDebug()  == 0 && ui->mf_map_debug_on->isChecked())
       || (this->mapfile->getDebug() != 0 && ui->mf_map_debug_off->isChecked())) {
-      this->settingsUndoStack->push(new SetMapDebugCommand(ui->mf_map_debug_on->isChecked() ? ui->mf_map_debug->value() : 0,
+      ((MainWindow *) parent())->pushUndoStack(new SetMapDebugCommand(ui->mf_map_debug_on->isChecked() ? ui->mf_map_debug->value() : 0,
                                                            this->mapfile));
     }
 
     if (ui->mf_map_config_errorFile->text() != this->mapfile->getMetadata("ms_errorfile")) {
-      this->settingsUndoStack->push(new SetMetadataCommand("ms_errorfile", ui->mf_map_config_errorFile->text(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("ms_errorfile", ui->mf_map_config_errorFile->text(), this->mapfile));
     }
     if (ui->mf_map_config_missingdata->currentText() != this->mapfile->getMetadata("missingdata")) {
-      this->settingsUndoStack->push(new SetMetadataCommand("missingdata", ui->mf_map_config_missingdata->currentText(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("missingdata", ui->mf_map_config_missingdata->currentText(), this->mapfile));
     }
 
     /** Path tab **/
     if (this->mapfile->getShapepath() != ui->mf_map_shapepath->text()) {
-      this->settingsUndoStack->push(new SetShapePathCommand(ui->mf_map_shapepath->text(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetShapePathCommand(ui->mf_map_shapepath->text(), this->mapfile));
     }
     if (this->mapfile->getSymbolSet() != ui->mf_map_symbolset->text()) {
-      this->settingsUndoStack->push(new SetSymbolSetCommand(ui->mf_map_symbolset->text(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetSymbolSetCommand(ui->mf_map_symbolset->text(), this->mapfile));
     }
     if (this->mapfile->getFontSet() != ui->mf_map_fontset->text()) {
-      this->settingsUndoStack->push(new SetFontSetCommand(ui->mf_map_fontset->text(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetFontSetCommand(ui->mf_map_fontset->text(), this->mapfile));
     }
 
     /** Advanced tab **/
     if (this->mapfile->getResolution() != ui->mf_map_resolution->value()) {
-      this->settingsUndoStack->push(new SetResolutionCommand(ui->mf_map_resolution->value(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetResolutionCommand(ui->mf_map_resolution->value(), this->mapfile));
     }
     if (this->mapfile->getDefResolution() != ui->mf_map_defresolution->value()) {
-      this->settingsUndoStack->push(new SetDefResolutionCommand(ui->mf_map_defresolution->value(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetDefResolutionCommand(ui->mf_map_defresolution->value(), this->mapfile));
     }
     if (this->mapfile->getAngle() != ui->mf_map_angle->value()) {
-      this->settingsUndoStack->push(new SetAngleCommand(ui->mf_map_angle->value(), this->mapfile));
+      ((MainWindow *) parent())->pushUndoStack(new SetAngleCommand(ui->mf_map_angle->value(), this->mapfile));
     }
 
 
@@ -283,7 +276,7 @@ void MapSettings::saveMapSettings() {
     this->mapfile->setImageColor(imageColor.red(), imageColor.green(), imageColor.blue());
     
     if (this->mapfile->getTemplatePattern() != ui->mf_map_templatepattern->text()) {
-     this->settingsUndoStack->push(new SetTemplatePatternCommand(ui->mf_map_templatepattern->text(), this->mapfile));
+     ((MainWindow *) parent())->pushUndoStack(new SetTemplatePatternCommand(ui->mf_map_templatepattern->text(), this->mapfile));
     }
     
     this->mapfile->setDataPattern(ui->mf_map_datapattern->text());
@@ -533,14 +526,6 @@ void MapSettings::toggleOutputFormatsWidgets(const bool &enable) {
 }
 
 
-void MapSettings::changeMapName() {
-  // if the map name has been left unchanged, do nothing
-  if (this->mapfile->getMapName() == this->ui->mf_map_name->text())
-    return;
-
-  ChangeMapNameCommand * cmd = new ChangeMapNameCommand(this->ui->mf_map_name->text(), this->mapfile);
-  settingsUndoStack->push(cmd);
-}
 /** End SLOTS **/
 
 MapSettings::~MapSettings() {

@@ -37,9 +37,9 @@ class MainWindow : public QMainWindow
       explicit MainWindow(QWidget *parent = 0);
 
       void openMapfile(const QString &);
+      void pushUndoStack(QUndoCommand *);
 
       ~MainWindow();
-      QUndoStack * getUndoStack();
 
  public slots:
       void openMapfile();

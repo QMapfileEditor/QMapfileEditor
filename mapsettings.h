@@ -32,6 +32,9 @@
 
 #include "parser/mapfileparser.h"
 
+// forward declaration
+class MainWindow;
+
 namespace Ui {
 class MapSettings;
 }
@@ -41,7 +44,7 @@ class MapSettings : public QDialog
   Q_OBJECT
 
  public:
-      explicit MapSettings(QWidget * parent, MapfileParser *, QUndoStack * undoStack);
+      explicit MapSettings(MainWindow *, MapfileParser *);
       ~MapSettings();
       static QStringList OgcFilteredOptions;
 
@@ -60,7 +63,6 @@ class MapSettings : public QDialog
       void browseProjlibFile();
       void browseShapepath();
       void browseSymbolsetFile();
-      void changeMapName();
       void refreshGdalOgrDriverCombo(const QString &);
       void refreshOutputFormatTab(const QModelIndex &);
       void refreshOutputFormatTab(void);
@@ -72,8 +74,6 @@ class MapSettings : public QDialog
       Ui::MapSettings * ui;
 
       MapfileParser * mapfile;
-
-      QUndoStack * settingsUndoStack;
 
       QDataWidgetMapper * outputFormatsMapper;
 
