@@ -14,7 +14,7 @@ SOURCES += \
         mainwindow.cpp                         \
         mapscene.cpp                           \
         mapsettings.cpp                        \
-        layersettings.cpp                      \
+        layersettingsvector.cpp                      \
         commands/changemapnamecommand.cpp      \
         commands/changemapstatuscommand.cpp    \
         commands/setanglecommand.cpp           \
@@ -40,7 +40,7 @@ HEADERS  += \
     mainwindow.h                            \
     mapscene.h                              \
     mapsettings.h                           \
-    layersettings.h                         \
+    layersettingsvector.h                         \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
     commands/setanglecommand.h              \
@@ -63,7 +63,8 @@ HEADERS  += \
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
-    layersettings.ui
+    layersettings.ui        \
+    layersettingsvector.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
                "/usr/include/gdal"

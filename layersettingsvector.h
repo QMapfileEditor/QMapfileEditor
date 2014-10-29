@@ -1,5 +1,5 @@
-#ifndef LAYERSETTINGS_H
-#define LAYERSETTINGS_H
+#ifndef LAYERSETTINGSVECTOR_H
+#define LAYERSETTINGSVECTOR_H
 
 #include <QAbstractListModel>
 #include <QColorDialog>
@@ -16,22 +16,22 @@
 #include "parser/mapfileparser.h"
 
 namespace Ui {
-class LayerSettings;
+class LayerSettingsVector;
 }
 
-class LayerSettings : public QTabWidget
+class LayerSettingsVector : public QTabWidget
 {
   Q_OBJECT
 
  public:
-      explicit LayerSettings(QWidget * parent, MapfileParser *);
-      ~LayerSettings();
+      explicit LayerSettingsVector(QWidget * parent, MapfileParser *);
+      ~LayerSettingsVector();
 
  public slots:
       void accept();
 
  private:
-      Ui::LayerSettings * ui;
+      Ui::LayerSettingsVector * ui;
 
       MapfileParser * mapfile;
 
@@ -41,5 +41,5 @@ class LayerSettings : public QTabWidget
 
 };
 
-#endif // LAYERSETTINGS_H
+#endif // LAYERSETTINGSVECTOR_H
 

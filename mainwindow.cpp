@@ -352,9 +352,10 @@ void MainWindow::showLayerSettings(const QModelIndex &) {
   connect(buttonBox, SIGNAL(rejected()), this->layerSettingsDialog, SLOT(reject()));
 
   //TODO: give layer to layerSettings?
-  LayerSettings * layerSettings = new LayerSettings(this->layerSettingsDialog, this->mapfile);
+  //TODO: if layer is vector then:
+  LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);
+  mainLayout->addWidget(layerSettingsVector);
   
-  mainLayout->addWidget(layerSettings);
   mainLayout->addWidget(buttonBox);
   
   this->layerSettingsDialog->setLayout(mainLayout);

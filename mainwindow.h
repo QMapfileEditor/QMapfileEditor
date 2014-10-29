@@ -21,7 +21,7 @@
 
 #include "mapscene.h"
 #include "mapsettings.h"
-#include "layersettings.h"
+#include "layersettingsvector.h"
 #include "parser/mapfileparser.h"
 
 
