@@ -53,13 +53,17 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->ui->mf_outputformat_formatoptions_list->setModel(new KeyValueModel(this));
     this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
+    
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
+    
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
     this->connect(ui->mf_outputformat_list, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
     this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
+    
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
     ui->mf_map_projection->addItem(this->mapfile->getMapProjection());
+    
     this->connect(ui->mf_outputformat_options_add, SIGNAL(clicked()), SLOT(addFormatOption()));
     this->connect(ui->mf_outputformat_options_del, SIGNAL(clicked()), SLOT(removeFormatOptions()));
 
@@ -377,6 +381,16 @@ void MapSettings::angleSpinChanged(int value) {
 }
 
 void MapSettings::addNewOutputFormat() {
+  if(ui->outputFormatForm->isEnabled()) {
+    if (warnIfActiveSession() == QMessageBox::Yes) {
+      this->reinitOutputFormatForm();
+    }
+    else {
+      return;
+    }
+  }
+  this->toggleOutputFormatsWidgets(true);
+  
   QList<OutputFormat *> lst = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getEntries();
   QString templ = QString("outfmt%1");
   int idx = 1;
@@ -394,6 +408,29 @@ void MapSettings::addNewOutputFormat() {
   lst.append(of);
   ((OutputFormatsModel *) this->outputFormatsMapper->model())->setEntries(lst);
 
+}
+
+void MapSettings::reinitOutputFormatForm() {
+  ui->mf_outputformat_name->clear();
+  ui->mf_outputformat_driver->clear();
+  ui->mf_outputformat_transparent_on->setEnabled(true);
+  ui->mf_outputformat_transparent_on->setChecked(true);
+  ui->mf_outputformat_transparent_off->setEnabled(true);
+  ui->mf_outputformat_transparent_off->setChecked(false);
+  ui->mf_outputformat_extension->clear();
+  ui->mf_outputformat_mimetype->clear();
+  ui->mf_outputformat_option_name->clear();
+  ui->mf_outputformat_option_value->clear();
+  ui->mf_outputformat_formatoptions_list->clearSpans();
+  return;
+}
+
+QMessageBox::StandardButton MapSettings::warnIfActiveSession() {
+  return QMessageBox::question(this, tr("Warning: currently editing"),
+			       tr("You are currently editing an output format. "),
+			       //"Opening another one will discard your "
+			       //"current changes. Are you sure ?"),
+			       QMessageBox::Yes | QMessageBox::No);
 }
 
 /** Following method should be refactored **/
@@ -508,6 +545,14 @@ void MapSettings::refreshOutputFormatTab(void) {
 }
 
 void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
+  if(ui->outputFormatForm->isEnabled()) {
+    if (warnIfActiveSession() == QMessageBox::Yes) {
+      this->reinitOutputFormatForm();
+    }
+    else {
+      return;
+    }
+  }
   this->outputFormatsMapper->setCurrentModelIndex(i);
   OutputFormat * fmt = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getOutputFormat(i);
   if (! fmt)

@@ -7,6 +7,7 @@
 #include <QDialog>
 #include <QDir>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QTableView>
@@ -57,6 +58,7 @@ class MapSettings : public QDialog
       void addNewOutputFormat(void);
       void enableDebugBox(bool);
       void enableOgcStandardFrame(bool);
+      void reinitOutputFormatForm();
       void browseDebugFile();
       void browseEncryptionFile();
       void browseFontsetFile();
@@ -76,9 +78,10 @@ class MapSettings : public QDialog
       MapfileParser * mapfile;
 
       QDataWidgetMapper * outputFormatsMapper;
-
+      
       void saveMapSettings();
       void toggleOutputFormatsWidgets(const bool &);
+      QMessageBox::StandardButton warnIfActiveSession(void);
 
 };
 
