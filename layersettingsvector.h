@@ -24,7 +24,7 @@ class LayerSettingsVector : public QTabWidget
   Q_OBJECT
 
  public:
-      explicit LayerSettingsVector(QWidget * parent, MapfileParser *);
+      explicit LayerSettingsVector(QWidget * parent, MapfileParser *m);
       ~LayerSettingsVector();
 
  public slots:
@@ -34,10 +34,6 @@ class LayerSettingsVector : public QTabWidget
       Ui::LayerSettingsVector * ui;
 
       MapfileParser * mapfile;
-
-      QUndoStack * settingsUndoStack;
-
-      //void saveLayerSettings();
 
 };
 

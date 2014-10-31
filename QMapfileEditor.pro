@@ -8,13 +8,14 @@ TEMPLATE = app
 
 QMAKE_CLEAN += $(TARGET)
 
+
 SOURCES += \
         keyvaluemodel.cpp                      \
         main.cpp                               \
         mainwindow.cpp                         \
         mapscene.cpp                           \
         mapsettings.cpp                        \
-        layersettingsvector.cpp                      \
+        layersettingsvector.cpp                \
         commands/changemapnamecommand.cpp      \
         commands/changemapstatuscommand.cpp    \
         commands/setanglecommand.cpp           \
@@ -40,7 +41,7 @@ HEADERS  += \
     mainwindow.h                            \
     mapscene.h                              \
     mapsettings.h                           \
-    layersettingsvector.h                         \
+    layersettingsvector.h                   \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
     commands/setanglecommand.h              \
