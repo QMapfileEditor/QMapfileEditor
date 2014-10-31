@@ -427,9 +427,9 @@ void MapSettings::reinitOutputFormatForm() {
 
 QMessageBox::StandardButton MapSettings::warnIfActiveSession() {
   return QMessageBox::question(this, tr("Warning: currently editing"),
-			       tr("You are currently editing an output format. "),
-			       //"Opening another one will discard your "
-			       //"current changes. Are you sure ?"),
+			       tr("You are currently editing an output format. "
+			       "Opening another one will discard your "
+			       "current changes. Are you sure ?"),
 			       QMessageBox::Yes | QMessageBox::No);
 }
 
