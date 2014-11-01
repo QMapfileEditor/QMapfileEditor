@@ -65,7 +65,8 @@ HEADERS  += \
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
     layersettings.ui        \
-    layersettingsvector.ui
+    layersettingsvector.ui  \
+    layersettingsraster.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
                "/usr/include/gdal"
