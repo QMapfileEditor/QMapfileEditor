@@ -254,7 +254,6 @@ void MainWindow::newMapfile()
 
 void MainWindow::openMapfile()
 {
-  //TODO: if mapfiledir exists use it instead:
   QString prevFilePath = QDir::currentPath();
   if(this->prevDirPath != NULL) {
     prevFilePath = this->prevDirPath;
