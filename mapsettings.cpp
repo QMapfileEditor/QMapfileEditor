@@ -411,22 +411,21 @@ void MapSettings::addNewOutputFormat() {
   if(ui->outputFormatForm->isEnabled()) {
     if (warnIfActiveSession() == QMessageBox::Yes) {
       this->reinitOutputFormatForm();
-    }
-    else {
+    } else {
       return;
     }
   }
   this->toggleOutputFormatsWidgets(true);
-  
+
   QList<OutputFormat *> lst = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getEntries();
-  QString templ = QString("outfmt%1");
+  QString templ = QString("newOutFmt%1");
   int idx = 1;
   QStringList ofNames = QStringList();
   for (int i = 0; i < lst.size(); ++i) {
     ofNames.append(lst.at(i)->getName());
   }
   QString curGenOf = templ.arg(idx);
-  while (ofNames.contains(curGenOf)) 
+  while (ofNames.contains(curGenOf))
     curGenOf = templ.arg(++idx);
 
   OutputFormat * of = new OutputFormat(curGenOf);
@@ -434,7 +433,6 @@ void MapSettings::addNewOutputFormat() {
 
   lst.append(of);
   ((OutputFormatsModel *) this->outputFormatsMapper->model())->setEntries(lst);
-
 }
 
 void MapSettings::reinitOutputFormatForm() {
@@ -546,7 +544,6 @@ void MapSettings::browseShapepath() {
 
 void MapSettings::accept() {
     this->saveMapSettings();
-
     QDialog::accept();
 }
 void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {

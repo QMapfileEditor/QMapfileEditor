@@ -72,18 +72,12 @@ class OutputFormat {
   private:
    QString name;
    QString mimeType;
-
    QString driver;
    QString extension;
-
    int imageMode;
-
    bool transparent;
-
    QHash<QString,QString> formatOptions;
-
    enum State state;
-
 
 };
 
@@ -99,6 +93,8 @@ class OutputFormatsModel : public QAbstractListModel {
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+
     void setEntries(QList<OutputFormat *> const &);
     QList<OutputFormat *> const & getEntries() const;
 
@@ -108,6 +104,8 @@ class OutputFormatsModel : public QAbstractListModel {
   protected:
       QList<OutputFormat *> entries;
 
+  private:
+      bool nameAlreadyIn(QString const &);
 };
 
 #endif // OUTPUTFORMAT_H
