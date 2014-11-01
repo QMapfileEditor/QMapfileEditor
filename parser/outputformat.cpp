@@ -27,6 +27,7 @@
  ****************************************************************************/
 
 #include "outputformat.h"
+#include <QDebug>
 
 /** OutputFormat related */
 
@@ -45,6 +46,8 @@ QString const & OutputFormat::getDriver()      const { return driver;      }
 QString const & OutputFormat::getExtension()   const { return extension;   }
 int     const & OutputFormat::getImageMode()   const { return imageMode;   }
 bool    const & OutputFormat::getTransparent() const { return transparent; }
+
+enum OutputFormat::State const & OutputFormat::getState()    const { return state;       }
 
 QHash<QString, QString> const & OutputFormat::getFormatOptions() const { return formatOptions; }
 
@@ -78,7 +81,7 @@ OutputFormatsModel::~OutputFormatsModel() {
 
 int OutputFormatsModel::rowCount(const QModelIndex & parent) const {
   Q_UNUSED(parent);
-  return entries.count();
+  return entries.size();
 }
 
 int OutputFormatsModel::columnCount(const QModelIndex &parent) const {
@@ -105,7 +108,7 @@ QList<OutputFormat *> const & OutputFormatsModel::getEntries(void) const {
 }
 
 OutputFormat * OutputFormatsModel::getOutputFormat(const QModelIndex &index) const {
-  if (index.row() < 0 || index.row() > entries.size())
+  if ((index.row() < 0) || index.row() > entries.size())
     return NULL;
   return entries.at(index.row());
 }
@@ -194,6 +197,12 @@ bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & val
   }
   return false;
 
-
 }
 
+void OutputFormatsModel::removeOutputFormat(const QModelIndex & index) {
+  if (index.row() < 0 || index.row() > entries.size())
+    return;
+  beginResetModel();
+  removedEntries.append(entries.takeAt(index.row()));
+  endResetModel();
+}
