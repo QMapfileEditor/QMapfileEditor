@@ -308,7 +308,7 @@
        <item>
         <widget class="QComboBox" name="mf_mask_box">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -525,7 +525,7 @@
      <item>
       <widget class="QTextEdit" name="mf_filter_edit">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -603,14 +603,14 @@
      <item>
       <widget class="QLineEdit" name="mf_plugin_edit">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="mf_browse_Button">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Browse</string>
@@ -831,7 +831,7 @@
      <item>
       <widget class="QToolButton" name="layer_join_tool">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>...</string>
