@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -1517,9 +1517,6 @@
              </item>
              <item>
               <widget class="QComboBox" name="mf_outputformat_driver">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -1619,9 +1616,6 @@
              </item>
              <item>
               <widget class="QRadioButton" name="mf_outputformat_transparent_on">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="minimumSize">
                 <size>
                  <width>45</width>
