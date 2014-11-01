@@ -144,57 +144,64 @@ QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
 }
 
 bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & value, int role) {
- if (role != Qt::EditRole)
-   return false;
 
- if (index.row() > entries.size())
-    return false;
+  // In fact, we cannot use the current method, because we have to consider the
+  // case when the user will do some modifications, then click on abort.  In
+  // this case, we would have to undo all the modifications made onto the
+  // selected outputformat. We will handle the call to the different setters
+  // into the event triggered when the user will click on "save".
 
-  OutputFormat * of = entries.at(index.row());
-
-  if (of == NULL)
-    return false;
-
-  switch (index.column()) {
-    case OutputFormatsModel::Name:
-      if (nameAlreadyIn(value.toString())) {
-        return false;
-      }
-      of->setName(value.toString());
-      if (of->getState() != OutputFormat::UNCHANGED)
-        of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::MimeType:
-      of->setMimeType(value.toString());
-      if (of->getState() != OutputFormat::UNCHANGED)
-        of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::Driver:
-      of->setDriver(value.toString());
-      if (of->getState() != OutputFormat::UNCHANGED)
-        of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::Extension:
-      of->setExtension(value.toString());
-      if (of->getState() != OutputFormat::UNCHANGED)
-        of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::ImageMode:
-      of->setImageMode(value.toInt());
-      if (of->getState() != OutputFormat::UNCHANGED)
-        of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::Transparent:
-      of->setTransparent(value.toBool());
-      if (of->getState() != OutputFormat::UNCHANGED)
-        of->setState(OutputFormat::MODIFIED);
-      return true;
-  }
+  // if (role != Qt::EditRole)
+  //   return false;
+  //
+  // if (index.row() > entries.size())
+  //    return false;
+  //
+  //  OutputFormat * of = entries.at(index.row());
+  //
+  //  if (of == NULL)
+  //    return false;
+  //
+  //  switch (index.column()) {
+  //    case OutputFormatsModel::Name:
+  //      if (nameAlreadyIn(value.toString())) {
+  //        return false;
+  //      }
+  //      of->setName(value.toString());
+  //      if (of->getState() != OutputFormat::UNCHANGED)
+  //        of->setState(OutputFormat::MODIFIED);
+  //      return true;
+  //
+  //    case OutputFormatsModel::MimeType:
+  //      of->setMimeType(value.toString());
+  //      if (of->getState() != OutputFormat::UNCHANGED)
+  //        of->setState(OutputFormat::MODIFIED);
+  //      return true;
+  //
+  //    case OutputFormatsModel::Driver:
+  //      of->setDriver(value.toString());
+  //      if (of->getState() != OutputFormat::UNCHANGED)
+  //        of->setState(OutputFormat::MODIFIED);
+  //      return true;
+  //
+  //    case OutputFormatsModel::Extension:
+  //      of->setExtension(value.toString());
+  //      if (of->getState() != OutputFormat::UNCHANGED)
+  //        of->setState(OutputFormat::MODIFIED);
+  //      return true;
+  //
+  //    case OutputFormatsModel::ImageMode:
+  //      of->setImageMode(value.toInt());
+  //      if (of->getState() != OutputFormat::UNCHANGED)
+  //        of->setState(OutputFormat::MODIFIED);
+  //      return true;
+  //
+  //    case OutputFormatsModel::Transparent:
+  //      of->setTransparent(value.toBool());
+  //      if (of->getState() != OutputFormat::UNCHANGED)
+  //        of->setState(OutputFormat::MODIFIED);
+  //      return true;
+  //  }
   return false;
 }
 
