@@ -72,7 +72,9 @@ QVariant OutputFormatsModel::headerData (int section, Qt::Orientation orientatio
 }
 
 void OutputFormatsModel::setEntries(QList<OutputFormat *> const & items) {
+  beginResetModel();
   entries = items;
+  endResetModel();
 }
 
 QList<OutputFormat *> const & OutputFormatsModel::getEntries(void) const {
