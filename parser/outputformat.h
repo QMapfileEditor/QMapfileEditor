@@ -35,6 +35,26 @@
 
 class OutputFormat {
   public:
+
+   
+   /**
+    * - ADDED: Marks the outputformat as "to be added to the mapfile". It as yet
+    *   no existence outside the application,
+    *
+    * - REMOVED: Marks the outputformat as "to be removed from the mapfile".
+    *   This means that the outputformat comes from the mapfile but has to be
+    *   removed when the user will finish with editing ; note: this should not
+    *   be necessary, because there is a specific list to maintain the output
+    *   formats that have to be removed,
+    *
+    * - MODIFIED: Marks the outputformat as "needs modification when edition
+    *   will finish". This means the format has already an existence
+    *   mapfile-side,
+    *
+    * - UNCHANGED: Marks the outputformats coming from the mapfile, that have
+    *   not been modified by the user yet.
+    *
+    */
    enum State { ADDED, REMOVED, MODIFIED, UNCHANGED };
 
    OutputFormat(const QString & name = 0,
@@ -93,7 +113,8 @@ class OutputFormatsModel : public QAbstractListModel {
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
-    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    // For now, the view should not modify the model directly
+    //bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
     void setEntries(QList<OutputFormat *> const &);
     QList<OutputFormat *> const & getEntries() const;

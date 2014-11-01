@@ -151,60 +151,73 @@ bool OutputFormatsModel::nameAlreadyIn(const QString & key) {
    return false;
 }
 
-bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & value, int role) {
- if (role != Qt::EditRole)
-   return false;
-
- if (index.row() > entries.size())
-    return false;
-
-  OutputFormat * of = entries.at(index.row());
-
-  if (of == NULL)
-    return false;
-
-  switch (index.column()) {
-    case OutputFormatsModel::Name:
-      if (nameAlreadyIn(value.toString())) {
-        return false;
-      }
-      of->setName(value.toString());
-      of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::MimeType:
-      of->setMimeType(value.toString());
-      of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::Driver:
-      of->setDriver(value.toString());
-      of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::Extension:
-      of->setExtension(value.toString());
-      of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::ImageMode:
-      of->setImageMode(value.toInt());
-      of->setState(OutputFormat::MODIFIED);
-      return true;
-
-    case OutputFormatsModel::Transparent:
-      of->setTransparent(value.toBool());
-      of->setState(OutputFormat::MODIFIED);
-      return true;
-  }
-  return false;
-
-}
+//bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & value, int role) {
+// if (role != Qt::EditRole)
+//   return false;
+//
+// if (index.row() > entries.size())
+//    return false;
+//
+//  OutputFormat * of = entries.at(index.row());
+//
+//  if (of == NULL)
+//    return false;
+//
+//  switch (index.column()) {
+//    case OutputFormatsModel::Name:
+//      if (nameAlreadyIn(value.toString())) {
+//        return false;
+//      }
+//      of->setName(value.toString());
+//      if (of->getState() != OutputFormat::UNCHANGED)
+//        of->setState(OutputFormat::MODIFIED);
+//      return true;
+//
+//    case OutputFormatsModel::MimeType:
+//      of->setMimeType(value.toString());
+//      if (of->getState() != OutputFormat::UNCHANGED)
+//        of->setState(OutputFormat::MODIFIED);
+//      return true;
+//
+//    case OutputFormatsModel::Driver:
+//      of->setDriver(value.toString());
+//      if (of->getState() != OutputFormat::UNCHANGED)
+//        of->setState(OutputFormat::MODIFIED);
+//      return true;
+//
+//    case OutputFormatsModel::Extension:
+//      of->setExtension(value.toString());
+//      if (of->getState() != OutputFormat::UNCHANGED)
+//        of->setState(OutputFormat::MODIFIED);
+//      return true;
+//
+//    case OutputFormatsModel::ImageMode:
+//      of->setImageMode(value.toInt());
+//      if (of->getState() != OutputFormat::UNCHANGED)
+//        of->setState(OutputFormat::MODIFIED);
+//      return true;
+//
+//    case OutputFormatsModel::Transparent:
+//      of->setTransparent(value.toBool());
+//      if (of->getState() != OutputFormat::UNCHANGED)
+//        of->setState(OutputFormat::MODIFIED);
+//      return true;
+//  }
+//  return false;
+//
+//}
 
 void OutputFormatsModel::removeOutputFormat(const QModelIndex & index) {
   if (index.row() < 0 || index.row() > entries.size())
     return;
   beginResetModel();
-  removedEntries.append(entries.takeAt(index.row()));
+  OutputFormat *toBeRemoved = entries.takeAt(index.row());
+  // if the format has only an existence into the application
+  // no need to mark it as to be removed later in the mapfile.
+  if (toBeRemoved->getState() == OutputFormat::ADDED) {
+    delete toBeRemoved;
+  } else {
+    removedEntries.append(toBeRemoved);
+  }
   endResetModel();
 }
