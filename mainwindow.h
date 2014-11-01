@@ -51,6 +51,7 @@ class MainWindow : public QMainWindow
       void showAbout();
       void showInfo(const QString & message);
       void showLayerSettings(const QModelIndex &);
+      void showLayerSettings(void);
       void showMapSettings();
       void showUndoStack();
       void updateMapPreview(void);

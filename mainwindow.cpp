@@ -23,7 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setModel(mfStructureModel);
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
   this->connect(ui->mf_structure, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
-
+  this->connect(ui->mf_editLayer, SIGNAL(clicked()), this, SLOT(showLayerSettings()));
+  
   // inits the graphics scene
   MapScene * mapScene = new MapScene(this);
   ui->mf_preview->setScene(mapScene);
@@ -331,7 +332,11 @@ void MainWindow::showMapSettings() {
 /**
  * Displays the layer settings window.
  */
-void MainWindow::showLayerSettings(const QModelIndex &) {
+void MainWindow::showLayerSettings(void) {
+  this->showLayerSettings(this->ui->mf_structure->currentIndex());
+}
+
+void MainWindow::showLayerSettings(const QModelIndex &i) {
   if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
     return;
   }
@@ -353,7 +358,6 @@ void MainWindow::showLayerSettings(const QModelIndex &) {
 
   //TODO: give layer to layerSettings?
   //TODO: if layer is vector then:
-  QModelIndex i = ui->mf_structure->currentIndex();
 
   //this->showInfo(QString::number(i.model()->data(Qt::DisplayRole)));
   LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);
