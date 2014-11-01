@@ -396,8 +396,8 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
 
   //TODO: give layer to layerSettings?
   //TODO: if layer is vector then:
-
   //this->showInfo(QString::number(i.model()->data(Qt::DisplayRole)));
+  this->layerSettingsDialog->setWindowTitle("Vector Layer Settings");
   LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);
   mainLayout->addWidget(layerSettingsVector);
   
