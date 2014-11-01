@@ -25,6 +25,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  ****************************************************************************/
+
 #include "mainwindow.h"
 
 #include "mapsettings.h"
@@ -102,10 +103,30 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_extent_left->setText(QString::number(this->mapfile->getMapExtentMinX()));
 
     /** Path tab **/
+    //connect relatif path for shapepath, symbolset and fontset
+    this->connect(ui->mf_map_shapepath_relative, SIGNAL(clicked()), SLOT(enableRelativePathShapepath()));
+    this->connect(ui->mf_map_symbolset_relative, SIGNAL(clicked()), SLOT(enableRelativePathSymbolset()));
+    this->connect(ui->mf_map_fontset_relative, SIGNAL(clicked()), SLOT(enableRelativePathFontset()));
+    
     ui->mf_map_shapepath->setText(this->mapfile->getShapepath());
+    
+    ui->mf_map_shapepath_relative->setChecked(true);
+    if((QFileInfo (this->mapfile->getShapepath())).isAbsolute()) {
+      ui->mf_map_shapepath_relative->setChecked(false);
+    }
+    
     ui->mf_map_symbolset->setText(this->mapfile->getSymbolSet());
+    ui->mf_map_symbolset_relative->setChecked(true);
+    if((QFileInfo (this->mapfile->getSymbolSet())).isAbsolute()) {
+      ui->mf_map_symbolset_relative->setChecked(false);
+    }
+    
     ui->mf_map_fontset->setText(this->mapfile->getFontSet());
-
+    ui->mf_map_fontset_relative->setChecked(true);
+    if((QFileInfo (this->mapfile->getFontSet())).isAbsolute()) {
+      ui->mf_map_fontset_relative->setChecked(false);
+    }
+    
     /** Advanced tab **/
 
     //connect angle value
@@ -117,7 +138,10 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->connect(ui->mf_map_config_encryption_browse, SIGNAL(clicked()), SLOT(browseEncryptionFile()));
     //connect imagecolor
     this->connect(ui->mf_map_imagecolor, SIGNAL(clicked()), SLOT(setImageColor()));
-
+    //connect relatif path for proj lib and encryption
+    this->connect(ui->mf_map_config_projlib_relative, SIGNAL(clicked()), SLOT(enableRelativePathProjlib()));
+    this->connect(ui->mf_map_config_encryption_relative, SIGNAL(clicked()), SLOT(enableRelativePathEncryption()));
+    
     //fill in form
     ui->mf_map_resolution->setValue(this->mapfile->getResolution());
     ui->mf_map_defresolution->setValue(this->mapfile->getDefResolution());
@@ -130,8 +154,14 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_angle->setValue(this->mapfile->getAngle());
     ui->mf_map_templatepattern->setText(this->mapfile->getTemplatePattern());
     ui->mf_map_datapattern->setText(this->mapfile->getDataPattern());
+    
     ui->mf_map_config_contexturl->setText(this->mapfile->getConfigOption("CGI_CONTEXT_URL"));
+    
     ui->mf_map_config_encryption->setText(this->mapfile->getConfigOption("MS_ENCRYPTION_KEY"));
+    ui->mf_map_config_encryption_relative->setChecked(true);
+    if((QFileInfo (this->mapfile->getConfigOption("MS_ENCRYPTION_KEY"))).isAbsolute()) {
+      ui->mf_map_config_encryption_relative->setChecked(false);
+    }
 
     if (! this->mapfile->getConfigOption("MS_NONSQUARE").isEmpty()) {
         ui->mf_map_config_squarepixel_on->setChecked(true);
@@ -142,7 +172,11 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     }
 
     ui->mf_map_config_projlib->setText(this->mapfile->getConfigOption("PROJ_LIB"));
-
+    ui->mf_map_config_projlib_relative->setChecked(true);
+    if((QFileInfo (this->mapfile->getConfigOption("PROJ_LIB"))).isAbsolute()) {
+      ui->mf_map_config_projlib_relative->setChecked(false);
+    }
+    
     /** OGC Standard / inspire tab **/
 
     //connect
@@ -185,7 +219,10 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
     this->connect(ui->mf_map_symbolset_browse, SIGNAL(clicked()), SLOT(browseSymbolsetFile()));
     this->connect(ui->mf_map_debug_on, SIGNAL(toggled(bool)), SLOT(enableDebugBox(bool)));
-
+    this->connect(ui->mf_map_config_errorFile_relative, SIGNAL(clicked()), SLOT(enableRelativePathDebug()));
+    //TODO: Test if file exist or form is empty, if not warn user
+    this->connect(ui->mf_map_config_errorFile_browse, SIGNAL(clicked()), SLOT(browseDebugFile()));
+    
     if( this->mapfile->getDebug() )
     {
         ui->mf_map_debug_off->setChecked(false);
@@ -198,11 +235,14 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
         ui->mf_map_debug->setValue(this->mapfile->getDebug());
         ui->mf_map_debug->setEnabled(false);
     }
-    //TODO: add option for relative/absolute debug file in forms.
-    //TODO: Test if file exist or form is empty, if not warn user
-    this->connect(ui->mf_map_config_errorFile_browse, SIGNAL(clicked()), SLOT(browseDebugFile()));
-    ui->mf_map_config_errorFile->setText(this->mapfile->getConfigOption("MS_ERRORFILE"));
 
+
+    ui->mf_map_config_errorFile->setText(this->mapfile->getConfigOption("MS_ERRORFILE"));
+    ui->mf_map_config_errorFile_relative->setChecked(true);
+    if((QFileInfo (this->mapfile->getConfigOption("MS_ERRORFILE"))).isAbsolute()) {
+      ui->mf_map_config_errorFile_relative->setChecked(false);
+    }
+    
     ui->mf_map_config_missingdata->addItems(MapfileParser::missingData);
     if (! this->mapfile->getConfigOption("ON_MISSING_DATA").isEmpty()) {
         ui->mf_map_config_missingdata->setCurrentIndex(MapfileParser::missingData.lastIndexOf(this->mapfile->getConfigOption("ON_MISSING_DATA")));
@@ -460,86 +500,135 @@ QMessageBox::StandardButton MapSettings::warnIfActiveSession() {
 
 /** Following method should be refactored **/
 void MapSettings::browseProjlibFile() {
-      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
-      QString prevDirPath = QDir::homePath();
 
-      QString dirName = QFileDialog::getExistingDirectory(this, tr("Open Directory Files"), prevDirPath);
+  QString dirName = QFileDialog::getExistingDirectory(this, tr("Open Directory Files"), ((MainWindow *) parent())->prevDirPath);
       // open file dialog has been discarded (escape)
       if (dirName.isEmpty()) {
             return;
       }
-      //TODO: should we used relatif or absolute path?
+
+      if(ui->mf_map_config_projlib_relative->isChecked()) {
+	dirName = ((MainWindow *) parent())->mapfiledir.relativeFilePath(dirName);
+      }
       ui->mf_map_config_projlib->setText(dirName);
+}
+
+void MapSettings::enableRelativePathProjlib() {
+  if(ui->mf_map_config_projlib_relative->isChecked()) {
+    ui->mf_map_config_projlib->setText(((MainWindow *) parent())->mapfiledir.relativeFilePath(ui->mf_map_config_projlib->text()));
+  } else {
+    ui->mf_map_config_projlib->setText(QDir (((MainWindow *) parent())->mapfiledir.path() + "/" + ui->mf_map_config_projlib->text()).absolutePath());
+  }
 }
 
 void MapSettings::browseEncryptionFile() {
 
-      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
-      QString prevFilePath = QDir::homePath();
-
-      QString fileName = QFileDialog::getOpenFileName(this, tr("Open Encryption File"), prevFilePath, tr("Encryption file (*)"));
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open Encryption File"), ((MainWindow *) parent())->prevDirPath, tr("Encryption file (*)"));
       // open file dialog has been discarded (escape)
       if (fileName.isEmpty()) {
             return;
       }
-      //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
+
+      if(ui->mf_map_config_encryption_relative->isChecked()) {
+	fileName = ((MainWindow *) parent())->mapfiledir.relativeFilePath(fileName);
+      }
       ui->mf_map_config_encryption->setText(fileName);
 }
 
+void MapSettings::enableRelativePathEncryption() {
+  if(ui->mf_map_config_encryption_relative->isChecked()) {
+    ui->mf_map_config_encryption->setText(((MainWindow *) parent())->mapfiledir.relativeFilePath(ui->mf_map_config_encryption->text()));
+  } else {
+    ui->mf_map_config_encryption->setText(((MainWindow *) parent())->mapfiledir.path() + "/" + ui->mf_map_config_encryption->text());
+  }
+}
 
 void MapSettings::browseDebugFile() {
 
-      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
-      QString prevFilePath = QDir::homePath();
-
-      QString fileName = QFileDialog::getOpenFileName(this, tr("Open debug File"), prevFilePath, tr("Debug file (*.log)"));
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open debug File"), ((MainWindow *) parent())->prevDirPath, tr("Debug file (*.log)"));
       // open file dialog has been discarded (escape)
       if (fileName.isEmpty()) {
             return;
       }
-      //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
+      
+      if(ui->mf_map_config_errorFile_relative->isChecked()) {
+	fileName = ((MainWindow *) parent())->mapfiledir.relativeFilePath(fileName);
+      }
       ui->mf_map_config_errorFile->setText(fileName);
+}
+
+void MapSettings::enableRelativePathDebug() {
+  if(ui->mf_map_config_errorFile_relative->isChecked()) {
+    ui->mf_map_config_errorFile->setText(((MainWindow *) parent())->mapfiledir.relativeFilePath(ui->mf_map_config_errorFile->text()));
+  } else {
+    ui->mf_map_config_errorFile->setText(((MainWindow *) parent())->mapfiledir.path() + "/" + ui->mf_map_config_errorFile->text());
+  }
 }
 
 void MapSettings::browseSymbolsetFile() {
 
-      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
-      QString prevFilePath = QDir::homePath();
-
-      QString fileName = QFileDialog::getOpenFileName(this, tr("Open symbolset File"), prevFilePath, tr("Symbolset file (*.sym)"));
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open symbolset File"), ((MainWindow *) parent())->prevDirPath, tr("Symbolset file (*.sym)"));
       // open file dialog has been discarded (escape)
       if (fileName.isEmpty()) {
             return;
       }
-      //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
+
+      if(ui->mf_map_symbolset_relative->isChecked()) {
+	fileName = ((MainWindow *) parent())->mapfiledir.relativeFilePath(fileName);
+      }
       ui->mf_map_symbolset->setText(fileName);
+}
+
+void MapSettings::enableRelativePathSymbolset() {
+  if(ui->mf_map_symbolset_relative->isChecked()) {
+    ui->mf_map_symbolset->setText(((MainWindow *) parent())->mapfiledir.relativeFilePath(ui->mf_map_symbolset->text()));
+  } else {
+    ui->mf_map_symbolset->setText(((MainWindow *) parent())->mapfiledir.path() + "/" + ui->mf_map_symbolset->text());
+  }
 }
 
 void MapSettings::browseFontsetFile() {
 
-      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
-      QString prevFilePath = QDir::homePath();
-
-      QString fileName = QFileDialog::getOpenFileName(this, tr("Open fontset File"), prevFilePath, tr("Fontset file (*.font)"));
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open fontset File"), ((MainWindow *) parent())->prevDirPath, tr("Fontset file (*.font)"));
       // open file dialog has been discarded (escape)
       if (fileName.isEmpty()) {
             return;
       }
-      //TODO: should we used relatif or absolute path? if dirname = dirname of mapfile then basename(fileName)
+      
+      if(ui->mf_map_fontset_relative->isChecked()) {
+	fileName = ((MainWindow *) parent())->mapfiledir.relativeFilePath(fileName);
+      }
       ui->mf_map_fontset->setText(fileName);
 }
 
-void MapSettings::browseShapepath() {
-      //TODO: should be defaulted to dirname of mapfile if option relativepath is set to on
-      QString prevDirPath = QDir::homePath();
+void MapSettings::enableRelativePathFontset() {
+  if(ui->mf_map_fontset_relative->isChecked()) {
+    ui->mf_map_fontset->setText(((MainWindow *) parent())->mapfiledir.relativeFilePath(ui->mf_map_fontset->text()));
+  } else {
+    ui->mf_map_fontset->setText(((MainWindow *) parent())->mapfiledir.path() + "/" + ui->mf_map_fontset->text());
+  }
+}
 
-      QString dirName = QFileDialog::getExistingDirectory(this, tr("Open Directory Files"), prevDirPath);
+void MapSettings::browseShapepath() {
+
+  QString dirName = QFileDialog::getExistingDirectory(this, tr("Open Directory Files"), ((MainWindow *) parent())->prevDirPath);
       // open file dialog has been discarded (escape)
       if (dirName.isEmpty()) {
             return;
       }
-      //TODO: should we used relatif or absolute path?
+      
+      if(ui->mf_map_shapepath_relative->isChecked()) {
+	dirName = ((MainWindow *) parent())->mapfiledir.relativeFilePath(dirName);
+      }
       ui->mf_map_shapepath->setText(dirName);
+}
+
+void MapSettings::enableRelativePathShapepath() {
+  if(ui->mf_map_shapepath_relative->isChecked()) {
+    ui->mf_map_shapepath->setText(((MainWindow *) parent())->mapfiledir.relativeFilePath(ui->mf_map_shapepath->text()));
+  } else {
+    ui->mf_map_shapepath->setText(((MainWindow *) parent())->mapfiledir.path() + "/" + ui->mf_map_shapepath->text());
+  }
 }
 
 void MapSettings::accept() {

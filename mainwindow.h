@@ -66,7 +66,9 @@ class MainWindow : public QMainWindow
 
       void openMapfile(const QString &);
       void pushUndoStack(QUndoCommand *);
-
+      QString mapfilename, prevDirPath = NULL;
+      QDir mapfiledir;
+      
       ~MainWindow();
 
  public slots:
@@ -109,6 +111,7 @@ class MainWindow : public QMainWindow
       QMessageBox::StandardButton warnIfActiveSession(void);
 
       double currentMapMinX, currentMapMaxX, currentMapMinY, currentMapMaxY;
+      
 };
 
 #endif // MAINWINDOW_H

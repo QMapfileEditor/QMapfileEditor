@@ -86,6 +86,12 @@ class MapSettings : public QDialog
       void addNewOutputFormat(void);
       void enableDebugBox(bool);
       void enableOgcStandardFrame(bool);
+      void enableRelativePathDebug();
+      void enableRelativePathEncryption();
+      void enableRelativePathFontset();
+      void enableRelativePathProjlib();
+      void enableRelativePathShapepath();
+      void enableRelativePathSymbolset();
       void reinitOutputFormatForm();
       void browseDebugFile();
       void browseEncryptionFile();

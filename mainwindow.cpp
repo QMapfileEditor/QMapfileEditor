@@ -253,7 +253,11 @@ void MainWindow::newMapfile()
 
 void MainWindow::openMapfile()
 {
-  QString prevFilePath = QDir::homePath();
+  //TODO: if mapfiledir exists use it instead:
+  QString prevFilePath = QDir::currentPath();
+  if(this->prevDirPath != NULL) {
+    prevFilePath = this->prevDirPath;
+  }
 
   // TODO: check if current session has unsaved modifications instead
   if ((this->mapfile->isLoaded()) &&  (this->undoStack->count() > 0)) {
@@ -262,7 +266,12 @@ void MainWindow::openMapfile()
   }
 
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
-
+  
+  QFileInfo mapFileInfo(fileName);
+  this->mapfilename = mapFileInfo.fileName();
+  this->mapfiledir = mapFileInfo.absolutePath();
+  this->prevDirPath = mapFileInfo.absolutePath();
+  
   this->openMapfile(fileName);
 }
 
@@ -427,7 +436,7 @@ void MainWindow::saveMapfile()
 
 void MainWindow::saveAsMapfile()
 {
-  QString prevFilePath = QDir::homePath();
+  QString prevFilePath = QDir::currentPath();
 
   if (this->mapfile) {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save map File"), prevFilePath, tr("Map file (*.map)")); 
