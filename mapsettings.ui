@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -597,7 +597,7 @@
         <rect>
          <x>20</x>
          <y>100</y>
-         <width>531</width>
+         <width>551</width>
          <height>29</height>
         </rect>
        </property>
@@ -625,6 +625,16 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="mf_map_fontset_relative">
+          <property name="text">
+           <string>Relative</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="layoutWidget7">
@@ -632,7 +642,7 @@
         <rect>
          <x>20</x>
          <y>70</y>
-         <width>531</width>
+         <width>551</width>
          <height>29</height>
         </rect>
        </property>
@@ -660,6 +670,16 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="mf_map_symbolset_relative">
+          <property name="text">
+           <string>Relative</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="layoutWidget8">
@@ -667,7 +687,7 @@
         <rect>
          <x>20</x>
          <y>40</y>
-         <width>531</width>
+         <width>551</width>
          <height>29</height>
         </rect>
        </property>
@@ -696,6 +716,16 @@
          <widget class="QPushButton" name="mf_map_shapepath_browse">
           <property name="text">
            <string>Browse</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mf_map_shapepath_relative">
+          <property name="text">
+           <string>Relative</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -942,7 +972,7 @@
         <rect>
          <x>20</x>
          <y>100</y>
-         <width>531</width>
+         <width>541</width>
          <height>29</height>
         </rect>
        </property>
@@ -976,7 +1006,7 @@
         <rect>
          <x>20</x>
          <y>130</y>
-         <width>531</width>
+         <width>541</width>
          <height>29</height>
         </rect>
        </property>
@@ -1010,7 +1040,7 @@
         <rect>
          <x>40</x>
          <y>200</y>
-         <width>481</width>
+         <width>521</width>
          <height>131</height>
         </rect>
        </property>
@@ -1135,6 +1165,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="mf_map_config_projlib_relative">
+            <property name="text">
+             <string>Relative</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -1184,6 +1224,16 @@
             </property>
             <property name="text">
              <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="mf_map_config_encryption_relative">
+            <property name="text">
+             <string>Relative</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -2519,7 +2569,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>411</width>
+         <width>601</width>
          <height>29</height>
         </rect>
        </property>
@@ -2553,14 +2603,24 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="mf_map_config_errorFile_relative">
+          <property name="text">
+           <string>Relative</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>90</y>
-         <width>185</width>
+         <x>350</x>
+         <y>10</y>
+         <width>261</width>
          <height>31</height>
         </rect>
        </property>
