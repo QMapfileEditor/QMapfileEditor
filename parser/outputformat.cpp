@@ -151,6 +151,10 @@ bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & val
   // selected outputformat. We will handle the call to the different setters
   // into the event triggered when the user will click on "save".
 
+  Q_UNUSED(index)
+  Q_UNUSED(value)
+  Q_UNUSED(role)
+
   // if (role != Qt::EditRole)
   //   return false;
   //
