@@ -1,20 +1,15 @@
 #include "outputformat.h"
 
+/** OutputFormat related */
 
-OutputFormat::OutputFormat(const QString & name,
-                const QString &mimeType,
-                const QString & driver,
-                const QString & extension,
-                const int  & imageMode,
-                const bool & transparent,
+OutputFormat::OutputFormat(const QString & name, const QString &mimeType, const QString & driver,
+                const QString & extension, const int  & imageMode, const bool & transparent,
                 const enum State & state) :
-name(name),
-mimeType(mimeType),
-driver(driver),
-extension(extension),
-imageMode(imageMode),
-transparent(transparent),
-state(state) {}
+name(name), mimeType(mimeType), driver(driver), extension(extension),
+imageMode(imageMode), transparent(transparent), state(state)
+{}
+
+/** Getters */
 
 QString const & OutputFormat::getName()        const { return name;        }
 QString const & OutputFormat::getMimeType()    const { return mimeType;    }
@@ -43,7 +38,7 @@ void OutputFormat::setImageMode(int const &v)     { imageMode   = v; }
 void OutputFormat::setTransparent(bool const &v)  { transparent = v; }
 void OutputFormat::setState(enum State const &v)  { state       = v; }
 
-/** related to OutputFormat Model (representation into the UI) */
+/** OutputFormat Model (representation into the UI) */
 
 OutputFormatsModel::OutputFormatsModel(QObject * parent) : QAbstractListModel(parent) {}
 
@@ -113,5 +108,64 @@ QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
       return QVariant(of->getTransparent());
   }
   return QVariant();
+}
+
+bool OutputFormatsModel::nameAlreadyIn(const QString & key) {
+   for (int i = 0; i < entries.size();  ++i) {
+     if (entries.at(i)->getName() == key)
+      return true;
+   }
+   return false;
+}
+
+bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & value, int role) {
+ if (role != Qt::EditRole)
+   return false;
+
+ if (index.row() > entries.size())
+    return false;
+
+  OutputFormat * of = entries.at(index.row());
+
+  if (of == NULL)
+    return false;
+
+  switch (index.column()) {
+    case OutputFormatsModel::Name:
+      if (nameAlreadyIn(value.toString())) {
+        return false;
+      }
+      of->setName(value.toString());
+      of->setState(OutputFormat::MODIFIED);
+      return true;
+
+    case OutputFormatsModel::MimeType:
+      of->setMimeType(value.toString());
+      of->setState(OutputFormat::MODIFIED);
+      return true;
+
+    case OutputFormatsModel::Driver:
+      of->setDriver(value.toString());
+      of->setState(OutputFormat::MODIFIED);
+      return true;
+
+    case OutputFormatsModel::Extension:
+      of->setExtension(value.toString());
+      of->setState(OutputFormat::MODIFIED);
+      return true;
+
+    case OutputFormatsModel::ImageMode:
+      of->setImageMode(value.toInt());
+      of->setState(OutputFormat::MODIFIED);
+      return true;
+
+    case OutputFormatsModel::Transparent:
+      of->setTransparent(value.toBool());
+      of->setState(OutputFormat::MODIFIED);
+      return true;
+  }
+  return false;
+
+
 }
 
