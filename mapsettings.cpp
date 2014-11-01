@@ -88,10 +88,9 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
     this->connect(ui->mf_outputformat_list, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
     this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
-    
+    this->connect(ui->outputformat_delete, SIGNAL(clicked()), SLOT(removeOutputFormat()));
     this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
     ui->mf_map_projection->addItem(this->mapfile->getMapProjection());
-    
     this->connect(ui->mf_outputformat_options_add, SIGNAL(clicked()), SLOT(addFormatOption()));
     this->connect(ui->mf_outputformat_options_del, SIGNAL(clicked()), SLOT(removeFormatOptions()));
 
@@ -473,6 +472,15 @@ void MapSettings::addNewOutputFormat() {
 
   lst.append(of);
   ((OutputFormatsModel *) this->outputFormatsMapper->model())->setEntries(lst);
+}
+
+void MapSettings::removeOutputFormat() {
+ QModelIndex idx = this->ui->mf_outputformat_list->currentIndex();
+ if (! idx.isValid())
+   return;
+
+ OutputFormatsModel * ofMdl = (OutputFormatsModel *) this->outputFormatsMapper->model();
+ ofMdl->removeOutputFormat(idx);
 }
 
 void MapSettings::reinitOutputFormatForm() {

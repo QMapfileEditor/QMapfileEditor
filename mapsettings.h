@@ -104,6 +104,7 @@ class MapSettings : public QDialog
       void refreshOutputFormatTab(void);
       void removeFormatOptions();
       void removeOgcMetadatas();
+      void removeOutputFormat();
       void setImageColor();
 
  private:
@@ -112,7 +113,7 @@ class MapSettings : public QDialog
       MapfileParser * mapfile;
 
       QDataWidgetMapper * outputFormatsMapper;
-      
+
       void saveMapSettings();
       void toggleOutputFormatsWidgets(const bool &);
       QMessageBox::StandardButton warnIfActiveSession(void);

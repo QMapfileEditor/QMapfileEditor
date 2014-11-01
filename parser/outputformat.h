@@ -97,12 +97,16 @@ class OutputFormatsModel : public QAbstractListModel {
 
     void setEntries(QList<OutputFormat *> const &);
     QList<OutputFormat *> const & getEntries() const;
+    QList<OutputFormat *> const & getDeletedEntries() const;
 
-    OutputFormat * getOutputFormat(const QModelIndex &index) const;
+    OutputFormat * getOutputFormat(const QModelIndex & index) const;
+    void removeOutputFormat(const QModelIndex & index);
 
     enum Column { Name, MimeType, Driver, Extension, ImageMode, Transparent };
+
   protected:
       QList<OutputFormat *> entries;
+      QList<OutputFormat *> removedEntries;
 
   private:
       bool nameAlreadyIn(QString const &);
