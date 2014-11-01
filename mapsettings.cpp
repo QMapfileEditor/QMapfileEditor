@@ -399,19 +399,23 @@ void MapSettings::saveMapSettings() {
 
 void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
 
-  switch (ui->mf_outputformat_form_buttons->buttonRole(b)) {
-    // Save
-    case QDialogButtonBox::AcceptRole:
-
+  if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::AcceptRole) {
       return;
-    // Abort (using "Discard" instead ?)
-    case QDialogButtonBox::RejectRole:
+  }
+  // Abort (using "Discard" instead ?)
+  else if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::RejectRole) {
+      // removes the outputformat if it was just created
+      // by the user (no existence in the mapfile)
+      OutputFormatsModel * mdl =  (OutputFormatsModel *) this->outputFormatsMapper->model();
+      QModelIndex curIdx = ui->mf_outputformat_list->currentIndex();
+      OutputFormat * fmt = mdl->getOutputFormat(curIdx);
+      if (fmt->getState() == OutputFormat::ADDED)
+        mdl->removeOutputFormat(curIdx);
+
       this->ui->mf_outputformat_list->clearSelection();
       this->reinitOutputFormatForm();
       this->toggleOutputFormatsWidgets(false);
       return;
-   default:
-     return;
   }
 }
 
@@ -434,7 +438,6 @@ void MapSettings::addFormatOption() {
   QString key   = this->ui->mf_outputformat_option_name->text();
   if (key.isEmpty())
     return;
-
   QString value = this->ui->mf_outputformat_option_value->text();
   ((KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model())->addData(key,value);
   this->ui->mf_outputformat_formatoptions_list->resizeColumnsToContents();
