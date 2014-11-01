@@ -394,7 +394,7 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   connect(buttonBox, SIGNAL(rejected()), this->layerSettingsDialog, SLOT(reject()));
 
   //TODO: give layer to layerSettings?
-  //TODO: if layer is vector then:
+  //TODO: if layer is vector (ie TYPE = POINT, LINE or POLYGON and have no grid object) then:
   //this->showInfo(QString::number(i.model()->data(Qt::DisplayRole)));
   this->layerSettingsDialog->setWindowTitle("Vector Layer Settings");
   LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);

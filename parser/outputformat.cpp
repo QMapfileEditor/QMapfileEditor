@@ -196,7 +196,7 @@ bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & val
       return true;
   }
   return false;
-
+}
 
 bool OutputFormatsModel::nameAlreadyIn(const QString & key) {
    for (int i = 0; i < entries.size();  ++i) {
