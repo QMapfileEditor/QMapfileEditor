@@ -31,6 +31,8 @@
 #include "mapsettings.h"
 #include "ui_mapsettings.h"
 
+#include <QDebug>
+
 MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
   QDialog(parent), ui(new Ui::MapSettings), mapfile(mf)
 {
@@ -81,10 +83,10 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->ui->mf_outputformat_formatoptions_list->setModel(new KeyValueModel(this));
     this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
-    
+
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
-    
+
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
     this->connect(ui->mf_outputformat_list, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
     this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
@@ -93,6 +95,8 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_projection->addItem(this->mapfile->getMapProjection());
     this->connect(ui->mf_outputformat_options_add, SIGNAL(clicked()), SLOT(addFormatOption()));
     this->connect(ui->mf_outputformat_options_del, SIGNAL(clicked()), SLOT(removeFormatOptions()));
+    // accept / reject outputformat modifications
+    this->connect(ui->mf_outputformat_form_buttons, SIGNAL(clicked(QAbstractButton *)), SLOT(handleOutputFormatFormClick(QAbstractButton *)));
 
 
     //Extent
@@ -393,6 +397,24 @@ void MapSettings::saveMapSettings() {
 
 // slots
 
+void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
+
+  switch (ui->mf_outputformat_form_buttons->buttonRole(b)) {
+    // Save
+    case QDialogButtonBox::AcceptRole:
+
+      return;
+    // Abort (using "Discard" instead ?)
+    case QDialogButtonBox::RejectRole:
+      this->ui->mf_outputformat_list->clearSelection();
+      this->reinitOutputFormatForm();
+      this->toggleOutputFormatsWidgets(false);
+      return;
+   default:
+     return;
+  }
+}
+
 void MapSettings::addOgcMetadata() {
   QString key   = this->ui->mf_map_web_md_option_name->currentText();
   if (key.isEmpty())
@@ -455,8 +477,8 @@ void MapSettings::addNewOutputFormat() {
     }
   }
   this->toggleOutputFormatsWidgets(true);
-
-  QList<OutputFormat *> lst = ((OutputFormatsModel *) this->outputFormatsMapper->model())->getEntries();
+  OutputFormatsModel * mdl =  (OutputFormatsModel *) this->outputFormatsMapper->model();
+  QList<OutputFormat *> lst = mdl->getEntries();
   QString templ = QString("newOutFmt%1");
   int idx = 1;
   QStringList ofNames = QStringList();
@@ -469,9 +491,14 @@ void MapSettings::addNewOutputFormat() {
 
   OutputFormat * of = new OutputFormat(curGenOf);
   of->setState(OutputFormat::ADDED);
-
   lst.append(of);
-  ((OutputFormatsModel *) this->outputFormatsMapper->model())->setEntries(lst);
+  mdl->setEntries(lst);
+
+  // Selects the outputformat in the list
+  QModelIndex ofIdx = mdl->index(mdl->rowCount() -1);
+  ui->mf_outputformat_list->setCurrentIndex(ofIdx);
+  this->outputFormatsMapper->setCurrentModelIndex(ofIdx);
+
 }
 
 void MapSettings::removeOutputFormat() {
@@ -481,21 +508,6 @@ void MapSettings::removeOutputFormat() {
 
  OutputFormatsModel * ofMdl = (OutputFormatsModel *) this->outputFormatsMapper->model();
  ofMdl->removeOutputFormat(idx);
-}
-
-void MapSettings::reinitOutputFormatForm() {
-  ui->mf_outputformat_name->clear();
-  ui->mf_outputformat_driver->clear();
-  ui->mf_outputformat_transparent_on->setEnabled(true);
-  ui->mf_outputformat_transparent_on->setChecked(true);
-  ui->mf_outputformat_transparent_off->setEnabled(true);
-  ui->mf_outputformat_transparent_off->setChecked(false);
-  ui->mf_outputformat_extension->clear();
-  ui->mf_outputformat_mimetype->clear();
-  ui->mf_outputformat_option_name->clear();
-  ui->mf_outputformat_option_value->clear();
-  ui->mf_outputformat_formatoptions_list->clearSpans();
-  return;
 }
 
 QMessageBox::StandardButton MapSettings::warnIfActiveSession() {
@@ -686,16 +698,32 @@ void MapSettings::refreshOutputFormatTab(const QModelIndex &i) {
   this->toggleOutputFormatsWidgets(true);
 }
 
+void MapSettings::reinitOutputFormatForm() {
+  ui->mf_outputformat_transparent_on->setEnabled(true);
+  ui->mf_outputformat_transparent_on->setChecked(true);
+  ui->mf_outputformat_transparent_off->setEnabled(true);
+  ui->mf_outputformat_transparent_off->setChecked(false);
+  ui->mf_outputformat_formatoptions_list->clearSpans();
+  ui->mf_outputformat_name->clear();
+  ui->mf_outputformat_driver->setCurrentIndex(0);
+  ui->mf_gdal_ogr_driver->setCurrentIndex(0);
+  ui->mf_outputformat_extension->clear();
+  ui->mf_outputformat_imagemode->setCurrentIndex(0);
+  ui->mf_outputformat_mimetype->clear();
+  ui->mf_outputformat_option_name->clear();
+  ui->mf_outputformat_option_value->clear();
+  KeyValueModel * mdl = (KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model();
+  mdl->setData(QHash<QString, QString>());
+}
+
 void MapSettings::toggleOutputFormatsWidgets(const bool &enable) {
   this->ui->outputFormatForm->setEnabled(enable);
   this->ui->mf_outputformat_form_buttons->setEnabled(enable);
 }
 
-
 /** End SLOTS **/
 
 MapSettings::~MapSettings() {
-  // mapfile lifecycle should be managed elsewhere
   delete ui;
 }
 

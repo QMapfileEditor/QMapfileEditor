@@ -80,10 +80,16 @@ class MapSettings : public QDialog
  public slots:
       void accept();
       void addFormatOption();
+      void addNewOutputFormat(void);
       void addOgcMetadata();
       void angleSliderChanged(int);
       void angleSpinChanged(int);
-      void addNewOutputFormat(void);
+      void browseDebugFile();
+      void browseEncryptionFile();
+      void browseFontsetFile();
+      void browseProjlibFile();
+      void browseShapepath();
+      void browseSymbolsetFile();
       void enableDebugBox(bool);
       void enableOgcStandardFrame(bool);
       void enableRelativePathDebug();
@@ -92,16 +98,11 @@ class MapSettings : public QDialog
       void enableRelativePathProjlib();
       void enableRelativePathShapepath();
       void enableRelativePathSymbolset();
-      void reinitOutputFormatForm();
-      void browseDebugFile();
-      void browseEncryptionFile();
-      void browseFontsetFile();
-      void browseProjlibFile();
-      void browseShapepath();
-      void browseSymbolsetFile();
+      void handleOutputFormatFormClick(QAbstractButton *);
       void refreshGdalOgrDriverCombo(const QString &);
       void refreshOutputFormatTab(const QModelIndex &);
       void refreshOutputFormatTab(void);
+      void reinitOutputFormatForm();
       void removeFormatOptions();
       void removeOgcMetadatas();
       void removeOutputFormat();
@@ -117,7 +118,6 @@ class MapSettings : public QDialog
       void saveMapSettings();
       void toggleOutputFormatsWidgets(const bool &);
       QMessageBox::StandardButton warnIfActiveSession(void);
-
 };
 
 #endif // MAPSETTINGS_H
