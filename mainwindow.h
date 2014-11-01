@@ -50,6 +50,7 @@
 #include "mapscene.h"
 #include "mapsettings.h"
 #include "layersettingsvector.h"
+#include "layersettingsraster.h"
 #include "parser/mapfileparser.h"
 
 

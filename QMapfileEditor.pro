@@ -16,6 +16,7 @@ SOURCES += \
         mapscene.cpp                           \
         mapsettings.cpp                        \
         layersettingsvector.cpp                \
+        layersettingsraster.cpp                \
         commands/changemapnamecommand.cpp      \
         commands/changemapstatuscommand.cpp    \
         commands/setanglecommand.cpp           \
@@ -42,6 +43,7 @@ HEADERS  += \
     mapscene.h                              \
     mapsettings.h                           \
     layersettingsvector.h                   \
+    layersettingsraster.h                   \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
     commands/setanglecommand.h              \

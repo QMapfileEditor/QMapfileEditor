@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LayerSettings</class>
- <widget class="QTabWidget" name="LayerSettings">
+ <class>LayerSettingsRaster</class>
+ <widget class="QTabWidget" name="LayerSettingsRaster">
   <property name="enabled">
    <bool>true</bool>
   </property>
