@@ -113,8 +113,7 @@ class OutputFormatsModel : public QAbstractListModel {
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
-    // For now, the view should not modify the model directly
-    //bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
     void setEntries(QList<OutputFormat *> const &);
     QList<OutputFormat *> const & getEntries() const;
