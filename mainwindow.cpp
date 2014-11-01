@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::pushUndoStack(QUndoCommand *c) {
   this->undoStack->push(c);
+  ui->actionSave->setEnabled(true);
 }
 
 void MainWindow::showUndoStack() {
@@ -431,6 +432,9 @@ void MainWindow::saveMapfile()
     } else {
       this->mapfile->saveMapfile(QString());
     }
+    //we know the mapfile filename:
+    this->mapfile->saveMapfile(this->mapfiledir.path()+ "/" + this->mapfilename);
+    ui->actionSave->setEnabled(false);
   }
 }
 
