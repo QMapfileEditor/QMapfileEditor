@@ -5,7 +5,6 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf) :
   QTabWidget(parent), ui(new Ui::LayerSettingsVector), mapfile(mf)
 {
     ui->setupUi(this);
-    this->settingsUndoStack = new QUndoStack(this);
 
 }
 
