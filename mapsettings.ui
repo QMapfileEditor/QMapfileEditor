@@ -75,7 +75,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainTabForm">
       <attribute name="title">
@@ -1984,7 +1984,7 @@
               </size>
              </property>
              <property name="standardButtons">
-              <set>QDialogButtonBox::Abort|QDialogButtonBox::Save</set>
+              <set>QDialogButtonBox::Discard|QDialogButtonBox::Save</set>
              </property>
             </widget>
            </item>
@@ -1996,10 +1996,10 @@
      </widget>
      <widget class="QWidget" name="ogcTabForm">
       <attribute name="title">
-       <string>OGC Standards</string>
+       <string>Web services</string>
       </attribute>
       <attribute name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OGC standards configuration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuration of Web services: WMS, WFS and WCS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </attribute>
       <widget class="QFrame" name="mf_ogc_frame">
        <property name="enabled">
