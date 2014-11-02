@@ -34,15 +34,16 @@
 OutputFormat::OutputFormat(const QString & name, const QString &mimeType, const QString & driver,
                 const QString & extension, const int  & imageMode, const bool & transparent,
                 const enum State & state) :
-name(name), mimeType(mimeType), extension(extension),
+name(name), originalName(name), mimeType(mimeType), extension(extension),
 imageMode(imageMode), transparent(transparent), state(state)
 {
   setDriver(driver);
 }
 
 /** Getters */
-QString const & OutputFormat::getName()        const { return name;        }
-QString const & OutputFormat::getMimeType()    const { return mimeType;    }
+QString const & OutputFormat::getName()         const { return name;         }
+QString const & OutputFormat::getOriginalName() const { return originalName; }
+QString const & OutputFormat::getMimeType()     const { return mimeType;     }
 
 QString const & OutputFormat::getDriver()     const { return driver;     }
 QString const & OutputFormat::getGdalDriver() const { return gdalDriver; }
