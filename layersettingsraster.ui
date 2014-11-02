@@ -20,7 +20,7 @@
    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;General setting of the layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>3</number>
   </property>
   <widget class="QWidget" name="generalTab">
    <property name="enabled">
@@ -1395,7 +1395,7 @@
   </widget>
   <widget class="QWidget" name="metadataTab">
    <attribute name="title">
-    <string>OGC Standards</string>
+    <string>Web services</string>
    </attribute>
   </widget>
   <widget class="QWidget" name="tab_2">

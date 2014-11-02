@@ -23,7 +23,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <property name="currentIndex">
-   <number>2</number>
+   <number>0</number>
   </property>
   <property name="elideMode">
    <enum>Qt::ElideNone</enum>
@@ -1750,7 +1750,7 @@
   </widget>
   <widget class="QWidget" name="metadataTab">
    <attribute name="title">
-    <string>OGC Standards</string>
+    <string>Web services</string>
    </attribute>
   </widget>
   <widget class="QWidget" name="tab_2">
