@@ -34,15 +34,19 @@
 OutputFormat::OutputFormat(const QString & name, const QString &mimeType, const QString & driver,
                 const QString & extension, const int  & imageMode, const bool & transparent,
                 const enum State & state) :
-name(name), mimeType(mimeType), driver(driver), extension(extension),
+name(name), mimeType(mimeType), extension(extension),
 imageMode(imageMode), transparent(transparent), state(state)
-{}
+{
+  setDriver(driver);
+}
 
 /** Getters */
-
 QString const & OutputFormat::getName()        const { return name;        }
 QString const & OutputFormat::getMimeType()    const { return mimeType;    }
-QString const & OutputFormat::getDriver()      const { return driver;      }
+
+QString const & OutputFormat::getDriver()     const { return driver;     }
+QString const & OutputFormat::getGdalDriver() const { return gdalDriver; }
+
 QString const & OutputFormat::getExtension()   const { return extension;   }
 int     const & OutputFormat::getImageMode()   const { return imageMode;   }
 bool    const & OutputFormat::getTransparent() const { return transparent; }
@@ -61,9 +65,26 @@ void OutputFormat::removeFormatOption(const QString &k) {
   formatOptions.remove(k);
 }
 
+void OutputFormat::setFormatOptions(QHash<QString,QString> const &newFmtOpts) {
+  formatOptions = newFmtOpts;
+}
+
 void OutputFormat::setName(QString const &v)      { name        = v; }
 void OutputFormat::setMimeType(QString const &v)  { mimeType    = v; }
-void OutputFormat::setDriver(QString const &v)    { driver      = v; }
+
+void OutputFormat::setDriver(QString const &driver)    {
+  this->gdalDriver = "";
+  if (driver.startsWith("GDAL") || driver.startsWith("OGR"))  {
+    QStringList split = driver.split("/");
+    this->driver = split.at(0);
+    // expected case
+    if (split.size() == 2)
+      this->gdalDriver = split.at(1);
+  }
+  else
+    this->driver = driver;
+}
+
 void OutputFormat::setExtension(QString const &v) { extension   = v; }
 void OutputFormat::setImageMode(int const &v)     { imageMode   = v; }
 void OutputFormat::setTransparent(bool const &v)  { transparent = v; }
@@ -133,6 +154,8 @@ QVariant OutputFormatsModel::data(const QModelIndex &index, int role) const {
       return QVariant(of->getMimeType());
     case OutputFormatsModel::Driver:
       return QVariant(of->getDriver());
+    case OutputFormatsModel::GdalDriver:
+      return QVariant(of->getGdalDriver());
     case OutputFormatsModel::Extension:
       return QVariant(of->getExtension());
     case OutputFormatsModel::ImageMode:
