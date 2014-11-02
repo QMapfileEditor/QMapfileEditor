@@ -77,6 +77,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->outputFormatsMapper->setModel(outputFormatsModel);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_name,      OutputFormatsModel::Name);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_driver,    OutputFormatsModel::Driver);
+    this->outputFormatsMapper->addMapping(ui->mf_gdal_ogr_driver,        OutputFormatsModel::GdalDriver);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
     this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
@@ -398,30 +399,43 @@ void MapSettings::saveMapSettings() {
 // slots
 
 void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
+
   OutputFormatsModel * mdl =  (OutputFormatsModel *) this->outputFormatsMapper->model();
   QModelIndex curIdx = ui->mf_outputformat_list->currentIndex();
   OutputFormat * fmt = mdl->getOutputFormat(curIdx);
 
   // save
   if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::AcceptRole) {
+    // check if there is a name clashing (only if the name has been actually
+    // edited)
+    if ((ui->mf_outputformat_name->text() != fmt->getName()) && 
+      (mdl->nameAlreadyIn(ui->mf_outputformat_name->text()))) {
+      QMessageBox::warning(this, tr("Error"), tr("An existing output format is already named  %1. Please select "
+                                                 "another name.").arg(ui->mf_outputformat_name->text()));
+       return;
+    }
     fmt->setName(ui->mf_outputformat_name->text());
-    fmt->setDriver(ui->mf_outputformat_driver->currentText());
     fmt->setExtension(ui->mf_outputformat_extension->text());
     fmt->setImageMode(ui->mf_outputformat_imagemode->currentIndex());
     fmt->setMimeType(ui->mf_outputformat_mimetype->text());
-    // TODO: saves the of options
-    return;
+    QString currentDriver = ui->mf_outputformat_driver->currentText();
+    if (currentDriver == "GDAL" || currentDriver == "OGR") {
+      fmt->setDriver(currentDriver + "/" + ui->mf_gdal_ogr_driver->currentText());
+    } else {
+      fmt->setDriver(ui->mf_outputformat_driver->currentText());
+    }
+    fmt->setTransparent(ui->mf_outputformat_transparent_on->isChecked());
+    KeyValueModel * fmtOptsMdl = ((KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model());
+    fmt->setFormatOptions(fmtOptsMdl->getData());
   }
   // Abort (using "Discard" instead ?)
   else if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::RejectRole) {
     if (fmt->getState() == OutputFormat::ADDED)
       mdl->removeOutputFormat(curIdx);
-
-    this->ui->mf_outputformat_list->clearSelection();
-    this->reinitOutputFormatForm();
-    this->toggleOutputFormatsWidgets(false);
-    return;
   }
+  this->ui->mf_outputformat_list->clearSelection();
+  this->reinitOutputFormatForm();
+  this->toggleOutputFormatsWidgets(false);
 }
 
 void MapSettings::addOgcMetadata() {
@@ -725,6 +739,11 @@ void MapSettings::reinitOutputFormatForm() {
 }
 
 void MapSettings::toggleOutputFormatsWidgets(const bool &enable) {
+  // toggles the button to add / edit / delete / clear / import
+  // if editing / not editing
+  this->ui->outputformat_buttons->setEnabled(! enable);
+  this->ui->mf_outputformat_list->setEnabled(! enable);
+
   this->ui->outputFormatForm->setEnabled(enable);
   this->ui->mf_outputformat_form_buttons->setEnabled(enable);
 }

@@ -69,6 +69,7 @@ class OutputFormat {
    QString                 const & getName()          const ;
    QString                 const & getMimeType()      const ;
    QString                 const & getDriver()        const ;
+   QString                 const & getGdalDriver()    const ;
    QString                 const & getExtension()     const ;
    int                     const & getImageMode()     const ;
    bool                    const & getTransparent()   const ;
@@ -81,6 +82,7 @@ class OutputFormat {
    bool isEmpty();
 
    /** setters */
+   void setFormatOptions(QHash<QString,QString> const &);
    void setName(QString const &);
    void setMimeType(QString const &);
    void setDriver(QString const &);
@@ -93,6 +95,7 @@ class OutputFormat {
    QString name;
    QString mimeType;
    QString driver;
+   QString gdalDriver;
    QString extension;
    int imageMode;
    bool transparent;
@@ -106,6 +109,8 @@ class OutputFormatsModel : public QAbstractListModel {
   public:
     OutputFormatsModel(QObject *parent = 0);
     ~OutputFormatsModel();
+
+    bool nameAlreadyIn(QString const &);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -122,14 +127,12 @@ class OutputFormatsModel : public QAbstractListModel {
     OutputFormat * getOutputFormat(const QModelIndex & index) const;
     void removeOutputFormat(const QModelIndex & index);
 
-    enum Column { Name, MimeType, Driver, Extension, ImageMode, Transparent };
+    enum Column { Name, MimeType, Driver, GdalDriver, Extension, ImageMode, Transparent };
 
   protected:
       QList<OutputFormat *> entries;
       QList<OutputFormat *> removedEntries;
 
-  private:
-      bool nameAlreadyIn(QString const &);
 };
 
 #endif // OUTPUTFORMAT_H
