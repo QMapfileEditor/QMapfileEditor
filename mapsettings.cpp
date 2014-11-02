@@ -369,9 +369,9 @@ void MapSettings::saveMapSettings() {
      ((MainWindow *) parent())->pushUndoStack(new SetTemplatePatternCommand(ui->mf_map_templatepattern->text(), this->mapfile));
     }
 
-
-    // TODO
-    this->mapfile->setDataPattern(ui->mf_map_datapattern->text());
+    if (ui->mf_map_datapattern->text() != this->mapfile->getDataPattern()) {
+      ((MainWindow *) parent())->pushUndoStack(new SetDataPatternCommand(ui->mf_map_datapattern->text(), this->mapfile));
+    }
 
     if (ui->mf_map_config_contexturl->text() != this->mapfile->getMetadata("CGI_CONTEXT_URL")) {
       ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("CGI_CONTEXT_URL",
@@ -400,6 +400,7 @@ void MapSettings::saveMapSettings() {
 
     /** Outputformat tab **/
 
+    // TODO
 
     /** OGC tab **/
 
