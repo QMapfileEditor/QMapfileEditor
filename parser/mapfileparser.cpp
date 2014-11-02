@@ -671,23 +671,21 @@ QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
 
 QString MapfileParser::getMapfileName() { return QString(this->filename); }
 
-QList<int> MapfileParser::getImageColor() {
-   QList<int> color;
-
+QColor MapfileParser::getImageColor() const {
    if (this->map) {
      colorObj colorObj = this->map->imagecolor;
-     color << colorObj.red << colorObj.green << colorObj.blue;
+     return QColor(colorObj.red, colorObj.green, colorObj.blue, colorObj.alpha);
    }
-   return color;
+   return QColor();
 }
 
-void MapfileParser::setImageColor(const int & red, const int & green, const int & blue ) {
-    if (this->map) {
-        this->map->imagecolor.red = red;
-        this->map->imagecolor.green = green;
-        this->map->imagecolor.blue = blue;
-        // TODO alpha ?
-    }
+void MapfileParser::setImageColor(QColor const & color) {
+  if (this->map) {
+    this->map->imagecolor.red = color.red();
+    this->map->imagecolor.green = color.green();
+    this->map->imagecolor.blue = color.blue();
+    this->map->imagecolor.alpha = color.alpha();
+  }
 }
 
 /**
