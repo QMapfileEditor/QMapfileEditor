@@ -71,6 +71,7 @@ class OutputFormat {
 
    /** getters */
    QString                 const & getName()          const ;
+   QString                 const & getOriginalName()  const ;
    QString                 const & getMimeType()      const ;
    QString                 const & getDriver()        const ;
    QString                 const & getGdalDriver()    const ;
@@ -97,6 +98,10 @@ class OutputFormat {
 
   private:
    QString name;
+   // Since the key is used by Mapserver to identify
+   // the outputformats, we need to keep a trace
+   // here in case of the user renames it.
+   QString originalName;
    QString mimeType;
    QString driver;
    QString gdalDriver;

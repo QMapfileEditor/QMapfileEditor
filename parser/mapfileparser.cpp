@@ -715,29 +715,148 @@ QList<OutputFormat *> MapfileParser::getOutputFormats() {
   return ret;
 }
 
-void MapfileParser::setOutputFormats(QList<OutputFormat *> const & of) {
 
-  // Note: need to modify several fields in the mapfile
-  // 1. map->outputformatlist (obviously)
-  // 2. map->outputformat (which is a link to the first elem of outputformatlist)
-  //
-  // This should be done by MS internals into mapoutput.c defined functions, and by
-  // avoiding having to fiddle with mapObj by ourselves.
-  //
-  // useful internal functions to fiddle with outputformat internally in MS:
-  //  - msFreeOutputFormat(outputFormatObj *);
-  //  - outputFormatObj *msCreateDefaultOutputFormat(mapObj *map, const char *driver, const char *name);
-  //  - msApplyDefaultOutputFormats(): initializes default output formats depending of compilation options
-  //    from MapServer.
-  //  - int msAppendOutputFormat(mapObj *map, outputFormatObj *format);
-  //  - int msRemoveOutputFormat(mapObj *map, const char *name)
-  //  - outputFormatObj *msSelectOutputFormat( mapObj *map, const char *imagetype )
-  //
+/**
+ * Does basically the same as the previous method, but for a given
+ * name. This implies that the OF exists in the mapfile.
+ *
+ * Used by the QUndo commands, to get the state of an ouptut format
+ * just before it goes modified.
+ *
+ * Once again, this is the role of the caller to destroy the created
+ * object.
+ */
+OutputFormat * MapfileParser::getOutputFormat(QString const & name) {
+  if (! this->map)
+    return NULL;
+
+  int ofIdx = msGetOutputFormatIndex(this->map, name.toStdString().c_str());
+  outputFormatObj * msOf = this->map->outputformatlist[ofIdx];
+  if (msOf == NULL)
+    return NULL;
+
+  OutputFormat * item = new OutputFormat(msOf->name,
+                                         msOf->mimetype,
+                                         msOf->driver,
+                                         msOf->extension,
+                                         msOf->imagemode,
+                                         msOf->transparent,
+                                         OutputFormat::UNCHANGED);
+
+  for (int j = 0 ; j < msOf->numformatoptions; ++j) {
+    QStringList kv = QString(msOf->formatoptions[j]).split("=");
+    if (kv.size() == 2)
+      item->addFormatOption(kv[0], kv[1]);
+  }
+  return item;
+}
+
+void MapfileParser::removeOutputFormat(OutputFormat const * of) {
+  if (! this->map)
+    return;
+
+  msRemoveOutputFormat(this->map, of->getName().toStdString().c_str());
+}
+
+void MapfileParser::updateOutputFormat(OutputFormat const * of) {
+  if (! this->map)
+    return;
+
+  int ofIdx = msGetOutputFormatIndex(this->map, of->getOriginalName().toStdString().c_str());
+  outputFormatObj * msOf = this->map->outputformatlist[ofIdx];
+
+  // name
+  if (of->getName() != msOf->name) {
+    free(msOf->name);
+    msOf->name = strdup(of->getName().toStdString().c_str());
+  }
+  // mimetype
+  if (of->getMimeType() != msOf->mimetype) {
+    free(msOf->mimetype);
+    msOf->mimetype = strdup(of->getMimeType().toStdString().c_str());
+  }
+  // driver
+  QString fullyQualifiedDriver = of->getDriver();
+  if ((of->getDriver() == "GDAL") || (of->getDriver() == "OGR")) {
+    fullyQualifiedDriver += "/" + of->getGdalDriver();
+  }
+  if (fullyQualifiedDriver != msOf->driver) {
+   free(msOf->driver);
+   msOf->driver = strdup(fullyQualifiedDriver.toStdString().c_str());
+  }
+  // extension
+  if (of->getExtension() != msOf->extension) {
+    free(msOf->extension);
+    msOf->extension = strdup(of->getExtension().toStdString().c_str());
+  }
+  // imagemode
+  if (of->getImageMode() != msOf->imagemode) {
+    msOf->imagemode  = of->getImageMode();
+  }
+  // transparent
+  if (of->getTransparent() != msOf->transparent) {
+    msOf->transparent = of->getTransparent();
+  }
+
+  // format options
+
+  // first, removes the format options
+  for (int i = 0; i < msOf->numformatoptions; ++i) {
+    free(msOf->formatoptions[i]);
+    msOf->formatoptions[i] = NULL;
+  }
+  msOf->numformatoptions = 0;
+  // then, recreates the format options
+  QHash<QString,QString> fmtOpts = of->getFormatOptions();
+  QStringList fmtKeys = fmtOpts.keys();
+  for (int i = 0 ; i < fmtKeys.size(); ++i) {
+    msSetOutputFormatOption(msOf, fmtKeys[i].toStdString().c_str(),
+                            fmtOpts[fmtKeys[i]].toStdString().c_str());
+  }
+
+}
+
+void MapfileParser::addOutputFormat(OutputFormat const * of) {
+  if (!this->map)
+    return;
+
+  QString fullyQualifiedDriver = of->getDriver();
+  if ((of->getDriver() == "GDAL") || (of->getDriver() == "OGR")) {
+    fullyQualifiedDriver += "/" + of->getGdalDriver();
+  }
+
+  outputFormatObj * newMsOf = msCreateDefaultOutputFormat(this->map, of->getName().toStdString().c_str(),
+                                                          fullyQualifiedDriver.toStdString().c_str());
+
+  newMsOf->mimetype  = strdup(of->getMimeType().toStdString().c_str());
+  newMsOf->extension = strdup(of->getExtension().toStdString().c_str());
+  newMsOf->imagemode = of->getImageMode();
+  newMsOf->transparent = of->getTransparent();
+  // add format options
+  QHash<QString,QString> fmtOpts = of->getFormatOptions();
+  QStringList fmtKeys = fmtOpts.keys();
+  for (int i = 0 ; i < fmtKeys.size(); ++i) {
+    msSetOutputFormatOption(newMsOf,
+                            fmtKeys[i].toStdString().c_str(),
+                            fmtOpts[fmtKeys[i]].toStdString().c_str());
+  }
+
+
+}
+
+QString MapfileParser::getDefaultOutputFormat() const {
+  if (! this->map)
+    return QString();
+  return QString(this->map->imagetype);
 }
 
 void MapfileParser::setDefaultOutputFormat(QString const & of) {
-  // see above: msSelectOutputFormat()
-
+  if (! this->map)
+    return;
+  if (this->map->imagetype) {
+    free(this->map->imagetype);
+  }
+  this->map->imagetype = strdup(of.toStdString().c_str());
 }
 
 void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr, int geomType) {
