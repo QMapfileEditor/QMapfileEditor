@@ -398,24 +398,29 @@ void MapSettings::saveMapSettings() {
 // slots
 
 void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
+  OutputFormatsModel * mdl =  (OutputFormatsModel *) this->outputFormatsMapper->model();
+  QModelIndex curIdx = ui->mf_outputformat_list->currentIndex();
+  OutputFormat * fmt = mdl->getOutputFormat(curIdx);
 
+  // save
   if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::AcceptRole) {
-      return;
+    fmt->setName(ui->mf_outputformat_name->text());
+    fmt->setDriver(ui->mf_outputformat_driver->currentText());
+    fmt->setExtension(ui->mf_outputformat_extension->text());
+    fmt->setImageMode(ui->mf_outputformat_imagemode->currentIndex());
+    fmt->setMimeType(ui->mf_outputformat_mimetype->text());
+    // TODO: saves the of options
+    return;
   }
   // Abort (using "Discard" instead ?)
   else if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::RejectRole) {
-      // removes the outputformat if it was just created
-      // by the user (no existence in the mapfile)
-      OutputFormatsModel * mdl =  (OutputFormatsModel *) this->outputFormatsMapper->model();
-      QModelIndex curIdx = ui->mf_outputformat_list->currentIndex();
-      OutputFormat * fmt = mdl->getOutputFormat(curIdx);
-      if (fmt->getState() == OutputFormat::ADDED)
-        mdl->removeOutputFormat(curIdx);
+    if (fmt->getState() == OutputFormat::ADDED)
+      mdl->removeOutputFormat(curIdx);
 
-      this->ui->mf_outputformat_list->clearSelection();
-      this->reinitOutputFormatForm();
-      this->toggleOutputFormatsWidgets(false);
-      return;
+    this->ui->mf_outputformat_list->clearSelection();
+    this->reinitOutputFormatForm();
+    this->toggleOutputFormatsWidgets(false);
+    return;
   }
 }
 
