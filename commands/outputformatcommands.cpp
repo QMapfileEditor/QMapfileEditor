@@ -28,6 +28,8 @@
 
 #include "outputformatcommands.h"
 
+/** related to adding a new Output Format */
+
 AddNewOutputFormatCommand::AddNewOutputFormatCommand(OutputFormat *newFormat, MapfileParser *parser, QUndoCommand *parent)
      : QUndoCommand(parent), newFormat(newFormat), parser(parser)
 {
@@ -42,4 +44,47 @@ void AddNewOutputFormatCommand::undo(void) {
 void AddNewOutputFormatCommand::redo(void) {
   parser->addOutputFormat(newFormat);
 }
+
+/** related to removing an Output Format */
+
+RemoveOutputFormatCommand::RemoveOutputFormatCommand(OutputFormat *fmtToRemove, MapfileParser *parser, QUndoCommand *parent)
+     : QUndoCommand(parent), fmtToRemove(fmtToRemove), parser(parser)
+{
+  setText(QObject::tr("Remove outputformat '%1'").arg(fmtToRemove->getName()));
+  parser->removeOutputFormat(fmtToRemove);
+}
+
+void RemoveOutputFormatCommand::undo(void) {
+  // Note: What if a command adds a fmt which has the same name ?
+  parser->addOutputFormat(fmtToRemove);
+}
+
+void RemoveOutputFormatCommand::redo(void) {
+  parser->removeOutputFormat(fmtToRemove);
+}
+
+/** related to modifying an existing Output Format */
+
+UpdateOutputFormatCommand::UpdateOutputFormatCommand(OutputFormat *fmtToUpdate, MapfileParser *parser, QUndoCommand *parent)
+     : QUndoCommand(parent), fmtToUpdate(fmtToUpdate), parser(parser)
+{
+  originalFmt = parser->getOutputFormat(fmtToUpdate->getOriginalName());
+  setText(QObject::tr("Update outputformat '%1'").arg(fmtToUpdate->getName()));
+  parser->updateOutputFormat(fmtToUpdate);
+}
+
+void UpdateOutputFormatCommand::undo(void) {
+  // Note: What if a command adds a fmt which has the same name ?
+  parser->updateOutputFormat(originalFmt);
+}
+
+void UpdateOutputFormatCommand::redo(void) {
+  parser->updateOutputFormat(fmtToUpdate);
+}
+
+UpdateOutputFormatCommand::~UpdateOutputFormatCommand() {
+  delete originalFmt;
+}
+
+
 

@@ -45,5 +45,31 @@ class AddNewOutputFormatCommand : public QUndoCommand {
    MapfileParser * parser;
 };
 
+class RemoveOutputFormatCommand : public QUndoCommand {
+
+ public:
+   RemoveOutputFormatCommand(OutputFormat * fmtToRemove, MapfileParser * parser, QUndoCommand *parent = 0);
+   void undo();
+   void redo();
+
+ private:
+   OutputFormat * fmtToRemove;
+   MapfileParser * parser;
+};
+
+class UpdateOutputFormatCommand : public QUndoCommand {
+
+ public:
+   UpdateOutputFormatCommand(OutputFormat * fmtToUpdate, MapfileParser * parser, QUndoCommand *parent = 0);
+   ~UpdateOutputFormatCommand();
+   void undo();
+   void redo();
+
+ private:
+   OutputFormat * fmtToUpdate, * originalFmt;
+   MapfileParser * parser;
+};
+
+
 
 #endif // OUTPUTFORMATCOMMANDS_H
