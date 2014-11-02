@@ -109,6 +109,7 @@ class MapSettings : public QDialog
       void removeOgcMetadatas();
       void removeOutputFormat();
       void setImageColor();
+      void switchProjectionMode();
 
  private:
       Ui::MapSettings * ui;

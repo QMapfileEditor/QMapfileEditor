@@ -72,7 +72,6 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_extent_left->setText(QString::number(this->mapfile->getMapExtentMinX()));
 
     //Projection
-    //TODO: add two slot to manage change of projection mode (proj/wkt vs epsg)
     if((this->mapfile->getMapProjection().startsWith(QString("epsg"))) || (this->mapfile->getMapProjection().startsWith(QString("+init=")))) {
         ui->mf_map_projection_btproj->setChecked(false);
         ui->mf_map_projection_btepsg->setChecked(true);
@@ -84,6 +83,9 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
         ui->mf_map_projection_btepsg->setChecked(false);
         ui->mf_map_projection_info->setEnabled(false);
     }
+    //Slot to manage change of projection mode (proj/wkt vs epsg)
+    this->connect(ui->mf_map_projection_btproj, SIGNAL(clicked()), SLOT(switchProjectionMode()));
+    this->connect(ui->mf_map_projection_btepsg, SIGNAL(clicked()), SLOT(switchProjectionMode()));
     ui->mf_map_projection->addItem(this->mapfile->getMapProjection());
 
     /** Path tab **/
@@ -414,6 +416,17 @@ void MapSettings::saveMapSettings() {
 void MapSettings::openProjectionInfo() {
     QString epsgCode = ui->mf_map_projection->currentText().replace(QString("+init=epsg:"), QString(""));
     QDesktopServices::openUrl(QUrl("http://epsg.io/"+epsgCode, QUrl::StrictMode));
+}
+
+void MapSettings::switchProjectionMode() {
+    //if proj4 is checked then ...
+    if(ui->mf_map_projection_btproj->isChecked()) {
+        //look for wkt string from epsg code
+        ui->mf_map_projection_btlink->setEnabled(false);
+    } else if (ui->mf_map_projection_btepsg->isChecked()) {
+        //look for epsg from wkt string
+        ui->mf_map_projection_btlink->setEnabled(true);
+    }
 }
 
 void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
