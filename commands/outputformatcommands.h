@@ -70,6 +70,16 @@ class UpdateOutputFormatCommand : public QUndoCommand {
    MapfileParser * parser;
 };
 
+class SetDefaultOutputFormatCommand : public QUndoCommand {
 
+ public:
+   SetDefaultOutputFormatCommand(QString const & newDefaultOf, MapfileParser * parser, QUndoCommand *parent = 0);
+   void undo();
+   void redo();
+
+ private:
+   QString oldDefaultOf, newDefaultOf;
+   MapfileParser * parser;
+};
 
 #endif // OUTPUTFORMATCOMMANDS_H

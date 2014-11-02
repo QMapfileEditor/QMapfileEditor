@@ -51,6 +51,9 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
       ui->mf_map_status_off->setChecked(true);
       ui->mf_map_status_on->setChecked(false);
     }
+    // default output format
+    ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
+    ui->mf_map_outputformat->setCurrentIndex(MapfileParser::imageTypes.indexOf(mf->getDefaultOutputFormat()));
     //MapSizes
     ui->mf_map_size_width->setValue(this->mapfile->getMapWidth());
     ui->mf_map_size_height->setValue(this->mapfile->getMapHeight());
@@ -181,7 +184,6 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
 
-    ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
     ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
 
     this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
@@ -261,7 +263,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     if((QFileInfo (this->mapfile->getConfigOption("MS_ERRORFILE"))).isAbsolute()) {
       ui->mf_map_config_errorFile_relative->setChecked(false);
     }
-    
+
     ui->mf_map_config_missingdata->addItems(MapfileParser::missingData);
     if (! this->mapfile->getConfigOption("ON_MISSING_DATA").isEmpty()) {
         ui->mf_map_config_missingdata->setCurrentIndex(MapfileParser::missingData.lastIndexOf(this->mapfile->getConfigOption("ON_MISSING_DATA")));
@@ -301,8 +303,11 @@ void MapSettings::saveMapSettings() {
       ((MainWindow *) parent())->pushUndoStack(new SetMapUnitsCommand(current_unit, this->mapfile));
     }
 
-    //TODO: default outputformat ?
-    //this->mapfile->setOutputformat(ui->mf_map_ouputformat->currentText());
+    // default outputformat (either mimetype or format name)
+    if (this->mapfile->getDefaultOutputFormat() != ui->mf_map_outputformat->currentText()) {
+      ((MainWindow *) parent())->pushUndoStack(new SetDefaultOutputFormatCommand(ui->mf_map_outputformat->currentText(), this->mapfile));
+      //this->mapfile->setDefaultOutputFormat(ui->mf_map_outputformat->currentText());
+    }
 
     //projection
     if (this->mapfile->getMapProjection() != ui->mf_map_projection->currentText()) {
