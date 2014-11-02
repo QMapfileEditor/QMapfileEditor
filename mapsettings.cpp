@@ -428,8 +428,8 @@ void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
     KeyValueModel * fmtOptsMdl = ((KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model());
     fmt->setFormatOptions(fmtOptsMdl->getData());
   }
-  // Abort (using "Discard" instead ?)
-  else if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::RejectRole) {
+  // Discard
+  else if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::DestructiveRole) {
     if (fmt->getState() == OutputFormat::ADDED)
       mdl->removeOutputFormat(curIdx);
   }
