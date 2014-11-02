@@ -19,6 +19,7 @@ SOURCES += \
         layersettingsraster.cpp                \
         commands/changemapnamecommand.cpp      \
         commands/changemapstatuscommand.cpp    \
+        commands/outputformatcommands.cpp      \
         commands/setanglecommand.cpp           \
         commands/setdatapatterncommand.cpp     \
         commands/setdefresolutioncommand.cpp   \
@@ -48,6 +49,7 @@ HEADERS  += \
     layersettingsraster.h                   \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
+    commands/outputformatcommands.h         \
     commands/setanglecommand.h              \
     commands/setdatapatterncommand.h        \
     commands/setdefresolutioncommand.h      \
