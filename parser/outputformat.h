@@ -41,6 +41,10 @@ class OutputFormat {
     * - ADDED: Marks the outputformat as "to be added to the mapfile". It as yet
     *   no existence outside the application,
     *
+    * - ADDED_SAVED: The outputformat has no existence into the Mapfile yet, but
+    *   has already been saved in the interface, so in further editions, it
+    *   should not be removed (from the interface).
+    *
     * - REMOVED: Marks the outputformat as "to be removed from the mapfile".
     *   This means that the outputformat comes from the mapfile but has to be
     *   removed when the user will finish with editing ; note: this should not
@@ -55,7 +59,7 @@ class OutputFormat {
     *   not been modified by the user yet.
     *
     */
-   enum State { ADDED, REMOVED, MODIFIED, UNCHANGED };
+   enum State { ADDED, ADDED_SAVED, REMOVED, MODIFIED, UNCHANGED };
 
    OutputFormat(const QString & name = 0,
                 const QString & mimeType = 0,

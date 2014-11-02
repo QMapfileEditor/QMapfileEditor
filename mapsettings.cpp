@@ -427,6 +427,9 @@ void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
     fmt->setTransparent(ui->mf_outputformat_transparent_on->isChecked());
     KeyValueModel * fmtOptsMdl = ((KeyValueModel *) this->ui->mf_outputformat_formatoptions_list->model());
     fmt->setFormatOptions(fmtOptsMdl->getData());
+    if (fmt->getState() == OutputFormat::ADDED) {
+      fmt->setState(OutputFormat::ADDED_SAVED);
+    }
   }
   // Discard
   else if (ui->mf_outputformat_form_buttons->buttonRole(b) == QDialogButtonBox::DestructiveRole) {

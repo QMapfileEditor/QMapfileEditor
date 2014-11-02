@@ -247,7 +247,8 @@ void OutputFormatsModel::removeOutputFormat(const QModelIndex & index) {
   OutputFormat *toBeRemoved = entries.takeAt(index.row());
   // if the format has only an existence into the application
   // no need to mark it as to be removed later in the mapfile.
-  if (toBeRemoved->getState() == OutputFormat::ADDED) {
+  if ((toBeRemoved->getState() == OutputFormat::ADDED)
+      ||(toBeRemoved->getState() == OutputFormat::ADDED_SAVED)) {
     delete toBeRemoved;
   } else {
     removedEntries.append(toBeRemoved);
