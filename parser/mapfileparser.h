@@ -29,9 +29,10 @@
 #ifndef MAPFILEPARSER_H
 #define MAPFILEPARSER_H
 
+#include <QColor>
 #include <QHash>
-#include <QStringList>
 #include <QList>
+#include <QStringList>
 
 #include <string>
 #include <iostream>
@@ -145,8 +146,8 @@ class MapfileParser
   float getAngle();
   void setAngle(const float & angle);
 
-  QList<int> getImageColor();
-  void setImageColor(const int & red, const int & green, const int & blue);
+  QColor getImageColor() const;
+  void setImageColor(QColor const &);
 
   bool isLoaded();
   bool isNew();

@@ -22,6 +22,7 @@ SOURCES += \
         commands/setanglecommand.cpp           \
         commands/setdefresolutioncommand.cpp   \
         commands/setfontsetcommand.cpp         \
+        commands/setimagecolorcommand.cpp      \
         commands/setmapdebugcommand.cpp        \
         commands/setmapextentcommand.cpp       \
         commands/setmapmaxsizecommand.cpp      \
@@ -49,6 +50,7 @@ HEADERS  += \
     commands/setanglecommand.h              \
     commands/setdefresolutioncommand.h      \
     commands/setfontsetcommand.h            \
+    commands/setimagecolorcommand.h         \
     commands/setmapdebugcommand.h           \
     commands/setmapextentcommand.h          \
     commands/setmapmaxsizecommand.h         \

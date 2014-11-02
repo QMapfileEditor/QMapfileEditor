@@ -131,8 +131,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_defresolution->setValue(this->mapfile->getDefResolution());
     ui->mf_map_angle_slider->setValue(this->mapfile->getAngle());
 
-    QList<int> colorList = this->mapfile->getImageColor();
-    QColor curColor = QColor(colorList.at(0), colorList.at(1), colorList.at(2));
+    QColor curColor = this->mapfile->getImageColor();
     ui->mf_map_imagecolor->setPalette(QPalette(curColor));
 
     ui->mf_map_angle->setValue(this->mapfile->getAngle());
@@ -359,15 +358,16 @@ void MapSettings::saveMapSettings() {
       ((MainWindow *) parent())->pushUndoStack(new SetAngleCommand(ui->mf_map_angle->value(), this->mapfile));
     }
 
-
-    // TODO
     QColor imageColor = ui->mf_map_imagecolor->palette().color(QWidget::backgroundRole());
-    this->mapfile->setImageColor(imageColor.red(), imageColor.green(), imageColor.blue());
-    
+    if (this->mapfile->getImageColor() != imageColor) {
+      ((MainWindow *) parent())->pushUndoStack(new SetImageColorCommand(imageColor, this->mapfile));
+    }
+
     if (this->mapfile->getTemplatePattern() != ui->mf_map_templatepattern->text()) {
      ((MainWindow *) parent())->pushUndoStack(new SetTemplatePatternCommand(ui->mf_map_templatepattern->text(), this->mapfile));
     }
-    
+
+
     this->mapfile->setDataPattern(ui->mf_map_datapattern->text());
     this->mapfile->setMetadata("CGI_CONTEXT_URL", ui->mf_map_config_contexturl->text());
     this->mapfile->setMetadata("MS_ENCRYPTION_KEY", ui->mf_map_config_encryption->text());
