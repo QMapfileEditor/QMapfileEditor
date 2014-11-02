@@ -368,15 +368,33 @@ void MapSettings::saveMapSettings() {
     }
 
 
+    // TODO
     this->mapfile->setDataPattern(ui->mf_map_datapattern->text());
-    this->mapfile->setMetadata("CGI_CONTEXT_URL", ui->mf_map_config_contexturl->text());
-    this->mapfile->setMetadata("MS_ENCRYPTION_KEY", ui->mf_map_config_encryption->text());
-    if (ui->mf_map_config_squarepixel_on->isChecked()) {
-        this->mapfile->setMetadata("MS_NONSQUARE", "ON");
-    } else if (ui->mf_map_config_squarepixel_off->isChecked()) {
-        this->mapfile->setMetadata("MS_NONSQUARE", "OFF");
+
+    if (ui->mf_map_config_contexturl->text() != this->mapfile->getMetadata("CGI_CONTEXT_URL")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("CGI_CONTEXT_URL",
+                                                                      ui->mf_map_config_contexturl->text(), this->mapfile));
     }
-    this->mapfile->setMetadata("PROJ_LIB", ui->mf_map_config_projlib->text());
+
+    if (ui->mf_map_config_encryption->text() != this->mapfile->getMetadata("MS_ENCRYPTION_KEY")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("MS_ENCRYPTION_KEY",
+                                                                      ui->mf_map_config_encryption->text(), this->mapfile));
+    }
+
+    if (ui->mf_map_config_squarepixel_on->isChecked()) {
+      if (this->mapfile->getMetadata("MS_NONSQUARE") != "ON") {
+        ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("MS_NONSQUARE", "ON", this->mapfile));
+      }
+    } else if (ui->mf_map_config_squarepixel_off->isChecked()) {
+       if (this->mapfile->getMetadata("MS_NONSQUARE") != "OFF") {
+        ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("MS_NONSQUARE", "OFF", this->mapfile));
+      }
+    }
+
+    if (ui->mf_map_config_projlib->text() != this->mapfile->getMetadata("PROJ_LIB")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("PROJ_LIB",
+                                                                      ui->mf_map_config_projlib->text(), this->mapfile));
+    }
 
     /** Outputformat tab **/
 
