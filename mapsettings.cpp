@@ -65,46 +65,26 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_extent_right->setValidator(new QDoubleValidator(this));
     ui->mf_map_extent_top->setValidator(new QDoubleValidator(this));
 
-
-    /** Output formats tab **/
-
-    this->outputFormatsMapper = new QDataWidgetMapper(this);
-    OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
-    outputFormatsModel->setEntries(this->mapfile->getOutputFormats());
-    ui->mf_outputformat_list->setModel(outputFormatsModel);
-    for (int i = 1; i < outputFormatsModel->columnCount(); i++)
-      ui->mf_outputformat_list->hideColumn(i);
-    this->outputFormatsMapper->setModel(outputFormatsModel);
-    this->outputFormatsMapper->addMapping(ui->mf_outputformat_name,      OutputFormatsModel::Name);
-    this->outputFormatsMapper->addMapping(ui->mf_outputformat_driver,    OutputFormatsModel::Driver);
-    this->outputFormatsMapper->addMapping(ui->mf_gdal_ogr_driver,        OutputFormatsModel::GdalDriver);
-    this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
-    this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
-    this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
-    this->ui->mf_outputformat_formatoptions_list->setModel(new KeyValueModel(this));
-    this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
-    this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
-
-    ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
-    ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
-
-    this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
-    this->connect(ui->mf_outputformat_list, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
-    this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
-    this->connect(ui->outputformat_delete, SIGNAL(clicked()), SLOT(removeOutputFormat()));
-    this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
-    ui->mf_map_projection->addItem(this->mapfile->getMapProjection());
-    this->connect(ui->mf_outputformat_options_add, SIGNAL(clicked()), SLOT(addFormatOption()));
-    this->connect(ui->mf_outputformat_options_del, SIGNAL(clicked()), SLOT(removeFormatOptions()));
-    // accept / reject outputformat modifications
-    this->connect(ui->mf_outputformat_form_buttons, SIGNAL(clicked(QAbstractButton *)), SLOT(handleOutputFormatFormClick(QAbstractButton *)));
-
-
     //Extent
     ui->mf_map_extent_top->setText(QString::number(this->mapfile->getMapExtentMaxY()));
     ui->mf_map_extent_bottom->setText(QString::number(this->mapfile->getMapExtentMinY()));
     ui->mf_map_extent_right->setText(QString::number(this->mapfile->getMapExtentMaxX()));
     ui->mf_map_extent_left->setText(QString::number(this->mapfile->getMapExtentMinX()));
+
+    //Projection
+    //TODO: add two slot to manage change of projection mode (proj/wkt vs epsg)
+    if((this->mapfile->getMapProjection().startsWith(QString("epsg"))) || (this->mapfile->getMapProjection().startsWith(QString("+init=")))) {
+        ui->mf_map_projection_btproj->setChecked(false);
+        ui->mf_map_projection_btepsg->setChecked(true);
+        ui->mf_map_projection_btlink->setEnabled(true);
+        //add a slot to open an url to http://epsg.io website
+        this->connect(ui->mf_map_projection_btlink, SIGNAL(clicked()), SLOT(openProjectionInfo()));
+    } else {
+        ui->mf_map_projection_btproj->setChecked(true);
+        ui->mf_map_projection_btepsg->setChecked(false);
+        ui->mf_map_projection_info->setEnabled(false);
+    }
+    ui->mf_map_projection->addItem(this->mapfile->getMapProjection());
 
     /** Path tab **/
     //connect relatif path for shapepath, symbolset and fontset
@@ -181,7 +161,41 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
       ui->mf_map_config_projlib_relative->setChecked(false);
     }
     
-    /** OGC Standard / inspire tab **/
+    /** Output formats tab **/
+
+    this->outputFormatsMapper = new QDataWidgetMapper(this);
+    OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
+    outputFormatsModel->setEntries(this->mapfile->getOutputFormats());
+    ui->mf_outputformat_list->setModel(outputFormatsModel);
+    for (int i = 1; i < outputFormatsModel->columnCount(); i++)
+      ui->mf_outputformat_list->hideColumn(i);
+    this->outputFormatsMapper->setModel(outputFormatsModel);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_name,      OutputFormatsModel::Name);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_driver,    OutputFormatsModel::Driver);
+    this->outputFormatsMapper->addMapping(ui->mf_gdal_ogr_driver,        OutputFormatsModel::GdalDriver);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_extension, OutputFormatsModel::Extension);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_imagemode, OutputFormatsModel::ImageMode);
+    this->outputFormatsMapper->addMapping(ui->mf_outputformat_mimetype,  OutputFormatsModel::MimeType);
+    this->ui->mf_outputformat_formatoptions_list->setModel(new KeyValueModel(this));
+    this->ui->mf_outputformat_formatoptions_list->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->ui->mf_outputformat_formatoptions_list->verticalHeader()->hide();
+
+    ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
+    ui->mf_outputformat_driver->addItems(MapfileParser::drivers);
+
+    this->connect(ui->outputformat_new, SIGNAL(clicked()), SLOT(addNewOutputFormat()));
+    this->connect(ui->mf_outputformat_list, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(refreshOutputFormatTab(const QModelIndex &)));
+    this->connect(ui->outputformat_edit, SIGNAL(clicked()), SLOT(refreshOutputFormatTab()));
+    this->connect(ui->outputformat_delete, SIGNAL(clicked()), SLOT(removeOutputFormat()));
+    this->connect(ui->mf_outputformat_driver, SIGNAL(currentIndexChanged(const QString &)), SLOT(refreshGdalOgrDriverCombo(const QString &)));
+
+    this->connect(ui->mf_outputformat_options_add, SIGNAL(clicked()), SLOT(addFormatOption()));
+    this->connect(ui->mf_outputformat_options_del, SIGNAL(clicked()), SLOT(removeFormatOptions()));
+    // accept / reject outputformat modifications
+    this->connect(ui->mf_outputformat_form_buttons, SIGNAL(clicked(QAbstractButton *)), SLOT(handleOutputFormatFormClick(QAbstractButton *)));
+
+
+    /** Web Services / inspire tab **/
 
     //connect
     this->connect(ui->mf_ogc_enable, SIGNAL(toggled(bool)), SLOT(enableOgcStandardFrame(bool)));
@@ -397,6 +411,10 @@ void MapSettings::saveMapSettings() {
 
 
 // slots
+void MapSettings::openProjectionInfo() {
+    QString epsgCode = ui->mf_map_projection->currentText().replace(QString("+init=epsg:"), QString(""));
+    QDesktopServices::openUrl(QUrl("http://epsg.io/"+epsgCode, QUrl::StrictMode));
+}
 
 void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
 

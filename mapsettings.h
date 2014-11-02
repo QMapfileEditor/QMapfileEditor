@@ -32,6 +32,7 @@
 #include <QAbstractListModel>
 #include <QColorDialog>
 #include <QDataWidgetMapper>
+#include <QDesktopServices>
 #include <QDialog>
 #include <QDir>
 #include <QFileDialog>
@@ -99,6 +100,7 @@ class MapSettings : public QDialog
       void enableRelativePathShapepath();
       void enableRelativePathSymbolset();
       void handleOutputFormatFormClick(QAbstractButton *);
+      void openProjectionInfo();
       void refreshGdalOgrDriverCombo(const QString &);
       void refreshOutputFormatTab(const QModelIndex &);
       void refreshOutputFormatTab(void);
