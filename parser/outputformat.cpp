@@ -131,6 +131,10 @@ QList<OutputFormat *> const & OutputFormatsModel::getEntries(void) const {
   return entries;
 }
 
+QList<OutputFormat *> const & OutputFormatsModel::getRemovedEntries(void) const {
+  return removedEntries;
+}
+
 OutputFormat * OutputFormatsModel::getOutputFormat(const QModelIndex &index) const {
   if ((index.row() < 0) || index.row() > entries.size())
     return NULL;

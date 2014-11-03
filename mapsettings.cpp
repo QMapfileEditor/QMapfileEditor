@@ -405,7 +405,27 @@ void MapSettings::saveMapSettings() {
 
     /** Outputformat tab **/
 
-    // TODO
+    // TODO: it might be interesting to save the model as member variable
+    // of the class instead of having to cast it all along the code.
+    OutputFormatsModel * fmtMdl = (OutputFormatsModel *) (ui->mf_outputformat_list->model());
+
+    QList<OutputFormat *> removedEntries = fmtMdl->getRemovedEntries();
+
+    for (int i = 0 ; i < removedEntries.size(); ++i) {
+      ((MainWindow *) parent())->pushUndoStack(new RemoveOutputFormatCommand(removedEntries[i], this->mapfile));
+    }
+
+    QList<OutputFormat *> entries = fmtMdl->getEntries();
+
+    for (int i = 0; i < entries.size(); ++i) {
+     if (entries[i]->getState() == OutputFormat::UNCHANGED)
+       continue;
+     qDebug() << entries.size() << " to be created/changed. [of]";
+     if ((entries[i]->getState() == OutputFormat::ADDED) || (entries[i]->getState() == OutputFormat::ADDED_SAVED))
+       ((MainWindow *) parent())->pushUndoStack(new AddNewOutputFormatCommand(entries[i], this->mapfile));
+     else if (entries[i]->getState() == OutputFormat::MODIFIED)
+       ((MainWindow *) parent())->pushUndoStack(new UpdateOutputFormatCommand(entries[i], this->mapfile));
+    }
 
     /** OGC tab **/
 
