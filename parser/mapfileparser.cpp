@@ -849,6 +849,9 @@ void MapfileParser::addOutputFormat(OutputFormat const * of) {
                             fmtOpts[fmtKeys[i]].toStdString().c_str());
   }
 
+  // No idea why, but when calling msCreateDefaultOutputFormat(), the
+  // created output format is considered "outside" of the mapfile.
+  newMsOf->inmapfile = MS_TRUE;
 }
 
 QString MapfileParser::getDefaultOutputFormat() const {
