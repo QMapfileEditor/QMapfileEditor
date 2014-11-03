@@ -420,7 +420,6 @@ void MapSettings::saveMapSettings() {
     for (int i = 0; i < entries.size(); ++i) {
      if (entries[i]->getState() == OutputFormat::UNCHANGED)
        continue;
-     qDebug() << entries.size() << " to be created/changed. [of]";
      if ((entries[i]->getState() == OutputFormat::ADDED) || (entries[i]->getState() == OutputFormat::ADDED_SAVED))
        ((MainWindow *) parent())->pushUndoStack(new AddNewOutputFormatCommand(entries[i], this->mapfile));
      else if (entries[i]->getState() == OutputFormat::MODIFIED)
@@ -504,6 +503,9 @@ void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
     fmt->setFormatOptions(fmtOptsMdl->getData());
     if (fmt->getState() == OutputFormat::ADDED) {
       fmt->setState(OutputFormat::ADDED_SAVED);
+    }
+    else if (fmt->getState() == OutputFormat::UNCHANGED) {
+      fmt->setState(OutputFormat::MODIFIED);
     }
   }
   // Discard
