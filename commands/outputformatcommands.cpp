@@ -87,4 +87,21 @@ UpdateOutputFormatCommand::~UpdateOutputFormatCommand() {
 }
 
 
+/**  related to setting the default outputformat */
+
+SetDefaultOutputFormatCommand::SetDefaultOutputFormatCommand(QString const & s, MapfileParser *parser, QUndoCommand *parent)
+     : QUndoCommand(parent), newDefaultOf(s), parser(parser)
+{
+  oldDefaultOf = parser->getDefaultOutputFormat();
+  setText(QObject::tr("set default output format to '%1'").arg(newDefaultOf));
+  parser->setDefaultOutputFormat(newDefaultOf);
+}
+
+void SetDefaultOutputFormatCommand::undo(void) {
+  parser->setDefaultOutputFormat(oldDefaultOf);
+}
+
+void SetDefaultOutputFormatCommand::redo(void) {
+  parser->setDefaultOutputFormat(newDefaultOf);
+}
 
