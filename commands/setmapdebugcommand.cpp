@@ -34,7 +34,6 @@ SetMapDebugCommand::SetMapDebugCommand(int newDebug, MapfileParser *parser, QUnd
   oldDebug = parser->getDebug();
 
    setText(QObject::tr("change map debug level to '%1'").arg(newDebug));
-   parser->setDebug(newDebug);
 }
 
 void SetMapDebugCommand::undo(void) {

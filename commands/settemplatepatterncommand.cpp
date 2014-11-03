@@ -34,7 +34,6 @@ SetTemplatePatternCommand::SetTemplatePatternCommand(QString newPattern, Mapfile
    oldPattern = parser->getTemplatePattern();
 
    setText(QObject::tr("change template pattern to '%1'").arg(this->newPattern));
-   parser->setTemplatePattern(this->newPattern);
 }
 
 void SetTemplatePatternCommand::undo(void) {

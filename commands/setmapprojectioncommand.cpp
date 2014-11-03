@@ -34,7 +34,6 @@ SetMapProjectionCommand::SetMapProjectionCommand(QString projection, MapfilePars
    oldProjection = parser->getMapProjection();
 
    setText(QObject::tr("change projection to '%1'").arg(this->newProjection));
-   parser->setMapProjection(this->newProjection);
 }
 
 void SetMapProjectionCommand::undo(void) {

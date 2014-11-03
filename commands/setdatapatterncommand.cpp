@@ -34,7 +34,6 @@ SetDataPatternCommand::SetDataPatternCommand(QString newDataPattern, MapfilePars
    oldDataPattern = parser->getDataPattern();
 
    setText(QObject::tr("change data pattern to '%1'").arg(this->newDataPattern));
-   parser->setDataPattern(this->newDataPattern);
 }
 
 void SetDataPatternCommand::undo(void) {

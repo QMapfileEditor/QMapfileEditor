@@ -35,7 +35,6 @@ SetMapUnitsCommand::SetMapUnitsCommand(int newUnits, MapfileParser *parser, QUnd
 
 
    setText(QObject::tr("change map units to '%1'").arg(newUnits));
-   parser->setMapUnits(newUnits);
 }
 
 void SetMapUnitsCommand::undo(void) {

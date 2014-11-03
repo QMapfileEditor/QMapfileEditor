@@ -39,7 +39,6 @@ SetMapExtentCommand::SetMapExtentCommand(double x1, double y1, double x2, double
 
 
    setText(QObject::tr("change map extent to '%1:%2:%3:%4'").arg(x1).arg(y1).arg(x2).arg(y2));
-   parser->setMapExtent(x1,y1,x2,y2);
 }
 
 void SetMapExtentCommand::undo(void) {

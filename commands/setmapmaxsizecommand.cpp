@@ -34,7 +34,6 @@ SetMapMaxSizeCommand::SetMapMaxSizeCommand(int newMaxSize, MapfileParser *parser
   oldMaxSize = parser->getMapMaxsize();
 
    setText(QObject::tr("change map max size to '%1'").arg(newMaxSize));
-   parser->setMapMaxsize(newMaxSize);
 }
 
 void SetMapMaxSizeCommand::undo(void) {

@@ -35,7 +35,6 @@ SetMapSizeCommand::SetMapSizeCommand(int newWidth, int newHeight, MapfileParser 
    oldHeight = parser->getMapHeight();
 
    setText(QObject::tr("change map size to '%1:%2'").arg(newWidth).arg(newHeight));
-   parser->setMapSize(newWidth, newHeight);
 }
 
 void SetMapSizeCommand::undo(void) {

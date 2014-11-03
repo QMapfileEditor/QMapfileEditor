@@ -34,7 +34,6 @@ SetMetadataCommand::SetMetadataCommand(QString key, QString value, MapfileParser
    oldValue = parser->getMetadata(key);
 
    setText(QObject::tr("change metadata[%1] to '%2'").arg(this->key).arg(this->newValue));
-   parser->setMetadata(this->key, this->newValue);
 }
 
 void SetMetadataCommand::undo(void) {

@@ -33,7 +33,6 @@ ChangeMapStatusCommand::ChangeMapStatusCommand(bool newStatus, MapfileParser *pa
 {
    oldStatus = parser->getMapStatus();
    setText(QObject::tr("change map status to '%1'").arg(this->newStatus));
-   parser->setMapStatus(this->newStatus);
 }
 
 void ChangeMapStatusCommand::undo(void) {

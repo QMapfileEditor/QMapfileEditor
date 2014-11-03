@@ -34,7 +34,6 @@ SetShapePathCommand::SetShapePathCommand(QString newShapePath, MapfileParser *pa
    oldShapePath = parser->getShapepath();
 
    setText(QObject::tr("change shapepath to '%1'").arg(this->newShapePath));
-   parser->setShapepath(this->newShapePath);
 }
 
 void SetShapePathCommand::undo(void) {
