@@ -454,8 +454,8 @@ void MainWindow::saveAsMapfile()
 
 void MainWindow::showInfo(const QString & message)
 {
-   //TODO: if statusBar is on so:
-   ui->statusbar->showMessage(message);
+   if (ui->statusbar->isEnabled() )
+     ui->statusbar->showMessage(message);
    return;
 }
 
