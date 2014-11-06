@@ -33,6 +33,7 @@
 #include <string>
 #include <iostream>
 
+#include <QDebug>
 
 #include "mapfileparser.h"
 
@@ -825,9 +826,15 @@ void MapfileParser::addOutputFormat(OutputFormat const * of) {
     fullyQualifiedDriver += "/" + of->getGdalDriver();
   }
 
-  outputFormatObj * newMsOf = msCreateDefaultOutputFormat(this->map, of->getName().toStdString().c_str(),
-                                                          fullyQualifiedDriver.toStdString().c_str());
+  outputFormatObj * newMsOf = msCreateDefaultOutputFormat(this->map,
+                                                          fullyQualifiedDriver.toStdString().c_str(),
+                                                          of->getName().toStdString().c_str());
 
+  // should not happen
+  if (! newMsOf) {
+    qDebug() << "newly created output format is NULL, should not happen (mapserver side)";
+    return;
+  }
   newMsOf->mimetype  = strdup(of->getMimeType().toStdString().c_str());
   newMsOf->extension = strdup(of->getExtension().toStdString().c_str());
   newMsOf->imagemode = of->getImageMode();
@@ -836,12 +843,15 @@ void MapfileParser::addOutputFormat(OutputFormat const * of) {
   QHash<QString,QString> fmtOpts = of->getFormatOptions();
   QStringList fmtKeys = fmtOpts.keys();
   for (int i = 0 ; i < fmtKeys.size(); ++i) {
+
     msSetOutputFormatOption(newMsOf,
                             fmtKeys[i].toStdString().c_str(),
                             fmtOpts[fmtKeys[i]].toStdString().c_str());
   }
 
-
+  // No idea why, but when calling msCreateDefaultOutputFormat(), the
+  // created output format is considered "outside" of the mapfile.
+  newMsOf->inmapfile = MS_TRUE;
 }
 
 QString MapfileParser::getDefaultOutputFormat() const {
@@ -943,7 +953,7 @@ QStringList MapfileParser::ogcMapOptions = QStringList() << "" << "ows_http_max_
             "wfs_maxfeatures" << "wfs_namespace_prefix" << "wfs_namespace_uri" <<
             "wfs_service_onlineresource";
 
-QStringList MapfileParser::drivers = QStringList() << "" << "AGG/PNG" <<
+QStringList MapfileParser::drivers = QStringList() << "AGG/PNG" <<
                    "AGG/JPEG" <<  "GD/GIF" << "GD/PNG" << "TEMPLATE" << "GDAL"<< "OGR";
 
 QStringList MapfileParser::defaultImageModes = QStringList() << "" << "RGB" << "RGBA" ;

@@ -34,7 +34,6 @@ SetDefResolutionCommand::SetDefResolutionCommand(double newDefResolution, Mapfil
   oldDefResolution = parser->getDefResolution();
 
    setText(QObject::tr("change def resolution to '%1'").arg(newDefResolution));
-   parser->setDefResolution(newDefResolution);
 }
 
 void SetDefResolutionCommand::undo(void) {

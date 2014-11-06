@@ -34,7 +34,6 @@ SetAngleCommand::SetAngleCommand(float newAngle, MapfileParser *parser, QUndoCom
   oldAngle = parser->getAngle();
 
   setText(QObject::tr("change map angle to '%1'").arg(newAngle));
-  parser->setAngle(newAngle);
 }
 
 void SetAngleCommand::undo(void) {

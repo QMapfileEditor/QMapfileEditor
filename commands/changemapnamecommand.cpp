@@ -34,7 +34,6 @@ ChangeMapNameCommand::ChangeMapNameCommand(QString title, MapfileParser *parser,
    oldName = parser->getMapName();
 
    setText(QObject::tr("change title to '%1'").arg(newName));
-   parser->setMapName(newName);
 }
 
 void ChangeMapNameCommand::undo(void) {

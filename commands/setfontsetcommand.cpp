@@ -34,7 +34,6 @@ SetFontSetCommand::SetFontSetCommand(QString newFontSet, MapfileParser *parser, 
    oldFontSet = parser->getFontSet();
 
    setText(QObject::tr("change fontset to '%1'").arg(this->newFontSet));
-   parser->setFontSet(this->newFontSet);
 }
 
 void SetFontSetCommand::undo(void) {

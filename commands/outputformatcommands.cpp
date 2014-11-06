@@ -34,7 +34,6 @@ AddNewOutputFormatCommand::AddNewOutputFormatCommand(OutputFormat *newFormat, Ma
      : QUndoCommand(parent), newFormat(newFormat), parser(parser)
 {
   setText(QObject::tr("Create new outputformat '%1'").arg(newFormat->getName()));
-  parser->addOutputFormat(newFormat);
 }
 
 void AddNewOutputFormatCommand::undo(void) {
@@ -51,7 +50,6 @@ RemoveOutputFormatCommand::RemoveOutputFormatCommand(OutputFormat *fmtToRemove, 
      : QUndoCommand(parent), fmtToRemove(fmtToRemove), parser(parser)
 {
   setText(QObject::tr("Remove outputformat '%1'").arg(fmtToRemove->getName()));
-  parser->removeOutputFormat(fmtToRemove);
 }
 
 void RemoveOutputFormatCommand::undo(void) {
@@ -70,7 +68,6 @@ UpdateOutputFormatCommand::UpdateOutputFormatCommand(OutputFormat *fmtToUpdate, 
 {
   originalFmt = parser->getOutputFormat(fmtToUpdate->getOriginalName());
   setText(QObject::tr("Update outputformat '%1'").arg(fmtToUpdate->getName()));
-  parser->updateOutputFormat(fmtToUpdate);
 }
 
 void UpdateOutputFormatCommand::undo(void) {
@@ -94,7 +91,6 @@ SetDefaultOutputFormatCommand::SetDefaultOutputFormatCommand(QString const & s, 
 {
   oldDefaultOf = parser->getDefaultOutputFormat();
   setText(QObject::tr("set default output format to '%1'").arg(newDefaultOf));
-  parser->setDefaultOutputFormat(newDefaultOf);
 }
 
 void SetDefaultOutputFormatCommand::undo(void) {

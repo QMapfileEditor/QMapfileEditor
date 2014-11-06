@@ -34,7 +34,6 @@ SetImageColorCommand::SetImageColorCommand(QColor color, MapfileParser *parser, 
     oldColor = parser->getImageColor();
 
    setText(QObject::tr("change image color to %1").arg(color.name()));
-   parser->setImageColor(color);
 }
 
 void SetImageColorCommand::undo(void) {

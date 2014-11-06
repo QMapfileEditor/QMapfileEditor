@@ -34,7 +34,6 @@ SetResolutionCommand::SetResolutionCommand(double newMapResolution, MapfileParse
   oldMapResolution = parser->getResolution();
 
    setText(QObject::tr("change map resolution to '%1'").arg(newMapResolution));
-   parser->setResolution(newMapResolution);
 }
 
 void SetResolutionCommand::undo(void) {
