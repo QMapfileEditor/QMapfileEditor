@@ -755,6 +755,8 @@ void MapSettings::enableRelativePathShapepath() {
 
 void MapSettings::accept() {
     this->saveMapSettings();
+    // Refreshes the map view
+    ((MainWindow *) parent())->updateMapPreview();
     QDialog::accept();
 }
 void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
