@@ -377,6 +377,7 @@ void MapfileParser::removeFromMsMap(void *table, const QString &name) {
 QHash<QString, QString> MapfileParser::getConfigOptions() {
   if (! this->map)
     return QHash<QString, QString>();
+  // TODO: same remark as for metadatas
   return populateMapFromMs(& (this->map->configoptions));
 }
 
@@ -406,6 +407,8 @@ void MapfileParser::removeConfigOption(const QString & name) {
 QHash<QString, QString> MapfileParser::getMetadatas() {
   if (! this->map)
     return QHash<QString, QString>();
+  // TODO: this should be done only once, and saved
+  // into a member variable.
   return populateMapFromMs(& (this->map->web.metadata));
 }
 

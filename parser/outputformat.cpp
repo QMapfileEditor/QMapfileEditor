@@ -260,3 +260,9 @@ void OutputFormatsModel::removeOutputFormat(const QModelIndex & index) {
   }
   endResetModel();
 }
+
+// TODO: emit a signal each time the OutputFormatsModel is modified, and
+// registers the default outputformat combo to listen the changes, because the
+// list there should contain the default supported outputformats PLUS the ones
+// user-defined.
+
