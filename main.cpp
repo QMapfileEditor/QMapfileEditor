@@ -30,16 +30,26 @@
 #include <QLocale>
 #include <QTranslator>
 
+#include <stdlib.h>
+
 #include <gdal.h>
 #include <ogr_api.h>
 
 #include "mainwindow.h"
 
+extern "C" {
+  extern int msDebugInitFromEnv();
+}
+
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
 
-
+//#ifdef DEBUG
+  setenv("MS_ERRORFILE", "stdout", 1);
+  setenv("MS_DEBUGLEVEL", "4", 1);
+  msDebugInitFromEnv();
+//#endif
 
   // loading translations / qtlinguist
   QTranslator trans;
