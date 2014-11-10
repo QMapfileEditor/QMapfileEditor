@@ -265,7 +265,7 @@ void MainWindow::openMapfile()
       return;
   }
 
-  QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map)"));
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map);; XML Map file (*.xml)"));
   
   QFileInfo mapFileInfo(fileName);
   this->mapfilename = mapFileInfo.fileName();
