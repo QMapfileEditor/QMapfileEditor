@@ -52,8 +52,13 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
       ui->mf_map_status_on->setChecked(false);
     }
     // default output format
+    QList<OutputFormat *> fmts = this->mapfile->getOutputFormats();
     ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
-    ui->mf_map_outputformat->setCurrentIndex(MapfileParser::imageTypes.indexOf(mf->getDefaultOutputFormat()));
+
+    for (int i =0; i < fmts.size(); i++)
+      ui->mf_map_outputformat->addItem(fmts[i]->getName());
+
+    ui->mf_map_outputformat->setCurrentIndex(ui->mf_map_outputformat->findText(mf->getDefaultOutputFormat()));
     //MapSizes
     ui->mf_map_size_width->setValue(this->mapfile->getMapWidth());
     ui->mf_map_size_height->setValue(this->mapfile->getMapHeight());
@@ -169,7 +174,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
 
     this->outputFormatsMapper = new QDataWidgetMapper(this);
     OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
-    outputFormatsModel->setEntries(this->mapfile->getOutputFormats());
+    outputFormatsModel->setEntries(fmts);
     ui->mf_outputformat_list->setModel(outputFormatsModel);
     for (int i = 1; i < outputFormatsModel->columnCount(); i++)
       ui->mf_outputformat_list->hideColumn(i);
