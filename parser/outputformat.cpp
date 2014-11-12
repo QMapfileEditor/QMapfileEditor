@@ -96,11 +96,6 @@ void OutputFormat::setState(enum State const &v)  { state       = v; }
 OutputFormatsModel::OutputFormatsModel(QObject * parent) : QAbstractListModel(parent) {}
 
 OutputFormatsModel::~OutputFormatsModel() {
-  for (int i = 0; i < entries.size(); ++i) {
-    delete entries.at(i);
-  }
-  for (int i = 0 ; i < removedEntries.size() ; ++i)
-    delete removedEntries.at(i);
 }
 
 int OutputFormatsModel::rowCount(const QModelIndex & parent) const {

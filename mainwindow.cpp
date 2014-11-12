@@ -357,8 +357,9 @@ void MainWindow::showMapSettings() {
   if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
     return;
   }
-  // a window has alrady been created
+  // a window has already been created
   if (this->settings) {
+    this->settings->reject();
     delete this->settings;
   }
   this->settings = new MapSettings(this, this->mapfile);
