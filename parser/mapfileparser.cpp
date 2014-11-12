@@ -98,6 +98,49 @@ MapfileParser::MapfileParser(const QString & fname) :
   this->gdalOgrDrivers.sort();
   this->gdalGdalDrivers.removeDuplicates();
   this->gdalGdalDrivers.sort();
+
+  this->name = QString();
+  this->layers = QStringList();
+  this->status = false;
+  this->mapPath = QString();
+  this->outputFormats = QList<OutputFormat *>();
+  this->defaultOutputFormat = QString();
+
+  if (this->map) {
+    // name
+    this->name = QString(this->map->name);
+    // Layers
+    // TODO: should become QList<Layer *>
+    // leaving it as is for now, for compatibility
+    for (int i = 0; i <  this->map->numlayers ; i++) {
+      this->layers << this->map->layers[i]->name;
+    }
+    // status
+    this->status = this->map->status;
+    // map path
+    this->mapPath = QString(this->map->mappath);
+    // output formats
+    for (int i = 0; i < this->map->numoutputformats ; i++) {
+      OutputFormat * item = new OutputFormat(this->map->outputformatlist[i]->name,
+                                             this->map->outputformatlist[i]->mimetype,
+                                             this->map->outputformatlist[i]->driver,
+                                             this->map->outputformatlist[i]->extension,
+                                             this->map->outputformatlist[i]->imagemode,
+                                             this->map->outputformatlist[i]->transparent,
+                                             OutputFormat::UNCHANGED);
+
+      for (int j = 0 ; j < this->map->outputformatlist[i]->numformatoptions; ++j) {
+        QStringList kv = QString(this->map->outputformatlist[i]->formatoptions[j]).split("=");
+        if (kv.size() == 2)
+          item->addFormatOption(kv[0], kv[1]);
+      }
+      this->outputFormats.append(item);
+    } // output formats
+
+   // default output format
+   this->defaultOutputFormat = QString(this->map->imagetype);
+
+  }
 }
 
 /**
@@ -162,21 +205,13 @@ bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
 bool MapfileParser::isLoaded() { return (this->map != NULL); }
 
 // get layers
-QStringList MapfileParser::getLayers() {
-  QStringList ret = QStringList();
-  if (this->map) {
-    for (int i = 0; i <  this->map->numlayers ; i++) {
-      ret << this->map->layers[i]->name;
-    }
-  }
-  return ret;
+QStringList const & MapfileParser::getLayers() const {
+  return layers;
 }
 
 // Map name
-QString MapfileParser::getMapName() {
-  if (this->map)
-    return QString(this->map->name);
-  return QString();
+QString const & MapfileParser::getMapName() const {
+  return name;
 }
 
 void MapfileParser::setMapName(const QString & name) {
@@ -185,14 +220,13 @@ void MapfileParser::setMapName(const QString & name) {
       free (this->map->name);
     }
     this->map->name = (char *) strdup(name.toStdString().c_str());
+    this->name = name;
   }
 }
 
 // Status parameters
-bool MapfileParser::getMapStatus() {
-  if (this->map)
-    return this->map->status;
-  return false;
+bool const & MapfileParser::getMapStatus() const {
+  return status;
 }
 
 void MapfileParser::setMapStatus(const bool & status) {
@@ -671,9 +705,13 @@ void MapfileParser::setDataPattern(const QString & pattern) {
 }
 
 
-QString MapfileParser::getMapfilePath() { return QString(this->map->mappath); }
+QString const & MapfileParser::getMapfilePath() const {
+  return this->mapPath;
+}
 
-QString MapfileParser::getMapfileName() { return QString(this->filename); }
+QString const & MapfileParser::getMapfileName() const {
+  return this->filename;
+}
 
 QColor MapfileParser::getImageColor() const {
    if (this->map) {
@@ -694,29 +732,9 @@ void MapfileParser::setImageColor(QColor const & color) {
 
 /**
  * Gets the known output format from the Mapfile.
- * Note: it is the responsability of the caller to free the allocated objects.
  */
-QList<OutputFormat *> MapfileParser::getOutputFormats() {
-  QList<OutputFormat *> ret = QList<OutputFormat *>();
-  if (!this->map)
-    return ret;
-  for (int i = 0; i < this->map->numoutputformats ; i++) {
-    OutputFormat * item = new OutputFormat(this->map->outputformatlist[i]->name,
-                                           this->map->outputformatlist[i]->mimetype,
-                                           this->map->outputformatlist[i]->driver,
-                                           this->map->outputformatlist[i]->extension,
-                                           this->map->outputformatlist[i]->imagemode,
-                                           this->map->outputformatlist[i]->transparent,
-                                           OutputFormat::UNCHANGED);
-
-    for (int j = 0 ; j < this->map->outputformatlist[i]->numformatoptions; ++j) {
-      QStringList kv = QString(this->map->outputformatlist[i]->formatoptions[j]).split("=");
-      if (kv.size() == 2)
-        item->addFormatOption(kv[0], kv[1]);
-    }
-    ret.append(item);
-  }
-  return ret;
+QList<OutputFormat *> const & MapfileParser::getOutputFormats() const {
+  return this->outputFormats;
 }
 
 
@@ -727,8 +745,9 @@ QList<OutputFormat *> MapfileParser::getOutputFormats() {
  * Used by the QUndo commands, to get the state of an ouptut format
  * just before it goes modified.
  *
- * Once again, this is the role of the caller to destroy the created
- * object.
+ * This is the role of the caller to destroy the created object.
+ * TODO: scan this->outputFormats instead ?
+ * Then remove the delete() from the QUndo command ?
  */
 OutputFormat * MapfileParser::getOutputFormat(QString const & name) {
   if (! this->map)
@@ -810,7 +829,7 @@ void MapfileParser::updateOutputFormat(OutputFormat const * of) {
     msOf->formatoptions[i] = NULL;
   }
   msOf->numformatoptions = 0;
-  // then, recreates the format options
+  // then, recreates them
   QHash<QString,QString> fmtOpts = of->getFormatOptions();
   QStringList fmtKeys = fmtOpts.keys();
   for (int i = 0 ; i < fmtKeys.size(); ++i) {
@@ -857,10 +876,8 @@ void MapfileParser::addOutputFormat(OutputFormat const * of) {
   newMsOf->inmapfile = MS_TRUE;
 }
 
-QString MapfileParser::getDefaultOutputFormat() const {
-  if (! this->map)
-    return QString();
-  return QString(this->map->imagetype);
+QString const & MapfileParser::getDefaultOutputFormat() const {
+  return this->defaultOutputFormat;
 }
 
 void MapfileParser::setDefaultOutputFormat(QString const & of) {
@@ -869,6 +886,7 @@ void MapfileParser::setDefaultOutputFormat(QString const & of) {
   if (this->map->imagetype) {
     free(this->map->imagetype);
   }
+  this->defaultOutputFormat = of;
   this->map->imagetype = strdup(of.toStdString().c_str());
 }
 

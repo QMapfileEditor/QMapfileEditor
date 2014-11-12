@@ -45,20 +45,23 @@ class MapfileParser
   MapfileParser(const QString & filename = "");
   ~MapfileParser();
 
-  QString getMapName();
+  QString const & getMapName() const;
   void setMapName(const QString & name);
-  QString getMapfilePath();
-  QString getMapfileName();
+
+  QString const & getMapfilePath() const;
+  QString const & getMapfileName() const;
 
   void addLayer(QString const &, QString const &, QString const &, int);
 
-  QStringList getLayers(void);
-  QStringList getGdalGdalDrivers(void) { return gdalGdalDrivers; };
-  QStringList getGdalOgrDrivers(void) { return gdalOgrDrivers; };
+  QStringList const & getLayers(void) const;
 
-  QList<OutputFormat *> getOutputFormats(void);
+  QStringList const & getGdalGdalDrivers(void) const { return gdalGdalDrivers; };
+  QStringList const & getGdalOgrDrivers(void)  const { return gdalOgrDrivers;  };
+
+
+  QList<OutputFormat *> const & getOutputFormats(void) const;
   OutputFormat * getOutputFormat(const QString &);
-  QString getDefaultOutputFormat(void) const;
+  QString const & getDefaultOutputFormat(void) const;
 
   void addOutputFormat(OutputFormat const * of);
   void removeOutputFormat(OutputFormat const * of);
@@ -66,7 +69,7 @@ class MapfileParser
 
   void setDefaultOutputFormat(QString const &);
 
-  bool getMapStatus();
+  bool const & getMapStatus() const;
   void setMapStatus(const bool & status);
 
   int  getMapWidth();
@@ -185,9 +188,12 @@ class MapfileParser
   void insertIntoMsMap(void *, const QString &, const QString &);
   void removeFromMsMap(void *, const QString &);
 
-  // This object is necessary, because msGetProjectionString()
-  // will allocate memory that needs to be freed after call.
-  //QString mapProjection;
+  QString name;
+  QStringList layers;
+  bool status;
+  QString mapPath;
+  QList<OutputFormat *> outputFormats;
+  QString defaultOutputFormat;
 
 
 };
