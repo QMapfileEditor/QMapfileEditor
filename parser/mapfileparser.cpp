@@ -144,8 +144,12 @@ MapfileParser::MapfileParser(const QString & fname) :
 }
 
 /**
- * Creates an image representation of the current map
+ * Related method to create an image representation of the current map
  */
+int MapfileParser::getCurrentMapImageSize() {
+  return this->currentImageSize;
+}
+
 unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int & height) {
   if (! this->map) {
     return NULL;
@@ -197,17 +201,40 @@ unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int &
   return NULL;
 }
 
-int MapfileParser::getCurrentMapImageSize() {
-  return this->currentImageSize;
-}
 
 bool MapfileParser::isNew()    { return (this->filename.isEmpty()); }
 bool MapfileParser::isLoaded() { return (this->map != NULL); }
 
-// get layers
+
+// Layers-related methods
+
 QStringList const & MapfileParser::getLayers() const {
   return layers;
 }
+
+void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr, int geomType) {
+  layerObj *newLayer =  (layerObj *) malloc(sizeof(layerObj));
+  initLayer(newLayer, this->map);
+  // TODO: check if unique before doing this
+  if (newLayer->name)
+    free(newLayer->name);
+
+  newLayer->name = strdup(layerName.toStdString().c_str());
+
+  // TODO: relative / absolute path ?
+  if (newLayer->data)
+    free(newLayer->data);
+  newLayer->data = strdup(dataStr.toStdString().c_str());
+
+  newLayer->type = (MS_LAYER_TYPE) geomType;
+
+  msLoadProjectionStringEPSG(& (newLayer->projection), projStr.toStdString().c_str());
+
+  // inserts the layer at the end
+  msInsertLayer(this->map, newLayer, -1);
+}
+
+
 
 // Map name
 QString const & MapfileParser::getMapName() const {
@@ -232,6 +259,7 @@ bool const & MapfileParser::getMapStatus() const {
 void MapfileParser::setMapStatus(const bool & status) {
   if (this->map) {
     this->map->status = (status == true ? 1 : 0);
+    this->status = status;
   }
 }
 
@@ -750,6 +778,7 @@ QList<OutputFormat *> const & MapfileParser::getOutputFormats() const {
  * Then remove the delete() from the QUndo command ?
  */
 OutputFormat * MapfileParser::getOutputFormat(QString const & name) {
+
   if (! this->map)
     return NULL;
 
@@ -778,12 +807,27 @@ void MapfileParser::removeOutputFormat(OutputFormat const * of) {
   if (! this->map)
     return;
 
+  for (int i = 0; i < this->outputFormats.size(); ++i) {
+    if (this->outputFormats[i]->getName() == of->getName()) {
+      delete this->outputFormats[i];
+      this->outputFormats.removeAt(i);
+      break;
+    }
+  }
   msRemoveOutputFormat(this->map, of->getName().toStdString().c_str());
 }
 
-void MapfileParser::updateOutputFormat(OutputFormat const * of) {
+void MapfileParser::updateOutputFormat(OutputFormat * const of) {
   if (! this->map)
     return;
+
+  for (int i = 0; i < this->outputFormats.size(); ++i) {
+    if (this->outputFormats[i]->getName() == of->getName()) {
+      delete this->outputFormats[i];
+      this->outputFormats[i] = of;
+      break;
+    }
+  }
 
   int ofIdx = msGetOutputFormatIndex(this->map, of->getOriginalName().toStdString().c_str());
   outputFormatObj * msOf = this->map->outputformatlist[ofIdx];
@@ -839,10 +883,11 @@ void MapfileParser::updateOutputFormat(OutputFormat const * of) {
 
 }
 
-void MapfileParser::addOutputFormat(OutputFormat const * of) {
+void MapfileParser::addOutputFormat(OutputFormat * const of) {
   if (!this->map)
     return;
 
+  this->outputFormats  << of;
   QString fullyQualifiedDriver = of->getDriver();
   if ((of->getDriver() == "GDAL") || (of->getDriver() == "OGR")) {
     fullyQualifiedDriver += "/" + of->getGdalDriver();
@@ -852,7 +897,6 @@ void MapfileParser::addOutputFormat(OutputFormat const * of) {
                                                           fullyQualifiedDriver.toStdString().c_str(),
                                                           of->getName().toStdString().c_str());
 
-  // should not happen
   if (! newMsOf) {
     qDebug() << "newly created output format is NULL, should not happen (mapserver side)";
     return;
@@ -890,28 +934,6 @@ void MapfileParser::setDefaultOutputFormat(QString const & of) {
   this->map->imagetype = strdup(of.toStdString().c_str());
 }
 
-void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr, int geomType) {
-  layerObj *newLayer =  (layerObj *) malloc(sizeof(layerObj));
-  initLayer(newLayer, this->map);
-  // TODO: check if unique before doing this
-  if (newLayer->name)
-    free(newLayer->name);
-
-  newLayer->name = strdup(layerName.toStdString().c_str());
-
-  // TODO: relative / absolute path ?
-  if (newLayer->data)
-    free(newLayer->data);
-  newLayer->data = strdup(dataStr.toStdString().c_str());
-
-  newLayer->type = (MS_LAYER_TYPE) geomType;
-
-  msLoadProjectionStringEPSG(& (newLayer->projection), projStr.toStdString().c_str());
-
-  // inserts the layer at the end
-  msInsertLayer(this->map, newLayer, -1);
-}
-
 bool MapfileParser::saveMapfile(const QString & filename) {
   int ret = -1;
   if (this->map) {
@@ -936,6 +958,8 @@ MapfileParser::~MapfileParser() {
   if (this->currentImageBuffer) {
     free(this->currentImageBuffer);
   }
+  for (int i = 0; i < this->outputFormats.size(); ++i)
+    delete this->outputFormats[i];
 }
 
 /**

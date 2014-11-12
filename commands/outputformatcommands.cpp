@@ -79,9 +79,7 @@ void UpdateOutputFormatCommand::redo(void) {
   parser->updateOutputFormat(fmtToUpdate);
 }
 
-UpdateOutputFormatCommand::~UpdateOutputFormatCommand() {
-  delete originalFmt;
-}
+UpdateOutputFormatCommand::~UpdateOutputFormatCommand() {}
 
 
 /**  related to setting the default outputformat */

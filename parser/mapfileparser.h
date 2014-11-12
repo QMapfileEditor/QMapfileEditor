@@ -63,9 +63,9 @@ class MapfileParser
   OutputFormat * getOutputFormat(const QString &);
   QString const & getDefaultOutputFormat(void) const;
 
-  void addOutputFormat(OutputFormat const * of);
+  void addOutputFormat(OutputFormat * const of);
   void removeOutputFormat(OutputFormat const * of);
-  void updateOutputFormat(OutputFormat const * of);
+  void updateOutputFormat(OutputFormat * const of);
 
   void setDefaultOutputFormat(QString const &);
 
