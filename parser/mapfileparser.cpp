@@ -183,6 +183,8 @@ MapfileParser::MapfileParser(const QString & fname) :
    this->configOptions = populateMapFromMs(& (this->map->configoptions));
    // metadatas
    this->metadatas = populateMapFromMs(& (this->map->web.metadata));
+   // shapepath
+   this->shapePath = this->map->shapepath;
    // symbolset
    this->symbolSet = this->map->symbolset.filename;
    // fontset
