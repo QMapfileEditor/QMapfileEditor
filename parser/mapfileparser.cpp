@@ -105,6 +105,24 @@ MapfileParser::MapfileParser(const QString & fname) :
   this->mapPath = QString();
   this->outputFormats = QList<OutputFormat *>();
   this->defaultOutputFormat = QString();
+  this->width = -1;
+  this->height = -1;
+  this->mapMaxSize = -1;
+  this->mapUnits  = -1;
+  this->mapImageType = QString();
+  this->mapProjection = QString();
+  this->minx = -1, this->miny = -1, this->maxx = -1, this->maxy = -1;
+  this->debug = false;
+  this->configOptions = QHash<QString,QString>();
+  this->metadatas = QHash<QString,QString>();
+  this->shapePath = QString();
+  this->symbolSet = QString();
+  this->fontSet = QString();
+  this->resolution = -1;
+  this->defResolution = -1;
+  this->angle = -1;
+  this->templatePattern = QString();
+  this->dataPattern = QString();
 
   if (this->map) {
     // name
@@ -140,13 +158,50 @@ MapfileParser::MapfileParser(const QString & fname) :
    // default output format
    this->defaultOutputFormat = QString(this->map->imagetype);
 
+   // width
+   this->width = this->map->width;
+   // height
+   this->height = this->map->height;
+   // map max size
+   this->mapMaxSize = this->map->maxsize;
+   // map units
+   this->mapUnits = this->map->units;
+   // map image type
+   this->mapImageType = this->map->imagetype;
+   // map projection
+   char * tmp = msGetProjectionString(& (this->map->projection));
+   this->mapProjection = tmp;
+   free(tmp);
+   // map extent
+   this->minx = this->map->extent.minx;
+   this->miny = this->map->extent.miny;
+   this->maxx = this->map->extent.maxx;
+   this->maxy = this->map->extent.maxy;
+   // debug
+   this->debug = this->map->debug;
+   // config options
+   this->configOptions = populateMapFromMs(& (this->map->configoptions));
+   // metadatas
+   this->metadatas = populateMapFromMs(& (this->map->web.metadata));
+   // symbolset
+   this->symbolSet = this->map->symbolset.filename;
+   // fontset
+   this->fontSet = this->map->fontset.filename;
+   // map resolution
+   this->resolution = this->map->resolution;
+   // def resolution
+   this->defResolution = this->map->defresolution;
+   // angle
+   this->angle = this->map->gt.rotation_angle;
+   // data pattern
+   this->dataPattern = this->map->datapattern;
   }
 }
 
 /**
  * Related method to create an image representation of the current map
  */
-int MapfileParser::getCurrentMapImageSize() {
+int const & MapfileParser::getCurrentMapImageSize() const {
   return this->currentImageSize;
 }
 
@@ -234,8 +289,6 @@ void MapfileParser::addLayer(QString const & layerName, QString const & dataStr,
   msInsertLayer(this->map, newLayer, -1);
 }
 
-
-
 // Map name
 QString const & MapfileParser::getMapName() const {
   return name;
@@ -264,61 +317,56 @@ void MapfileParser::setMapStatus(const bool & status) {
 }
 
 // Width/Height parameters
-int MapfileParser::getMapWidth() {
-  if (this->map)
-    return this->map->width;
-  return -1;
+int const & MapfileParser::getMapWidth() const {
+  return this->width;
 }
 
-int MapfileParser::getMapHeight() {
-  if (this->map)
-    return this->map->height;
-  return -1;
+int const & MapfileParser::getMapHeight() const {
+  return this->height;
 }
 
 void MapfileParser::setMapSize(const int & width, const int & height) {
    if (this->map) {
-    this->map->width = width;
-    this->map->height = height;
+     this->width = width;
+     this->height = height;
+     this->map->width = width;
+     this->map->height = height;
   }
 }
 
-int MapfileParser::getMapMaxsize() {
-  if (this->map)
-    return this->map->maxsize;
-  return -1;
+int const & MapfileParser::getMapMaxsize() const {
+  return this->mapMaxSize;
 }
 
 void MapfileParser::setMapMaxsize(const int & maxsize) {
   if (this->map) {
+    this->mapMaxSize = maxsize;
     this->map->maxsize = maxsize;
   }
 }
 
 // units parameter
-int MapfileParser::getMapUnits() {
-  if (this->map)
-    return this->map->units;
-  return -1;
+int const & MapfileParser::getMapUnits() const {
+  return this->mapUnits;
 }
 
 void MapfileParser::setMapUnits(const QString & units) {
   if (this->map) {
+    this->mapUnits = this->units.indexOf(units);
     this->map->units = (enum MS_UNITS) this->units.indexOf(units);
   }
 }
 void MapfileParser::setMapUnits(int const & units) {
   if (this->map) {
+    this->mapUnits = units;
     this->map->units = (enum MS_UNITS) units;
   }
 }
 
 
 // imageType parameter
-QString MapfileParser::getMapImageType() {
-  if (this->map)
-    return this->map->imagetype;
-  return QString();
+QString const & MapfileParser::getMapImageType() const {
+  return this->mapImageType;
 }
 
 void MapfileParser::setMapImageType(const QString & imageType) {
@@ -327,54 +375,45 @@ void MapfileParser::setMapImageType(const QString & imageType) {
   if (this->map->imagetype) {
     free(this->map->imagetype);
   }
+  this->mapImageType = imageType;
   this->map->imagetype = (char *) strdup(imageType.toStdString().c_str());
 }
 
 //projection parameters
-QString MapfileParser::getMapProjection() {
-  QString ret = QString();
-  if (this->map) {
-    char * tmp = msGetProjectionString(& (this->map->projection));
-    ret = QString(tmp);
-    free(tmp);
-    return ret;
-  }
-  return QString();
+QString const & MapfileParser::getMapProjection() const {
+  return this->mapProjection;
 }
 
 void MapfileParser::setMapProjection(const QString & projection) {
     if (this->map) {
+      this->mapProjection = projection;
       msLoadProjectionStringEPSG(& (this->map->projection), projection.toStdString().c_str());
     }
 }
 
 // Extent object parameters
-double MapfileParser::getMapExtentMinX() {
-  if (this->map)
-    return this->map->extent.minx;
-  return -1;
+double const & MapfileParser::getMapExtentMinX() const {
+  return this->minx;
 }
 
-double MapfileParser::getMapExtentMinY() {
-  if (this->map)
-    return this->map->extent.miny;
-  return -1;
+double const & MapfileParser::getMapExtentMinY() const {
+  return this->miny;
 }
 
-double MapfileParser::getMapExtentMaxX() {
-  if (this->map)
-    return this->map->extent.maxx;
-  return -1;
+double const & MapfileParser::getMapExtentMaxX() const {
+  return this->maxx;
 }
 
-double MapfileParser::getMapExtentMaxY() {
-  if (this->map)
-    return this->map->extent.maxy;
-  return -1;
+double const & MapfileParser::getMapExtentMaxY() const {
+  return this->maxy;
 }
 
 void MapfileParser::setMapExtent(const double & minx, const double & miny, const double & maxx, const double & maxy) {
   if (this->map) {
+    this->minx = minx;
+    this->miny = miny;
+    this->maxx = maxx;
+    this->maxy = maxy;
     this->map->extent.minx = minx;
     this->map->extent.miny = miny;
     this->map->extent.maxx = maxx;
@@ -382,10 +421,8 @@ void MapfileParser::setMapExtent(const double & minx, const double & miny, const
   }
 }
 
-int MapfileParser::getDebug() {
-    if (this->map)
-        return this->map->debug;
-    return false;
+int const & MapfileParser::getDebug() const {
+  return this->debug;
 }
 
 void MapfileParser::setDebug(const int & debug) {
@@ -436,29 +473,29 @@ void MapfileParser::removeFromMsMap(void *table, const QString &name) {
 /**
  * map configuration options (nested into map->configoptions)
  */
-QHash<QString, QString> MapfileParser::getConfigOptions() {
-  if (! this->map)
-    return QHash<QString, QString>();
-  // TODO: same remark as for metadatas
-  return populateMapFromMs(& (this->map->configoptions));
+QHash<QString, QString> const & MapfileParser::getConfigOptions() const {
+  return this->configOptions;
 }
 
-QString MapfileParser::getConfigOption(const QString &key) {
-  return this->getConfigOptions().value(key, QString());
+QString const MapfileParser::getConfigOption(const QString &key) const {
+  return this->configOptions.value(key);
 }
 
 void MapfileParser::setConfigOption(const QString & name, const QString & value) {
   if (! this->map)
     return;
   // Doing nothing if current config option is already set to the given value
-  if (this->getConfigOptions().value(name) == value)
+  if (this->configOptions.value(name) == value)
     return;
+
+  configOptions[name] = value;
   insertIntoMsMap(& (this->map->configoptions), name, value);
 }
 
 void MapfileParser::removeConfigOption(const QString & name) {
   if (! this->map)
     return;
+  configOptions.remove(name);
   removeFromMsMap(& (this->map->configoptions), name);
 }
 
@@ -466,16 +503,12 @@ void MapfileParser::removeConfigOption(const QString & name) {
  * metadatas (nested into map->web).
  */
 
-QHash<QString, QString> MapfileParser::getMetadatas() {
-  if (! this->map)
-    return QHash<QString, QString>();
-  // TODO: this should be done only once, and saved
-  // into a member variable.
-  return populateMapFromMs(& (this->map->web.metadata));
+QHash<QString, QString> const & MapfileParser::getMetadatas() const {
+  return this->metadatas;
 }
 
-QString MapfileParser::getMetadata(const QString & name) {
-  return this->getMetadatas().value(name);
+QString const MapfileParser::getMetadata(const QString & name) const {
+  return this->metadatas.value(name);
 }
 
 void MapfileParser::setMetadata(const QString & name, const QString & value) {
@@ -483,143 +516,143 @@ void MapfileParser::setMetadata(const QString & name, const QString & value) {
     return;
   if (this->getMetadatas().value(name) == value)
     return;
+  this->metadatas[name] = value;
   insertIntoMsMap(& (this->map->web.metadata), name, value);
 }
 
 void MapfileParser::removeMetadata(const QString & name) {
   if (! this->map)
     return;
+  this->metadatas.remove(name);
   removeFromMsMap(& (this->map->web.metadata), name);
 }
 
 // WFS operations
 
 bool MapfileParser::wfsGetCapabilitiesEnabled() {
-  return (((this->getMetadatas().value("wfs_enable_request").contains("*") ||
-       (this->getMetadatas().value("wfs_enable_request").contains("GetCapabilities")))
-      && (! this->getMetadatas().value("wfs_enable_request").contains("!GetCapabilities")))
+  return (((this->metadatas.value("wfs_enable_request").contains("*") ||
+       (this->metadatas.value("wfs_enable_request").contains("GetCapabilities")))
+      && (! this->metadatas.value("wfs_enable_request").contains("!GetCapabilities")))
     ||
-    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
-       (this->getMetadatas().value("ows_enable_request").contains("GetCapabilities")))
-      && (! this->getMetadatas().value("ows_enable_request").contains("!GetCapabilities"))));
+    ((this->metadatas.value("ows_enable_request").contains("*") ||
+       (this->metadatas.value("ows_enable_request").contains("GetCapabilities")))
+      && (! this->metadatas.value("ows_enable_request").contains("!GetCapabilities"))));
 }
 
 bool MapfileParser::wfsGetFeatureEnabled() {
-  return (((this->getMetadatas().value("wfs_enable_request").contains("*") ||
-       (this->getMetadatas().value("wfs_enable_request").contains("GetFeature")))
-      && (! this->getMetadatas().value("wfs_enable_request").contains("!GetFeature")))
+  return (((this->metadatas.value("wfs_enable_request").contains("*") ||
+       (this->metadatas.value("wfs_enable_request").contains("GetFeature")))
+      && (! this->metadatas.value("wfs_enable_request").contains("!GetFeature")))
     ||
-    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
-       (this->getMetadatas().value("ows_enable_request").contains("GetFeature")))
-      && (! this->getMetadatas().value("ows_enable_request").contains("!GetFeature"))));
+    ((this->metadatas.value("ows_enable_request").contains("*") ||
+       (this->metadatas.value("ows_enable_request").contains("GetFeature")))
+      && (! this->metadatas.value("ows_enable_request").contains("!GetFeature"))));
 }
 
 bool MapfileParser::wfsDescribeFeatureTypeEnabled() {
-  return (((this->getMetadatas().value("wfs_enable_request").contains("*") ||
-       (this->getMetadatas().value("wfs_enable_request").contains("DescribeFeatureType")))
-      && (! this->getMetadatas().value("wfs_enable_request").contains("!DescribeFeatureType")))
+  return (((this->metadatas.value("wfs_enable_request").contains("*") ||
+       (this->metadatas.value("wfs_enable_request").contains("DescribeFeatureType")))
+      && (! this->metadatas.value("wfs_enable_request").contains("!DescribeFeatureType")))
     ||
-    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
-       (this->getMetadatas().value("ows_enable_request").contains("DescribeFeatureType")))
-      && (! this->getMetadatas().value("ows_enable_request").contains("!DescribeFeatureType"))));
+    ((this->metadatas.value("ows_enable_request").contains("*") ||
+       (this->metadatas.value("ows_enable_request").contains("DescribeFeatureType")))
+      && (! this->metadatas.value("ows_enable_request").contains("!DescribeFeatureType"))));
 }
 
 // WMS operations
 
 bool MapfileParser::wmsGetMapEnabled() {
-  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
-       (this->getMetadatas().value("wms_enable_request").contains("GetMap")))
-      && (! this->getMetadatas().value("wms_enable_request").contains("!GetMap")))
+  return (((this->metadatas.value("wms_enable_request").contains("*") ||
+       (this->metadatas.value("wms_enable_request").contains("GetMap")))
+      && (! this->metadatas.value("wms_enable_request").contains("!GetMap")))
     ||
-    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
-       (this->getMetadatas().value("ows_enable_request").contains("GetMap")))
-      && (! this->getMetadatas().value("ows_enable_request").contains("!GetMap"))));
+    ((this->metadatas.value("ows_enable_request").contains("*") ||
+       (this->metadatas.value("ows_enable_request").contains("GetMap")))
+      && (! this->metadatas.value("ows_enable_request").contains("!GetMap"))));
 }
 
 bool MapfileParser::wmsGetLegendGraphicEnabled() {
-  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
-       (this->getMetadatas().value("wms_enable_request").contains("GetLegendGraphic")))
-      && (! this->getMetadatas().value("wms_enable_request").contains("!GetLegendGraphic")))
+  return (((this->metadatas.value("wms_enable_request").contains("*") ||
+       (this->metadatas.value("wms_enable_request").contains("GetLegendGraphic")))
+      && (! this->metadatas.value("wms_enable_request").contains("!GetLegendGraphic")))
     ||
-    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
-       (this->getMetadatas().value("ows_enable_request").contains("GetLegendGraphic")))
-      && (! this->getMetadatas().value("ows_enable_request").contains("!GetLegendGraphic"))));
+    ((this->metadatas.value("ows_enable_request").contains("*") ||
+       (this->metadatas.value("ows_enable_request").contains("GetLegendGraphic")))
+      && (! this->metadatas.value("ows_enable_request").contains("!GetLegendGraphic"))));
 }
 
 bool MapfileParser::wmsGetCapabilitiesEnabled() {
-  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
-       (this->getMetadatas().value("wms_enable_request").contains("GetCapabilities")))
-      && (! this->getMetadatas().value("wms_enable_request").contains("!GetCapabilities")))
+  return (((this->metadatas.value("wms_enable_request").contains("*") ||
+       (this->metadatas.value("wms_enable_request").contains("GetCapabilities")))
+      && (! this->metadatas.value("wms_enable_request").contains("!GetCapabilities")))
     ||
-    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
-       (this->getMetadatas().value("ows_enable_request").contains("GetCapabilities")))
-      && (! this->getMetadatas().value("ows_enable_request").contains("!GetCapabilities"))));
+    ((this->metadatas.value("ows_enable_request").contains("*") ||
+       (this->metadatas.value("ows_enable_request").contains("GetCapabilities")))
+      && (! this->metadatas.value("ows_enable_request").contains("!GetCapabilities"))));
 }
 
 bool MapfileParser::wmsGetFeatureInfoEnabled() {
-  return (((this->getMetadatas().value("wms_enable_request").contains("*") ||
-       (this->getMetadatas().value("wms_enable_request").contains("GetFeatureInfo")))
-      && (! this->getMetadatas().value("wms_enable_request").contains("!GetFeatureInfo")))
+  return (((this->metadatas.value("wms_enable_request").contains("*") ||
+       (this->metadatas.value("wms_enable_request").contains("GetFeatureInfo")))
+      && (! this->metadatas.value("wms_enable_request").contains("!GetFeatureInfo")))
     ||
-    ((this->getMetadatas().value("ows_enable_request").contains("*") ||
-       (this->getMetadatas().value("ows_enable_request").contains("GetFeatureInfo")))
-      && (! this->getMetadatas().value("ows_enable_request").contains("!GetFeatureInfo"))));
+    ((this->metadatas.value("ows_enable_request").contains("*") ||
+       (this->metadatas.value("ows_enable_request").contains("GetFeatureInfo")))
+      && (! this->metadatas.value("ows_enable_request").contains("!GetFeatureInfo"))));
 }
 
 QString MapfileParser::getMetadataWmsTitle() {
-  QString ret = this->getMetadatas().value("wms_title", QString());
+  QString ret = this->metadatas.value("wms_title", QString());
   // Empty, lets try with OWS_TITLE
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("ows_title", QString());
+    return this->metadatas.value("ows_title", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWfsTitle() {
-  QString ret = this->getMetadatas().value("wfs_title", QString());
+  QString ret = this->metadatas.value("wfs_title", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("ows_title", QString());
+    return this->metadatas.value("ows_title", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWmsOnlineresource() {
-  QString ret = this->getMetadatas().value("wms_onlineresource", QString());
+  QString ret = this->metadatas.value("wms_onlineresource", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("ows_onlineresource", QString());
+    return this->metadatas.value("ows_onlineresource", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWfsOnlineresource() {
-  QString ret = this->getMetadatas().value("wfs_onlineresource", QString());
+  QString ret = this->metadatas.value("wfs_onlineresource", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("ows_onlineresource", QString());
+    return this->metadatas.value("ows_onlineresource", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWmsSrs() {
-  QString ret = this->getMetadatas().value("wms_srs", QString());
+  QString ret = this->metadatas.value("wms_srs", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("ows_srs", QString());
+    return this->metadatas.value("ows_srs", QString());
   }
   return ret;
 }
 
 QString MapfileParser::getMetadataWfsSrs() {
-  QString ret = this->getMetadatas().value("wfs_srs", QString());
+  QString ret = this->metadatas.value("wfs_srs", QString());
   if (ret.isEmpty()) {
-    return this->getMetadatas().value("ows_srs", QString());
+    return this->metadatas.value("ows_srs", QString());
   }
   return ret;
 }
 
 
-QString MapfileParser::getShapepath() {
-    if (this->map)
-        return this->map->shapepath;
-    return NULL;
+QString const & MapfileParser::getShapepath() const {
+  return this->shapePath;
 }
 
 void MapfileParser::setShapepath(const QString & shapepath) {
@@ -627,15 +660,13 @@ void MapfileParser::setShapepath(const QString & shapepath) {
         if (this->map->shapepath) {
             free(this->map->shapepath);
         }
+        this->shapePath = shapepath;
         this->map->shapepath = (char *) strdup(shapepath.toStdString().c_str());
     }
 }
 
-QString MapfileParser::getSymbolSet() {
-    if (this->map) {
-        return this->map->symbolset.filename;
-    }
-    return QString();
+QString const & MapfileParser::getSymbolSet() const {
+  return this->symbolSet;
 }
 
 void MapfileParser::setSymbolSet(const QString & symbolset) {
@@ -643,14 +674,13 @@ void MapfileParser::setSymbolSet(const QString & symbolset) {
         if (this->map->symbolset.filename) {
             free(this->map->symbolset.filename);
         }
+        this->symbolSet = symbolset;
         this->map->symbolset.filename = (char *) strdup(symbolset.toStdString().c_str());
     }
 }
 
-QString MapfileParser::getFontSet() {
-    if (this->map)
-        return this->map->fontset.filename;
-    return QString();
+QString const & MapfileParser::getFontSet() const {
+  return this->fontSet;
 }
 
 void MapfileParser::setFontSet(const QString & fontset) {
@@ -658,28 +688,25 @@ void MapfileParser::setFontSet(const QString & fontset) {
         if (this->map->fontset.filename) {
             free(this->map->fontset.filename);
         }
+        this->fontSet = fontset;
         this->map->fontset.filename = (char *) strdup(fontset.toStdString().c_str());
     }
 }
 
 
-double MapfileParser::getResolution() {
-    if (this->map) {
-        return this->map->resolution;
-    }
-    return -1;
+double const & MapfileParser::getResolution() const {
+  return this->resolution;
 }
 
 void MapfileParser::setResolution(const double & resolution) {
-    if (this->map) {
-        this->map->resolution = resolution;
-    }
+  if (this->map) {
+    this->resolution = resolution;
+    this->map->resolution = resolution;
+  }
 }
 
-double MapfileParser::getDefResolution() {
-    if (this->map)
-        return this->map->defresolution;
-    return -1;
+double const & MapfileParser::getDefResolution() const {
+  return this->defResolution;
 }
 
 void MapfileParser::setDefResolution(const double & resolution) {
@@ -688,39 +715,33 @@ void MapfileParser::setDefResolution(const double & resolution) {
     }
 }
 
-float MapfileParser::getAngle() {
-    if (this->map)
-        return this->map->gt.rotation_angle;
-    return -1.0;
+float const & MapfileParser::getAngle() const {
+  return this->angle;
 }
 
 void MapfileParser::setAngle(const float & angle) {
-    if (this->map) {
-        this->map->gt.rotation_angle = angle;
-    }
+  if (this->map) {
+    this->angle = angle;
+    this->map->gt.rotation_angle = angle;
+  }
 }
 
-QString MapfileParser::getTemplatePattern() {
-    if (this->map) {
-        return this->map->templatepattern;
-    }
-    return QString();
+QString const & MapfileParser::getTemplatePattern() const {
+  return  this->templatePattern;
 }
 
 void MapfileParser::setTemplatePattern(const QString & pattern) {
-    if (this->map) {
-        if (this->map->templatepattern) {
-            free(this->map->templatepattern);
-        }
-        this->map->templatepattern = (char *) strdup(pattern.toStdString().c_str());
+  if (this->map) {
+    if (this->map->templatepattern) {
+      free(this->map->templatepattern);
     }
+    this->templatePattern = pattern;
+    this->map->templatepattern = (char *) strdup(pattern.toStdString().c_str());
+  }
 }
 
-QString MapfileParser::getDataPattern() {
-    if (this->map) {
-        return this->map->datapattern;
-    }
-    return QString();
+QString const & MapfileParser::getDataPattern() const {
+  return this->dataPattern;
 }
 
 void MapfileParser::setDataPattern(const QString & pattern) {
@@ -776,6 +797,10 @@ QList<OutputFormat *> const & MapfileParser::getOutputFormats() const {
  * This is the role of the caller to destroy the created object.
  * TODO: scan this->outputFormats instead ?
  * Then remove the delete() from the QUndo command ?
+ *
+ * We have to create a new OF because in case of a delete, the object
+ * no longer exist and the QUndo command still need it (in case of redo
+ * command, to recreate the deleted OF).
  */
 OutputFormat * MapfileParser::getOutputFormat(QString const & name) {
 
@@ -803,7 +828,7 @@ OutputFormat * MapfileParser::getOutputFormat(QString const & name) {
   return item;
 }
 
-void MapfileParser::removeOutputFormat(OutputFormat const * of) {
+void MapfileParser::removeOutputFormat(OutputFormat * const of) {
   if (! this->map)
     return;
 
