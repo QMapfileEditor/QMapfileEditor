@@ -45,11 +45,11 @@ int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
 
-//#ifdef DEBUG
+#ifdef QT_DEBUG
   setenv("MS_ERRORFILE", "stdout", 1);
   setenv("MS_DEBUGLEVEL", "4", 1);
   msDebugInitFromEnv();
-//#endif
+#endif // QT_DEBUG
 
   // loading translations / qtlinguist
   QTranslator trans;
