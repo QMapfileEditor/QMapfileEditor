@@ -89,8 +89,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::handleUndoStackChanged(int i) {
   Q_UNUSED(i);
-  ui->actionUndo->setText(undoStack->undoText());
-  ui->actionRedo->setText(undoStack->redoText());
+  ui->actionUndo->setText(tr("Undo '%1'").arg(undoStack->undoText()));
+  ui->actionRedo->setText(tr("Redo '%1'").arg(undoStack->redoText()));
 }
 
 void MainWindow::pushUndoStack(QUndoCommand *c) {

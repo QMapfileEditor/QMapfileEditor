@@ -40,6 +40,20 @@ imageMode(imageMode), transparent(transparent), state(state)
   setDriver(driver);
 }
 
+/** copy constructor */
+OutputFormat::OutputFormat(const OutputFormat & of) {
+  name          = of.getName();
+  originalName  = of.getOriginalName();
+  mimeType      = of.getMimeType();
+  extension     = of.getExtension();
+  imageMode     = of.getImageMode();
+  transparent   = of.getTransparent();
+  state         = of.getState();
+  driver        = of.getDriver();
+  gdalDriver    = of.getGdalDriver();
+  formatOptions = QHash<QString,QString>(of.getFormatOptions());
+}
+
 /** Getters */
 QString const & OutputFormat::getName()         const { return name;         }
 QString const & OutputFormat::getOriginalName() const { return originalName; }

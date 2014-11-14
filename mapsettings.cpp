@@ -425,10 +425,15 @@ void MapSettings::saveMapSettings() {
     for (int i = 0; i < entries.size(); ++i) {
      if (entries[i]->getState() == OutputFormat::UNCHANGED)
        continue;
-     if ((entries[i]->getState() == OutputFormat::ADDED) || (entries[i]->getState() == OutputFormat::ADDED_SAVED))
+     if ((entries[i]->getState() == OutputFormat::ADDED) || (entries[i]->getState() == OutputFormat::ADDED_SAVED)) {
+       // before inserting, consider the OF as UNCHANGED
+       entries[i]->setState(OutputFormat::UNCHANGED);
        ((MainWindow *) parent())->pushUndoStack(new AddNewOutputFormatCommand(entries[i], this->mapfile));
-     else if (entries[i]->getState() == OutputFormat::MODIFIED)
+     }
+     else if (entries[i]->getState() == OutputFormat::MODIFIED) {
+       entries[i]->setState(OutputFormat::UNCHANGED);
        ((MainWindow *) parent())->pushUndoStack(new UpdateOutputFormatCommand(entries[i], this->mapfile));
+     }
     }
 
     /** OGC tab **/

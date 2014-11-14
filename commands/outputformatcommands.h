@@ -37,6 +37,7 @@ class AddNewOutputFormatCommand : public QUndoCommand {
 
  public:
    AddNewOutputFormatCommand(OutputFormat * newOf, MapfileParser * parser, QUndoCommand *parent = 0);
+   ~AddNewOutputFormatCommand();
    void undo();
    void redo();
 
@@ -49,6 +50,7 @@ class RemoveOutputFormatCommand : public QUndoCommand {
 
  public:
    RemoveOutputFormatCommand(OutputFormat * fmtToRemove, MapfileParser * parser, QUndoCommand *parent = 0);
+   ~RemoveOutputFormatCommand();
    void undo();
    void redo();
 
