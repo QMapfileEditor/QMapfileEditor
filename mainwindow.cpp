@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
   this->connect(ui->mf_structure, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
   this->connect(ui->mf_editLayer, SIGNAL(clicked()), this, SLOT(showLayerSettings()));
-  
+
   // inits the graphics scene
   MapScene * mapScene = new MapScene(this);
   ui->mf_preview->setScene(mapScene);
@@ -73,9 +73,24 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionAbout,      SIGNAL(triggered()), SLOT(showAbout()));
   this->connect(ui->actionRefresh,    SIGNAL(triggered()), SLOT(updateMapPreview()));
 
+  // edit menu
+  this->connect(ui->actionUndo, SIGNAL(triggered()), undoStack, SLOT(undo()));
+  this->connect(ui->actionRedo, SIGNAL(triggered()), undoStack, SLOT(redo()));
+  this->connect(undoStack, SIGNAL(indexChanged(int)), this, SLOT(handleUndoStackChanged(int)));
+
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
+}
+
+
+
+// Undo / Redo related methods
+
+void MainWindow::handleUndoStackChanged(int i) {
+  Q_UNUSED(i);
+  ui->actionUndo->setText(undoStack->undoText());
+  ui->actionRedo->setText(undoStack->redoText());
 }
 
 void MainWindow::pushUndoStack(QUndoCommand *c) {
@@ -94,6 +109,7 @@ void MainWindow::showUndoStack() {
   undoView->show();
 }
 
+// Zoom / Pan / ... map related methods
 
 void MainWindow::zoomOutMapPreview() {
   double curmaxx = this->currentMapMaxX,

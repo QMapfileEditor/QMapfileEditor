@@ -73,6 +73,7 @@ class MainWindow : public QMainWindow
       ~MainWindow();
 
  public slots:
+      void handleUndoStackChanged(int);
       void openMapfile();
       void newMapfile();
       void panPreview(qreal,qreal);
