@@ -363,29 +363,26 @@ void TestMapfileParser::testMapfilePath() {
 void TestMapfileParser::testImageColor() {
   MapfileParser * p = new MapfileParser();
 
-  QList<int> l = p->getImageColor();
-  QVERIFY(l.size() == 3);
-  QVERIFY(l[0] == 0xff);
-  QVERIFY(l[1] == 0xff);
-  QVERIFY(l[2] == 0xff);
+  QColor l = p->getImageColor();
+  QVERIFY(l.red()   == 0xff);
+  QVERIFY(l.green() == 0xff);
+  QVERIFY(l.blue()  == 0xff);
 
   // TODO: what if setting to integers so that the colour could not fit ? (e.g. > 0xff)
-  p->setImageColor(0xddddde, 0xad, 0xef);
+  p->setImageColor(QColor(0xddddde, 0xad, 0xef));
   l = p->getImageColor();
-  QVERIFY(l.size() == 3);
-  QVERIFY(l[0] == 0xddddde);
-  QVERIFY(l[1] == 0xad);
-  QVERIFY(l[2] == 0xef);
+  QVERIFY(l.red()   == 0xddddde);
+  QVERIFY(l.green() == 0xad);
+  QVERIFY(l.blue()  == 0xef);
 
   delete p;
 
   p = new MapfileParser("../data/world_mapfile.map");
 
   l = p->getImageColor();
-  QVERIFY(l.size() == 3);
-  QVERIFY(l[0] == 0xfa);
-  QVERIFY(l[1] == 0x00);
-  QVERIFY(l[2] == 0x00);
+  QVERIFY(l.red()   == 0xfa);
+  QVERIFY(l.green() == 0x00);
+  QVERIFY(l.blue()  == 0x00);
   delete p;
 
 }

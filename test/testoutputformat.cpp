@@ -27,11 +27,6 @@ void TestOutputFormat::testInitOutputFormat() {
    QVERIFY(f->getTransparent() == false);
 
    if (f) delete f;
-
-   // Test creating on the stack
-   OutputFormat fs = OutputFormat();
-   QVERIFY(fs.isEmpty());
-
 }
 
 
