@@ -21,6 +21,7 @@ SOURCES += \
         commands/changemapstatuscommand.cpp    \
         commands/outputformatcommands.cpp      \
         commands/setanglecommand.cpp           \
+        commands/setconfigoptioncommand.cpp    \
         commands/setdatapatterncommand.cpp     \
         commands/setdefresolutioncommand.cpp   \
         commands/setfontsetcommand.cpp         \
@@ -51,6 +52,7 @@ HEADERS  += \
     commands/changemapstatuscommand.h       \
     commands/outputformatcommands.h         \
     commands/setanglecommand.h              \
+    commands/setconfigoptioncommand.h       \
     commands/setdatapatterncommand.h        \
     commands/setdefresolutioncommand.h      \
     commands/setfontsetcommand.h            \
