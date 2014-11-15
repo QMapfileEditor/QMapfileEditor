@@ -195,6 +195,8 @@ MapfileParser::MapfileParser(const QString & fname) :
    this->defResolution = this->map->defresolution;
    // angle
    this->angle = this->map->gt.rotation_angle;
+   // template pattern
+   this->templatePattern = this->map->templatepattern;
    // data pattern
    this->dataPattern = this->map->datapattern;
   }
@@ -429,6 +431,7 @@ int const & MapfileParser::getDebug() const {
 
 void MapfileParser::setDebug(const int & debug) {
     if(this->map) {
+        this->debug      = debug;
         this->map->debug = debug;
     }
 }
@@ -713,6 +716,7 @@ double const & MapfileParser::getDefResolution() const {
 
 void MapfileParser::setDefResolution(const double & resolution) {
     if (this->map) {
+        this->defResolution = resolution;
         this->map->defresolution = resolution;
     }
 }
@@ -729,7 +733,7 @@ void MapfileParser::setAngle(const float & angle) {
 }
 
 QString const & MapfileParser::getTemplatePattern() const {
-  return  this->templatePattern;
+  return this->templatePattern;
 }
 
 void MapfileParser::setTemplatePattern(const QString & pattern) {
@@ -751,6 +755,7 @@ void MapfileParser::setDataPattern(const QString & pattern) {
         if (this->map->datapattern) {
             free(this->map->datapattern);
         }
+        this->dataPattern = pattern;
         this->map->datapattern = (char *) strdup(pattern.toStdString().c_str());
     }
 }

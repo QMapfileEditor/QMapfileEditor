@@ -231,7 +231,7 @@ void TestMapfileParser::testConfigOptions() {
 void TestMapfileParser::testMetadata() {
   MapfileParser * p  = new MapfileParser("../data/world_mapfile.map");
 
-  QVERIFY(p->getMetadatas().size() == 8);
+  QVERIFY(p->getMetadatas().size() == 9);
 
 
   QVERIFY(p->getMetadataWmsTitle() == "World Map");
@@ -244,17 +244,17 @@ void TestMapfileParser::testMetadata() {
   // Testing insertion
   p->setMetadata("ows_srs", "EPSG:2154");
 
-  QVERIFY(p->getMetadatas().size() == 9);
+  QVERIFY(p->getMetadatas().size() == 10);
   QVERIFY(p->getMetadataWfsSrs() == "EPSG:2154");
 
   // testing update
   p->setMetadata("wms_srs", "EPSG:3857");
   QVERIFY(p->getMetadataWmsSrs() == "EPSG:3857");
-  QVERIFY(p->getMetadatas().size() == 9);
+  QVERIFY(p->getMetadatas().size() == 10);
 
   // testing removal
   p->removeMetadata("ows_srs");
-  QVERIFY(p->getMetadatas().size() == 8);
+  QVERIFY(p->getMetadatas().size() == 9);
   QVERIFY(p->getMetadataWfsSrs().isEmpty());
 
   if (p) delete p;
@@ -368,10 +368,9 @@ void TestMapfileParser::testImageColor() {
   QVERIFY(l.green() == 0xff);
   QVERIFY(l.blue()  == 0xff);
 
-  // TODO: what if setting to integers so that the colour could not fit ? (e.g. > 0xff)
-  p->setImageColor(QColor(0xddddde, 0xad, 0xef));
+  p->setImageColor(QColor(0xdd, 0xad, 0xef));
   l = p->getImageColor();
-  QVERIFY(l.red()   == 0xddddde);
+  QVERIFY(l.red()   == 0xdd);
   QVERIFY(l.green() == 0xad);
   QVERIFY(l.blue()  == 0xef);
 
