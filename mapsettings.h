@@ -47,6 +47,7 @@
 #include "commands/changemapstatuscommand.h"
 #include "commands/outputformatcommands.h"
 #include "commands/setanglecommand.h"
+#include "commands/setconfigoptioncommand.h"
 #include "commands/setdatapatterncommand.h"
 #include "commands/setdefresolutioncommand.h"
 #include "commands/setimagecolorcommand.h"

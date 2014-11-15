@@ -914,7 +914,7 @@ void MapfileParser::addOutputFormat(OutputFormat * const of) {
   if (!this->map)
     return;
 
-  this->outputFormats  << of;
+  this->outputFormats  << new OutputFormat(*of);
   QString fullyQualifiedDriver = of->getDriver();
   if ((of->getDriver() == "GDAL") || (of->getDriver() == "OGR")) {
     fullyQualifiedDriver += "/" + of->getGdalDriver();
