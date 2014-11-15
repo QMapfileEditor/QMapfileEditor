@@ -73,7 +73,7 @@ RemoveOutputFormatCommand::~RemoveOutputFormatCommand() {
 /** related to modifying an existing Output Format */
 
 UpdateOutputFormatCommand::UpdateOutputFormatCommand(OutputFormat *fmtToUpdate, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent), fmtToUpdate(fmtToUpdate), parser(parser)
+     : QUndoCommand(parent), fmtToUpdate(new OutputFormat(* fmtToUpdate)), parser(parser)
 {
   originalFmt = parser->getOutputFormat(fmtToUpdate->getOriginalName());
   setText(QObject::tr("Update outputformat '%1'").arg(fmtToUpdate->getName()));
@@ -88,7 +88,11 @@ void UpdateOutputFormatCommand::redo(void) {
   parser->updateOutputFormat(fmtToUpdate);
 }
 
-UpdateOutputFormatCommand::~UpdateOutputFormatCommand() {}
+UpdateOutputFormatCommand::~UpdateOutputFormatCommand() {
+  // both objects are managed by the QUndo command
+  delete fmtToUpdate;
+  delete originalFmt;
+}
 
 
 /**  related to setting the default outputformat */

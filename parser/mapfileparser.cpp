@@ -851,7 +851,9 @@ void MapfileParser::updateOutputFormat(OutputFormat * const of) {
   for (int i = 0; i < this->outputFormats.size(); ++i) {
     if (this->outputFormats[i]->getName() == of->getName()) {
       delete this->outputFormats[i];
-      this->outputFormats[i] = of;
+      // Passed argument lifecycle is managed by the QUndo command
+      // we need to copy it.
+      this->outputFormats[i] = new OutputFormat(* of);
       break;
     }
   }
