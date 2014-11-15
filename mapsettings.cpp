@@ -52,13 +52,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
       ui->mf_map_status_on->setChecked(false);
     }
     // default output format
-    QList<OutputFormat *> fmts = this->mapfile->getOutputFormats();
-    ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
-
-    for (int i =0; i < fmts.size(); i++)
-      ui->mf_map_outputformat->addItem(fmts[i]->getName());
-
-    ui->mf_map_outputformat->setCurrentIndex(ui->mf_map_outputformat->findText(mf->getDefaultOutputFormat()));
+    this->populateDefaultOutputFormatList();
     //MapSizes
     ui->mf_map_size_width->setValue(this->mapfile->getMapWidth());
     ui->mf_map_size_height->setValue(this->mapfile->getMapHeight());
@@ -175,7 +169,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
 
     this->outputFormatsMapper = new QDataWidgetMapper(this);
     OutputFormatsModel * outputFormatsModel = new OutputFormatsModel(this);
-    outputFormatsModel->setEntries(fmts);
+    outputFormatsModel->setEntries(this->mapfile->getOutputFormats());
     ui->mf_outputformat_list->setModel(outputFormatsModel);
     for (int i = 1; i < outputFormatsModel->columnCount(); i++)
       ui->mf_outputformat_list->hideColumn(i);
@@ -241,7 +235,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
 
     /** Debug tab **/
 
-    
+
     this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
     this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
     this->connect(ui->mf_map_symbolset_browse, SIGNAL(clicked()), SLOT(browseSymbolsetFile()));
@@ -249,7 +243,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->connect(ui->mf_map_config_errorFile_relative, SIGNAL(clicked()), SLOT(enableRelativePathDebug()));
     //TODO: Test if file exist or form is empty, if not warn user
     this->connect(ui->mf_map_config_errorFile_browse, SIGNAL(clicked()), SLOT(browseDebugFile()));
-    
+
     if( this->mapfile->getDebug() )
     {
         ui->mf_map_debug_off->setChecked(false);
@@ -277,6 +271,20 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
 
 
 }
+
+
+void MapSettings::populateDefaultOutputFormatList(void) {
+  ui->mf_map_outputformat->clear();
+  QList<OutputFormat *> fmts = this->mapfile->getOutputFormats();
+  ui->mf_map_outputformat->addItems(MapfileParser::imageTypes);
+
+  for (int i =0; i < fmts.size(); i++)
+    ui->mf_map_outputformat->addItem(fmts[i]->getName());
+
+  ui->mf_map_outputformat->setCurrentIndex(ui->mf_map_outputformat->findText(this->mapfile->getDefaultOutputFormat()));
+
+}
+
 
 void MapSettings::saveMapSettings() {
     // name has changed
@@ -533,6 +541,8 @@ void MapSettings::handleOutputFormatFormClick(QAbstractButton *b) {
   this->ui->mf_outputformat_list->clearSelection();
   this->reinitOutputFormatForm();
   this->toggleOutputFormatsWidgets(false);
+
+  this->populateDefaultOutputFormatList();
 }
 
 void MapSettings::addOgcMetadata() {
@@ -627,6 +637,8 @@ void MapSettings::removeOutputFormat() {
 
  OutputFormatsModel * ofMdl = (OutputFormatsModel *) this->outputFormatsMapper->model();
  ofMdl->removeOutputFormat(idx);
+
+ this->populateDefaultOutputFormatList();
 }
 
 QMessageBox::StandardButton MapSettings::warnIfActiveSession() {

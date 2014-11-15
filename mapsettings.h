@@ -122,6 +122,7 @@ class MapSettings : public QDialog
 
       QDataWidgetMapper * outputFormatsMapper;
 
+      void populateDefaultOutputFormatList(void);
       void saveMapSettings();
       void toggleOutputFormatsWidgets(const bool &);
       QMessageBox::StandardButton warnIfActiveSession(void);
