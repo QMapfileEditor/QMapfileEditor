@@ -9,11 +9,12 @@ void TestCommands::testChangeMapNameCommand(void) {
 
   ChangeMapNameCommand *c = new ChangeMapNameCommand("MS2", p);
 
+  c->redo();
   QVERIFY(p->getMapName() == "MS2");
 
   c->undo();
 
-  
+
   QVERIFY(p->getMapName() == "MS");
 
   c->redo();
