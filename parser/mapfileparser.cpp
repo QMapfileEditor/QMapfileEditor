@@ -916,7 +916,6 @@ void MapfileParser::addOutputFormat(OutputFormat * const of) {
   if (!this->map)
     return;
 
-  this->outputFormats  << new OutputFormat(*of);
   QString fullyQualifiedDriver = of->getDriver();
   if ((of->getDriver() == "GDAL") || (of->getDriver() == "OGR")) {
     fullyQualifiedDriver += "/" + of->getGdalDriver();
@@ -930,6 +929,8 @@ void MapfileParser::addOutputFormat(OutputFormat * const of) {
     qDebug() << "newly created output format is NULL, should not happen (mapserver side)";
     return;
   }
+
+  this->outputFormats  << new OutputFormat(*of);
   newMsOf->mimetype  = strdup(of->getMimeType().toStdString().c_str());
   newMsOf->extension = strdup(of->getExtension().toStdString().c_str());
   newMsOf->imagemode = of->getImageMode();
