@@ -186,63 +186,13 @@ bool OutputFormatsModel::setData(const QModelIndex & index, const QVariant & val
   // case when the user will do some modifications, then click on abort.  In
   // this case, we would have to undo all the modifications made onto the
   // selected outputformat. We will handle the call to the different setters
-  // into the event triggered when the user will click on "save".
+  // into the event triggered when the user will click on "save" (on output
+  // format tab).
 
   Q_UNUSED(index)
   Q_UNUSED(value)
   Q_UNUSED(role)
 
-  // if (role != Qt::EditRole)
-  //   return false;
-  //
-  // if (index.row() > entries.size())
-  //    return false;
-  //
-  //  OutputFormat * of = entries.at(index.row());
-  //
-  //  if (of == NULL)
-  //    return false;
-  //
-  //  switch (index.column()) {
-  //    case OutputFormatsModel::Name:
-  //      if (nameAlreadyIn(value.toString())) {
-  //        return false;
-  //      }
-  //      of->setName(value.toString());
-  //      if (of->getState() != OutputFormat::UNCHANGED)
-  //        of->setState(OutputFormat::MODIFIED);
-  //      return true;
-  //
-  //    case OutputFormatsModel::MimeType:
-  //      of->setMimeType(value.toString());
-  //      if (of->getState() != OutputFormat::UNCHANGED)
-  //        of->setState(OutputFormat::MODIFIED);
-  //      return true;
-  //
-  //    case OutputFormatsModel::Driver:
-  //      of->setDriver(value.toString());
-  //      if (of->getState() != OutputFormat::UNCHANGED)
-  //        of->setState(OutputFormat::MODIFIED);
-  //      return true;
-  //
-  //    case OutputFormatsModel::Extension:
-  //      of->setExtension(value.toString());
-  //      if (of->getState() != OutputFormat::UNCHANGED)
-  //        of->setState(OutputFormat::MODIFIED);
-  //      return true;
-  //
-  //    case OutputFormatsModel::ImageMode:
-  //      of->setImageMode(value.toInt());
-  //      if (of->getState() != OutputFormat::UNCHANGED)
-  //        of->setState(OutputFormat::MODIFIED);
-  //      return true;
-  //
-  //    case OutputFormatsModel::Transparent:
-  //      of->setTransparent(value.toBool());
-  //      if (of->getState() != OutputFormat::UNCHANGED)
-  //        of->setState(OutputFormat::MODIFIED);
-  //      return true;
-  //  }
   return false;
 }
 
@@ -269,9 +219,4 @@ void OutputFormatsModel::removeOutputFormat(const QModelIndex & index) {
   }
   endResetModel();
 }
-
-// TODO: emit a signal each time the OutputFormatsModel is modified, and
-// registers the default outputformat combo to listen the changes, because the
-// list there should contain the default supported outputformats PLUS the ones
-// user-defined.
 

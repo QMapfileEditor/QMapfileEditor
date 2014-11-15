@@ -636,9 +636,18 @@ void MapSettings::removeOutputFormat() {
    return;
 
  OutputFormatsModel * ofMdl = (OutputFormatsModel *) this->outputFormatsMapper->model();
+ OutputFormat *of = ofMdl->getOutputFormat(idx);
+
+ // removes the OF from the model
  ofMdl->removeOutputFormat(idx);
 
- this->populateDefaultOutputFormatList();
+ // Removes the outputformat from the default outputformat combo
+ // (on main tab)
+ if (of) {
+   int comboIdx = ui->mf_map_outputformat->findText(of->getOriginalName());
+   if (comboIdx != -1)
+     ui->mf_map_outputformat->removeItem(comboIdx);
+ }
 }
 
 QMessageBox::StandardButton MapSettings::warnIfActiveSession() {
