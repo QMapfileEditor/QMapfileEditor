@@ -18,6 +18,7 @@
         <file>images/icons/dialog-cancel.png</file>
         <file>images/icons/edit-table-delete-row.png</file>
         <file>images/icons/edit-table-insert-row-below.png</file>
+        <file>images/icons/icon.png</file>
     </qresource>
     <qresource prefix="/">
         <file>lang/en_US.qm</file>

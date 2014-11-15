@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
+  this->setWindowIcon(QIcon(":/ui/images/icons/icon.png"));
+
   this->undoStack = new QUndoStack(this);
 
   this->showInfo(tr("Initializing default mapfile"));
