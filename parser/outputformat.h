@@ -63,6 +63,7 @@ class OutputFormat {
                 const bool & transparent = 0,
                 const enum State & state = ADDED);
 
+   explicit OutputFormat(const OutputFormat &);
    /** getters */
    QString                 const & getName()          const ;
    QString                 const & getOriginalName()  const ;

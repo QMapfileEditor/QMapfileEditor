@@ -26,62 +26,21 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  ****************************************************************************/
 
-#ifndef OUTPUTFORMATCOMMANDS_H
-#define OUTPUTFORMATCOMMANDS_H
+#include "setconfigoptioncommand.h"
 
-#include <QUndoCommand>
+SetConfigOptionCommand::SetConfigOptionCommand(QString key, QString value, MapfileParser *parser, QUndoCommand *parent)
+     : QUndoCommand(parent), key(key), newValue(value), parser(parser)
+{
+   oldValue = parser->getMetadata(key);
 
-#include "../parser/mapfileparser.h"
+   setText(QObject::tr("change config option[%1] to '%2'").arg(this->key).arg(this->newValue));
+}
 
-class AddNewOutputFormatCommand : public QUndoCommand {
+void SetConfigOptionCommand::undo(void) {
+  parser->setConfigOption(this->key, this->oldValue);
+}
 
- public:
-   AddNewOutputFormatCommand(OutputFormat * newOf, MapfileParser * parser, QUndoCommand *parent = 0);
-   ~AddNewOutputFormatCommand();
-   void undo();
-   void redo();
+void SetConfigOptionCommand::redo(void) {
+  parser->setConfigOption(this->key, this->newValue);
+}
 
- private:
-   OutputFormat * newFormat;
-   MapfileParser * parser;
-};
-
-class RemoveOutputFormatCommand : public QUndoCommand {
-
- public:
-   RemoveOutputFormatCommand(OutputFormat * fmtToRemove, MapfileParser * parser, QUndoCommand *parent = 0);
-   ~RemoveOutputFormatCommand();
-   void undo();
-   void redo();
-
- private:
-   OutputFormat * fmtToRemove;
-   MapfileParser * parser;
-};
-
-class UpdateOutputFormatCommand : public QUndoCommand {
-
- public:
-   UpdateOutputFormatCommand(OutputFormat * fmtToUpdate, MapfileParser * parser, QUndoCommand *parent = 0);
-   ~UpdateOutputFormatCommand();
-   void undo();
-   void redo();
-
- private:
-   OutputFormat * fmtToUpdate, * originalFmt;
-   MapfileParser * parser;
-};
-
-class SetDefaultOutputFormatCommand : public QUndoCommand {
-
- public:
-   SetDefaultOutputFormatCommand(QString const & newDefaultOf, MapfileParser * parser, QUndoCommand *parent = 0);
-   void undo();
-   void redo();
-
- private:
-   QString oldDefaultOf, newDefaultOf;
-   MapfileParser * parser;
-};
-
-#endif // OUTPUTFORMATCOMMANDS_H

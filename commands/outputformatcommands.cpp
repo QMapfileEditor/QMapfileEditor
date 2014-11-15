@@ -31,8 +31,9 @@
 /** related to adding a new Output Format */
 
 AddNewOutputFormatCommand::AddNewOutputFormatCommand(OutputFormat *newFormat, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent), newFormat(newFormat), parser(parser)
+     : QUndoCommand(parent), parser(parser)
 {
+  this->newFormat = new OutputFormat(* newFormat);
   setText(QObject::tr("Create new outputformat '%1'").arg(newFormat->getName()));
 }
 
@@ -44,16 +45,20 @@ void AddNewOutputFormatCommand::redo(void) {
   parser->addOutputFormat(newFormat);
 }
 
+AddNewOutputFormatCommand::~AddNewOutputFormatCommand() {
+  delete newFormat;
+}
+
 /** related to removing an Output Format */
 
 RemoveOutputFormatCommand::RemoveOutputFormatCommand(OutputFormat *fmtToRemove, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent), fmtToRemove(fmtToRemove), parser(parser)
+     : QUndoCommand(parent), parser(parser)
 {
+  this->fmtToRemove = new OutputFormat(* fmtToRemove);
   setText(QObject::tr("Remove outputformat '%1'").arg(fmtToRemove->getName()));
 }
 
 void RemoveOutputFormatCommand::undo(void) {
-  // Note: What if a command adds a fmt which has the same name ?
   parser->addOutputFormat(fmtToRemove);
 }
 
@@ -61,10 +66,14 @@ void RemoveOutputFormatCommand::redo(void) {
   parser->removeOutputFormat(fmtToRemove);
 }
 
+RemoveOutputFormatCommand::~RemoveOutputFormatCommand() {
+  delete fmtToRemove;
+}
+
 /** related to modifying an existing Output Format */
 
 UpdateOutputFormatCommand::UpdateOutputFormatCommand(OutputFormat *fmtToUpdate, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent), fmtToUpdate(fmtToUpdate), parser(parser)
+     : QUndoCommand(parent), fmtToUpdate(new OutputFormat(* fmtToUpdate)), parser(parser)
 {
   originalFmt = parser->getOutputFormat(fmtToUpdate->getOriginalName());
   setText(QObject::tr("Update outputformat '%1'").arg(fmtToUpdate->getName()));
@@ -80,6 +89,8 @@ void UpdateOutputFormatCommand::redo(void) {
 }
 
 UpdateOutputFormatCommand::~UpdateOutputFormatCommand() {
+  // both objects are managed by the QUndo command
+  delete fmtToUpdate;
   delete originalFmt;
 }
 

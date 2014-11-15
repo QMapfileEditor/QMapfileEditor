@@ -40,6 +40,20 @@ imageMode(imageMode), transparent(transparent), state(state)
   setDriver(driver);
 }
 
+/** copy constructor */
+OutputFormat::OutputFormat(const OutputFormat & of) {
+  name          = of.getName();
+  originalName  = of.getOriginalName();
+  mimeType      = of.getMimeType();
+  extension     = of.getExtension();
+  imageMode     = of.getImageMode();
+  transparent   = of.getTransparent();
+  state         = of.getState();
+  driver        = of.getDriver();
+  gdalDriver    = of.getGdalDriver();
+  formatOptions = QHash<QString,QString>(of.getFormatOptions());
+}
+
 /** Getters */
 QString const & OutputFormat::getName()         const { return name;         }
 QString const & OutputFormat::getOriginalName() const { return originalName; }
@@ -96,11 +110,6 @@ void OutputFormat::setState(enum State const &v)  { state       = v; }
 OutputFormatsModel::OutputFormatsModel(QObject * parent) : QAbstractListModel(parent) {}
 
 OutputFormatsModel::~OutputFormatsModel() {
-  for (int i = 0; i < entries.size(); ++i) {
-    delete entries.at(i);
-  }
-  for (int i = 0 ; i < removedEntries.size() ; ++i)
-    delete removedEntries.at(i);
 }
 
 int OutputFormatsModel::rowCount(const QModelIndex & parent) const {

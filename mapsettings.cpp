@@ -101,26 +101,26 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->connect(ui->mf_map_shapepath_relative, SIGNAL(clicked()), SLOT(enableRelativePathShapepath()));
     this->connect(ui->mf_map_symbolset_relative, SIGNAL(clicked()), SLOT(enableRelativePathSymbolset()));
     this->connect(ui->mf_map_fontset_relative, SIGNAL(clicked()), SLOT(enableRelativePathFontset()));
-    
+
     ui->mf_map_shapepath->setText(this->mapfile->getShapepath());
-    
+
     ui->mf_map_shapepath_relative->setChecked(true);
     if((QFileInfo (this->mapfile->getShapepath())).isAbsolute()) {
       ui->mf_map_shapepath_relative->setChecked(false);
     }
-    
+
     ui->mf_map_symbolset->setText(this->mapfile->getSymbolSet());
     ui->mf_map_symbolset_relative->setChecked(true);
     if((QFileInfo (this->mapfile->getSymbolSet())).isAbsolute()) {
       ui->mf_map_symbolset_relative->setChecked(false);
     }
-    
+
     ui->mf_map_fontset->setText(this->mapfile->getFontSet());
     ui->mf_map_fontset_relative->setChecked(true);
     if((QFileInfo (this->mapfile->getFontSet())).isAbsolute()) {
       ui->mf_map_fontset_relative->setChecked(false);
     }
-    
+
     /** Advanced tab **/
 
     //connect angle value
@@ -135,7 +135,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     //connect relatif path for proj lib and encryption
     this->connect(ui->mf_map_config_projlib_relative, SIGNAL(clicked()), SLOT(enableRelativePathProjlib()));
     this->connect(ui->mf_map_config_encryption_relative, SIGNAL(clicked()), SLOT(enableRelativePathEncryption()));
-    
+
     //fill in form
     ui->mf_map_resolution->setValue(this->mapfile->getResolution());
     ui->mf_map_defresolution->setValue(this->mapfile->getDefResolution());
@@ -147,16 +147,17 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_angle->setValue(this->mapfile->getAngle());
     ui->mf_map_templatepattern->setText(this->mapfile->getTemplatePattern());
     ui->mf_map_datapattern->setText(this->mapfile->getDataPattern());
-    
+
     ui->mf_map_config_contexturl->setText(this->mapfile->getConfigOption("CGI_CONTEXT_URL"));
-    
+
     ui->mf_map_config_encryption->setText(this->mapfile->getConfigOption("MS_ENCRYPTION_KEY"));
     ui->mf_map_config_encryption_relative->setChecked(true);
     if((QFileInfo (this->mapfile->getConfigOption("MS_ENCRYPTION_KEY"))).isAbsolute()) {
       ui->mf_map_config_encryption_relative->setChecked(false);
     }
 
-    if (! this->mapfile->getConfigOption("MS_NONSQUARE").isEmpty()) {
+    QString msNonSquare = this->mapfile->getConfigOption("MS_NONSQUARE").toLower();
+      if (msNonSquare == "yes") {
         ui->mf_map_config_squarepixel_on->setChecked(true);
         ui->mf_map_config_squarepixel_off->setChecked(false);
     } else {
@@ -169,7 +170,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     if((QFileInfo (this->mapfile->getConfigOption("PROJ_LIB"))).isAbsolute()) {
       ui->mf_map_config_projlib_relative->setChecked(false);
     }
-    
+
     /** Output formats tab **/
 
     this->outputFormatsMapper = new QDataWidgetMapper(this);
@@ -320,7 +321,6 @@ void MapSettings::saveMapSettings() {
     }
 
     //extent
-
     if ((ui->mf_map_extent_left->text().toFloat()      != this->mapfile->getMapExtentMinX())
         || (ui->mf_map_extent_bottom->text().toFloat() != this->mapfile->getMapExtentMinY())
         || (ui->mf_map_extent_right->text().toFloat()  != this->mapfile->getMapExtentMaxX())
@@ -341,11 +341,13 @@ void MapSettings::saveMapSettings() {
                                                            this->mapfile));
     }
 
-    if (ui->mf_map_config_errorFile->text() != this->mapfile->getMetadata("ms_errorfile")) {
-      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("ms_errorfile", ui->mf_map_config_errorFile->text(), this->mapfile));
+    // error file (map options)
+    if (ui->mf_map_config_errorFile->text() != this->mapfile->getConfigOption("MS_ERRORFILE")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetConfigOptionCommand("MS_ERRORFILE", ui->mf_map_config_errorFile->text(), this->mapfile));
     }
-    if (ui->mf_map_config_missingdata->currentText() != this->mapfile->getMetadata("missingdata")) {
-      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("missingdata", ui->mf_map_config_missingdata->currentText(), this->mapfile));
+    // missing data (map options)
+    if (ui->mf_map_config_missingdata->currentText() != this->mapfile->getConfigOption("ON_MISSING_DATA")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetConfigOptionCommand("ON_MISSING_DATA", ui->mf_map_config_missingdata->currentText(), this->mapfile));
     }
 
     /** Path tab **/
@@ -383,29 +385,34 @@ void MapSettings::saveMapSettings() {
       ((MainWindow *) parent())->pushUndoStack(new SetDataPatternCommand(ui->mf_map_datapattern->text(), this->mapfile));
     }
 
-    if (ui->mf_map_config_contexturl->text() != this->mapfile->getMetadata("CGI_CONTEXT_URL")) {
-      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("CGI_CONTEXT_URL",
-                                                                      ui->mf_map_config_contexturl->text(), this->mapfile));
+    // CGI_CONTEXT_URL (map options)
+    if (ui->mf_map_config_contexturl->text() != this->mapfile->getConfigOption("CGI_CONTEXT_URL")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetConfigOptionCommand("CGI_CONTEXT_URL",
+                                                                          ui->mf_map_config_contexturl->text(), this->mapfile));
     }
 
-    if (ui->mf_map_config_encryption->text() != this->mapfile->getMetadata("MS_ENCRYPTION_KEY")) {
-      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("MS_ENCRYPTION_KEY",
-                                                                      ui->mf_map_config_encryption->text(), this->mapfile));
+    // encryption key (map options)
+    if (ui->mf_map_config_encryption->text() != this->mapfile->getConfigOption("MS_ENCRYPTION_KEY")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetConfigOptionCommand("MS_ENCRYPTION_KEY",
+                                                                          ui->mf_map_config_encryption->text(), this->mapfile));
     }
 
+    // MS_NONSQUARE (map options)
+    QString msNonSquare = this->mapfile->getConfigOption("MS_NONSQUARE").toLower();
     if (ui->mf_map_config_squarepixel_on->isChecked()) {
-      if (this->mapfile->getMetadata("MS_NONSQUARE") != "ON") {
-        ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("MS_NONSQUARE", "ON", this->mapfile));
+      if (msNonSquare != "yes") {
+        ((MainWindow *) parent())->pushUndoStack(new SetConfigOptionCommand("MS_NONSQUARE", "yes", this->mapfile));
       }
     } else if (ui->mf_map_config_squarepixel_off->isChecked()) {
-       if (this->mapfile->getMetadata("MS_NONSQUARE") != "OFF") {
-        ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("MS_NONSQUARE", "OFF", this->mapfile));
+       if (msNonSquare != "no") {
+        ((MainWindow *) parent())->pushUndoStack(new SetConfigOptionCommand("MS_NONSQUARE", "no", this->mapfile));
       }
     }
 
-    if (ui->mf_map_config_projlib->text() != this->mapfile->getMetadata("PROJ_LIB")) {
-      ((MainWindow *) parent())->pushUndoStack(new SetMetadataCommand("PROJ_LIB",
-                                                                      ui->mf_map_config_projlib->text(), this->mapfile));
+    // PROJ_LIB (map option)
+    if (ui->mf_map_config_projlib->text() != this->mapfile->getConfigOption("PROJ_LIB")) {
+      ((MainWindow *) parent())->pushUndoStack(new SetConfigOptionCommand("PROJ_LIB",
+                                                                          ui->mf_map_config_projlib->text(), this->mapfile));
     }
 
     /** Outputformat tab **/
@@ -425,10 +432,15 @@ void MapSettings::saveMapSettings() {
     for (int i = 0; i < entries.size(); ++i) {
      if (entries[i]->getState() == OutputFormat::UNCHANGED)
        continue;
-     if ((entries[i]->getState() == OutputFormat::ADDED) || (entries[i]->getState() == OutputFormat::ADDED_SAVED))
+     if ((entries[i]->getState() == OutputFormat::ADDED) || (entries[i]->getState() == OutputFormat::ADDED_SAVED)) {
+       // before inserting, consider the OF as UNCHANGED
+       entries[i]->setState(OutputFormat::UNCHANGED);
        ((MainWindow *) parent())->pushUndoStack(new AddNewOutputFormatCommand(entries[i], this->mapfile));
-     else if (entries[i]->getState() == OutputFormat::MODIFIED)
+     }
+     else if (entries[i]->getState() == OutputFormat::MODIFIED) {
+       entries[i]->setState(OutputFormat::UNCHANGED);
        ((MainWindow *) parent())->pushUndoStack(new UpdateOutputFormatCommand(entries[i], this->mapfile));
+     }
     }
 
     /** OGC tab **/

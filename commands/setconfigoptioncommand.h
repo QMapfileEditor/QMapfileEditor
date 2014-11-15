@@ -26,62 +26,26 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  ****************************************************************************/
 
-#ifndef OUTPUTFORMATCOMMANDS_H
-#define OUTPUTFORMATCOMMANDS_H
+#ifndef SETCONFIGOPTIONCOMMAND_H
+#define SETCONFIGOPTIONCOMMAND_H
 
 #include <QUndoCommand>
 
 #include "../parser/mapfileparser.h"
 
-class AddNewOutputFormatCommand : public QUndoCommand {
+class SetConfigOptionCommand : public QUndoCommand {
 
  public:
-   AddNewOutputFormatCommand(OutputFormat * newOf, MapfileParser * parser, QUndoCommand *parent = 0);
-   ~AddNewOutputFormatCommand();
+   SetConfigOptionCommand(QString key, QString newValue, MapfileParser * parser, QUndoCommand *parent = 0);
    void undo();
    void redo();
 
  private:
-   OutputFormat * newFormat;
+   QString key;
+   QString oldValue;
+   QString newValue;
    MapfileParser * parser;
 };
 
-class RemoveOutputFormatCommand : public QUndoCommand {
 
- public:
-   RemoveOutputFormatCommand(OutputFormat * fmtToRemove, MapfileParser * parser, QUndoCommand *parent = 0);
-   ~RemoveOutputFormatCommand();
-   void undo();
-   void redo();
-
- private:
-   OutputFormat * fmtToRemove;
-   MapfileParser * parser;
-};
-
-class UpdateOutputFormatCommand : public QUndoCommand {
-
- public:
-   UpdateOutputFormatCommand(OutputFormat * fmtToUpdate, MapfileParser * parser, QUndoCommand *parent = 0);
-   ~UpdateOutputFormatCommand();
-   void undo();
-   void redo();
-
- private:
-   OutputFormat * fmtToUpdate, * originalFmt;
-   MapfileParser * parser;
-};
-
-class SetDefaultOutputFormatCommand : public QUndoCommand {
-
- public:
-   SetDefaultOutputFormatCommand(QString const & newDefaultOf, MapfileParser * parser, QUndoCommand *parent = 0);
-   void undo();
-   void redo();
-
- private:
-   QString oldDefaultOf, newDefaultOf;
-   MapfileParser * parser;
-};
-
-#endif // OUTPUTFORMATCOMMANDS_H
+#endif // SETCONFIGOPTIONCOMMAND_H
