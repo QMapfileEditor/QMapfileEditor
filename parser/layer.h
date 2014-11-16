@@ -55,6 +55,66 @@ class Layer {
     int getInternalIndex();
     struct layerObj * getInternalLayerObj();
 
+    /** General tab  */
+    bool status;
+    // TODO: there may be some types (enums ?) more appropriate
+    // For now, getting what @yjacolin put in the interface
+    QString type;
+    QString geomType;
+    int opacity;
+    QString mask;
+    QString group;
+    QString requires;
+
+    QString plugin;
+    // These could probably be merged
+    QString projType;
+    QString projString;
+
+    double minx, miny, maxx, maxy;
+
+    QString filter;
+
+    // minscale / maxscale onto layerObj (mapserver side)
+    double minScale, maxScale;
+
+
+    /** Advanced tab */
+    QString geomTransformation;
+    double tolerance;
+    QString toleranceUnit;
+    QString processing;
+
+    bool transform;
+    int maxfeatures;
+    double mingeowidth, maxgeowidth;
+
+    // TODO: cluster ??
+
+
+    QString layerTemplate;
+    QString header, footer;
+
+    /** classes tab */
+    // TODO: needs a LayerClass class definition
+
+    /** label tab  */
+    QString labelItem;
+    double minScaleDenomLabel, maxScaleDenomLabel;
+    int labelAngleItem;
+    bool labelCache;
+    bool postLabelCache;
+    int labelSizeItem;
+    QString labelRequires;
+
+    /** web services tab */
+
+    /** validation tab */
+    QString validation;
+
+    /** debug tab */
+    int debugLevel;
+
 };
 
 
