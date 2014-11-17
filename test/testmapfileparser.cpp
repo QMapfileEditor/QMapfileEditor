@@ -74,10 +74,10 @@ void TestMapfileParser::testLayers() {
   MapfileParser * p = new MapfileParser("../data/world_mapfile.map");
   QVERIFY(p->isLoaded());
 
-  QStringList layers = p->getLayers();
+  QList<Layer *> layers = p->getLayers();
   QVERIFY(layers.size() == 2);
-  QVERIFY(layers.at(0) == "world_raster");
-  QVERIFY(layers.at(1) == "world_adm0");
+  QVERIFY(layers.at(0)->getName() == "world_raster");
+  QVERIFY(layers.at(1)->getName() == "world_adm0");
 
   if (p) delete p;
 

@@ -32,7 +32,7 @@
 #include <QHash>
 #include <QModelIndex>
 #include <QString>
-
+#include <QStringList>
 
 /**
  * This class shall be considered as an interface
@@ -47,13 +47,23 @@ class Layer {
     QString const & getName();
     void setName(QString const &);
 
+    // static variables (from mapserver.h)
+    static QStringList layerType;
+
   private:
     // Note: in Mapserver, name is used as a primary key
+    // Hence, this member variable has a specific role.
     QString name;
 
+    // Since modifications of layers could have an impact on the in-memory
+    // objects (e.g. deletion), we prefer keeping a reference the the map
+    // object, instead of the layerObj ones.
     struct mapObj * map;
+
     int getInternalIndex();
     struct layerObj * getInternalLayerObj();
+
+    // Significant member variables for the model
 
     /** General tab  */
     bool status;
@@ -67,7 +77,7 @@ class Layer {
     QString requires;
 
     QString plugin;
-    // These could probably be merged
+    // TODO These could probably be merged
     QString projType;
     QString projString;
 

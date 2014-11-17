@@ -31,7 +31,50 @@
 #include "layer.h"
 
 Layer::Layer(QString const & name, struct mapObj * map):
-    name(name), map(map) {
+name(name), map(map) {
+
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    this->status = l->status;
+    this->type = Layer::layerType.at(l->type);
+    // TODO geomType ?
+    this->opacity = l->opacity;
+    this->mask = l->mask; // TODO if mask == NULL ??
+    this->group = l->group;
+    this->requires = l->requires;
+    this->plugin = l->plugin_library; // TODO ?
+    //TODO projection ? map->project and map->projection refers to != objects
+    this->minx = l->extent.minx;
+    this->miny = l->extent.miny;
+    this->maxx = l->extent.maxx;
+    this->maxy = l->extent.maxy;
+    // TODO layer->filter is a complex object
+    this->minScale = l->minscaledenom;
+    this->maxScale = l->maxscaledenom;
+    // TODO geomTransform  vs l->transform ?
+    this->tolerance = l->tolerance;
+    // TODO toleranceUnits vs l->toleranceunits ?
+    // TODO processing (QString) vs l->processing (char ** / QStringList)
+    this->transform = l->transform;
+    this->maxfeatures = l->maxfeatures;
+    this->mingeowidth = l->mingeowidth;
+    this->maxgeowidth = l->maxgeowidth;
+    // TODO layerTemplate ?
+    this->header = l->header;
+    this->footer = l->footer;
+    this->labelItem = l->labelitem;
+    this->maxScaleDenomLabel = l->labelmaxscaledenom;
+    this->minScaleDenomLabel = l->labelminscaledenom;
+    // TODO labelAngleItem (not found in layerObj)
+    this->labelCache = l->labelcache;
+    this->postLabelCache = l->postlabelcache;
+    // TODO labelSizeItem ? (not found in layerObj)
+    this->labelRequires = l->labelrequires;
+    // TODO l->validation is a complex structure (vs QString)
+    this->debugLevel = l->debug;
+
+  }
+
 }
 
 QString const & Layer::getName() {
@@ -63,8 +106,14 @@ int Layer::getInternalIndex(void) {
 layerObj * Layer::getInternalLayerObj(void) {
   int idx = getInternalIndex();
 
-  if (idx < 0)
+  if ((idx < 0) || (idx > this->map->numlayers))
    return NULL;
+
  return GET_LAYER(this->map, idx);
 
 }
+
+
+QStringList Layer::layerType = QStringList() << "MS_LAYER_POINT" << "MS_LAYER_LINE" << "MS_LAYER_POLYGON"
+                                                    << "MS_LAYER_RASTER" << "MS_LAYER_ANNOTATION" << "MS_LAYER_QUERY"
+                                                    << "MS_LAYER_CIRCLE" << "MS_LAYER_TILEINDEX"<< "MS_LAYER_CHART";

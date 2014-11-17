@@ -38,6 +38,7 @@
 #include <iostream>
 
 #include "outputformat.h"
+#include "layer.h"
 
 class MapfileParser
 {
@@ -53,7 +54,7 @@ class MapfileParser
 
   void addLayer(QString const &, QString const &, QString const &, int);
 
-  QStringList const & getLayers(void) const;
+  QList<Layer *> const & getLayers(void) const;
 
   QStringList const & getGdalGdalDrivers(void) const { return gdalGdalDrivers; };
   QStringList const & getGdalOgrDrivers(void)  const { return gdalOgrDrivers;  };
@@ -187,7 +188,6 @@ class MapfileParser
   void removeFromMsMap(void *, const QString &);
 
   QString name;
-  QStringList layers;
   bool status;
   QString mapPath;
   QList<OutputFormat *> outputFormats;
@@ -217,6 +217,10 @@ class MapfileParser
 
   QString templatePattern;
   QString dataPattern;
+
+  // Layers
+  QList<Layer *> layers;
+
 };
 
 #endif // MAPFILEPARSER_H

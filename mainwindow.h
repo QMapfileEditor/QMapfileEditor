@@ -52,6 +52,7 @@
 #include "layersettingsvector.h"
 #include "layersettingsraster.h"
 #include "parser/mapfileparser.h"
+//#include "parser/layer.h"
 
 
 namespace Ui {

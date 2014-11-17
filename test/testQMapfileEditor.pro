@@ -24,6 +24,7 @@ QMAKE_CLEAN += $(TARGET)
 LIBS += ../debug/mapfileparser.o            \
         ../debug/outputformat.o             \
         ../debug/changemapnamecommand.o     \
+        ../debug/layer.o                    \
         -L/usr/lib/x86_64-linux-gnu/ -lmapserver -lgdal -lgcov
 
 

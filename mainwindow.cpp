@@ -316,7 +316,12 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
     return;
   }
 
-  ((QStringListModel *) this->ui->mf_structure->model())->setStringList(this->mapfile->getLayers());
+  QStringList layersName = QStringList();
+  QList<Layer *> l = this->mapfile->getLayers();
+  for (int i = 0; i < l.size(); ++i)
+    layersName << l[i]->getName();
+
+  ((QStringListModel *) this->ui->mf_structure->model())->setStringList(layersName);
 
   ui->mf_structure->expandAll();
 

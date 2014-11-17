@@ -100,7 +100,7 @@ MapfileParser::MapfileParser(const QString & fname) :
   this->gdalGdalDrivers.sort();
 
   this->name = QString();
-  this->layers = QStringList();
+  this->layers = QList<Layer *>();
   this->status = false;
   this->mapPath = QString();
   this->outputFormats = QList<OutputFormat *>();
@@ -127,12 +127,6 @@ MapfileParser::MapfileParser(const QString & fname) :
   if (this->map) {
     // name
     this->name = QString(this->map->name);
-    // Layers
-    // TODO: should become QList<Layer *>
-    // leaving it as is for now, for compatibility
-    for (int i = 0; i <  this->map->numlayers ; i++) {
-      this->layers << this->map->layers[i]->name;
-    }
     // status
     this->status = this->map->status;
     // map path
@@ -199,6 +193,11 @@ MapfileParser::MapfileParser(const QString & fname) :
    this->templatePattern = this->map->templatepattern;
    // data pattern
    this->dataPattern = this->map->datapattern;
+
+   // Layers
+   for (int i = 0; i < this->map->numlayers; ++i) {
+     this->layers << new Layer(this->map->layers[i]->name, this->map);
+   }
   }
 }
 
@@ -221,7 +220,7 @@ unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int &
     this->currentImageSize = 0;
   }
 
-  // issue #13:
+  // issue #13 (https://github.com/QMapfileEditor/QMapfileEditor/issues/13)
   //
   // mapserver will internally adjust the extent when calling msDrawMap, since
   // we do not want to alter the original parameters, we need to save them, then
@@ -267,9 +266,12 @@ bool MapfileParser::isLoaded() { return (this->map != NULL); }
 
 // Layers-related methods
 
-QStringList const & MapfileParser::getLayers() const {
+QList<Layer *> const & MapfileParser::getLayers() const {
   return layers;
 }
+
+// This method is only used in case of using qgisimporter class for now.
+// It shall evolve in the future to use the Layer class.
 
 void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr, int geomType) {
   layerObj *newLayer =  (layerObj *) malloc(sizeof(layerObj));
