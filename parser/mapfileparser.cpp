@@ -995,8 +995,12 @@ MapfileParser::~MapfileParser() {
   if (this->currentImageBuffer) {
     free(this->currentImageBuffer);
   }
+  // freeing allocated outputformats
   for (int i = 0; i < this->outputFormats.size(); ++i)
     delete this->outputFormats[i];
+  // freeing allocated layers
+  for (int i = 0; i < this->layers.size(); ++i)
+    delete this->layers[i];
 }
 
 /**
