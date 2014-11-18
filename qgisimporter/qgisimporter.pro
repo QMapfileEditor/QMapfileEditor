@@ -15,7 +15,7 @@ QMAKE_CLEAN += $(TARGET)
 
 QT += xml
 # Input
-HEADERS += qgisimporter.h ../parser/mapfileparser.h ../parser/outputformat.h
-SOURCES += main.cpp qgisimporter.cpp ../parser/mapfileparser.cpp ../parser/outputformat.cpp
+HEADERS += qgisimporter.h ../parser/mapfileparser.h ../parser/outputformat.h ../parser/layer.h
+SOURCES += main.cpp qgisimporter.cpp ../parser/mapfileparser.cpp ../parser/outputformat.cpp ../parser/layer.cpp
 
 
