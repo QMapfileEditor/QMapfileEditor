@@ -402,7 +402,8 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   }
 
   if (this->layerSettingsDialog) {
-    this->layerSettingsDialog->show();
+    delete this->layerSettingsDialog;
+    this->layerSettingsDialog = NULL;
     return;
   }
 
@@ -430,7 +431,6 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
     this->layerSettingsDialog->setLayout(mainLayout);
     this->layerSettingsDialog->resize(870, 630);
     this->layerSettingsDialog->show();
-
   } else {
     this->layerSettingsDialog->setWindowTitle(tr("Vector Layer Settings"));
     LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);
