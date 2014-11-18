@@ -50,6 +50,32 @@ class Layer {
     // static variables (from mapserver.h)
     static QStringList layerType;
 
+    // Accessors
+    bool const & getStatus() const { return status; };
+    QString const & getType() const { return type; };
+    int const & getOpacity() const { return opacity; };
+    QString const & getMask() const { return mask; };
+    double const & getMinX() const { return minx; };
+    double const & getMaxX() const { return maxx; };
+    double const & getMinY() const { return miny; };
+    double const & getMaxY() const { return maxy; };
+    double const & getMinScale() const { return minScale; };
+    double const & getMaxScale() const { return maxScale; };
+    double const & getTolerance() const { return tolerance; };
+    int const & getMaxFeatures() const { return maxfeatures; };
+    double const & getMinGeoWidth() const { return mingeowidth; } ;
+    double const & getMaxGeoWidth() const { return maxgeowidth; };
+    QString const & getHeader() const { return header; };
+    QString const & getFooter() const { return footer; };
+    QString const & getLabelItem() const { return labelItem; };
+    double const & getMaxScaleDenomLabel() const { return maxScaleDenomLabel; };
+    double const & getMinScaleDenomLabel() const { return minScaleDenomLabel; };
+    bool const & getLabelCache() const { return labelCache; };
+    bool const & getPostLabelCache() const { return postLabelCache; };
+    int const & getDebugLevel() const { return debugLevel; };
+    QString const & getLabelRequires() const { return labelRequires; };
+
+
   private:
     // Note: in Mapserver, name is used as a primary key
     // Hence, this member variable has a specific role.
@@ -127,6 +153,32 @@ class Layer {
 
 };
 
+class LayerModel : public QAbstractListModel {
+
+ public:
+  LayerModel(QObject *, QList<Layer *> const &);
+  ~LayerModel();
+
+  Layer * getLayer(const QModelIndex &) const;
+  void removeLayer(const QModelIndex &);
+
+  int rowCount(const QModelIndex &parent = QModelIndex()) const;
+  int columnCount(const QModelIndex &parent = QModelIndex()) const;
+
+  QVariant data(const QModelIndex &index, int role) const;
+  QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+
+  // TODO to be completed as long as new member variables are supported
+  enum Column { LAYER_NAME, LAYER_STATUS, LAYER_TYPE, LAYER_OPACITY, LAYER_MASK, LAYER_MIN_X, LAYER_MAX_X, 
+    LAYER_MIN_Y, LAYER_MAX_Y, LAYER_MIN_SCALE, LAYER_MAX_SCALE,
+    LAYER_TOLERANCE, LAYER_MAX_FEATURES, LAYER_MIN_GEO_WIDTH, LAYER_MAX_GEO_WIDTH, LAYER_HEADER, LAYER_FOOTER, LAYER_LABEL_ITEM, LAYER_MAX_SCALE_DENOM_LABEL,
+    LAYER_MIN_SCALE_DENOM_LABEL, LAYER_LABEL_CACHE, LAYER_POST_LABEL_CACHE, LAYER_LABEL_REQUIRES, LAYER_DEBUG_LEVEL };
+
+ private:
+  QList<Layer *> layers;
+  QList<Layer *> removedLayers;
+
+};
 
 #endif // LAYER_H
 

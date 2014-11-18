@@ -196,6 +196,9 @@ MapfileParser::MapfileParser(const QString & fname) :
 
    // Layers
    for (int i = 0; i < this->map->numlayers; ++i) {
+     // Since the name is a pivot, we consider it as a special
+     // variable (this is the only thing we can almost consider
+     // as stable across user modifications).
      this->layers << new Layer(this->map->layers[i]->name, this->map);
    }
   }

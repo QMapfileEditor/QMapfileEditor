@@ -419,15 +419,27 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   //TODO: give layer to layerSettings?
   //TODO: if layer is vector (ie TYPE = POINT, LINE or POLYGON and have no grid object) then:
   //this->showInfo(QString::number(i.model()->data(Qt::DisplayRole)));
-  this->layerSettingsDialog->setWindowTitle("Vector Layer Settings");
-  LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);
-  mainLayout->addWidget(layerSettingsVector);
-  
-  mainLayout->addWidget(buttonBox);
-  
-  this->layerSettingsDialog->setLayout(mainLayout);
-  this->layerSettingsDialog->resize(870, 630);
-  this->layerSettingsDialog->show();
+  //qDebug() << i.row();
+
+  Layer * l = this->mapfile->getLayers().at(i.row());
+  if (l->getType() == "MS_LAYER_RASTER") {
+    this->layerSettingsDialog->setWindowTitle(tr("Raster Layer Settings"));
+    LayerSettingsRaster * layerSettingsRaster = new LayerSettingsRaster(this->layerSettingsDialog, this->mapfile);
+    mainLayout->addWidget(layerSettingsRaster);
+    mainLayout->addWidget(buttonBox);
+    this->layerSettingsDialog->setLayout(mainLayout);
+    this->layerSettingsDialog->resize(870, 630);
+    this->layerSettingsDialog->show();
+
+  } else {
+    this->layerSettingsDialog->setWindowTitle(tr("Vector Layer Settings"));
+    LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);
+    mainLayout->addWidget(layerSettingsVector);
+    mainLayout->addWidget(buttonBox);
+    this->layerSettingsDialog->setLayout(mainLayout);
+    this->layerSettingsDialog->resize(870, 630);
+    this->layerSettingsDialog->show();
+  }
 }
 
 void MainWindow::showAbout() {

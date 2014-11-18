@@ -117,3 +117,123 @@ layerObj * Layer::getInternalLayerObj(void) {
 QStringList Layer::layerType = QStringList() << "MS_LAYER_POINT" << "MS_LAYER_LINE" << "MS_LAYER_POLYGON"
                                                     << "MS_LAYER_RASTER" << "MS_LAYER_ANNOTATION" << "MS_LAYER_QUERY"
                                                     << "MS_LAYER_CIRCLE" << "MS_LAYER_TILEINDEX"<< "MS_LAYER_CHART";
+
+
+
+// Methods related to the Qt representation of the layers
+
+LayerModel::LayerModel(QObject * parent, QList<Layer *> const & l) : QAbstractListModel(parent), layers(l) {}
+
+LayerModel::~LayerModel() {
+}
+
+Layer * LayerModel::getLayer(const QModelIndex &m) const {
+  if ((m.row() < 0) || m.row() > layers.size())
+    return NULL;
+  return layers.at(m.row());
+}
+
+void LayerModel::removeLayer(const QModelIndex &m) {
+   if (m.row() < 0 || m.row() > layers.size())
+    return;
+
+  beginResetModel();
+
+  Layer * toBeRemoved = layers.takeAt(m.row());
+  // TODO: We might need the same mechanism as on OutputFormats
+  // (i.e. state - ADDED ...)
+  //if ((toBeRemoved->getState() == OutputFormat::ADDED)
+  //    ||(toBeRemoved->getState() == OutputFormat::ADDED_SAVED)) {
+  //  delete toBeRemoved;
+  //} else {
+  removedLayers.append(toBeRemoved);
+  //}
+  endResetModel();
+
+}
+
+int LayerModel::rowCount(const QModelIndex & parent) const {
+  Q_UNUSED(parent);
+  return layers.size();
+}
+
+int LayerModel::columnCount(const QModelIndex &parent) const {
+  Q_UNUSED(parent);
+  return LayerModel::LAYER_DEBUG_LEVEL + 1;
+}
+
+QVariant LayerModel::data(const QModelIndex &index, int role) const {
+  if ((role != Qt::DisplayRole) && (role != Qt::EditRole))
+    return QVariant();
+  if (index.row() > layers.size())
+    return QVariant();
+
+  Layer * l = layers.at(index.row());
+
+  if (l == NULL)
+    return QVariant();
+
+  switch (index.column()) {
+    case LayerModel::LAYER_NAME:
+      return QVariant(l->getName());
+    case LayerModel::LAYER_STATUS:
+      return QVariant(l->getStatus());
+    case LayerModel::LAYER_TYPE:
+      return QVariant(l->getType());
+    case LayerModel::LAYER_OPACITY:
+      return QVariant(l->getOpacity());
+    case LayerModel::LAYER_MASK:
+      return QVariant(l->getMask());
+    case LayerModel::LAYER_MIN_X:
+      return QVariant(l->getMinX());
+    case LayerModel::LAYER_MAX_X:
+      return QVariant(l->getMaxX());
+    case LayerModel::LAYER_MIN_Y:
+      return QVariant(l->getMinY());
+    case LayerModel::LAYER_MAX_Y:
+      return QVariant(l->getMaxY());
+    case LayerModel::LAYER_MIN_SCALE:
+      return QVariant(l->getMinScale());
+    case LayerModel::LAYER_MAX_SCALE:
+      return QVariant(l->getMaxScale());
+    case LayerModel::LAYER_TOLERANCE:
+      return QVariant(l->getTolerance());
+    case LayerModel::LAYER_MAX_FEATURES:
+      return QVariant(l->getMaxFeatures());
+    case LayerModel::LAYER_MIN_GEO_WIDTH:
+      return QVariant(l->getMinGeoWidth());
+    case LayerModel::LAYER_MAX_GEO_WIDTH:
+      return QVariant(l->getMaxGeoWidth());
+    case LayerModel::LAYER_HEADER:
+      return QVariant(l->getHeader());
+    case LayerModel::LAYER_FOOTER:
+      return QVariant(l->getFooter());
+    case LayerModel::LAYER_LABEL_ITEM:
+      return QVariant(l->getLabelItem());
+    case LayerModel::LAYER_MAX_SCALE_DENOM_LABEL:
+      return QVariant(l->getMaxScaleDenomLabel());
+    case LayerModel::LAYER_MIN_SCALE_DENOM_LABEL:
+      return QVariant(l->getMinScaleDenomLabel());
+    case LayerModel::LAYER_LABEL_CACHE:
+      return QVariant(l->getLabelCache());
+    case LayerModel::LAYER_POST_LABEL_CACHE:
+      return QVariant(l->getPostLabelCache());
+    case LayerModel::LAYER_LABEL_REQUIRES:
+      return QVariant(l->getLabelRequires());
+    case LayerModel::LAYER_DEBUG_LEVEL:
+      return QVariant(l->getDebugLevel());
+    default:
+      return QVariant();
+  }
+}
+
+
+QVariant LayerModel::headerData (int section, Qt::Orientation orientation, int role) const {
+  Q_UNUSED(section);
+  Q_UNUSED(orientation);
+  if (role != Qt::DisplayRole)
+    return QVariant();
+  return QVariant(QObject::tr("Layers"));
+}
+
+
