@@ -42,6 +42,7 @@
 #include "keyvaluemodel.h"
 #include "commands/changemapnamecommand.h"
 #include "parser/mapfileparser.h"
+#include "parser/layer.h"
 
 namespace Ui {
 class LayerSettingsRaster;
@@ -52,7 +53,7 @@ class LayerSettingsRaster : public QTabWidget
   Q_OBJECT
 
  public:
-      explicit LayerSettingsRaster(QWidget * parent, MapfileParser *m);
+      explicit LayerSettingsRaster(QWidget * parent, MapfileParser *m, Layer * l);
       ~LayerSettingsRaster();
 
  public slots:
@@ -60,8 +61,8 @@ class LayerSettingsRaster : public QTabWidget
 
  private:
       Ui::LayerSettingsRaster * ui;
-
       MapfileParser * mapfile;
+      Layer * layer;
 
 };
 

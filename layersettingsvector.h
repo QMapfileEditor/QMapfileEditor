@@ -42,6 +42,7 @@
 #include "keyvaluemodel.h"
 #include "commands/changemapnamecommand.h"
 #include "parser/mapfileparser.h"
+#include "parser/layer.h"
 
 namespace Ui {
 class LayerSettingsVector;
@@ -52,7 +53,7 @@ class LayerSettingsVector : public QTabWidget
   Q_OBJECT
 
  public:
-      explicit LayerSettingsVector(QWidget * parent, MapfileParser *m);
+      explicit LayerSettingsVector(QWidget * parent, MapfileParser *m, Layer *l);
       ~LayerSettingsVector();
 
  public slots:
@@ -63,6 +64,7 @@ class LayerSettingsVector : public QTabWidget
 
       MapfileParser * mapfile;
 
+      Layer *layer;
 };
 
 #endif // LAYERSETTINGSVECTOR_H

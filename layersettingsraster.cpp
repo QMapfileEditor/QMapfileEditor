@@ -29,10 +29,11 @@
 #include "layersettingsraster.h"
 #include "ui_layersettingsraster.h"
 
-LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf) :
-  QTabWidget(parent), ui(new Ui::LayerSettingsRaster), mapfile(mf)
+LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf, Layer * l) :
+  QTabWidget(parent), ui(new Ui::LayerSettingsRaster), mapfile(mf), layer(l)
 {
     ui->setupUi(this);
+    ui->mf_layerName_value->setText(l->getName());
 
 }
 

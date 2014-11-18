@@ -124,7 +124,14 @@ QStringList Layer::layerType = QStringList() << "MS_LAYER_POINT" << "MS_LAYER_LI
 
 LayerModel::LayerModel(QObject * parent, QList<Layer *> const & l) : QAbstractListModel(parent), layers(l) {}
 
-LayerModel::~LayerModel() {
+#include <QDebug>
+
+LayerModel::~LayerModel() {}
+
+void LayerModel::setLayers(QList<Layer *> const  & layers) {
+  beginResetModel();
+  this->layers = layers;
+  endResetModel();
 }
 
 Layer * LayerModel::getLayer(const QModelIndex &m) const {

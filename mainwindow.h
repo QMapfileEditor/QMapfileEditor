@@ -52,7 +52,7 @@
 #include "layersettingsvector.h"
 #include "layersettingsraster.h"
 #include "parser/mapfileparser.h"
-//#include "parser/layer.h"
+#include "parser/layer.h"
 
 
 namespace Ui {
@@ -70,7 +70,7 @@ class MainWindow : public QMainWindow
       void pushUndoStack(QUndoCommand *);
       QString mapfilename, prevDirPath = NULL;
       QDir mapfiledir;
-      
+
       ~MainWindow();
 
  public slots:
@@ -114,7 +114,8 @@ class MainWindow : public QMainWindow
       QMessageBox::StandardButton warnIfActiveSession(void);
 
       double currentMapMinX, currentMapMaxX, currentMapMinY, currentMapMaxY;
-      
+
+      LayerModel * layerModel;
 };
 
 #endif // MAINWINDOW_H

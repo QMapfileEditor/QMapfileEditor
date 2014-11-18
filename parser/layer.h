@@ -159,6 +159,7 @@ class LayerModel : public QAbstractListModel {
   LayerModel(QObject *, QList<Layer *> const &);
   ~LayerModel();
 
+  void setLayers(QList<Layer *> const &);
   Layer * getLayer(const QModelIndex &) const;
   void removeLayer(const QModelIndex &);
 

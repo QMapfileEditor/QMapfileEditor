@@ -29,10 +29,12 @@
 #include "layersettingsvector.h"
 #include "ui_layersettingsvector.h"
 
-LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf) :
-  QTabWidget(parent), ui(new Ui::LayerSettingsVector), mapfile(mf)
+LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, Layer * l) :
+  QTabWidget(parent), ui(new Ui::LayerSettingsVector), mapfile(mf), layer(l)
 {
     ui->setupUi(this);
+
+    ui->mf_layerName_value->setText(l->getName());
 
 }
 

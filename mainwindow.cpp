@@ -83,6 +83,10 @@ MainWindow::MainWindow(QWidget *parent) :
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
+
+  // creates a Layer model
+  // Note: Qt will manage the deletion of the object by itself.
+  this->layerModel = new LayerModel(this, this->mapfile->getLayers());
 }
 
 
@@ -313,11 +317,15 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
         );
     this->reinitMapfile();
     this->showInfo("");
+    this->layerModel->setLayers(this->mapfile->getLayers());
     return;
   }
 
+  // TODO: use layerModel instead !
   QStringList layersName = QStringList();
   QList<Layer *> l = this->mapfile->getLayers();
+
+
   for (int i = 0; i < l.size(); ++i)
     layersName << l[i]->getName();
 
@@ -404,7 +412,6 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   if (this->layerSettingsDialog) {
     delete this->layerSettingsDialog;
     this->layerSettingsDialog = NULL;
-    return;
   }
 
   this->layerSettingsDialog = new QDialog();
@@ -422,10 +429,11 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   //this->showInfo(QString::number(i.model()->data(Qt::DisplayRole)));
   //qDebug() << i.row();
 
+
   Layer * l = this->mapfile->getLayers().at(i.row());
   if (l->getType() == "MS_LAYER_RASTER") {
     this->layerSettingsDialog->setWindowTitle(tr("Raster Layer Settings"));
-    LayerSettingsRaster * layerSettingsRaster = new LayerSettingsRaster(this->layerSettingsDialog, this->mapfile);
+    LayerSettingsRaster * layerSettingsRaster = new LayerSettingsRaster(this->layerSettingsDialog, this->mapfile, l);
     mainLayout->addWidget(layerSettingsRaster);
     mainLayout->addWidget(buttonBox);
     this->layerSettingsDialog->setLayout(mainLayout);
@@ -433,7 +441,7 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
     this->layerSettingsDialog->show();
   } else {
     this->layerSettingsDialog->setWindowTitle(tr("Vector Layer Settings"));
-    LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile);
+    LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile, l);
     mainLayout->addWidget(layerSettingsVector);
     mainLayout->addWidget(buttonBox);
     this->layerSettingsDialog->setLayout(mainLayout);
