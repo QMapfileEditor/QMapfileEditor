@@ -428,6 +428,9 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   //TODO: if layer is vector (ie TYPE = POINT, LINE or POLYGON and have no grid object) then:
   //this->showInfo(QString::number(i.model()->data(Qt::DisplayRole)));
   //qDebug() << i.row();
+  if ((i.row() > this->mapfile->getLayers().length()) || (i.row() < 0))
+    return;
+
 
 
   Layer * l = this->mapfile->getLayers().at(i.row());

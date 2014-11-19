@@ -172,7 +172,7 @@ int LayerModel::columnCount(const QModelIndex &parent) const {
 QVariant LayerModel::data(const QModelIndex &index, int role) const {
   if ((role != Qt::DisplayRole) && (role != Qt::EditRole))
     return QVariant();
-  if (index.row() > layers.size())
+  if ((index.row() < 0) || (index.row() > layers.size()))
     return QVariant();
 
   Layer * l = layers.at(index.row());
