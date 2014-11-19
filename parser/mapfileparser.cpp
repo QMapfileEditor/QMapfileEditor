@@ -273,6 +273,25 @@ QList<Layer *> const & MapfileParser::getLayers() const {
   return layers;
 }
 
+bool MapfileParser::layerExists(QString const & key) {
+  for (int i = 0; i < layers.size(); ++i)
+    if (layers[i]->getName() == key)
+      return true;
+  return false;
+}
+
+// creates a completely blank layer from scratch
+void MapfileParser::addLayer(void) {
+
+  // Generates a Layer name which is not already taken
+  int i = 0;
+  while (layerExists(QString("NewLayer%d").arg(i))) { ++i; };
+
+  layerObj * newL = msGrowMapLayers(this->map);
+  newL->name = strdup(QString("NewLayer%d").arg(i).toStdString().c_str());
+  layers  << new Layer(newL->name, this->map);
+}
+
 // This method is only used in case of using qgisimporter class for now.
 // It shall evolve in the future to use the Layer class.
 
@@ -297,6 +316,43 @@ void MapfileParser::addLayer(QString const & layerName, QString const & dataStr,
   // inserts the layer at the end
   msInsertLayer(this->map, newLayer, -1);
 }
+
+/**
+ * Method called in case of undo
+ */
+void MapfileParser::addLayer(Layer const * newL) {
+  // TODO: check if already in ?
+  layers << new Layer(* newL);
+
+  layerObj * newLayerObj = msGrowMapLayers(this->map);
+  newLayerObj->name = strdup(newL->getName().toStdString().c_str());
+  // TODO: need to copy the fields from newL to newLayerObj
+
+}
+
+/**
+ * this method assumes that the order into this->layers
+ * is the same as in this->map->layers (we should be the case).
+ */
+void MapfileParser::removeLayer(Layer const * l) {
+  int index = -1;
+  for (int i = 0; i < layers.size(); ++i) {
+    if (layers[i]->getName() == l->getName()) {
+      Layer * toRem = layers.takeAt(i);
+      delete toRem;
+      index = i;
+      break;
+    }
+  }
+
+  if (index == -1) {
+    return;
+  }
+
+  msRemoveLayer(this->map, index);
+
+}
+
 
 // Map name
 QString const & MapfileParser::getMapName() const {

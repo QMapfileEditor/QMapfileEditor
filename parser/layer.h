@@ -44,7 +44,7 @@ class Layer {
   public:
     Layer(QString const & name, struct mapObj *);
 
-    QString const & getName();
+    QString const & getName() const;
     void setName(QString const &);
 
     // static variables (from mapserver.h)

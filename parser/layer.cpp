@@ -77,7 +77,7 @@ name(name), map(map) {
 
 }
 
-QString const & Layer::getName() {
+QString const & Layer::getName() const {
   return name;
 }
 
