@@ -19,6 +19,7 @@ SOURCES += \
         layersettingsraster.cpp                \
         commands/changemapnamecommand.cpp      \
         commands/changemapstatuscommand.cpp    \
+        commands/layercommands.cpp             \
         commands/outputformatcommands.cpp      \
         commands/setanglecommand.cpp           \
         commands/setconfigoptioncommand.cpp    \
@@ -50,6 +51,7 @@ HEADERS  += \
     layersettingsraster.h                   \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
+    commands/layercommands.h                \
     commands/outputformatcommands.h         \
     commands/setanglecommand.h              \
     commands/setconfigoptioncommand.h       \
