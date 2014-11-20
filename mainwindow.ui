@@ -109,7 +109,7 @@
      <x>0</x>
      <y>0</y>
      <width>875</width>
-     <height>27</height>
+     <height>19</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -414,7 +414,7 @@
        <number>6</number>
       </property>
       <item>
-       <widget class="QToolButton" name="mf_addLayer_2">
+       <widget class="QToolButton" name="mf_addlayer_2">
         <property name="text">
          <string>...</string>
         </property>
@@ -436,7 +436,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="mf_removeLayer">
+       <widget class="QToolButton" name="mf_removelayer">
         <property name="text">
          <string>...</string>
         </property>

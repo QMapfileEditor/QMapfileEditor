@@ -29,6 +29,7 @@
 #include "mapserver.h"
 
 #include "layer.h"
+#include <QDebug>
 
 Layer::Layer(QString const & name, struct mapObj * map):
 name(name), map(map) {
@@ -36,43 +37,54 @@ name(name), map(map) {
   layerObj * l = getInternalLayerObj();
   if (l) {
     this->status = l->status;
-    this->type = Layer::layerType.at(l->type);
-    // TODO geomType ?
-    this->opacity = l->opacity;
-    this->mask = l->mask; // TODO if mask == NULL ??
-    this->group = l->group;
-    this->requires = l->requires;
-    this->plugin = l->plugin_library; // TODO ?
-    //TODO projection ? map->project and map->projection refers to != objects
-    this->minx = l->extent.minx;
-    this->miny = l->extent.miny;
-    this->maxx = l->extent.maxx;
-    this->maxy = l->extent.maxy;
-    // TODO layer->filter is a complex object
-    this->minScale = l->minscaledenom;
-    this->maxScale = l->maxscaledenom;
-    // TODO geomTransform  vs l->transform ?
-    this->tolerance = l->tolerance;
-    // TODO toleranceUnits vs l->toleranceunits ?
-    // TODO processing (QString) vs l->processing (char ** / QStringList)
-    this->transform = l->transform;
-    this->maxfeatures = l->maxfeatures;
-    this->mingeowidth = l->mingeowidth;
-    this->maxgeowidth = l->maxgeowidth;
-    // TODO layerTemplate ?
-    this->header = l->header;
-    this->footer = l->footer;
-    this->labelItem = l->labelitem;
-    this->maxScaleDenomLabel = l->labelmaxscaledenom;
-    this->minScaleDenomLabel = l->labelminscaledenom;
-    // TODO labelAngleItem (not found in layerObj)
-    this->labelCache = l->labelcache;
-    this->postLabelCache = l->postlabelcache;
-    // TODO labelSizeItem ? (not found in layerObj)
-    this->labelRequires = l->labelrequires;
-    // TODO l->validation is a complex structure (vs QString)
-    this->debugLevel = l->debug;
-
+//    if (l->type >= 0)
+//      this->type = Layer::layerType.at(l->type);
+//    else
+//      this->type = QString();
+//    // TODO geomType ?
+//    this->opacity = l->opacity;
+//    this->mask = l->mask; // TODO if mask == NULL ??
+//    this->group = l->group;
+//    if (l->requires)
+//      this->requires = l->requires;
+//    else this->requires = QString();
+//    if (l->plugin_library)
+//      this->plugin = l->plugin_library; // TODO ?
+//    else
+//      this->plugin = QString();
+//    //TODO projection ? map->project and map->projection refers to != objects
+//    this->minx = l->extent.minx;
+//    this->miny = l->extent.miny;
+//    this->maxx = l->extent.maxx;
+//    this->maxy = l->extent.maxy;
+//    // TODO layer->filter is a complex object
+//    this->minScale = l->minscaledenom;
+//    this->maxScale = l->maxscaledenom;
+//    // TODO geomTransform  vs l->transform ?
+//    this->tolerance = l->tolerance;
+//    // TODO toleranceUnits vs l->toleranceunits ?
+//    // TODO processing (QString) vs l->processing (char ** / QStringList)
+//    this->transform = l->transform;
+//    this->maxfeatures = l->maxfeatures;
+//    this->mingeowidth = l->mingeowidth;
+//    this->maxgeowidth = l->maxgeowidth;
+//    // TODO layerTemplate ?
+//    this->header = l->header;
+//    this->footer = l->footer;
+//    if (l->labelitem)
+//      this->labelItem = l->labelitem;
+//    else
+//      this->labelItem = QString();
+//    this->maxScaleDenomLabel = l->labelmaxscaledenom;
+//    this->minScaleDenomLabel = l->labelminscaledenom;
+//    // TODO labelAngleItem (not found in layerObj)
+//    this->labelCache = l->labelcache;
+//    this->postLabelCache = l->postlabelcache;
+//    // TODO labelSizeItem ? (not found in layerObj)
+//    this->labelRequires = l->labelrequires;
+//    // TODO l->validation is a complex structure (vs QString)
+//    this->debugLevel = l->debug;
+//
   }
 
 }
@@ -97,9 +109,11 @@ void Layer::setName(QString const & newName) {
 /* private methods */
 
 int Layer::getInternalIndex(void) {
-  if (! this->map) {
+  if ((! this->map) || name.isNull() || name.isEmpty()) {
     return -1;
   }
+
+  qDebug() << "Layer name: " << name;
   return msGetLayerIndex(this->map, (char *) name.toStdString().c_str());
 }
 

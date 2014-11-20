@@ -74,6 +74,7 @@ class MainWindow : public QMainWindow
       ~MainWindow();
 
  public slots:
+      void addLayerTriggered();
       void handleUndoStackChanged(int);
       void openMapfile();
       void newMapfile();

@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
   this->connect(ui->mf_structure, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
   this->connect(ui->mf_editLayer, SIGNAL(clicked()), this, SLOT(showLayerSettings()));
+  this->connect(ui->mf_addlayer_2, SIGNAL(clicked()), this, SLOT(addLayerTriggered()));
 
   // inits the graphics scene
   MapScene * mapScene = new MapScene(this);
@@ -404,6 +405,20 @@ void MainWindow::showLayerSettings(void) {
   this->showLayerSettings(this->ui->mf_structure->currentIndex());
 }
 
+void MainWindow::addLayerTriggered(void) {
+  // TODO should go through a layer Command
+  this->mapfile->addLayer();
+  // refreshes the layerModel
+  QList<Layer *> ls = this->mapfile->getLayers();
+  this->layerModel->setLayers(ls);
+  // TODO: drop this model and use layerModel
+  QStringList newL = QStringList();
+  for (int i = 0; i < ls.size(); ++i)
+    newL << ls[i]->getName();
+
+  ((QStringListModel *) this->ui->mf_structure->model())->setStringList(newL);
+}
+
 void MainWindow::showLayerSettings(const QModelIndex &i) {
   if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
     return;
@@ -430,8 +445,6 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   //qDebug() << i.row();
   if ((i.row() > this->mapfile->getLayers().length()) || (i.row() < 0))
     return;
-
-
 
   Layer * l = this->mapfile->getLayers().at(i.row());
   if (l->getType() == "MS_LAYER_RASTER") {

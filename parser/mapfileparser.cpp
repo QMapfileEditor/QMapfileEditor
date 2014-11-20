@@ -285,10 +285,23 @@ void MapfileParser::addLayer(void) {
 
   // Generates a Layer name which is not already taken
   int i = 0;
-  while (layerExists(QString("NewLayer%d").arg(i))) { ++i; };
+  while (layerExists(QString("NewLayer%1").arg(i))) { ++i; };
 
   layerObj * newL = msGrowMapLayers(this->map);
-  newL->name = strdup(QString("NewLayer%d").arg(i).toStdString().c_str());
+  if (newL == NULL) {
+    qDebug() << "Mapserver did not return a layerObj, this should not happen.";
+    return;
+  }
+
+  initLayer(newL, this->map);
+  newL->name = strdup(QString("NewLayer%1").arg(i).toStdString().c_str());
+  int ret = msInsertLayer(this->map, newL, -1);
+
+  if (ret == -1) {
+    qDebug() << "Mapserver did not manage to import the layer, this should not happen.";
+    return;
+  }
+
   layers  << new Layer(newL->name, this->map);
 }
 
@@ -296,9 +309,17 @@ void MapfileParser::addLayer(void) {
 // It shall evolve in the future to use the Layer class.
 
 void MapfileParser::addLayer(QString const & layerName, QString const & dataStr, QString const & projStr, int geomType) {
-  layerObj *newLayer =  (layerObj *) malloc(sizeof(layerObj));
+
+  // Ensures the layer does not exist yet
+  if (layerExists(layerName)) {
+    return;
+  }
+
+  layerObj *newLayer =  msGrowMapLayers(this->map);
+  if (newLayer == NULL)
+    return;
+
   initLayer(newLayer, this->map);
-  // TODO: check if unique before doing this
   if (newLayer->name)
     free(newLayer->name);
 
@@ -325,7 +346,9 @@ void MapfileParser::addLayer(Layer const * newL) {
   layers << new Layer(* newL);
 
   layerObj * newLayerObj = msGrowMapLayers(this->map);
+  initLayer(newLayerObj, this->map);
   newLayerObj->name = strdup(newL->getName().toStdString().c_str());
+  msInsertLayer(this->map, newLayerObj, -1);
   // TODO: need to copy the fields from newL to newLayerObj
 
 }
