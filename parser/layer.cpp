@@ -113,7 +113,6 @@ int Layer::getInternalIndex(void) {
     return -1;
   }
 
-  qDebug() << "Layer name: " << name;
   return msGetLayerIndex(this->map, (char *) name.toStdString().c_str());
 }
 

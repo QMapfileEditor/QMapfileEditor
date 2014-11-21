@@ -293,14 +293,19 @@ void MapfileParser::addLayer(void) {
     return;
   }
 
+  // Doing basically the same as mapfile.c:6270
   initLayer(newL, this->map);
   newL->name = strdup(QString("NewLayer%1").arg(i).toStdString().c_str());
-  int ret = msInsertLayer(this->map, newL, -1);
+  newL->index = this->map->numlayers;
+  this->map->layerorder[map->numlayers] = map->numlayers;
+  this->map->numlayers++;
 
-  if (ret == -1) {
-    qDebug() << "Mapserver did not manage to import the layer, this should not happen.";
-    return;
-  }
+  //int ret = msInsertLayer(this->map, newL, -1);
+
+  //if (ret == -1) {
+  //  qDebug() << "Mapserver did not manage to import the layer, this should not happen.";
+  //  return;
+  //}
 
   layers  << new Layer(newL->name, this->map);
 }
