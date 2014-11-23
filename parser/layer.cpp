@@ -32,7 +32,40 @@
 #include <QDebug>
 
 Layer::Layer(QString const & name, struct mapObj * map):
-name(name), map(map) {
+map(map) {
+
+  this->name = name;
+  this->status = 0;
+  this->mask = QString();
+  this->group = QString();
+  this->requires = QString();
+  this->tolerance = 0.0;
+  this->toleranceUnits = QString();
+  this->layerTemplate =  QString();
+  this->header = QString(), this->footer = QString();
+
+  this->debugLevel = 0;
+  this->opacity = 0;
+  this->type = QString();
+  this->geomType = QString();
+  this->units = QString();
+
+  this->plugin = QString();
+  this->projType = QString();
+  this->projString = QString();
+
+  this->minx = 0.0, this->miny = 0.0, this->maxx = 0.0, this->maxy = 0.0;
+  this->filter = QString();
+
+  this->minScale = 0.0; this->maxScale = 0.0;
+
+  this->geomTransformation = QString();
+  this->processing = QString();
+  this->transform = false;
+
+  this->maxfeatures = 0;
+  this->mingeowidth = 0.0, this->maxgeowidth = 0.0;
+
 
   layerObj * l = getInternalLayerObj();
   if (l) {
@@ -45,7 +78,7 @@ name(name), map(map) {
     this->opacity = l->opacity;
     this->mask = l->mask; // TODO if mask == NULL ??
     this->group = l->group;
-    
+
     if (l->requires)
       this->requires = l->requires;
     else this->requires = QString();
@@ -71,7 +104,7 @@ name(name), map(map) {
     }
 //    // TODO geomTransform  vs l->transform ?
     this->tolerance = l->tolerance;
-    this->toleranceunits = l->toleranceunits;
+    this->toleranceUnits = l->toleranceunits;
 //    // TODO processing (QString) vs l->processing (char ** / QStringList)
 //    this->transform = l->transform;
 //    this->maxfeatures = l->maxfeatures;

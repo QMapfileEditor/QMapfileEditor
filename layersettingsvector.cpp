@@ -65,7 +65,7 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
     
     ui->mf_tolerance_box->setValue( l->getTolerance() );
     //BUG: casse est importante?
-    ui->mf_toleranceUnit_combo->setCurrentIndex(ui->mf_toleranceUnit_combo->findText(l->getToleranceUnit()) );
+    ui->mf_toleranceUnit_combo->setCurrentIndex(ui->mf_toleranceUnit_combo->findText(l->getToleranceUnits()) );
     
     if (l->getMinScale())
       ui->mf_minScaleDenom_edit->setText( QString::number(l->getMinScale()) );

@@ -66,7 +66,7 @@ class Layer {
     double const & getMaxScale() const { return maxScale; };
 //     QString const & getPlugin() const { return plugin; );
     double const & getTolerance() const { return tolerance; };
-    QString const & getToleranceUnit() const { return toleranceunits; };
+    QString const & getToleranceUnits() const { return toleranceUnits; };
     int const & getMaxFeatures() const { return maxfeatures; };
     double const & getMinGeoWidth() const { return mingeowidth; } ;
     double const & getMaxGeoWidth() const { return maxgeowidth; };
@@ -103,7 +103,7 @@ class Layer {
     QString group;
     QString requires;
     double tolerance;
-    QString toleranceunits;
+    QString toleranceUnits;
     QString layerTemplate;
     QString header, footer;
     int debugLevel;
