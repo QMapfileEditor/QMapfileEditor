@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
   this->connect(ui->mf_structure, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
   this->connect(ui->mf_editLayer, SIGNAL(clicked()), this, SLOT(showLayerSettings()));
-  this->connect(ui->mf_addlayer_2, SIGNAL(clicked()), this, SLOT(addLayerTriggered()));
+  this->connect(ui->mf_addlayer, SIGNAL(clicked()), this, SLOT(addLayerTriggered()));
 
   // inits the graphics scene
   MapScene * mapScene = new MapScene(this);
