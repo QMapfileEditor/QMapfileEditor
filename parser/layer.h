@@ -51,7 +51,7 @@ class Layer {
     static QStringList layerType;
 
     // Accessors
-    bool const & getStatus() const { return status; };
+    int const & getStatus() const { return status; };
     QString const & getType() const { return type; };
     int const & getOpacity() const { return opacity; };
     QString const & getMask() const { return mask; };
@@ -92,7 +92,7 @@ class Layer {
     // Significant member variables for the model
 
     /** General tab  */
-    bool status;
+    int status;
     // TODO: there may be some types (enums ?) more appropriate
     // For now, getting what @yjacolin put in the interface
     QString type;

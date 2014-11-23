@@ -35,7 +35,20 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
     ui->setupUi(this);
 
     ui->mf_layerName_value->setText(l->getName());
-
+    if( l->getStatus() == 0 )
+    {
+      ui->mf_statusOn_radio->setChecked(true);
+      ui->mf_statusOff_radio->setChecked(false);
+      ui->mf_statusDefault_radio->setChecked(false);
+    } else if(l->getStatus() == 2 ) {
+      ui->mf_statusOn_radio->setChecked(false);
+      ui->mf_statusOff_radio->setChecked(false);
+      ui->mf_statusDefault_radio->setChecked(true);
+    } else {
+      ui->mf_statusOn_radio->setChecked(false);
+      ui->mf_statusOff_radio->setChecked(true);
+      ui->mf_statusDefault_radio->setChecked(false);
+    }
 }
 
 
