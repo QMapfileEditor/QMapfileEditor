@@ -49,6 +49,26 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
       ui->mf_statusOff_radio->setChecked(true);
       ui->mf_statusDefault_radio->setChecked(false);
     }
+    
+    //TODO: need to fill dropdown list with current layer for mask and requires:
+    ui->mf_requires_box->addItem( l->getRequires() );
+    ui->mf_requires_box->setCurrentIndex(ui->mf_requires_box->findText(l->getRequires()));
+    
+    ui->mf_mask_box->addItem( l->getMask() );
+    ui->mf_mask_box->setCurrentIndex(ui->mf_mask_box->findText(l->getMask()));
+    
+    ui->mf_group_edit->setText( l->getGroup() );
+    
+    ui->mf_opacity_box->setValue( l->getOpacity() );
+    
+    ui->mf_tolerance_box->setValue( l->getTolerance() );
+    //BUG: casse est importante?
+    ui->mf_toleranceUnit_combo->setCurrentIndex(ui->mf_toleranceUnit_combo->findText(l->getToleranceUnit()) );
+    
+    if (l->getMinScale())
+      ui->mf_minScaleDenom_edit->setText( QString::number(l->getMinScale()) );
+    if( l->getMaxScale())
+      ui->mf_maxScaleDenom_edit->setText( QString::number(l->getMaxScale()) );
 }
 
 

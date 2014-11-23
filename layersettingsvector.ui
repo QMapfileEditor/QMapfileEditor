@@ -99,7 +99,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="ms_requires_edit"/>
+      <widget class="QComboBox" name="mf_requires_box">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

@@ -11,7 +11,7 @@ MAP
   CONFIG "ON_MISSING_DATA" "LOG"
   CONFIG "CGI_CONTEXT_URL" "http://log"
   CONFIG "MS_ENCRYPTION_KEY" "mapserver.log"
-  CONFIG "PROJ_LIB" "/usr/local/share/proj/"
+  CONFIG "PROJ_LIB" "/usr/share/proj/"
   CONFIG "MS_NONSQUARE" "YES"
   DATAPATTERN "(/a-zA-Z0-9/)"
   TEMPLATEPATTERN "(/a-zA-Z0-9/)"
@@ -51,13 +51,15 @@ MAP
   END
 
 
-
-  PROJECTION
-    "proj=longlat"
-    "ellps=WGS84"
-    "datum=WGS84"
-    "no_defs"
-  END # PROJECTION
+PROJECTION
+   "init=epsg:4326"
+END
+#  PROJECTION
+#    "proj=longlat"
+#    "ellps=WGS84"
+#    "datum=WGS84"
+#    "no_defs"
+#  END # PROJECTION
   
   LEGEND
     KEYSIZE 18 12
@@ -108,11 +110,11 @@ MAP
   END # WEB
 
   LAYER
+    NAME "world raster"
     DATA "world_raster.tif"
     METADATA
       "wms_title"	"world_raster"
     END # METADATA
-    NAME "world_raster"
     PROJECTION
       "proj=longlat"
       "ellps=WGS84"
@@ -126,11 +128,11 @@ MAP
   END # LAYER
 
   LAYER
+    NAME "World contour"
     DATA "world_adm0.shp"
     METADATA
       "wms_title"	"world_adm0"
     END # METADATA
-    NAME "world_adm0"
     PROJECTION
       "proj=longlat"
       "ellps=WGS84"
@@ -138,7 +140,10 @@ MAP
       "no_defs"
     END # PROJECTION
     STATUS DEFAULT
-    TILEITEM "location"
+    OPACITY 20
+    REQUIRES "world_raster"
+    TOLERANCE 10
+    TOLERANCEUNITS meters
     TYPE POLYGON
     UNITS METERS
     CLASS

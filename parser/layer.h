@@ -52,6 +52,8 @@ class Layer {
 
     // Accessors
     int const & getStatus() const { return status; };
+    QString const & getRequires() const { return requires; };
+    QString const & getGroup() const { return group; };
     QString const & getType() const { return type; };
     int const & getOpacity() const { return opacity; };
     QString const & getMask() const { return mask; };
@@ -62,6 +64,7 @@ class Layer {
     double const & getMinScale() const { return minScale; };
     double const & getMaxScale() const { return maxScale; };
     double const & getTolerance() const { return tolerance; };
+    QString const & getToleranceUnit() const { return toleranceUnit; };
     int const & getMaxFeatures() const { return maxfeatures; };
     double const & getMinGeoWidth() const { return mingeowidth; } ;
     double const & getMaxGeoWidth() const { return maxgeowidth; };
