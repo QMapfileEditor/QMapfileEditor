@@ -88,6 +88,8 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
     ui->mf_extent_maxy->setText( QString::number(l->getMaxY()) );
     
 //     ui->mf_filter_edit->setText( l->getFilter() );
+    
+//     ui->mf_plugin_edit->setText( l->getPlugin() );
 }
 
 

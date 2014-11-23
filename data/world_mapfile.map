@@ -130,6 +130,7 @@ END
   LAYER
     NAME "World contour"
     DATA "world_adm0.shp"
+    GROUP common
     METADATA
       "wms_title"	"world_adm0"
     END # METADATA
@@ -148,6 +149,9 @@ END
     TYPE POLYGON
     UNITS METERS
     FILTER ([type]=’road’ and [size]<2)
+    TEMPLATE test.html
+    FOOTER footer.html
+    HEADER header.html
     CLASS
       NAME "world_adm0"
       STYLE

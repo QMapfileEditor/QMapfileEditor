@@ -37,40 +37,50 @@ name(name), map(map) {
   layerObj * l = getInternalLayerObj();
   if (l) {
     this->status = l->status;
-//    if (l->type >= 0)
-//      this->type = Layer::layerType.at(l->type);
-//    else
-//      this->type = QString();
+    if (l->type >= 0)
+      this->type = Layer::layerType.at(l->type);
+    else
+      this->type = QString();
 //    // TODO geomType ?
-//    this->opacity = l->opacity;
-//    this->mask = l->mask; // TODO if mask == NULL ??
-//    this->group = l->group;
-//    if (l->requires)
-//      this->requires = l->requires;
-//    else this->requires = QString();
-//    if (l->plugin_library)
-//      this->plugin = l->plugin_library; // TODO ?
-//    else
-//      this->plugin = QString();
+    this->opacity = l->opacity;
+    this->mask = l->mask; // TODO if mask == NULL ??
+    this->group = l->group;
+    
+    if (l->requires)
+      this->requires = l->requires;
+    else this->requires = QString();
+    if (l->plugin_library)
+      this->plugin = l->plugin_library; // TODO ?
+    else
+      this->plugin = QString();
 //    //TODO projection ? map->project and map->projection refers to != objects
-//    this->minx = l->extent.minx;
-//    this->miny = l->extent.miny;
-//    this->maxx = l->extent.maxx;
-//    this->maxy = l->extent.maxy;
+    this->minx = l->extent.minx;
+    this->miny = l->extent.miny;
+    this->maxx = l->extent.maxx;
+    this->maxy = l->extent.maxy;
 //    // TODO layer->filter is a complex object
-//    this->minScale = l->minscaledenom;
-//    this->maxScale = l->maxscaledenom;
+    if ( l->minscaledenom > 0) {
+      this->minScale = l->minscaledenom;
+    } else {
+      this->minScale = NULL;
+    }
+    if (l->maxscaledenom > 0) {
+      this->maxScale = l->maxscaledenom;
+    } else {
+      this->maxScale = NULL;
+    }
 //    // TODO geomTransform  vs l->transform ?
-//    this->tolerance = l->tolerance;
-//    // TODO toleranceUnits vs l->toleranceunits ?
+    this->tolerance = l->tolerance;
+    this->toleranceunits = l->toleranceunits;
 //    // TODO processing (QString) vs l->processing (char ** / QStringList)
 //    this->transform = l->transform;
 //    this->maxfeatures = l->maxfeatures;
 //    this->mingeowidth = l->mingeowidth;
 //    this->maxgeowidth = l->maxgeowidth;
-//    // TODO layerTemplate ?
-//    this->header = l->header;
-//    this->footer = l->footer;
+    
+//     this->layerTemplate = l->template;
+    this->header = l->header;
+    this->footer = l->footer;
 //    if (l->labelitem)
 //      this->labelItem = l->labelitem;
 //    else
@@ -81,10 +91,10 @@ name(name), map(map) {
 //    this->labelCache = l->labelcache;
 //    this->postLabelCache = l->postlabelcache;
 //    // TODO labelSizeItem ? (not found in layerObj)
-//    this->labelRequires = l->labelrequires;
+    this->labelRequires = l->labelrequires;
 //    // TODO l->validation is a complex structure (vs QString)
-//    this->debugLevel = l->debug;
-//
+    this->debugLevel = l->debug;
+
   }
 
 }
