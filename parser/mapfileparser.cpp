@@ -306,8 +306,8 @@ void MapfileParser::addLayer(void) {
   //  qDebug() << "Mapserver did not manage to import the layer, this should not happen.";
   //  return;
   //}
-
-  layers  << new Layer(newL->name, this->map);
+  Layer * newLayer = new Layer(newL->name, this->map);
+  layers  << newLayer;
 }
 
 // This method is only used in case of using qgisimporter class for now.

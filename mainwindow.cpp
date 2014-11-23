@@ -49,8 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   this->connect(ui->actionShowUndoStack, SIGNAL(triggered()), this, SLOT(showUndoStack()));
   // inits the model for the mapfile structure
-  QStringListModel * mfStructureModel = new QStringListModel(this);
-  ui->mf_structure->setModel(mfStructureModel);
+  //QStringListModel * mfStructureModel = new QStringListModel(this);
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
   this->connect(ui->mf_structure, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
   this->connect(ui->mf_editLayer, SIGNAL(clicked()), this, SLOT(showLayerSettings()));
@@ -88,6 +87,9 @@ MainWindow::MainWindow(QWidget *parent) :
   // creates a Layer model
   // Note: Qt will manage the deletion of the object by itself.
   this->layerModel = new LayerModel(this, this->mapfile->getLayers());
+  ui->mf_structure->setModel(layerModel);
+  for (int i = 1; i < layerModel->columnCount(); i++)
+      ui->mf_structure->hideColumn(i);
 }
 
 
@@ -309,6 +311,7 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
   }
 
   this->mapfile = new MapfileParser(mapfilePath);
+  this->layerModel->setLayers(this->mapfile->getLayers());
 
   if (! this->mapfile->isLoaded()) {
     QMessageBox::critical(
@@ -322,18 +325,8 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
     return;
   }
 
-  // TODO: use layerModel instead !
-  QStringList layersName = QStringList();
-  QList<Layer *> l = this->mapfile->getLayers();
 
-
-  for (int i = 0; i < l.size(); ++i)
-    layersName << l[i]->getName();
-
-  ((QStringListModel *) this->ui->mf_structure->model())->setStringList(layersName);
-
-  ui->mf_structure->expandAll();
-
+  ui->mf_structure->setModel(layerModel);
   // inits the default extent
   this->currentMapMinX = this->mapfile->getMapExtentMinX();
   this->currentMapMinY = this->mapfile->getMapExtentMinY();
@@ -411,12 +404,6 @@ void MainWindow::addLayerTriggered(void) {
   // refreshes the layerModel
   QList<Layer *> ls = this->mapfile->getLayers();
   this->layerModel->setLayers(ls);
-  // TODO: drop this model and use layerModel
-  QStringList newL = QStringList();
-  for (int i = 0; i < ls.size(); ++i)
-    newL << ls[i]->getName();
-
-  ((QStringListModel *) this->ui->mf_structure->model())->setStringList(newL);
 }
 
 void MainWindow::showLayerSettings(const QModelIndex &i) {
