@@ -144,8 +144,10 @@ END
     REQUIRES "world_raster"
     TOLERANCE 10
     TOLERANCEUNITS meters
+    EXTENT -180 -90 180 90
     TYPE POLYGON
     UNITS METERS
+    FILTER ([type]=’road’ and [size]<2)
     CLASS
       NAME "world_adm0"
       STYLE

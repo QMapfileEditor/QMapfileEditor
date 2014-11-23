@@ -23,7 +23,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>1</number>
   </property>
   <property name="elideMode">
    <enum>Qt::ElideNone</enum>
@@ -614,7 +614,7 @@
         <widget class="QComboBox" name="mf_type_combo">
          <item>
           <property name="text">
-           <string>Line</string>
+           <string comment="line">Line</string>
           </property>
          </item>
          <item>
@@ -827,8 +827,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>270</y>
-      <width>821</width>
+      <y>220</y>
+      <width>841</width>
       <height>171</height>
      </rect>
     </property>
@@ -869,15 +869,30 @@
      <rect>
       <x>410</x>
       <y>0</y>
-      <width>436</width>
+      <width>431</width>
       <height>222</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_14">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="datasourceLayout">
        <item>
         <widget class="QLabel" name="layer_adddata_label">
+         <property name="minimumSize">
+          <size>
+           <width>380</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>380</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>filepath or database uri</string>
          </property>
@@ -896,6 +911,18 @@
       <layout class="QHBoxLayout" name="joinLayout">
        <item>
         <widget class="QLabel" name="mf_Join_label">
+         <property name="minimumSize">
+          <size>
+           <width>380</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>380</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>Join</string>
          </property>
@@ -923,13 +950,13 @@
         <widget class="QLabel" name="mf_plugin_label">
          <property name="minimumSize">
           <size>
-           <width>60</width>
+           <width>50</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>60</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -943,12 +970,36 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>250</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>250</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="mf_browse_Button">
          <property name="enabled">
           <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
          </property>
          <property name="text">
           <string>Browse</string>
@@ -989,6 +1040,9 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_10">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetFixedSize</enum>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_40">
            <property name="sizeConstraint">

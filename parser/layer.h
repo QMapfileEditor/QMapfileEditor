@@ -57,6 +57,7 @@ class Layer {
     QString const & getType() const { return type; };
     int const & getOpacity() const { return opacity; };
     QString const & getMask() const { return mask; };
+    QString const & getUnits() const { return units; };
     double const & getMinX() const { return minx; };
     double const & getMaxX() const { return maxx; };
     double const & getMinY() const { return miny; };
@@ -68,6 +69,7 @@ class Layer {
     int const & getMaxFeatures() const { return maxfeatures; };
     double const & getMinGeoWidth() const { return mingeowidth; } ;
     double const & getMaxGeoWidth() const { return maxgeowidth; };
+    QString const & getTemplate() const { return layerTemplate; };
     QString const & getHeader() const { return header; };
     QString const & getFooter() const { return footer; };
     QString const & getLabelItem() const { return labelItem; };
@@ -94,17 +96,26 @@ class Layer {
 
     // Significant member variables for the model
 
-    /** General tab  */
+    /** Layer tab  */
     int status;
+    QString mask;
+    QString group;
+    QString requires;
+    double tolerance;
+    QString toleranceUnit;
+    QString layerTemplate;
+    QString header, footer;
+    int debugLevel;
+    int opacity;
+    
+    /** Data source **/
+    
     // TODO: there may be some types (enums ?) more appropriate
     // For now, getting what @yjacolin put in the interface
     QString type;
     QString geomType;
-    int opacity;
-    QString mask;
-    QString group;
-    QString requires;
-
+    QString units;
+    
     QString plugin;
     // TODO These could probably be merged
     QString projType;
@@ -118,10 +129,9 @@ class Layer {
     double minScale, maxScale;
 
 
-    /** Advanced tab */
+    /** Data transformation tab */
     QString geomTransformation;
-    double tolerance;
-    QString toleranceUnit;
+
     QString processing;
 
     bool transform;
@@ -129,10 +139,6 @@ class Layer {
     double mingeowidth, maxgeowidth;
 
     // TODO: cluster ??
-
-
-    QString layerTemplate;
-    QString header, footer;
 
     /** classes tab */
     // TODO: needs a LayerClass class definition
@@ -150,9 +156,6 @@ class Layer {
 
     /** validation tab */
     QString validation;
-
-    /** debug tab */
-    int debugLevel;
 
 };
 

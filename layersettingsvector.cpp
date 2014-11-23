@@ -34,6 +34,8 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
 {
     ui->setupUi(this);
 
+    
+    /** Layer Tab **/
     ui->mf_layerName_value->setText(l->getName());
     if( l->getStatus() == 0 )
     {
@@ -69,6 +71,23 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
       ui->mf_minScaleDenom_edit->setText( QString::number(l->getMinScale()) );
     if( l->getMaxScale())
       ui->mf_maxScaleDenom_edit->setText( QString::number(l->getMaxScale()) );
+    
+    ui->mf_debug_value->setValue( l->getDebugLevel() );
+    
+    ui->mf_template_edit->setText( l->getTemplate() );
+    ui->mf_footer_value->setText( l->getFooter() );
+    ui->mf_header_value->setText( l->getHeader() );
+    
+    /** Data source Tab **/
+    ui->mf_type_combo->setCurrentIndex(ui->mf_type_combo->findText(l->getType()) );
+    ui->mf_units_combo->setCurrentIndex(ui->mf_units_combo->findText(l->getUnits()) );
+    
+    ui->mf_extent_minx->setText( QString::number(l->getMinX()) );
+    ui->mf_extent_miny->setText( QString::number(l->getMinY()) );
+    ui->mf_extent_maxx->setText( QString::number(l->getMaxX()) );
+    ui->mf_extent_maxy->setText( QString::number(l->getMaxY()) );
+    
+//     ui->mf_filter_edit->setText( l->getFilter() );
 }
 
 
