@@ -279,6 +279,10 @@ QVariant LayerModel::data(const QModelIndex &index, int role) const {
       return QVariant(l->getLabelItem());
     case LayerModel::LAYER_MAX_SCALE_DENOM_LABEL:
       return QVariant(l->getSymbolScaleDenom());
+    case LayerModel::LAYER_MAX_SCALE_DENOM_LABEL:
+      return QVariant(l->getMaxScaleDenomLabel());
+    case LayerModel::LAYER_MIN_SCALE_DENOM_LABEL:
+      return QVariant(l->getMinScaleDenomLabel());
     case LayerModel::LAYER_LABEL_CACHE:
       return QVariant(l->getLabelCache());
     case LayerModel::LAYER_POST_LABEL_CACHE:
