@@ -107,19 +107,23 @@ map(map) {
     this->toleranceUnits = l->toleranceunits;
 //    // TODO processing (QString) vs l->processing (char ** / QStringList)
 //    this->transform = l->transform;
-//    this->maxfeatures = l->maxfeatures;
-//    this->mingeowidth = l->mingeowidth;
-//    this->maxgeowidth = l->maxgeowidth;
+    this->maxfeatures = l->maxfeatures;
+    this->mingeowidth = l->mingeowidth;
+    this->maxgeowidth = l->maxgeowidth;
     
 //     this->layerTemplate = l->template;
     this->header = l->header;
     this->footer = l->footer;
-//    if (l->labelitem)
-//      this->labelItem = l->labelitem;
-//    else
-//      this->labelItem = QString();
-//    this->maxScaleDenomLabel = l->labelmaxscaledenom;
-//    this->minScaleDenomLabel = l->labelminscaledenom;
+    if (l->filteritem)
+      this->filterItem = l->filteritem;
+    else
+      this->filterItem = QString();
+    
+    if (l->labelitem)
+      this->labelItem = l->labelitem;
+    else
+      this->labelItem = QString();
+    this->symbolScaleDenom = l->symbolscaledenom;
 //    // TODO labelAngleItem (not found in layerObj)
 //    this->labelCache = l->labelcache;
 //    this->postLabelCache = l->postlabelcache;
@@ -274,9 +278,7 @@ QVariant LayerModel::data(const QModelIndex &index, int role) const {
     case LayerModel::LAYER_LABEL_ITEM:
       return QVariant(l->getLabelItem());
     case LayerModel::LAYER_MAX_SCALE_DENOM_LABEL:
-      return QVariant(l->getMaxScaleDenomLabel());
-    case LayerModel::LAYER_MIN_SCALE_DENOM_LABEL:
-      return QVariant(l->getMinScaleDenomLabel());
+      return QVariant(l->getSymbolScaleDenom());
     case LayerModel::LAYER_LABEL_CACHE:
       return QVariant(l->getLabelCache());
     case LayerModel::LAYER_POST_LABEL_CACHE:

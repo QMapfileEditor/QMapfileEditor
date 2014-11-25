@@ -58,6 +58,7 @@ class Layer {
     int const & getOpacity() const { return opacity; };
     QString const & getMask() const { return mask; };
     QString const & getUnits() const { return units; };
+    QString const & getSizeUnits() const { return sizeunits; };
     double const & getMinX() const { return minx; };
     double const & getMaxX() const { return maxx; };
     double const & getMinY() const { return miny; };
@@ -70,12 +71,15 @@ class Layer {
     int const & getMaxFeatures() const { return maxfeatures; };
     double const & getMinGeoWidth() const { return mingeowidth; } ;
     double const & getMaxGeoWidth() const { return maxgeowidth; };
+    QString const & getClassGroup() const { return classgroup; };
     QString const & getTemplate() const { return layerTemplate; };
     QString const & getHeader() const { return header; };
     QString const & getFooter() const { return footer; };
+    QString const & getStyleItem() const { return styleItem; };
+    QString const & getFilterItem() const { return filterItem; };
     QString const & getLabelItem() const { return labelItem; };
-    double const & getMaxScaleDenomLabel() const { return maxScaleDenomLabel; };
-    double const & getMinScaleDenomLabel() const { return minScaleDenomLabel; };
+    QString const & getClassItem() const { return classItem; };
+    double const & getSymbolScaleDenom() const { return symbolScaleDenom; };
     bool const & getLabelCache() const { return labelCache; };
     bool const & getPostLabelCache() const { return postLabelCache; };
     int const & getDebugLevel() const { return debugLevel; };
@@ -115,12 +119,19 @@ class Layer {
     // For now, getting what @yjacolin put in the interface
     QString type;
     QString geomType;
+    QString styleItem;
+    QString filterItem;
+    QString classItem;
     QString units;
+    QString sizeunits;
+    QString classgroup;
+    double symbolScaleDenom;
     
     QString plugin;
     // TODO These could probably be merged
     QString projType;
     QString projString;
+    
 
     double minx, miny, maxx, maxy;
 

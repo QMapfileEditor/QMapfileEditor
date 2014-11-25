@@ -23,7 +23,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>3</number>
   </property>
   <property name="elideMode">
    <enum>Qt::ElideNone</enum>
@@ -1171,10 +1171,6 @@
      </item>
     </layout>
    </widget>
-   <zorder>verticalLayoutWidget</zorder>
-   <zorder>horizontalLayoutWidget_6</zorder>
-   <zorder></zorder>
-   <zorder>verticalLayoutWidget_6</zorder>
   </widget>
   <widget class="QWidget" name="datatransformTab">
    <attribute name="title">
@@ -1300,7 +1296,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox">
+        <widget class="QComboBox" name="mf_transform_comboBox">
          <item>
           <property name="text">
            <string>true</string>
@@ -1456,7 +1452,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="mf_size_box">
+      <widget class="QComboBox" name="mf_sizeunits_box">
        <item>
         <property name="text">
          <string>Pixels</string>
@@ -1664,7 +1660,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox_2">
+          <widget class="QComboBox" name="mf_classitem_comboBox">
            <property name="enabled">
             <bool>false</bool>
            </property>

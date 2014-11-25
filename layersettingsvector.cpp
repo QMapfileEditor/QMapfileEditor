@@ -87,9 +87,40 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
     ui->mf_extent_maxx->setText( QString::number(l->getMaxX()) );
     ui->mf_extent_maxy->setText( QString::number(l->getMaxY()) );
     
-//     ui->mf_filter_edit->setText( l->getFilter() );
+     //TODO: ui->mf_filter_edit->setText( l->getFilter() );
     
-//     ui->mf_plugin_edit->setText( l->getPlugin() );
+    //TODO: ui->mf_plugin_edit->setText( l->getPlugin() );
+    
+    /** Data transormatio tab**/
+    //TODO: ui->mf_geomTransform_edit->setText( l->geotransform() );
+    
+    //TODO: ui->mf_label_transform->addItem( l->getTransform() );
+    //TODO: ui->mf_label_transform->setCurrentIndex(ui->mf_label_transform->findText(l->getTransform()) );
+    
+    ui->mf_maxFeatures_edit->setText(QString::number(l->getMaxFeatures()));
+    //TODO: ui->mf_processing_edit->setText(l->());
+    
+    ui->mf_maxGeoWidth_box->setValue( l->getMaxGeoWidth() );
+    ui->mf_minGeoWidth_box->setValue( l->getMinGeoWidth() );
+    
+    /** Class tab **/
+    ui->mf_filterItem_value->setText( l->getFilterItem() );
+    //TODO : ui->mf_styleitem_combo->addItem(l->getStyleItem() );
+    //TODO : ui->mf_styleitem_combo->setCurrentIndex(ui->mf_styleitem_combo->findText(l->getStyleItem()) );
+    //TODO : ui->mf_sizeunits_box->addItem(l->getSizeUnits() );
+    //TODO : ui->mf_sizeunits_box->setCurrentIndex(ui->mf_sizeunits_box->findText( l->getSizeUnits() ));
+    //TODO : ui->mf_classgroup_combo->addItem(l->getClassGroup() );
+    //TODO : ui->mf_classgroup_combo->setCurrentIndex(ui->mf_classgroup_combo->findText( l->getClassGroup() ));
+    ui->mf_symbolScaleDenom_edit->setText( QString::number(l->getSymbolScaleDenom()) );
+    ui->mf_classitem_comboBox->addItem( l->getClassItem() );
+    ui->mf_classitem_comboBox->setCurrentIndex(ui->mf_classitem_comboBox->findText( l->getClassItem() ));
+    
+    /** Label Class **/
+    
+    /** Web Services **/
+    
+    /** Validation **/
+    //TODO in layer.cpp: ui->mf_validation_table->setText( l->validation() );
 }
 
 
