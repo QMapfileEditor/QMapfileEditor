@@ -152,7 +152,19 @@ void Layer::setName(QString const & newName) {
   name = newName;
 }
 
+double Layer::getMaxScaleDenomLabel() {
+  layerObj * l = getInternalLayerObj();
+  if (! l)
+    return -1.0;
+  return l->labelmaxscaledenom;
+}
 
+double Layer::getMinScaleDenomLabel() {
+  layerObj * l = getInternalLayerObj();
+  if (! l)
+    return -1.0;
+  return l->labelminscaledenom;
+}
 /* private methods */
 
 int Layer::getInternalIndex(void) {
@@ -277,7 +289,7 @@ QVariant LayerModel::data(const QModelIndex &index, int role) const {
       return QVariant(l->getFooter());
     case LayerModel::LAYER_LABEL_ITEM:
       return QVariant(l->getLabelItem());
-    case LayerModel::LAYER_MAX_SCALE_DENOM_LABEL:
+    case LayerModel::LAYER_SYMBOL_SCALE_DENOM:
       return QVariant(l->getSymbolScaleDenom());
     case LayerModel::LAYER_MAX_SCALE_DENOM_LABEL:
       return QVariant(l->getMaxScaleDenomLabel());

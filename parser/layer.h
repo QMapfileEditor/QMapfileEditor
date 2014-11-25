@@ -85,6 +85,9 @@ class Layer {
     int const & getDebugLevel() const { return debugLevel; };
     QString const & getLabelRequires() const { return labelRequires; };
 
+    double getMaxScaleDenomLabel();
+    double getMinScaleDenomLabel();
+
 
   private:
     // Note: in Mapserver, name is used as a primary key
@@ -190,7 +193,8 @@ class LayerModel : public QAbstractListModel {
   // TODO to be completed as long as new member variables are supported
   enum Column { LAYER_NAME, LAYER_STATUS, LAYER_TYPE, LAYER_OPACITY, LAYER_MASK, LAYER_MIN_X, LAYER_MAX_X, 
     LAYER_MIN_Y, LAYER_MAX_Y, LAYER_MIN_SCALE, LAYER_MAX_SCALE,
-    LAYER_TOLERANCE, LAYER_MAX_FEATURES, LAYER_MIN_GEO_WIDTH, LAYER_MAX_GEO_WIDTH, LAYER_HEADER, LAYER_FOOTER, LAYER_LABEL_ITEM, LAYER_MAX_SCALE_DENOM_LABEL,
+    LAYER_TOLERANCE, LAYER_MAX_FEATURES, LAYER_MIN_GEO_WIDTH, LAYER_MAX_GEO_WIDTH, LAYER_HEADER, LAYER_FOOTER, LAYER_LABEL_ITEM, 
+    LAYER_SYMBOL_SCALE_DENOM, LAYER_MAX_SCALE_DENOM_LABEL,
     LAYER_MIN_SCALE_DENOM_LABEL, LAYER_LABEL_CACHE, LAYER_POST_LABEL_CACHE, LAYER_LABEL_REQUIRES, LAYER_DEBUG_LEVEL };
 
  private:
