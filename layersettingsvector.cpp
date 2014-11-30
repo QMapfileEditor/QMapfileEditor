@@ -37,7 +37,7 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
     
     /** Layer Tab **/
     ui->mf_layerName_value->setText(l->getName());
-    if( l->getStatus() == 0 )
+    if( l->getStatus() == 1 )
     {
       ui->mf_statusOn_radio->setChecked(true);
       ui->mf_statusOff_radio->setChecked(false);
