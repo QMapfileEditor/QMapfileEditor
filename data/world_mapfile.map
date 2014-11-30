@@ -112,6 +112,7 @@ END
   LAYER
     NAME "world raster"
     DATA "world_raster.tif"
+    OPACITY 20
     METADATA
       "wms_title"	"world_raster"
     END # METADATA
@@ -122,9 +123,15 @@ END
       "no_defs"
     END # PROJECTION
     STATUS ON
-    TILEITEM "location"
+    REQUIRES "World contour"
+    GROUP common
+    EXTENT -180 -90 180 90
+    OFFSITE 100 100 100
     TYPE RASTER
     UNITS METERS
+    TEMPLATE test.html
+    FOOTER footer.html
+    HEADER header.html
   END # LAYER
 
   LAYER
@@ -142,7 +149,7 @@ END
     END # PROJECTION
     STATUS DEFAULT
     OPACITY 20
-    REQUIRES "world_raster"
+    REQUIRES "world raster"
     TOLERANCE 10
     TOLERANCEUNITS meters
     EXTENT -180 -90 180 90
