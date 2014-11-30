@@ -1,38 +1,107 @@
-<ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>Dialog</class>
- <widget class="QDialog" name="Dialog" >
-  <property name="geometry" >
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>523</width>
+    <height>376</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox" >
-   <property name="geometry" >
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
+     <x>170</x>
+     <y>340</y>
      <width>341</width>
      <height>32</height>
     </rect>
    </property>
-   <property name="orientation" >
+   <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
-   <property name="standardButtons" >
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+   </property>
+  </widget>
+  <widget class="QListView" name="FontList">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>231</width>
+     <height>311</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListView" name="mf_fontlist">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>30</y>
+     <width>241</width>
+     <height>311</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="addButton">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>130</y>
+     <width>29</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&gt;&gt;</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="removeButton">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>160</y>
+     <width>29</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;&lt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="fontAvailableLabel">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>211</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Font available</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="fontEnabledLabel">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>10</y>
+     <width>221</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Font enabled</string>
    </property>
   </widget>
  </widget>
- <pixmapfunction></pixmapfunction>
  <resources/>
  <connections>
   <connection>
@@ -41,11 +110,11 @@
    <receiver>Dialog</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>248</x>
      <y>254</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>157</x>
      <y>274</y>
     </hint>
@@ -57,11 +126,11 @@
    <receiver>Dialog</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>316</x>
      <y>260</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
     </hint>
