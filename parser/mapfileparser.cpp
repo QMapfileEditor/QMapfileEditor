@@ -153,7 +153,7 @@ unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int &
   // set querymap options to be coherent with the interface state
   imageObj * img = NULL;
 
-  if (this->map->width > 0 && this->map->height > 0) {
+  if (width > 0 && height > 0) {
     this->map->querymap.width  = width;
     this->map->querymap.height = height;
     img = msDrawMap(this->map, MS_TRUE);
