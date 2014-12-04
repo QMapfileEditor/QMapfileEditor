@@ -76,8 +76,8 @@ void TestMapfileParser::testLayers() {
 
   QList<Layer *> layers = p->getLayers();
   QVERIFY(layers.size() == 2);
-  QVERIFY(layers.at(0)->getName() == "world_raster");
-  QVERIFY(layers.at(1)->getName() == "world_adm0");
+  QVERIFY(layers.at(0)->getName() == "world raster");
+  QVERIFY(layers.at(1)->getName() == "World contour");
 
   if (p) delete p;
 
@@ -208,7 +208,7 @@ void TestMapfileParser::testConfigOptions() {
 
   QVERIFY(l.size() == 6);
 
-  QVERIFY(p->getConfigOptions().value("PROJ_LIB") == "/usr/local/share/proj/");
+  QVERIFY(p->getConfigOptions().value("PROJ_LIB") == "/usr/share/proj/");
   p->setConfigOption("PROJ_LIB", "/usr/share/proj/");
   // size should not have changed
   QVERIFY(p->getConfigOptions().size() == 6);
