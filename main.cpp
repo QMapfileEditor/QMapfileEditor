@@ -61,7 +61,32 @@ int main(int argc, char *argv[])
   OGRRegisterAll();
 
   MainWindow w;
-  
+
+  // inits gdal / ogr drivers
+  w.gdalGdalDrivers.clear();
+  w.gdalOgrDrivers.clear();
+  w.gdalGdalDrivers << "";
+  w.gdalOgrDrivers << "";
+
+  for (int i = 0; i < GDALGetDriverCount(); ++i) {
+    GDALDriverH d = GDALGetDriver(i);
+    w.gdalGdalDrivers << GDALGetDriverShortName(d) ;
+  }
+  for (int i = 0; i < OGRGetDriverCount(); ++i) {
+    OGRSFDriverH d = OGRGetDriver(i);
+    w.gdalOgrDrivers << OGR_Dr_GetName(d);
+  }
+  w.gdalOgrDrivers.removeDuplicates();
+  w.gdalOgrDrivers.sort();
+  w.gdalGdalDrivers.removeDuplicates();
+  w.gdalGdalDrivers.sort();
+
+
+
+
+
+
+
   w.show();
   // preloads a mapfile if given as argument
   if (argc > 1) {

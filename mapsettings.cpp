@@ -803,10 +803,10 @@ void MapSettings::refreshGdalOgrDriverCombo(const QString &s) {
       this->ui->mf_gdal_ogr_driver->setEnabled(true);
       if (s == "GDAL") {
         this->ui->mf_gdal_ogr_driver->clear();
-        this->ui->mf_gdal_ogr_driver->addItems(this->mapfile->getGdalGdalDrivers());
+        this->ui->mf_gdal_ogr_driver->addItems(((MainWindow *) parent())->gdalGdalDrivers);
       } else {
         this->ui->mf_gdal_ogr_driver->clear();
-        this->ui->mf_gdal_ogr_driver->addItems(this->mapfile->getGdalOgrDrivers());
+        this->ui->mf_gdal_ogr_driver->addItems(((MainWindow *) parent())->gdalOgrDrivers);
       }
     } else {
       this->ui->gdaldriver_label->setDisabled(true);

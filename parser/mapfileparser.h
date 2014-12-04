@@ -46,76 +46,70 @@ class MapfileParser
   MapfileParser(const QString & filename = "");
   ~MapfileParser();
 
-  QString const & getMapName() const;
+  QString const getMapName() const;
   void setMapName(const QString & name);
 
-  QString const & getMapfilePath() const;
+  QString const getMapfilePath() const;
   QString const & getMapfileName() const;
 
 
   QList<Layer *> const & getLayers(void) const;
-
-  QStringList const & getGdalGdalDrivers(void) const { return gdalGdalDrivers; };
-  QStringList const & getGdalOgrDrivers(void)  const { return gdalOgrDrivers;  };
-
-
   QList<OutputFormat *> const & getOutputFormats(void) const;
-  OutputFormat * getOutputFormat(const QString &);
-  QString const & getDefaultOutputFormat(void) const;
-
   void addOutputFormat(OutputFormat * const of);
   void removeOutputFormat(OutputFormat * const of);
   void updateOutputFormat(OutputFormat * const of);
+  OutputFormat * getOutputFormat(const QString &);
 
+  QString const getDefaultOutputFormat(void) const;
   void setDefaultOutputFormat(QString const &);
 
-  bool const & getMapStatus() const;
+  bool getMapStatus() const;
   void setMapStatus(const bool & status);
 
-  int  const & getMapWidth() const;
-  int  const & getMapHeight() const;
+  int getMapWidth() const;
+  int getMapHeight() const;
   void setMapSize(const int & width, const int & height);
 
-  int  const & getMapMaxsize() const;
+  int getMapMaxsize() const;
   void setMapMaxsize(const int & maxsize);
 
-  int  const & getMapUnits() const;
+  int getMapUnits() const;
   void setMapUnits(const QString & units);
   void setMapUnits(int const & units);
 
-  QString const & getMapImageType() const;
+  QString const getMapImageType() const;
   void setMapImageType(const QString & imageType);
 
-  QString const & getMapProjection() const;
+  QString const getMapProjection() const;
   void setMapProjection(const QString & projection);
 
-  double const & getMapExtentMinX() const;
-  double const & getMapExtentMinY() const;
-  double const & getMapExtentMaxX() const;
-  double const & getMapExtentMaxY() const;
+  double getMapExtentMinX() const;
+  double getMapExtentMinY() const;
+  double getMapExtentMaxX() const;
+  double getMapExtentMaxY() const;
   void setMapExtent(const double & minx, const double & miny, const double & maxx, const double & maxy);
 
   unsigned char * getCurrentMapImage(const int & width = -1, const int & height = -1);
-  int const     & getCurrentMapImageSize() const;
+  int const & getCurrentMapImageSize() const;
 
   bool saveMapfile(const QString & filename);
 
-  int const & getDebug() const;
+  int getDebug() const;
   void setDebug(const int & debug);
 
-  QString const & getShapepath() const;
+  QString const getShapepath() const;
   void setShapepath(const QString & shapepath);
 
-  QString const & getSymbolSet() const;
+  QString const getSymbolSet() const;
   void setSymbolSet(const QString & symbolset);
 
-  QString const & getFontSet() const;
+  QString const getFontSet() const;
   void setFontSet(const QString & fontset);
 
-  QString const & getTemplatePattern() const;
+  QString const getTemplatePattern() const;
   void setTemplatePattern(const QString & pattern);
 
-  QString const & getDataPattern() const;
+  QString const getDataPattern() const;
   void setDataPattern(const QString & pattern);
 
   QString getMetadataWmsTitle();
@@ -143,13 +137,13 @@ class MapfileParser
   QString const getMetadata(const QString & name) const;
   void removeMetadata(const QString &);
 
-  double const & getResolution() const;
+  double getResolution() const;
   void setResolution(const double & resolution);
 
-  double const & getDefResolution() const;
+  double getDefResolution() const;
   void setDefResolution(const double & resolution);
 
-  float const & getAngle() const;
+  float getAngle() const;
   void setAngle(const float & angle);
 
   QColor getImageColor() const;
@@ -187,9 +181,6 @@ class MapfileParser
   struct mapObj * map = NULL;
 
   QString filename;
-  QStringList gdalGdalDrivers;
-  QStringList gdalOgrDrivers;
-
   unsigned char * currentImageBuffer = NULL;
   int currentImageSize;
 
@@ -197,36 +188,14 @@ class MapfileParser
   void insertIntoMsMap(void *, const QString &, const QString &);
   void removeFromMsMap(void *, const QString &);
 
-  QString name;
-  bool status;
-  QString mapPath;
+  // output formats
   QList<OutputFormat *> outputFormats;
-  QString defaultOutputFormat;
 
-  int width, height;
-  int mapMaxSize;
-  int mapUnits;
-
-  QString mapImageType;
-  QString mapProjection;
-
-  double minx, miny, maxx, maxy;
-
-  int debug;
-
+  // config options
   QHash<QString,QString> configOptions;
+
+  // metadata
   QHash<QString,QString> metadatas;
-
-  QString shapePath;
-  QString fontSet;
-  QString symbolSet;
-
-  double resolution, defResolution;
-
-  float angle;
-
-  QString templatePattern;
-  QString dataPattern;
 
   // Layers
   QList<Layer *> layers;
