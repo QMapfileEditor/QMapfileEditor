@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   this->showInfo(tr("Initializing default mapfile"));
 
+
   // inits QAction behaviours
   this->connect(ui->actionZoom_to_Extent,   SIGNAL(triggered()), SLOT(zoomToOriginalExtent()));
   this->connect(ui->actionZoom,   SIGNAL(toggled(bool)), SLOT(zoomToggled(bool)));

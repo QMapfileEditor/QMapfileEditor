@@ -55,10 +55,6 @@ class MapfileParser
 
   QList<Layer *> const & getLayers(void) const;
 
-  QStringList const & getGdalGdalDrivers(void) const { return gdalGdalDrivers; };
-  QStringList const & getGdalOgrDrivers(void)  const { return gdalOgrDrivers;  };
-
-
   QList<OutputFormat *> const & getOutputFormats(void) const;
   OutputFormat * getOutputFormat(const QString &);
   QString const & getDefaultOutputFormat(void) const;
@@ -187,9 +183,6 @@ class MapfileParser
   struct mapObj * map = NULL;
 
   QString filename;
-  QStringList gdalGdalDrivers;
-  QStringList gdalOgrDrivers;
-
   unsigned char * currentImageBuffer = NULL;
   int currentImageSize;
 

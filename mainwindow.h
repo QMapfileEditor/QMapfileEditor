@@ -71,6 +71,11 @@ class MainWindow : public QMainWindow
       QString mapfilename, prevDirPath = NULL;
       QDir mapfiledir;
 
+      // TODO: private ? public ?
+      QStringList gdalGdalDrivers;
+      QStringList gdalOgrDrivers;
+
+
       ~MainWindow();
 
  public slots:

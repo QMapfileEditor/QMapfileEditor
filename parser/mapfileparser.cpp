@@ -78,27 +78,6 @@ MapfileParser::MapfileParser(const QString & fname) :
 {
   this->map = umnms_new_map(fname.isEmpty() ? NULL :  (char *) filename.toStdString().c_str());
 
-  // TODO: might be relevant to have this calculated
-  // on the mainwindow object instead of having it here,
-  // and calculate each time we create a new mapfile project.
-  this->gdalGdalDrivers.clear();
-  this->gdalOgrDrivers.clear();
-  this->gdalGdalDrivers << "";
-  this->gdalOgrDrivers << "";
-
-  for (int i = 0; i < GDALGetDriverCount(); ++i) {
-    GDALDriverH d = GDALGetDriver(i);
-    this->gdalGdalDrivers << GDALGetDriverShortName(d) ;
-  }
-  for (int i = 0; i < OGRGetDriverCount(); ++i) {
-    OGRSFDriverH d = OGRGetDriver(i);
-    this->gdalOgrDrivers << OGR_Dr_GetName(d);
-  }
-  this->gdalOgrDrivers.removeDuplicates();
-  this->gdalOgrDrivers.sort();
-  this->gdalGdalDrivers.removeDuplicates();
-  this->gdalGdalDrivers.sort();
-
   this->name = QString();
   this->layers = QList<Layer *>();
   this->status = false;
