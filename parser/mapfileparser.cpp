@@ -78,39 +78,12 @@ MapfileParser::MapfileParser(const QString & fname) :
 {
   this->map = umnms_new_map(fname.isEmpty() ? NULL :  (char *) filename.toStdString().c_str());
 
-  this->name = QString();
   this->layers = QList<Layer *>();
-  this->status = false;
-  this->mapPath = QString();
   this->outputFormats = QList<OutputFormat *>();
-  this->defaultOutputFormat = QString();
-  this->width = -1;
-  this->height = -1;
-  this->mapMaxSize = -1;
-  this->mapUnits  = -1;
-  this->mapImageType = QString();
-  this->mapProjection = QString();
-  this->minx = -1, this->miny = -1, this->maxx = -1, this->maxy = -1;
-  this->debug = false;
   this->configOptions = QHash<QString,QString>();
   this->metadatas = QHash<QString,QString>();
-  this->shapePath = QString();
-  this->symbolSet = QString();
-  this->fontSet = QString();
-  this->resolution = -1;
-  this->defResolution = -1;
-  this->angle = -1;
-  this->templatePattern = QString();
-  this->dataPattern = QString();
 
   if (this->map) {
-    // name
-    this->name = QString(this->map->name);
-    // status
-    this->status = this->map->status;
-    // map path
-    this->mapPath = QString(this->map->mappath);
-    // output formats
     for (int i = 0; i < this->map->numoutputformats ; i++) {
       OutputFormat * item = new OutputFormat(this->map->outputformatlist[i]->name,
                                              this->map->outputformatlist[i]->mimetype,
@@ -128,50 +101,9 @@ MapfileParser::MapfileParser(const QString & fname) :
       this->outputFormats.append(item);
     } // output formats
 
-   // default output format
-   this->defaultOutputFormat = QString(this->map->imagetype);
-
-   // width
-   this->width = this->map->width;
-   // height
-   this->height = this->map->height;
-   // map max size
-   this->mapMaxSize = this->map->maxsize;
-   // map units
-   this->mapUnits = this->map->units;
-   // map image type
-   this->mapImageType = this->map->imagetype;
-   // map projection
-   char * tmp = msGetProjectionString(& (this->map->projection));
-   this->mapProjection = tmp;
-   free(tmp);
-   // map extent
-   this->minx = this->map->extent.minx;
-   this->miny = this->map->extent.miny;
-   this->maxx = this->map->extent.maxx;
-   this->maxy = this->map->extent.maxy;
-   // debug
-   this->debug = this->map->debug;
-   // config options
    this->configOptions = populateMapFromMs(& (this->map->configoptions));
    // metadatas
    this->metadatas = populateMapFromMs(& (this->map->web.metadata));
-   // shapepath
-   this->shapePath = this->map->shapepath;
-   // symbolset
-   this->symbolSet = this->map->symbolset.filename;
-   // fontset
-   this->fontSet = this->map->fontset.filename;
-   // map resolution
-   this->resolution = this->map->resolution;
-   // def resolution
-   this->defResolution = this->map->defresolution;
-   // angle
-   this->angle = this->map->gt.rotation_angle;
-   // template pattern
-   this->templatePattern = this->map->templatepattern;
-   // data pattern
-   this->dataPattern = this->map->datapattern;
 
    // Layers
    for (int i = 0; i < this->map->numlayers; ++i) {
@@ -185,6 +117,9 @@ MapfileParser::MapfileParser(const QString & fname) :
 
 /**
  * Related method to create an image representation of the current map
+ *
+ * TODO: This should not be managed by this class and may be exported
+ * into mainwindow or mapscene class instead.
  */
 int const & MapfileParser::getCurrentMapImageSize() const {
   return this->currentImageSize;
@@ -218,7 +153,7 @@ unsigned char * MapfileParser::getCurrentMapImage(const int & width, const int &
   // set querymap options to be coherent with the interface state
   imageObj * img = NULL;
 
-  if (width > 0 && height > 0) {
+  if (this->map->width > 0 && this->map->height > 0) {
     this->map->querymap.width  = width;
     this->map->querymap.height = height;
     img = msDrawMap(this->map, MS_TRUE);
@@ -279,12 +214,6 @@ void MapfileParser::addLayer(void) {
   this->map->layerorder[map->numlayers] = map->numlayers;
   this->map->numlayers++;
 
-  //int ret = msInsertLayer(this->map, newL, -1);
-
-  //if (ret == -1) {
-  //  qDebug() << "Mapserver did not manage to import the layer, this should not happen.";
-  //  return;
-  //}
   Layer * newLayer = new Layer(newL->name, this->map);
   layers  << newLayer;
 }
@@ -323,10 +252,11 @@ void MapfileParser::addLayer(QString const & layerName, QString const & dataStr,
 }
 
 /**
- * Method called in case of undo
+ * Adds a layer.
+ *
+ * This method is called in case of undo.
  */
 void MapfileParser::addLayer(Layer const * newL) {
-  // TODO: check if already in ?
   layers << new Layer(* newL);
 
   layerObj * newLayerObj = msGrowMapLayers(this->map);
@@ -339,7 +269,7 @@ void MapfileParser::addLayer(Layer const * newL) {
 
 /**
  * this method assumes that the order into this->layers
- * is the same as in this->map->layers (we should be the case).
+ * is the same as in this->map->layers (this should be the case).
  */
 void MapfileParser::removeLayer(Layer const * l) {
   int index = -1;
@@ -362,8 +292,10 @@ void MapfileParser::removeLayer(Layer const * l) {
 
 
 // Map name
-QString const & MapfileParser::getMapName() const {
-  return name;
+QString const MapfileParser::getMapName() const {
+  if (this->map)
+    return QString(this->map->name);
+  return QString();
 }
 
 void MapfileParser::setMapName(const QString & name) {
@@ -372,73 +304,78 @@ void MapfileParser::setMapName(const QString & name) {
       free (this->map->name);
     }
     this->map->name = (char *) strdup(name.toStdString().c_str());
-    this->name = name;
   }
 }
 
 // Status parameters
-bool const & MapfileParser::getMapStatus() const {
-  return status;
+bool MapfileParser::getMapStatus() const {
+  if (this->map)
+    return this->map->status == 1;
+  return false;
 }
 
 void MapfileParser::setMapStatus(const bool & status) {
   if (this->map) {
     this->map->status = (status == true ? 1 : 0);
-    this->status = status;
   }
 }
 
 // Width/Height parameters
-int const & MapfileParser::getMapWidth() const {
-  return this->width;
+int MapfileParser::getMapWidth() const {
+  if (this->map)
+    return this->map->width;
+  return -1;
 }
 
-int const & MapfileParser::getMapHeight() const {
-  return this->height;
+int MapfileParser::getMapHeight() const {
+  if (this->map)
+    return this->map->height;
+  return -1;
 }
 
 void MapfileParser::setMapSize(const int & width, const int & height) {
    if (this->map) {
-     this->width = width;
-     this->height = height;
      this->map->width = width;
      this->map->height = height;
   }
 }
 
-int const & MapfileParser::getMapMaxsize() const {
-  return this->mapMaxSize;
+int MapfileParser::getMapMaxsize() const {
+  if (this->map)
+    return this->map->maxsize;
+  return -1;
 }
 
 void MapfileParser::setMapMaxsize(const int & maxsize) {
   if (this->map) {
-    this->mapMaxSize = maxsize;
     this->map->maxsize = maxsize;
   }
 }
 
 // units parameter
-int const & MapfileParser::getMapUnits() const {
-  return this->mapUnits;
+int MapfileParser::getMapUnits() const {
+  if (this->map)
+    return this->map->units;
+  return -1;
 }
 
 void MapfileParser::setMapUnits(const QString & units) {
   if (this->map) {
-    this->mapUnits = this->units.indexOf(units);
     this->map->units = (enum MS_UNITS) this->units.indexOf(units);
   }
 }
 void MapfileParser::setMapUnits(int const & units) {
   if (this->map) {
-    this->mapUnits = units;
     this->map->units = (enum MS_UNITS) units;
   }
 }
 
 
 // imageType parameter
-QString const & MapfileParser::getMapImageType() const {
-  return this->mapImageType;
+QString const MapfileParser::getMapImageType() const {
+  if (this->map)
+    return this->map->imagetype;
+  return QString();
 }
 
 void MapfileParser::setMapImageType(const QString & imageType) {
@@ -447,45 +384,54 @@ void MapfileParser::setMapImageType(const QString & imageType) {
   if (this->map->imagetype) {
     free(this->map->imagetype);
   }
-  this->mapImageType = imageType;
   this->map->imagetype = (char *) strdup(imageType.toStdString().c_str());
 }
 
 //projection parameters
-QString const & MapfileParser::getMapProjection() const {
-  return this->mapProjection;
+QString const MapfileParser::getMapProjection() const {
+  if (! this->map)
+    return QString();
+
+  char * tmp = msGetProjectionString(& (this->map->projection));
+  QString ret = QString(tmp);
+  free(tmp);
+
+  return ret;
 }
 
 void MapfileParser::setMapProjection(const QString & projection) {
     if (this->map) {
-      this->mapProjection = projection;
       msLoadProjectionStringEPSG(& (this->map->projection), projection.toStdString().c_str());
     }
 }
 
 // Extent object parameters
-double const & MapfileParser::getMapExtentMinX() const {
-  return this->minx;
+double MapfileParser::getMapExtentMinX() const {
+  if (this->map)
+    return this->map->extent.minx;
+  return -1;
 }
 
-double const & MapfileParser::getMapExtentMinY() const {
-  return this->miny;
+double MapfileParser::getMapExtentMinY() const {
+  if (this->map)
+    return this->map->extent.miny;
+  return -1;
 }
 
-double const & MapfileParser::getMapExtentMaxX() const {
-  return this->maxx;
+double MapfileParser::getMapExtentMaxX() const {
+  if (this->map)
+    return this->map->extent.maxx;
+  return -1;
 }
 
-double const & MapfileParser::getMapExtentMaxY() const {
-  return this->maxy;
+double MapfileParser::getMapExtentMaxY() const {
+  if (this->map)
+    return this->map->extent.maxy;
+  return -1;
 }
 
 void MapfileParser::setMapExtent(const double & minx, const double & miny, const double & maxx, const double & maxy) {
   if (this->map) {
-    this->minx = minx;
-    this->miny = miny;
-    this->maxx = maxx;
-    this->maxy = maxy;
     this->map->extent.minx = minx;
     this->map->extent.miny = miny;
     this->map->extent.maxx = maxx;
@@ -493,13 +439,12 @@ void MapfileParser::setMapExtent(const double & minx, const double & miny, const
   }
 }
 
-int const & MapfileParser::getDebug() const {
-  return this->debug;
+int MapfileParser::getDebug() const {
+  return this->map->debug;
 }
 
 void MapfileParser::setDebug(const int & debug) {
     if(this->map) {
-        this->debug      = debug;
         this->map->debug = debug;
     }
 }
@@ -724,8 +669,10 @@ QString MapfileParser::getMetadataWfsSrs() {
 }
 
 
-QString const & MapfileParser::getShapepath() const {
-  return this->shapePath;
+QString const MapfileParser::getShapepath() const {
+  if (this->map)
+    return this->map->shapepath;
+  return QString();
 }
 
 void MapfileParser::setShapepath(const QString & shapepath) {
@@ -733,13 +680,14 @@ void MapfileParser::setShapepath(const QString & shapepath) {
         if (this->map->shapepath) {
             free(this->map->shapepath);
         }
-        this->shapePath = shapepath;
         this->map->shapepath = (char *) strdup(shapepath.toStdString().c_str());
     }
 }
 
-QString const & MapfileParser::getSymbolSet() const {
-  return this->symbolSet;
+QString const MapfileParser::getSymbolSet() const {
+  if (this->map)
+    return this->map->symbolset.filename;
+  return QString();
 }
 
 void MapfileParser::setSymbolSet(const QString & symbolset) {
@@ -747,13 +695,14 @@ void MapfileParser::setSymbolSet(const QString & symbolset) {
         if (this->map->symbolset.filename) {
             free(this->map->symbolset.filename);
         }
-        this->symbolSet = symbolset;
         this->map->symbolset.filename = (char *) strdup(symbolset.toStdString().c_str());
     }
 }
 
-QString const & MapfileParser::getFontSet() const {
-  return this->fontSet;
+QString const MapfileParser::getFontSet() const {
+  if (this->map)
+    return this->map->fontset.filename;
+  return QString();
 }
 
 void MapfileParser::setFontSet(const QString & fontset) {
@@ -761,47 +710,52 @@ void MapfileParser::setFontSet(const QString & fontset) {
         if (this->map->fontset.filename) {
             free(this->map->fontset.filename);
         }
-        this->fontSet = fontset;
         this->map->fontset.filename = (char *) strdup(fontset.toStdString().c_str());
     }
 }
 
 
-double const & MapfileParser::getResolution() const {
-  return this->resolution;
+double MapfileParser::getResolution() const {
+  if (this->map)
+    return this->map->resolution;
+  return -1.0;
 }
 
 void MapfileParser::setResolution(const double & resolution) {
   if (this->map) {
-    this->resolution = resolution;
     this->map->resolution = resolution;
   }
 }
 
-double const & MapfileParser::getDefResolution() const {
-  return this->defResolution;
+double MapfileParser::getDefResolution() const {
+  if (this->map)
+    return this->map->defresolution;
+  return -1.0;
 }
 
 void MapfileParser::setDefResolution(const double & resolution) {
     if (this->map) {
-        this->defResolution = resolution;
         this->map->defresolution = resolution;
     }
 }
 
-float const & MapfileParser::getAngle() const {
-  return this->angle;
+float MapfileParser::getAngle() const {
+  if (this->map)
+    return this->map->gt.rotation_angle;
+
+  return 0.0;
 }
 
 void MapfileParser::setAngle(const float & angle) {
   if (this->map) {
-    this->angle = angle;
     this->map->gt.rotation_angle = angle;
   }
 }
 
-QString const & MapfileParser::getTemplatePattern() const {
-  return this->templatePattern;
+QString const MapfileParser::getTemplatePattern() const {
+  if (this->map)
+    return this->map->templatepattern;
+  return QString();
 }
 
 void MapfileParser::setTemplatePattern(const QString & pattern) {
@@ -809,13 +763,14 @@ void MapfileParser::setTemplatePattern(const QString & pattern) {
     if (this->map->templatepattern) {
       free(this->map->templatepattern);
     }
-    this->templatePattern = pattern;
     this->map->templatepattern = (char *) strdup(pattern.toStdString().c_str());
   }
 }
 
-QString const & MapfileParser::getDataPattern() const {
-  return this->dataPattern;
+QString const MapfileParser::getDataPattern() const {
+  if (this->map)
+    return this->map->datapattern;
+  return QString();
 }
 
 void MapfileParser::setDataPattern(const QString & pattern) {
@@ -823,14 +778,15 @@ void MapfileParser::setDataPattern(const QString & pattern) {
         if (this->map->datapattern) {
             free(this->map->datapattern);
         }
-        this->dataPattern = pattern;
         this->map->datapattern = (char *) strdup(pattern.toStdString().c_str());
     }
 }
 
 
-QString const & MapfileParser::getMapfilePath() const {
-  return this->mapPath;
+QString const MapfileParser::getMapfilePath() const {
+  if (this->map)
+    return this->map->mappath;
+  return QString();
 }
 
 QString const & MapfileParser::getMapfileName() const {
@@ -855,16 +811,14 @@ void MapfileParser::setImageColor(QColor const & color) {
 }
 
 /**
- * Gets the known output format from the Mapfile.
+ * Gets the output formats from the Mapfile.
  */
 QList<OutputFormat *> const & MapfileParser::getOutputFormats() const {
   return this->outputFormats;
 }
 
-
 /**
- * Does basically the same as the previous method, but for a given
- * name. This implies that the OF exists in the mapfile.
+ * Gets a specific output format, given its name.
  *
  * Used by the QUndo commands, to get the state of an ouptut format
  * just before it goes modified.
@@ -874,7 +828,7 @@ QList<OutputFormat *> const & MapfileParser::getOutputFormats() const {
  * Then remove the delete() from the QUndo command ?
  *
  * We have to create a new OF because in case of a delete, the object
- * no longer exist and the QUndo command still need it (in case of redo
+ * no longer exists and the QUndo command still needs it (in case of redo
  * command, to recreate the deleted OF).
  */
 OutputFormat * MapfileParser::getOutputFormat(QString const & name) {
@@ -986,7 +940,7 @@ void MapfileParser::updateOutputFormat(OutputFormat * const of) {
 }
 
 void MapfileParser::addOutputFormat(OutputFormat * const of) {
-  if (!this->map)
+  if (! this->map)
     return;
 
   QString fullyQualifiedDriver = of->getDriver();
@@ -1023,8 +977,10 @@ void MapfileParser::addOutputFormat(OutputFormat * const of) {
   newMsOf->inmapfile = MS_TRUE;
 }
 
-QString const & MapfileParser::getDefaultOutputFormat() const {
-  return this->defaultOutputFormat;
+QString const MapfileParser::getDefaultOutputFormat() const {
+  if (this->map)
+    return this->map->imagetype;
+  return QString();
 }
 
 void MapfileParser::setDefaultOutputFormat(QString const & of) {
@@ -1033,7 +989,6 @@ void MapfileParser::setDefaultOutputFormat(QString const & of) {
   if (this->map->imagetype) {
     free(this->map->imagetype);
   }
-  this->defaultOutputFormat = of;
   this->map->imagetype = strdup(of.toStdString().c_str());
 }
 
