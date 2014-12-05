@@ -109,7 +109,7 @@
      <x>0</x>
      <y>0</y>
      <width>875</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -690,6 +690,24 @@
   <action name="actionShowUndoStack">
    <property name="text">
     <string>&amp;Show Undo stack</string>
+   </property>
+  </action>
+  <action name="actionNew_vector_layer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/ui/images/icons/document-new.png</normaloff>:/ui/images/icons/document-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>new vector layer</string>
+   </property>
+  </action>
+  <action name="actionNew_raster_layer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/ui/images/icons/document-new.png</normaloff>:/ui/images/icons/document-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>new raster layer</string>
    </property>
   </action>
  </widget>

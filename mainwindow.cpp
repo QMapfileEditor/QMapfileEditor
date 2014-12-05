@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setEditTriggers(QAbstractItemView::NoEditTriggers);
   this->connect(ui->mf_structure, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(showLayerSettings(const QModelIndex &)));
   this->connect(ui->mf_editLayer, SIGNAL(clicked()), this, SLOT(showLayerSettings()));
-  this->connect(ui->mf_addlayer, SIGNAL(clicked()), this, SLOT(addLayerTriggered()));
+  this->connect(ui->mf_addlayer, SIGNAL(clicked()), ui->mf_addlayer, SLOT(showMenu()));
 
   // inits the graphics scene
   MapScene * mapScene = new MapScene(this);
@@ -91,6 +91,13 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mf_structure->setModel(layerModel);
   for (int i = 1; i < layerModel->columnCount(); i++)
       ui->mf_structure->hideColumn(i);
+
+  // menu for adding a new layer (vector/raster)
+  QMenu * newLayerMenu = new QMenu(ui->mf_addlayer);
+  newLayerMenu->addAction(ui->actionNew_vector_layer);
+  newLayerMenu->addAction(ui->actionNew_raster_layer);
+  ui->mf_addlayer->setMenu(newLayerMenu);
+
 }
 
 
