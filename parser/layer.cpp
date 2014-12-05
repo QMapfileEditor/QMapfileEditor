@@ -29,111 +29,13 @@
 #include "mapserver.h"
 
 #include "layer.h"
+#include "mapfileparser.h"
+
 #include <QDebug>
 
 Layer::Layer(QString const & name, struct mapObj * map):
 map(map) {
-
   this->name = name;
-  this->status = 0;
-  this->mask = QString();
-  this->group = QString();
-  this->requires = QString();
-  this->tolerance = 0.0;
-  this->toleranceUnits = QString();
-  this->layerTemplate =  QString();
-  this->header = QString(), this->footer = QString();
-
-  this->debugLevel = 0;
-  this->opacity = 0;
-  this->type = QString();
-  this->geomType = QString();
-  this->units = QString();
-
-  this->plugin = QString();
-  this->projType = QString();
-  this->projString = QString();
-
-  this->minx = 0.0, this->miny = 0.0, this->maxx = 0.0, this->maxy = 0.0;
-  this->filter = QString();
-
-  this->minScale = 0.0; this->maxScale = 0.0;
-
-  this->geomTransformation = QString();
-  this->processing = QString();
-  this->transform = false;
-
-  this->maxfeatures = 0;
-  this->mingeowidth = 0.0, this->maxgeowidth = 0.0;
-
-
-  layerObj * l = getInternalLayerObj();
-  if (l) {
-    this->status = l->status;
-    if (l->type >= 0)
-      this->type = Layer::layerType.at(l->type);
-    else
-      this->type = QString();
-//    // TODO geomType ?
-    this->opacity = l->opacity;
-    this->mask = l->mask; // TODO if mask == NULL ??
-    this->group = l->group;
-
-    if (l->requires)
-      this->requires = l->requires;
-    else this->requires = QString();
-    if (l->plugin_library)
-      this->plugin = l->plugin_library; // TODO ?
-    else
-      this->plugin = QString();
-//    //TODO projection ? map->project and map->projection refers to != objects
-    this->minx = l->extent.minx;
-    this->miny = l->extent.miny;
-    this->maxx = l->extent.maxx;
-    this->maxy = l->extent.maxy;
-//    // TODO layer->filter is a complex object
-    if ( l->minscaledenom > 0) {
-      this->minScale = l->minscaledenom;
-    } else {
-      this->minScale = NULL;
-    }
-    if (l->maxscaledenom > 0) {
-      this->maxScale = l->maxscaledenom;
-    } else {
-      this->maxScale = NULL;
-    }
-//    // TODO geomTransform  vs l->transform ?
-    this->tolerance = l->tolerance;
-    this->toleranceUnits = l->toleranceunits;
-//    // TODO processing (QString) vs l->processing (char ** / QStringList)
-//    this->transform = l->transform;
-    this->maxfeatures = l->maxfeatures;
-    this->mingeowidth = l->mingeowidth;
-    this->maxgeowidth = l->maxgeowidth;
-    
-//     this->layerTemplate = l->template;
-    this->header = l->header;
-    this->footer = l->footer;
-    if (l->filteritem)
-      this->filterItem = l->filteritem;
-    else
-      this->filterItem = QString();
-    
-    if (l->labelitem)
-      this->labelItem = l->labelitem;
-    else
-      this->labelItem = QString();
-    this->symbolScaleDenom = l->symbolscaledenom;
-//    // TODO labelAngleItem (not found in layerObj)
-//    this->labelCache = l->labelcache;
-//    this->postLabelCache = l->postlabelcache;
-//    // TODO labelSizeItem ? (not found in layerObj)
-    this->labelRequires = l->labelrequires;
-//    // TODO l->validation is a complex structure (vs QString)
-    this->debugLevel = l->debug;
-
-  }
-
 }
 
 QString const & Layer::getName() const {
@@ -152,22 +54,256 @@ void Layer::setName(QString const & newName) {
   name = newName;
 }
 
-double Layer::getMaxScaleDenomLabel() {
+double Layer::getMaxScaleDenomLabel() const {
   layerObj * l = getInternalLayerObj();
   if (! l)
     return -1.0;
   return l->labelmaxscaledenom;
 }
 
-double Layer::getMinScaleDenomLabel() {
+double Layer::getMinScaleDenomLabel() const {
   layerObj * l = getInternalLayerObj();
   if (! l)
     return -1.0;
   return l->labelminscaledenom;
 }
+
+int Layer::getStatus() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->status;
+  return -1;
+}
+
+QString Layer::getRequires() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->requires;
+  return QString();
+}
+
+QString Layer::getGroup() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->group;
+  return QString();
+}
+
+QString Layer::getType() const  {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return layerType.at(l->type);
+  return QString();
+}
+
+int Layer::getOpacity() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->opacity;
+  return -1;
+}
+
+QString Layer::getMask() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->mask;
+  return QString();
+}
+
+QString Layer::getUnits() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return MapfileParser::units.at(l->units);
+  return QString();
+}
+
+QString Layer::getSizeUnits() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return MapfileParser::units.at(l->sizeunits);
+  return QString();
+}
+
+double Layer::getMinX() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->extent.minx;
+  return -1;
+}
+
+double Layer::getMinY() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->extent.miny;
+  return -1;
+}
+
+double Layer::getMaxX() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->extent.maxx;
+  return -1;
+}
+
+double Layer::getMaxY() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->extent.maxy;
+  return -1;
+}
+
+double Layer::getMinScale() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->minscaledenom;
+  return -1.0;
+}
+
+double Layer::getMaxScale() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->maxscaledenom;
+  return -1.0;
+}
+
+QString Layer::getPlugin() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->plugin_library;
+  return QString();
+}
+
+double Layer::getTolerance() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->tolerance;
+  return -1.0;
+}
+
+QString Layer::getToleranceUnits() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    // TODO toleranceunits is an int (mapserver.h around line 1598)
+    return QString();
+  return QString();
+}
+
+int Layer::getMaxFeatures() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->maxfeatures;
+  return -1;
+}
+
+double Layer::getMinGeoWidth() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->mingeowidth;
+  return -1.0;
+}
+
+double Layer::getMaxGeoWidth() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->maxgeowidth;
+  return -1.0;
+}
+
+QString Layer::getClassGroup() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->classgroup;
+  return QString();
+}
+
+QString Layer::getTemplate() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->_template;
+  return QString();
+}
+
+QString Layer::getHeader() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->header;
+  return QString();
+}
+
+QString Layer::getFooter() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->footer;
+  return QString();
+}
+
+QString Layer::getStyleItem() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->styleitem;
+  return QString();
+}
+
+QString Layer::getFilterItem() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->filteritem;
+  return QString();
+}
+
+QString Layer::getLabelItem() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->labelitem;
+  return QString();
+}
+
+QString Layer::getClassItem() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->classitem;
+  return QString();
+}
+
+double Layer::getSymbolScaleDenom() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->symbolscaledenom;
+  return -1.0;
+}
+
+bool Layer::getLabelCache() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->labelcache;
+  return false;
+}
+
+bool Layer::getPostLabelCache() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->postlabelcache;
+  return false;
+}
+
+int Layer::getDebugLevel() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->debug;
+  return -1;
+}
+
+QString Layer::getLabelRequires() const {
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    return l->labelrequires;
+  return QString();
+}
+
+
 /* private methods */
 
-int Layer::getInternalIndex(void) {
+int Layer::getInternalIndex(void) const {
   if ((! this->map) || name.isNull() || name.isEmpty()) {
     return -1;
   }
@@ -175,7 +311,7 @@ int Layer::getInternalIndex(void) {
   return msGetLayerIndex(this->map, (char *) name.toStdString().c_str());
 }
 
-layerObj * Layer::getInternalLayerObj(void) {
+layerObj * Layer::getInternalLayerObj(void) const {
   int idx = getInternalIndex();
 
   if ((idx < 0) || (idx > this->map->numlayers))

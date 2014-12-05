@@ -51,42 +51,42 @@ class Layer {
     static QStringList layerType;
 
     // Accessors
-    int const & getStatus() const { return status; };
-    QString const & getRequires() const { return requires; };
-    QString const & getGroup() const { return group; };
-    QString const & getType() const { return type; };
-    int const & getOpacity() const { return opacity; };
-    QString const & getMask() const { return mask; };
-    QString const & getUnits() const { return units; };
-    QString const & getSizeUnits() const { return sizeunits; };
-    double const & getMinX() const { return minx; };
-    double const & getMaxX() const { return maxx; };
-    double const & getMinY() const { return miny; };
-    double const & getMaxY() const { return maxy; };
-    double const & getMinScale() const { return minScale; };
-    double const & getMaxScale() const { return maxScale; };
-//     QString const & getPlugin() const { return plugin; );
-    double const & getTolerance() const { return tolerance; };
-    QString const & getToleranceUnits() const { return toleranceUnits; };
-    int const & getMaxFeatures() const { return maxfeatures; };
-    double const & getMinGeoWidth() const { return mingeowidth; } ;
-    double const & getMaxGeoWidth() const { return maxgeowidth; };
-    QString const & getClassGroup() const { return classgroup; };
-    QString const & getTemplate() const { return layerTemplate; };
-    QString const & getHeader() const { return header; };
-    QString const & getFooter() const { return footer; };
-    QString const & getStyleItem() const { return styleItem; };
-    QString const & getFilterItem() const { return filterItem; };
-    QString const & getLabelItem() const { return labelItem; };
-    QString const & getClassItem() const { return classItem; };
-    double const & getSymbolScaleDenom() const { return symbolScaleDenom; };
-    bool const & getLabelCache() const { return labelCache; };
-    bool const & getPostLabelCache() const { return postLabelCache; };
-    int const & getDebugLevel() const { return debugLevel; };
-    QString const & getLabelRequires() const { return labelRequires; };
+    int getStatus() const;
+    QString getRequires() const;
+    QString getGroup() const;
+    QString getType() const;
+    int getOpacity() const;
+    QString getMask() const;
+    QString getUnits() const;
+    QString getSizeUnits() const;
+    double getMinX() const;
+    double getMaxX() const;
+    double getMinY() const;
+    double getMaxY() const;
+    double getMinScale() const;
+    double getMaxScale() const;
+    QString getPlugin() const;
+    double getTolerance() const;
+    QString getToleranceUnits() const;
+    int getMaxFeatures() const;
+    double getMinGeoWidth() const;
+    double getMaxGeoWidth() const;
+    QString getClassGroup() const;
+    QString getTemplate() const;
+    QString getHeader() const;
+    QString getFooter() const;
+    QString getStyleItem() const;
+    QString getFilterItem() const;
+    QString getLabelItem() const;
+    QString getClassItem() const;
+    double getSymbolScaleDenom() const;
+    bool getLabelCache() const;
+    bool getPostLabelCache() const;
+    int getDebugLevel() const;
+    QString getLabelRequires() const;
 
-    double getMaxScaleDenomLabel();
-    double getMinScaleDenomLabel();
+    double getMaxScaleDenomLabel() const;
+    double getMinScaleDenomLabel() const;
 
 
   private:
@@ -97,82 +97,28 @@ class Layer {
     // Since modifications of layers could have an impact on the in-memory
     // objects (e.g. deletion), we prefer keeping a reference the the map
     // object, instead of the layerObj ones.
+    //
+    // It should anyway always be possible to get back a reference to the
+    // internal layer object using the mapObj.
     struct mapObj * map;
 
-    int getInternalIndex();
-    struct layerObj * getInternalLayerObj();
-
-    // Significant member variables for the model
-
-    /** Layer tab  */
-    int status;
-    QString mask;
-    QString group;
-    QString requires;
-    double tolerance;
-    QString toleranceUnits;
-    QString layerTemplate;
-    QString header, footer;
-    int debugLevel;
-    int opacity;
-    
-    /** Data source **/
-    
-    // TODO: there may be some types (enums ?) more appropriate
-    // For now, getting what @yjacolin put in the interface
-    QString type;
-    QString geomType;
-    QString styleItem;
-    QString filterItem;
-    QString classItem;
-    QString units;
-    QString sizeunits;
-    QString classgroup;
-    double symbolScaleDenom;
-    
-    QString plugin;
-    // TODO These could probably be merged
-    QString projType;
-    QString projString;
-    
-
-    double minx, miny, maxx, maxy;
-
-    QString filter;
-
-    // minscale / maxscale onto layerObj (mapserver side)
-    double minScale, maxScale;
-
-
-    /** Data transformation tab */
-    QString geomTransformation;
-
-    QString processing;
-
-    bool transform;
-    int maxfeatures;
-    double mingeowidth, maxgeowidth;
-
-    // TODO: cluster ??
-
-    /** classes tab */
-    // TODO: needs a LayerClass class definition
-
-    /** label tab  */
-    QString labelItem;
-    double minScaleDenomLabel, maxScaleDenomLabel;
-    int labelAngleItem;
-    bool labelCache;
-    bool postLabelCache;
-    int labelSizeItem;
-    QString labelRequires;
-
-    /** web services tab */
-
-    /** validation tab */
-    QString validation;
+    int getInternalIndex() const;
+    struct layerObj * getInternalLayerObj() const;
 
 };
+
+// TODO: Don't know yet if it would be of interest to introduce class hierarchy
+
+class VectorLayer : public Layer {
+
+};
+
+class RasterLayer : public Layer {
+
+};
+
+
+
 
 class LayerModel : public QAbstractListModel {
 
