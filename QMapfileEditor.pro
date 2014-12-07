@@ -17,6 +17,7 @@ SOURCES += \
         mapsettings.cpp                        \
         layersettingsvector.cpp                \
         layersettingsraster.cpp                \
+        fontsettings.cpp                       \
         commands/changemapnamecommand.cpp      \
         commands/changemapstatuscommand.cpp    \
         commands/layercommands.cpp             \
@@ -49,6 +50,7 @@ HEADERS  += \
     mapsettings.h                           \
     layersettingsvector.h                   \
     layersettingsraster.h                   \
+    fontsettings.h                          \
     commands/changemapnamecommand.h         \
     commands/changemapstatuscommand.h       \
     commands/layercommands.h                \
@@ -79,7 +81,7 @@ FORMS    += mainwindow.ui   \
     layersettings.ui        \
     layersettingsvector.ui  \
     layersettingsraster.ui \
-    fontSettings.ui
+    fontsettings.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
                "/usr/include/gdal"
