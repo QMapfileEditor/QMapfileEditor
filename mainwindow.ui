@@ -109,7 +109,7 @@
      <x>0</x>
      <y>0</y>
      <width>875</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -151,19 +151,27 @@
     <property name="title">
      <string>New</string>
     </property>
-    <addaction name="actionLayer_object"/>
-    <addaction name="actionClass_object"/>
-    <addaction name="actionStyle_Object"/>
-    <addaction name="separator"/>
-    <addaction name="actionSymbol"/>
-    <addaction name="actionFont"/>
+    <widget class="QMenu" name="menuLayer_object">
+     <property name="title">
+      <string>Layer object</string>
+     </property>
+     <addaction name="actionVector"/>
+     <addaction name="actionRaster"/>
+     <addaction name="actionDiagram"/>
+     <addaction name="actionFeature"/>
+     <addaction name="actionGrid"/>
+    </widget>
+    <addaction name="menuLayer_object"/>
    </widget>
    <widget class="QMenu" name="menuSetting">
     <property name="title">
      <string>Settings</string>
     </property>
     <addaction name="actionOptions"/>
+    <addaction name="separator"/>
     <addaction name="actionMapSetting"/>
+    <addaction name="actionSymbol"/>
+    <addaction name="actionFont"/>
    </widget>
    <widget class="QMenu" name="menuMap">
     <property name="title">
@@ -537,11 +545,6 @@
     <string>Style Object</string>
    </property>
   </action>
-  <action name="actionLayer_object">
-   <property name="text">
-    <string>Layer object</string>
-   </property>
-  </action>
   <action name="actionClass_object">
    <property name="text">
     <string>Class object</string>
@@ -708,6 +711,31 @@
    </property>
    <property name="text">
     <string>new raster layer</string>
+   </property>
+  </action>
+  <action name="actionVector">
+   <property name="text">
+    <string>Vector</string>
+   </property>
+  </action>
+  <action name="actionRaster">
+   <property name="text">
+    <string>Raster</string>
+   </property>
+  </action>
+  <action name="actionDiagram">
+   <property name="text">
+    <string>Diagram</string>
+   </property>
+  </action>
+  <action name="actionFeature">
+   <property name="text">
+    <string>Feature</string>
+   </property>
+  </action>
+  <action name="actionGrid">
+   <property name="text">
+    <string>Grid</string>
    </property>
   </action>
  </widget>

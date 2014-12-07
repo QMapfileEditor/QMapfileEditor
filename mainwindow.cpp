@@ -73,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionSave,       SIGNAL(triggered()), SLOT(saveMapfile()));
   this->connect(ui->actionSaveAs,     SIGNAL(triggered()), SLOT(saveAsMapfile()));
   this->connect(ui->actionMapSetting, SIGNAL(triggered()), SLOT(showMapSettings()));
+  this->connect(ui->actionFont,        SIGNAL(triggered()), SLOT(showFontSettings()));
   this->connect(ui->actionAbout,      SIGNAL(triggered()), SLOT(showAbout()));
   this->connect(ui->actionRefresh,    SIGNAL(triggered()), SLOT(updateMapPreview()));
 
@@ -397,6 +398,23 @@ void MainWindow::showMapSettings() {
   }
   this->settings = new MapSettings(this, this->mapfile);
   this->settings->show();
+}
+
+/**
+ * Displays the Font settings window.
+ */
+void MainWindow::showFontSettings() {
+  // Mapfile not loaded
+  if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
+    return;
+  }
+  // a window has already been created
+  if (this->fontSettings) {
+    this->fontSettings->reject();
+    delete this->fontSettings;
+  }
+  this->fontSettings = new FontSettings(this, this->mapfile);
+  this->fontSettings->show();
 }
 
 /**

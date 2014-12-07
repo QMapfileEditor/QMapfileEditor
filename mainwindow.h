@@ -49,6 +49,7 @@
 
 #include "mapscene.h"
 #include "mapsettings.h"
+#include "fontsettings.h"
 #include "layersettingsvector.h"
 #include "layersettingsraster.h"
 #include "parser/mapfileparser.h"
@@ -92,6 +93,7 @@ class MainWindow : public QMainWindow
       void showLayerSettings(const QModelIndex &);
       void showLayerSettings(void);
       void showMapSettings();
+      void showFontSettings();
       void showUndoStack();
       void updateMapPreview(void);
       void zoomMapPreview(QRectF);
@@ -108,6 +110,7 @@ class MainWindow : public QMainWindow
 
       // Dialog which handles the mapfile settings
       MapSettings * settings = NULL;
+      FontSettings * fontSettings = NULL;
       QDialog * layerSettingsDialog = NULL;
       QDialogButtonBox *buttonBox;
 
