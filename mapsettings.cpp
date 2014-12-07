@@ -94,7 +94,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     //connect relatif path for shapepath, symbolset and fontset
     this->connect(ui->mf_map_shapepath_relative, SIGNAL(clicked()), SLOT(enableRelativePathShapepath()));
     this->connect(ui->mf_map_symbolset_relative, SIGNAL(clicked()), SLOT(enableRelativePathSymbolset()));
-    this->connect(ui->mf_map_fontset_relative, SIGNAL(clicked()), SLOT(enableRelativePathFontset()));
+    //TO REMOVE : this->connect(ui->mf_map_fontset_relative, SIGNAL(clicked()), SLOT(enableRelativePathFontset()));
 
     ui->mf_map_shapepath->setText(this->mapfile->getShapepath());
 
@@ -109,11 +109,11 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
       ui->mf_map_symbolset_relative->setChecked(false);
     }
 
-    ui->mf_map_fontset->setText(this->mapfile->getFontSet());
-    ui->mf_map_fontset_relative->setChecked(true);
-    if((QFileInfo (this->mapfile->getFontSet())).isAbsolute()) {
-      ui->mf_map_fontset_relative->setChecked(false);
-    }
+    //TO REMOVE ui->mf_map_fontset->setText(this->mapfile->getFontSet());
+    //TO REMOVE ui->mf_map_fontset_relative->setChecked(true);
+    //TO REMOVE if((QFileInfo (this->mapfile->getFontSet())).isAbsolute()) {
+    //  ui->mf_map_fontset_relative->setChecked(false);
+    //}
 
     /** Advanced tab **/
 
@@ -237,7 +237,7 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
 
 
     this->connect(ui->mf_map_shapepath_browse, SIGNAL(clicked()), SLOT(browseShapepath()));
-    this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
+    //TO REMOVE this->connect(ui->mf_map_fontset_browse, SIGNAL(clicked()), SLOT(browseFontsetFile()));
     this->connect(ui->mf_map_symbolset_browse, SIGNAL(clicked()), SLOT(browseSymbolsetFile()));
     this->connect(ui->mf_map_debug_on, SIGNAL(toggled(bool)), SLOT(enableDebugBox(bool)));
     this->connect(ui->mf_map_config_errorFile_relative, SIGNAL(clicked()), SLOT(enableRelativePathDebug()));
@@ -365,9 +365,9 @@ void MapSettings::saveMapSettings() {
     if (this->mapfile->getSymbolSet() != ui->mf_map_symbolset->text()) {
       ((MainWindow *) parent())->pushUndoStack(new SetSymbolSetCommand(ui->mf_map_symbolset->text(), this->mapfile));
     }
-    if (this->mapfile->getFontSet() != ui->mf_map_fontset->text()) {
-      ((MainWindow *) parent())->pushUndoStack(new SetFontSetCommand(ui->mf_map_fontset->text(), this->mapfile));
-    }
+    //TO REMOVE if (this->mapfile->getFontSet() != ui->mf_map_fontset->text()) {
+    //  ((MainWindow *) parent())->pushUndoStack(new SetFontSetCommand(ui->mf_map_fontset->text(), this->mapfile));
+    //}
 
     /** Advanced tab **/
     if (this->mapfile->getResolution() != ui->mf_map_resolution->value()) {
@@ -747,7 +747,8 @@ void MapSettings::enableRelativePathSymbolset() {
   }
 }
 
-void MapSettings::browseFontsetFile() {
+//TO REMOVE
+/*void MapSettings::browseFontsetFile() {
 
       QString fileName = QFileDialog::getOpenFileName(this, tr("Open fontset File"), ((MainWindow *) parent())->prevDirPath, tr("Fontset file (*.font)"));
       // open file dialog has been discarded (escape)
@@ -768,6 +769,7 @@ void MapSettings::enableRelativePathFontset() {
     ui->mf_map_fontset->setText(((MainWindow *) parent())->mapfiledir.path() + "/" + ui->mf_map_fontset->text());
   }
 }
+*/
 
 void MapSettings::browseShapepath() {
 

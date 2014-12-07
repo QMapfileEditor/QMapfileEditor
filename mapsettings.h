@@ -60,7 +60,7 @@
 #include "commands/setmetadatacommand.h"
 #include "commands/setresolutioncommand.h"
 #include "commands/setshapepathcommand.h"
-#include "commands/setfontsetcommand.h"
+//TO REMOVE #include "commands/setfontsetcommand.h"
 #include "commands/setsymbolsetcommand.h"
 #include "commands/settemplatepatterncommand.h"
 
@@ -91,7 +91,7 @@ class MapSettings : public QDialog
       void angleSpinChanged(int);
       void browseDebugFile();
       void browseEncryptionFile();
-      void browseFontsetFile();
+      //void browseFontsetFile();
       void browseProjlibFile();
       void browseShapepath();
       void browseSymbolsetFile();
@@ -99,7 +99,7 @@ class MapSettings : public QDialog
       void enableOgcStandardFrame(bool);
       void enableRelativePathDebug();
       void enableRelativePathEncryption();
-      void enableRelativePathFontset();
+      //void enableRelativePathFontset();
       void enableRelativePathProjlib();
       void enableRelativePathShapepath();
       void enableRelativePathSymbolset();

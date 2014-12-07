@@ -601,51 +601,6 @@
       <attribute name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path configuration for the map object.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </attribute>
-      <widget class="QWidget" name="layoutWidget6">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>100</y>
-         <width>551</width>
-         <height>29</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QLabel" name="mf_map_fontset_label">
-          <property name="minimumSize">
-           <size>
-            <width>80</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Font Set</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="mf_map_fontset"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="mf_map_fontset_browse">
-          <property name="text">
-           <string>Browse</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="mf_map_fontset_relative">
-          <property name="text">
-           <string>Relative</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="layoutWidget7">
        <property name="geometry">
         <rect>
