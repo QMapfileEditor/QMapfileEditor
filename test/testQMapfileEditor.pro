@@ -31,11 +31,13 @@ LIBS += ../debug/mapfileparser.o            \
 
 # Input
 HEADERS += testmapfileparser.h      \
+           testlayer.h              \
            testoutputformat.h       \
            testcommands.h           \
            autotest.h
 
 SOURCES += testmapfileparser.cpp    \
+           testlayer.cpp            \
            testoutputformat.cpp     \
            testcommands.cpp         \
            main.cpp
