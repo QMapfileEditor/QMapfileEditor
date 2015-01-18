@@ -15,6 +15,7 @@ SOURCES += \
         mainwindow.cpp                         \
         mapscene.cpp                           \
         mapsettings.cpp                        \
+        layersettings.cpp                      \
         layersettingsvector.cpp                \
         layersettingsraster.cpp                \
         fontsettings.cpp                       \
@@ -48,6 +49,7 @@ HEADERS  += \
     mainwindow.h                            \
     mapscene.h                              \
     mapsettings.h                           \
+    layersettings.h                         \
     layersettingsvector.h                   \
     layersettingsraster.h                   \
     fontsettings.h                          \

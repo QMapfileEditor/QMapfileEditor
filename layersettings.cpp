@@ -2,8 +2,10 @@
  * $Id$
  *
  * Project: QMapfileEditor
- * Purpose: Settings of Raster Layer Window Object
- * Author: Pierre Mauduit / Yves Jacolin
+ * 
+ * Purpose: Settings of Layer window, code common to vector|raster layers
+ *
+ * Author: Pierre Mauduit, Yves Jacolin
  *
  **********************************************************************
  * Copyright (c) 2014, Yves Jacolin
@@ -26,28 +28,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  ****************************************************************************/
 
-#ifndef LAYERSETTINGSRASTER_H
-#define LAYERSETTINGSRASTER_H
-
 #include "layersettings.h"
 
-namespace Ui {
-  class LayerSettingsRaster;
-}
 
-class LayerSettingsRaster : public LayerSettings
-{
-  Q_OBJECT ;
+LayerSettings::LayerSettings(QWidget *parent, MapfileParser *p, Layer *l):
+   QTabWidget(parent), mapfile(p), layer(l) {};
 
- public:
-      explicit LayerSettingsRaster(QWidget * parent, MapfileParser *m, Layer * l);
-      ~LayerSettingsRaster();
 
- public slots:
-      void accept();
 
- private:
-      Ui::LayerSettingsRaster * ui;
-};
-
-#endif // LAYERSETTINGSRASTER_H

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Project: QMapfileEditor
- * Purpose: Settings of Vector Layer Object
+ * Purpose: Settings of Vector Layer Window Object
  * Author: Pierre Mauduit / Yves Jacolin
  *
  **********************************************************************
@@ -29,28 +29,15 @@
 #ifndef LAYERSETTINGSVECTOR_H
 #define LAYERSETTINGSVECTOR_H
 
-#include <QAbstractListModel>
-#include <QColorDialog>
-#include <QDataWidgetMapper>
-#include <QDialog>
-#include <QDir>
-#include <QFileDialog>
-#include <QStandardItem>
-#include <QStandardItemModel>
-#include <QTableView>
-
-#include "keyvaluemodel.h"
-#include "commands/changemapnamecommand.h"
-#include "parser/mapfileparser.h"
-#include "parser/layer.h"
+#include "layersettings.h"
 
 namespace Ui {
-class LayerSettingsVector;
+  class LayerSettingsVector;
 }
 
-class LayerSettingsVector : public QTabWidget
+class LayerSettingsVector : public LayerSettings
 {
-  Q_OBJECT
+  Q_OBJECT ;
 
  public:
       explicit LayerSettingsVector(QWidget * parent, MapfileParser *m, Layer *l);
@@ -61,10 +48,6 @@ class LayerSettingsVector : public QTabWidget
 
  private:
       Ui::LayerSettingsVector * ui;
-
-      MapfileParser * mapfile;
-
-      Layer *layer;
 };
 
 #endif // LAYERSETTINGSVECTOR_H
