@@ -29,6 +29,7 @@
 #include "layersettingsraster.h"
 #include "ui_layersettingsraster.h"
 
+#include "mainwindow.h"
 
 LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf, Layer * l) :
   LayerSettings(parent,mf,l), ui(new Ui::LayerSettingsRaster)
@@ -53,10 +54,14 @@ LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf, L
   }
 
   //TODO: need to fill dropdown list with current layer for mask and requires:
-  ui->mf_requires_box->addItem( l->getRequires() );
+  QStringList appropriateLayerList = mf->getLayerList();
+  appropriateLayerList.prepend(QString());
+  appropriateLayerList.removeAll(l->getName());
+
+  ui->mf_requires_box->addItems(appropriateLayerList);
   ui->mf_requires_box->setCurrentIndex(ui->mf_requires_box->findText(l->getRequires()));
 
-  ui->mf_mask_box->addItem( l->getMask() );
+  ui->mf_mask_box->addItems(appropriateLayerList);
   ui->mf_mask_box->setCurrentIndex(ui->mf_mask_box->findText(l->getMask()));
 
   ui->mf_group_edit->setText( l->getGroup() );

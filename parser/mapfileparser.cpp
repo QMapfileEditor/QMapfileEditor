@@ -187,6 +187,14 @@ QList<Layer *> const & MapfileParser::getLayers() const {
   return layers;
 }
 
+QStringList const MapfileParser::getLayerList() const {
+  QStringList ret = QStringList();
+  for (int i = 0; i < layers.size(); ++i) {
+    ret << layers.at(i)->getName();
+  }
+  return ret;
+}
+
 bool MapfileParser::layerExists(QString const & key) {
   for (int i = 0; i < layers.size(); ++i)
     if (layers[i]->getName() == key)

@@ -26,7 +26,6 @@ class LayerSettings : public QTabWidget {
   MapfileParser * mapfile;
   Layer *layer;
 
-
 };
 
 

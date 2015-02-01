@@ -59,6 +59,7 @@ class MapfileParser
   void removeOutputFormat(OutputFormat * const of);
   void updateOutputFormat(OutputFormat * const of);
   OutputFormat * getOutputFormat(const QString &);
+  QStringList const getLayerList() const;
 
   QString const getDefaultOutputFormat(void) const;
   void setDefaultOutputFormat(QString const &);
