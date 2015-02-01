@@ -3,10 +3,12 @@
 
 #include <QAbstractListModel>
 #include <QColorDialog>
+#include <QComboBox>
 #include <QDataWidgetMapper>
 #include <QDialog>
 #include <QDir>
 #include <QFileDialog>
+#include <QRadioButton>
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QTableView>
@@ -26,6 +28,8 @@ class LayerSettings : public QTabWidget {
   MapfileParser * mapfile;
   Layer *layer;
 
+  void initStatusRadioButton(QRadioButton *, QRadioButton *, QRadioButton *);
+  void initRequiresMaskCombo(QComboBox *, QComboBox *);
 };
 
 

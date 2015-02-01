@@ -35,33 +35,13 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
   ui->setupUi(this);
 
   /** Layer Tab **/
+
   ui->mf_layerName_value->setText(l->getName());
-  if( l->getStatus() == 1 )
-  {
-    ui->mf_statusOn_radio->setChecked(true);
-    ui->mf_statusOff_radio->setChecked(false);
-    ui->mf_statusDefault_radio->setChecked(false);
-  } else if(l->getStatus() == 2 ) {
-    ui->mf_statusOn_radio->setChecked(false);
-    ui->mf_statusOff_radio->setChecked(false);
-    ui->mf_statusDefault_radio->setChecked(true);
-  } else {
-    ui->mf_statusOn_radio->setChecked(false);
-    ui->mf_statusOff_radio->setChecked(true);
-    ui->mf_statusDefault_radio->setChecked(false);
-  }
-
-  //TODO: need to fill dropdown list with current layer for mask and requires:
-  ui->mf_requires_box->addItem( l->getRequires() );
-  ui->mf_requires_box->setCurrentIndex(ui->mf_requires_box->findText(l->getRequires()));
-
-  ui->mf_mask_box->addItem( l->getMask() );
-  ui->mf_mask_box->setCurrentIndex(ui->mf_mask_box->findText(l->getMask()));
+  initStatusRadioButton(ui->mf_statusOn_radio, ui->mf_statusOff_radio, ui->mf_statusDefault_radio);
+  initRequiresMaskCombo(ui->mf_requires_box, ui->mf_mask_box);
 
   ui->mf_group_edit->setText( l->getGroup() );
-
   ui->mf_opacity_box->setValue( l->getOpacity() );
-
   ui->mf_tolerance_box->setValue( l->getTolerance() );
   //BUG: casse est importante?
   ui->mf_toleranceUnit_combo->setCurrentIndex(ui->mf_toleranceUnit_combo->findText(l->getToleranceUnits()) );

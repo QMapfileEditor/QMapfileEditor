@@ -34,5 +34,31 @@
 LayerSettings::LayerSettings(QWidget *parent, MapfileParser *p, Layer *l):
    QTabWidget(parent), mapfile(p), layer(l) {};
 
+void LayerSettings::initStatusRadioButton(QRadioButton * on, QRadioButton * off, QRadioButton * defaultRadio) {
+  if(layer->getStatus() == 1) {
+    on->setChecked(true);
+    off->setChecked(false);
+    defaultRadio->setChecked(false);
+  } else if (layer->getStatus() == 2) {
+    on->setChecked(false);
+    off->setChecked(false);
+    defaultRadio->setChecked(true);
+  } else {
+    on->setChecked(false);
+    off->setChecked(true);
+    defaultRadio->setChecked(false);
+  }
+}
 
+void LayerSettings::initRequiresMaskCombo(QComboBox *requires, QComboBox *mask) {
+  QStringList appropriateLayerList = mapfile->getLayerList();
+  appropriateLayerList.prepend(QString());
+  appropriateLayerList.removeAll(layer->getName());
+
+  requires->addItems(appropriateLayerList);
+  requires->setCurrentIndex(requires->findText(layer->getRequires()));
+
+  mask->addItems(appropriateLayerList);
+  mask->setCurrentIndex(mask->findText(layer->getMask()));
+}
 
