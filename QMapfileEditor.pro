@@ -83,7 +83,8 @@ FORMS    += mainwindow.ui   \
     layersettings.ui        \
     layersettingsvector.ui  \
     layersettingsraster.ui \
-    fontsettings.ui
+    fontsettings.ui \
+    ../projection_widget.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
                "/usr/include/gdal"

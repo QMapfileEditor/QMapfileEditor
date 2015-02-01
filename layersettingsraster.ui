@@ -29,51 +29,11 @@
    <attribute name="title">
     <string>Layer</string>
    </attribute>
-   <widget class="QWidget" name="horizontalLayoutWidget_22">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>220</y>
-      <width>501</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="scaleLayout">
-     <item>
-      <layout class="QVBoxLayout" name="minScaleLayout">
-       <item>
-        <widget class="QLabel" name="mf_minScaleDenom_label">
-         <property name="text">
-          <string>Minimum Scale Denominator</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="mf_minScaleDenom_edit"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="maxScaleLayout">
-       <item>
-        <widget class="QLabel" name="mf_maxScaleDenom_label">
-         <property name="text">
-          <string>Maximum Scale Denominator</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="mf_maxScaleDenom_edit"/>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>370</y>
+      <x>690</x>
+      <y>80</y>
       <width>146</width>
       <height>29</height>
      </rect>
@@ -95,7 +55,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -142,7 +102,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -197,7 +157,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -238,7 +198,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -276,7 +236,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -314,56 +274,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>180</y>
-      <width>319</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_26">
-     <item>
-      <widget class="QLabel" name="mf_offsite_label">
-       <property name="text">
-        <string>Offsite</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="mf_offsiteRed_box">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="maximum">
-        <number>250</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="mf_offsiteGreen_box">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="maximum">
-        <number>250</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="mf_offsiteBlue_box">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="maximum">
-        <number>250</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -397,110 +308,273 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_9">
+   <widget class="QGroupBox" name="layer_dispaly_group">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>370</y>
-      <width>361</width>
-      <height>31</height>
+      <x>20</x>
+      <y>140</y>
+      <width>801</width>
+      <height>151</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_34">
-     <item>
-      <widget class="QLabel" name="mf_template_label">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Template</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="mf_template_edit"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="mf_template_button">
-       <property name="text">
-        <string>Browse</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
+    <property name="title">
+     <string>Display</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>761</width>
+       <height>89</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_26">
+        <item>
+         <widget class="QLabel" name="mf_offsite_label">
+          <property name="text">
+           <string>Offsite</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="mf_layer_offsite">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="scaleLayout">
+        <item>
+         <layout class="QVBoxLayout" name="minScaleLayout">
+          <item>
+           <widget class="QLabel" name="mf_minScaleDenom_label">
+            <property name="text">
+             <string>Minimum Scale Denominator</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="mf_minScaleDenom_edit">
+            <property name="accelerated">
+             <bool>true</bool>
+            </property>
+            <property name="maximum">
+             <number>1000000000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="maxScaleLayout">
+          <item>
+           <widget class="QLabel" name="mf_maxScaleDenom_label">
+            <property name="text">
+             <string>Maximum Scale Denominator</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="mf_maxScaleDenom_edit">
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="accelerated">
+             <bool>true</bool>
+            </property>
+            <property name="maximum">
+             <number>1000000000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_4">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>410</y>
-      <width>361</width>
-      <height>80</height>
+      <x>19</x>
+      <y>329</y>
+      <width>801</width>
+      <height>141</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_4">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_11">
-       <item>
-        <widget class="QLabel" name="mf_footer_label">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Footer</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="mf_footer_value"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_10">
-       <item>
-        <widget class="QLabel" name="mf_header_label">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Header</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="mf_header_value"/>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <property name="title">
+     <string>Template</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>30</y>
+       <width>761</width>
+       <height>97</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_34">
+        <item>
+         <widget class="QLabel" name="mf_template_label">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Template</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="mf_template_edit"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="mf_template_button">
+          <property name="text">
+           <string>Browse</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mf_layer_template_relative">
+          <property name="text">
+           <string>relative</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <widget class="QLabel" name="mf_header_label">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Header</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mf_header_value"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="mf_header_button">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="mf_layer_header_relative">
+            <property name="text">
+             <string>relative</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item>
+           <widget class="QLabel" name="mf_footer_label">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Footer</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mf_footer_value"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="mf_footer_button">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="mf_layer_footer_relative">
+            <property name="text">
+             <string>relative</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
   <widget class="QWidget" name="datasourceTab">
@@ -592,8 +666,8 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>411</width>
-      <height>87</height>
+      <width>821</width>
+      <height>141</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="extentLayout">
@@ -731,177 +805,21 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="layer_editdata_button">
+       <property name="text">
+        <string>Edit</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="layer_adddata_button">
        <property name="text">
-        <string>...</string>
+        <string>Add</string>
+       </property>
+       <property name="arrowType">
+        <enum>Qt::DownArrow</enum>
        </property>
       </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget5">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>50</y>
-      <width>417</width>
-      <height>97</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="projectionLayout">
-     <item>
-      <widget class="QLabel" name="mf_map_projection_label">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>75</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>75</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="baseSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Projection</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_40">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <item>
-          <widget class="QRadioButton" name="mf_map_projection_btproj">
-           <property name="minimumSize">
-            <size>
-             <width>70</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>70</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="baseSize">
-            <size>
-             <width>70</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define projection using WKT Proj4 string.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="text">
-            <string>Proj4</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="mf_map_projection_btepsg">
-           <property name="minimumSize">
-            <size>
-             <width>70</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>70</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="baseSize">
-            <size>
-             <width>70</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define projection using EPSG code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="text">
-            <string>EPSG</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_31">
-         <item>
-          <widget class="QComboBox" name="mf_map_projection">
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>350</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Search EPSG code using EPSG key word or WKT proj4 string using +proj key word. Projection are always store in wkt proj string for best performance.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="mf_map_projection_btlink">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/ui/images/icons/documentinfo.png</normaloff>:/ui/images/icons/documentinfo.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="mf_map_projection_info">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::PlainText</enum>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </item>
     </layout>
    </widget>
@@ -1538,24 +1456,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QTableView" name="mf_validation_table">
-       <property name="alternatingRowColors">
-        <bool>true</bool>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <widget class="QColumnView" name="mf_validation_table"/>
      </item>
     </layout>
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
