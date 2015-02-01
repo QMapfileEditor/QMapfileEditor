@@ -543,7 +543,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Template</string>
+           <string>Template file</string>
           </property>
          </widget>
         </item>
@@ -585,7 +585,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Header</string>
+             <string>Header file</string>
             </property>
            </widget>
           </item>
@@ -625,7 +625,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Footer</string>
+             <string>Footer file</string>
             </property>
            </widget>
           </item>
