@@ -679,7 +679,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>821</width>
+      <width>411</width>
       <height>141</height>
      </rect>
     </property>
@@ -757,6 +757,19 @@
         </layout>
        </item>
        <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_48">
          <item>
           <widget class="QLabel" name="mf_y_min_label">
@@ -794,6 +807,19 @@
           <widget class="QLineEdit" name="mf_extent_maxx"/>
          </item>
         </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_50">
@@ -848,6 +874,17 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>429</x>
+      <y>59</y>
+      <width>411</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="projection_wwidget"/>
    </widget>
   </widget>
   <widget class="QWidget" name="datatransformTab">
