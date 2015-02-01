@@ -68,10 +68,10 @@ LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf, L
   ui->mf_toleranceUnit_combo->setCurrentIndex(ui->mf_toleranceUnit_combo->findText(l->getToleranceUnits()) );
 
   if (l->getMinScale()) {
-    ui->mf_minScaleDenom_edit->setText( QString::number(l->getMinScale()) );
+    ui->mf_minScaleDenom_edit->setValue( l->getMinScale() );
   }
   if( l->getMaxScale()) {
-    ui->mf_maxScaleDenom_edit->setText( QString::number(l->getMaxScale()) );
+    ui->mf_maxScaleDenom_edit->setValue( l->getMaxScale() );
   }
   ui->mf_debug_value->setValue( l->getDebugLevel() );
 

@@ -314,7 +314,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="layer_dispaly_group">
+   <widget class="QGroupBox" name="layer_display_group">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -440,18 +440,18 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="scaleLayout_2">
+       <layout class="QHBoxLayout" name="scaleLayout">
         <item>
-         <layout class="QVBoxLayout" name="minScaleLayout_2">
+         <layout class="QVBoxLayout" name="minScaleLayout">
           <item>
-           <widget class="QLabel" name="mf_minScaleDenom_label_2">
+           <widget class="QLabel" name="mf_minScaleDenom_label">
             <property name="text">
              <string>Minimum Scale Denominator</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="mf_minScaleDenom_edit_2">
+           <widget class="QSpinBox" name="mf_minScaleDenom_edit">
             <property name="accelerated">
              <bool>true</bool>
             </property>
@@ -463,16 +463,16 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="maxScaleLayout_2">
+         <layout class="QVBoxLayout" name="maxScaleLayout">
           <item>
-           <widget class="QLabel" name="mf_maxScaleDenom_label_2">
+           <widget class="QLabel" name="mf_maxScaleDenom_label">
             <property name="text">
              <string>Maximum Scale Denominator</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="mf_maxScaleDenom_edit_2">
+           <widget class="QSpinBox" name="mf_maxScaleDenom_edit">
             <property name="wrapping">
              <bool>false</bool>
             </property>
@@ -941,7 +941,7 @@
      <rect>
       <x>410</x>
       <y>0</y>
-      <width>431</width>
+      <width>462</width>
       <height>222</height>
      </rect>
     </property>
