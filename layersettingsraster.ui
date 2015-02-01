@@ -20,7 +20,7 @@
    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;General setting of the layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>1</number>
   </property>
   <widget class="QWidget" name="layerTab">
    <property name="enabled">
@@ -308,7 +308,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="layer_dispaly_group">
+   <widget class="QGroupBox" name="layer_display_group">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -427,7 +427,7 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="layer_template_group">
     <property name="geometry">
      <rect>
       <x>19</x>
@@ -1419,7 +1419,7 @@
     <string>Web services</string>
    </attribute>
   </widget>
-  <widget class="QWidget" name="tab_2">
+  <widget class="QWidget" name="validationTab">
    <attribute name="title">
     <string>Validation</string>
    </attribute>
