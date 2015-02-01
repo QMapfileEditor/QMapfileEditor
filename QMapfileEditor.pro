@@ -42,7 +42,9 @@ SOURCES += \
         commands/settemplatepatterncommand.cpp \
         parser/layer.cpp                       \
         parser/mapfileparser.cpp               \
-        parser/outputformat.cpp
+        parser/outputformat.cpp \
+    layerclasssettings.cpp \
+    classstylesetting.cpp
 
 HEADERS  += \
     keyvaluemodel.h                         \
@@ -76,7 +78,9 @@ HEADERS  += \
     commands/settemplatepatterncommand.h    \
     parser/layer.h                          \
     parser/mapfileparser.h                  \
-    parser/outputformat.h
+    parser/outputformat.h \
+    layerclasssettings.h \
+    classstylesetting.h
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
@@ -84,7 +88,9 @@ FORMS    += mainwindow.ui   \
     layersettingsvector.ui  \
     layersettingsraster.ui \
     fontsettings.ui \
-    projection_widget.ui
+    projection_widget.ui \
+    layerclasssettings.ui \
+    classstylesetting.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
                "/usr/include/gdal"
