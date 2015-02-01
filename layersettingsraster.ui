@@ -826,7 +826,7 @@
      <item>
       <widget class="QLabel" name="layer_adddata_label">
        <property name="text">
-        <string>filepath or database uri</string>
+        <string>Data source settings</string>
        </property>
       </widget>
      </item>

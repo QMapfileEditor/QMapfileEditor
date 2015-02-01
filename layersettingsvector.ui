@@ -964,7 +964,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>220</y>
+      <y>240</y>
       <width>831</width>
       <height>171</height>
      </rect>
@@ -1020,20 +1020,33 @@
         <widget class="QLabel" name="layer_adddata_label">
          <property name="minimumSize">
           <size>
-           <width>380</width>
+           <width>250</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>380</width>
+           <width>250</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="text">
-          <string>filepath or database uri</string>
+          <string>Data source settings</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QToolButton" name="layer_editdata_button">
@@ -1060,13 +1073,13 @@
         <widget class="QLabel" name="mf_Join_label">
          <property name="minimumSize">
           <size>
-           <width>380</width>
+           <width>200</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>380</width>
+           <width>200</width>
            <height>16777215</height>
           </size>
          </property>
@@ -1074,6 +1087,19 @@
           <string>Join</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QToolButton" name="layer_join_tool">
@@ -1111,6 +1137,19 @@
           <string>Plugin</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QLineEdit" name="mf_plugin_edit">
