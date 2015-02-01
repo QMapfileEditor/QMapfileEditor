@@ -85,6 +85,19 @@
       </widget>
      </item>
      <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QLineEdit" name="mf_layerName_value">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -130,6 +143,19 @@
         <string>Status</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QRadioButton" name="mf_statusOn_radio">
@@ -341,7 +367,7 @@
         <item>
          <widget class="QLabel" name="mf_offsite_label">
           <property name="text">
-           <string>Offsite</string>
+           <string>Color transparency</string>
           </property>
          </widget>
         </item>
@@ -479,7 +505,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Template</string>
+           <string>Template file</string>
           </property>
          </widget>
         </item>
@@ -521,7 +547,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Header</string>
+             <string>Header file</string>
             </property>
            </widget>
           </item>
@@ -561,7 +587,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Footer</string>
+             <string>Footer file</string>
             </property>
            </widget>
           </item>
@@ -855,6 +881,19 @@
         <string>Data source settings</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QToolButton" name="layer_editdata_button">
