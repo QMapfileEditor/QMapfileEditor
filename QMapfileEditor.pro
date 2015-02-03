@@ -93,6 +93,7 @@ FORMS    += mainwindow.ui   \
     classstylesetting.ui
 
 INCLUDEPATH += "/usr/include/mapserver" \
+               "/usr/include/libxml2"   \
                "/usr/include/gdal"
 
 LIBS += -lmapserver -lgdal
