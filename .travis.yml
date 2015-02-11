@@ -1,0 +1,8 @@
+install:
+    - sudo apt-get update
+    - sudo apt-get install libqt4-dev qt4-qmake libmapserver1-dev
+script:
+    - qmake -project
+    - qmake QMapfileEditor.pro
+    - make
+
