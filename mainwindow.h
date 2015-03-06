@@ -80,7 +80,8 @@ class MainWindow : public QMainWindow
       ~MainWindow();
 
  public slots:
-      void addLayerTriggered();
+      void addLayerVectorTriggered();
+      void addLayerRasterTriggered();
       void handleUndoStackChanged(int);
       void openMapfile();
       void newMapfile();
@@ -117,6 +118,7 @@ class MainWindow : public QMainWindow
       QUndoStack * undoStack;
       QUndoView  * undoView = NULL;
 
+      void addLayerTriggered(bool);
       // internal methods
       void reinitMapfile();
       void updateMapPreview(const int &, const int &);

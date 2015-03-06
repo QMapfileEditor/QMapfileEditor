@@ -203,7 +203,7 @@ bool MapfileParser::layerExists(QString const & key) {
 }
 
 // creates a completely blank layer from scratch
-void MapfileParser::addLayer(void) {
+void MapfileParser::addLayer(bool isRaster) {
 
   // Generates a Layer name which is not already taken
   int i = 0;
@@ -219,6 +219,7 @@ void MapfileParser::addLayer(void) {
   initLayer(newL, this->map);
   newL->name = strdup(QString("NewLayer%1").arg(i).toStdString().c_str());
   newL->index = this->map->numlayers;
+  newL->type = isRaster ? MS_LAYER_RASTER : MS_LAYER_POINT;
   this->map->layerorder[map->numlayers] = map->numlayers;
   this->map->numlayers++;
 

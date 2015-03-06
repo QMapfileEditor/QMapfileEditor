@@ -87,7 +87,6 @@ MainWindow::MainWindow(QWidget *parent) :
   this->showInfo(tr("Initialisation process: success !"));
 
   // creates a Layer model
-  // Note: Qt will manage the deletion of the object by itself.
   this->layerModel = new LayerModel(this, this->mapfile->getLayers());
   ui->mf_structure->setModel(layerModel);
   for (int i = 1; i < layerModel->columnCount(); i++)
@@ -99,9 +98,10 @@ MainWindow::MainWindow(QWidget *parent) :
   newLayerMenu->addAction(ui->actionNew_raster_layer);
   ui->mf_addlayer->setMenu(newLayerMenu);
 
+  this->connect(ui->actionNew_vector_layer, SIGNAL(triggered()), SLOT(addLayerVectorTriggered()));
+  this->connect(ui->actionNew_raster_layer, SIGNAL(triggered()), SLOT(addLayerRasterTriggered()));
+
 }
-
-
 
 // Undo / Redo related methods
 
@@ -424,9 +424,19 @@ void MainWindow::showLayerSettings(void) {
   this->showLayerSettings(this->ui->mf_structure->currentIndex());
 }
 
-void MainWindow::addLayerTriggered(void) {
+void MainWindow::addLayerVectorTriggered() {
+  addLayerTriggered(false);
+}
+
+void MainWindow::addLayerRasterTriggered() {
+  addLayerTriggered(true);
+}
+
+void MainWindow::addLayerTriggered(bool isRaster) {
   // TODO should go through a layer Command
-  this->mapfile->addLayer();
+  // TODO how to differentiate vector / raster layer ?
+  // Mapserver does not make any difference at creating a new one
+  this->mapfile->addLayer(isRaster);
   // refreshes the layerModel
   QList<Layer *> ls = this->mapfile->getLayers();
   this->layerModel->setLayers(ls);

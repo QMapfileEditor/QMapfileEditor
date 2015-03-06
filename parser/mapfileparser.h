@@ -155,7 +155,7 @@ class MapfileParser
 
   // Layer related methods
   // needed by the interface (+) on mainwindow
-  void addLayer();
+  void addLayer(bool);
   // needed by QGisImporter (might be dropped in the future though)
   void addLayer(QString const &, QString const &, QString const &, int);
   // needed by the QUndo Layer commands framework
