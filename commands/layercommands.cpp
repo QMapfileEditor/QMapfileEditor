@@ -28,6 +28,7 @@
 
 #include "layercommands.h"
 
+// Add layer command
 
 AddLayerCommand::AddLayerCommand(Layer *newLayer, MapfileParser *parser, QUndoCommand *parent)
      : QUndoCommand(parent), parser(parser)
@@ -47,5 +48,29 @@ void AddLayerCommand::redo(void) {
 AddLayerCommand::~AddLayerCommand() {
   delete newLayer;
 }
+
+// Remove layer command
+
+RemoveLayerCommand::RemoveLayerCommand(Layer *deletedLayer, MapfileParser *parser, QUndoCommand *parent)
+     : QUndoCommand(parent), parser(parser)
+{
+  this->deletedLayer = new Layer(* deletedLayer);
+  setText(QObject::tr("Delete layer '%1'").arg(deletedLayer->getName()));
+}
+
+void RemoveLayerCommand::undo(void) {
+  parser->addLayer(deletedLayer);
+}
+
+void RemoveLayerCommand::redo(void) {
+  parser->removeLayer(deletedLayer);
+}
+
+RemoveLayerCommand::~RemoveLayerCommand() {
+  delete deletedLayer;
+}
+
+
+// Edit layers commands
 
 

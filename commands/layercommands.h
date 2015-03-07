@@ -46,4 +46,17 @@ class AddLayerCommand : public QUndoCommand {
    MapfileParser * parser;
 };
 
+class RemoveLayerCommand : public QUndoCommand {
+
+ public:
+   RemoveLayerCommand(Layer * deletedLayer, MapfileParser * parser, QUndoCommand *parent = 0);
+   ~RemoveLayerCommand();
+   void undo();
+   void redo();
+
+ private:
+   Layer * deletedLayer;
+   MapfileParser * parser;
+};
+
 #endif // LAYERCOMMANDS_H
