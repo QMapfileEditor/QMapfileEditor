@@ -87,6 +87,7 @@ class MainWindow : public QMainWindow
       void newMapfile();
       void panPreview(qreal,qreal);
       void panToggled(bool);
+      void removeLayerTriggered();
       void saveMapfile();
       void saveAsMapfile();
       void showAbout();

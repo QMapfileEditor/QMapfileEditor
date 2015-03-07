@@ -98,9 +98,10 @@ MainWindow::MainWindow(QWidget *parent) :
   newLayerMenu->addAction(ui->actionNew_raster_layer);
   ui->mf_addlayer->setMenu(newLayerMenu);
 
+  // Add vector / raster, remove layer actions
   this->connect(ui->actionNew_vector_layer, SIGNAL(triggered()), SLOT(addLayerVectorTriggered()));
   this->connect(ui->actionNew_raster_layer, SIGNAL(triggered()), SLOT(addLayerRasterTriggered()));
-
+  this->connect(ui->mf_removelayer, SIGNAL(clicked()), SLOT(removeLayerTriggered()));
 }
 
 // Undo / Redo related methods
@@ -434,10 +435,30 @@ void MainWindow::addLayerRasterTriggered() {
 
 void MainWindow::addLayerTriggered(bool isRaster) {
   // TODO should go through a layer Command
-  // TODO how to differentiate vector / raster layer ?
-  // Mapserver does not make any difference at creating a new one
   this->mapfile->addLayer(isRaster);
   // refreshes the layerModel
+  QList<Layer *> ls = this->mapfile->getLayers();
+  this->layerModel->setLayers(ls);
+}
+
+void MainWindow::removeLayerTriggered() {
+  if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
+    return;
+  }
+
+  QModelIndex idx = this->ui->mf_structure->currentIndex();
+  // check validity of selection
+  if ((idx.row() > this->mapfile->getLayers().length()) || (idx.row() < 0)) {
+    return;
+  }
+
+  Layer * toRemove = this->mapfile->getLayers().at(idx.row());
+  if (! toRemove)
+    return;
+
+  this->mapfile->removeLayer(toRemove);
+
+  //refresh
   QList<Layer *> ls = this->mapfile->getLayers();
   this->layerModel->setLayers(ls);
 }

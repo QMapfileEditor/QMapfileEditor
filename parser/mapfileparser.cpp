@@ -296,9 +296,7 @@ void MapfileParser::removeLayer(Layer const * l) {
   }
 
   msRemoveLayer(this->map, index);
-
 }
-
 
 // Map name
 QString const MapfileParser::getMapName() const {
