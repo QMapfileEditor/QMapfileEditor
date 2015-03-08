@@ -52,6 +52,7 @@
 #include "fontsettings.h"
 #include "layersettingsvector.h"
 #include "layersettingsraster.h"
+#include "commands/layercommands.h"
 #include "parser/mapfileparser.h"
 #include "parser/layer.h"
 

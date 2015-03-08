@@ -203,28 +203,27 @@ bool MapfileParser::layerExists(QString const & key) {
 }
 
 // creates a completely blank layer from scratch
-void MapfileParser::addLayer(bool isRaster) {
-
-  // Generates a Layer name which is not already taken
-  int i = 0;
-  while (layerExists(QString("NewLayer%1").arg(i))) { ++i; };
+Layer * MapfileParser::addLayer(QString & layerName, bool isRaster) {
 
   layerObj * newL = msGrowMapLayers(this->map);
   if (newL == NULL) {
     qDebug() << "Mapserver did not return a layerObj, this should not happen.";
-    return;
+    return NULL;
   }
 
   // Doing basically the same as mapfile.c:6270
   initLayer(newL, this->map);
-  newL->name = strdup(QString("NewLayer%1").arg(i).toStdString().c_str());
+  newL->name = strdup(layerName.toStdString().c_str());
   newL->index = this->map->numlayers;
+  // In case of vector layers: pre-selecting POINT layer,
+  // it can be user-customized by a further edition
   newL->type = isRaster ? MS_LAYER_RASTER : MS_LAYER_POINT;
   this->map->layerorder[map->numlayers] = map->numlayers;
   this->map->numlayers++;
 
   Layer * newLayer = new Layer(newL->name, this->map);
   layers  << newLayer;
+  return newLayer;
 }
 
 // This method is only used in case of using qgisimporter class for now.
@@ -297,6 +296,28 @@ void MapfileParser::removeLayer(Layer const * l) {
 
   msRemoveLayer(this->map, index);
 }
+
+void MapfileParser::removeLayer(QString const & name) {
+  int index = -1;
+  for (int i = 0; i < layers.size(); ++i) {
+    if (layers[i]->getName() == name) {
+      Layer * toRem = layers.takeAt(i);
+      delete toRem;
+      index = i;
+      break;
+    }
+  }
+
+  if (index == -1) {
+    return;
+  }
+
+  msRemoveLayer(this->map, index);
+}
+
+
+
+
 
 // Map name
 QString const MapfileParser::getMapName() const {

@@ -89,8 +89,9 @@ MainWindow::MainWindow(QWidget *parent) :
   // creates a Layer model
   this->layerModel = new LayerModel(this, this->mapfile->getLayers());
   ui->mf_structure->setModel(layerModel);
-  for (int i = 1; i < layerModel->columnCount(); i++)
+  for (int i = 1; i < layerModel->columnCount(); i++) {
       ui->mf_structure->hideColumn(i);
+  }
 
   // menu for adding a new layer (vector/raster)
   QMenu * newLayerMenu = new QMenu(ui->mf_addlayer);
@@ -102,6 +103,7 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionNew_vector_layer, SIGNAL(triggered()), SLOT(addLayerVectorTriggered()));
   this->connect(ui->actionNew_raster_layer, SIGNAL(triggered()), SLOT(addLayerRasterTriggered()));
   this->connect(ui->mf_removelayer, SIGNAL(clicked()), SLOT(removeLayerTriggered()));
+
 }
 
 // Undo / Redo related methods
@@ -112,13 +114,16 @@ void MainWindow::handleUndoStackChanged(int i) {
   ui->actionRedo->setText(tr("Redo '%1'").arg(undoStack->redoText()));
 }
 
+// TODO separation of concerns: maybe just a getter
+// for undostack, so that the other objects can
+// push by themselves. (or else, a singleton)
 void MainWindow::pushUndoStack(QUndoCommand *c) {
   this->undoStack->push(c);
   ui->actionSave->setEnabled(true);
 }
 
 void MainWindow::showUndoStack() {
-    // open up undo stack window
+  // open up undo stack window
   if (undoView == 0)
   {
     undoView = new QUndoView(undoStack);
@@ -202,6 +207,7 @@ void MainWindow::zoomMapPreview(QRectF area) {
   this->updateMapPreview();
 
 }
+
 void MainWindow::zoomToOriginalExtent() {
   // reinits the extent to its original value
   this->currentMapMinX = this->mapfile->getMapExtentMinX();
@@ -244,6 +250,7 @@ void MainWindow::reinitMapfile() {
     delete this->settings;
     this->settings = NULL;
   }
+  // same for LayerSettings
   if (this->layerSettingsDialog) {
     this->layerSettingsDialog->close();
     delete this->layerSettingsDialog;
@@ -264,6 +271,7 @@ void MainWindow::reinitMapfile() {
   this->currentMapMaxX = this->mapfile->getMapExtentMaxX();
   this->currentMapMaxY = this->mapfile->getMapExtentMaxY();
 }
+
 
 QMessageBox::StandardButton MainWindow::warnIfActiveSession() {
   return QMessageBox::question(this, tr("Warning: currently editing"),
@@ -301,12 +309,12 @@ void MainWindow::openMapfile()
   }
 
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open map File"), prevFilePath, tr("Map file (*.map);; XML Map file (*.xml)"));
-  
+
   QFileInfo mapFileInfo(fileName);
   this->mapfilename = mapFileInfo.fileName();
   this->mapfiledir = mapFileInfo.absolutePath();
   this->prevDirPath = mapFileInfo.absolutePath();
-  
+
   this->openMapfile(fileName);
 }
 
@@ -335,7 +343,6 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
     return;
   }
 
-
   ui->mf_structure->setModel(layerModel);
   // inits the default extent
   this->currentMapMinX = this->mapfile->getMapExtentMinX();
@@ -349,8 +356,10 @@ void MainWindow::openMapfile(const QString & mapfilePath) {
 
 
 void MainWindow::updateMapPreview(void) {
-  this->ui->mf_preview->setSceneRect(0,0,this->ui->mf_preview->viewport()->width(),this->ui->mf_preview->viewport()->height());
-  int w = this->ui->mf_preview->frameSize().width(), h = this->ui->mf_preview->frameSize().height();
+  this->ui->mf_preview->setSceneRect(0,0,this->ui->mf_preview->viewport()->width(),
+                                     this->ui->mf_preview->viewport()->height());
+  int w = this->ui->mf_preview->frameSize().width(),
+      h = this->ui->mf_preview->frameSize().height();
   this->updateMapPreview(w, h);
 }
 
@@ -359,8 +368,6 @@ void MainWindow::updateMapPreview(const int & w, const int &h) {
   this->ui->mf_preview->scene()->clear();
   // rendering the map
   QPixmap mapRepr = QPixmap();
-
-  // Hacks the extent of the map
 
   // Temporarily hack the map extent
   double tmpMinx, tmpMiny, tmpMaxx, tmpMaxy;
@@ -378,7 +385,6 @@ void MainWindow::updateMapPreview(const int & w, const int &h) {
 
   // Then restores the original map extent
  this->mapfile->setMapExtent(tmpMinx, tmpMiny, tmpMaxx, tmpMaxy);
-
 
   mapRepr.loadFromData(mapImage, mapImageSize);
   this->ui->mf_preview->scene()->addPixmap(mapRepr);
@@ -434,27 +440,36 @@ void MainWindow::addLayerRasterTriggered() {
 }
 
 void MainWindow::addLayerTriggered(bool isRaster) {
-  // TODO should go through a layer Command
-  this->mapfile->addLayer(isRaster);
+  // Generates a Layer name which is not already taken
+  int i = 0;
+  while (mapfile->layerExists(QString("NewLayer%1").arg(i))) { ++i; };
+
+  QString newLayerName = QString("NewLayer%1").arg(i);
+
+  // the pivot used between our Qt model and Mapserver is the name (char *)
+  // to create a new layer, we need to ensure the name is not taken yet.
+
+  this->undoStack->push(new AddLayerCommand(newLayerName, isRaster, this->mapfile));
+
   // refreshes the layerModel
   QList<Layer *> ls = this->mapfile->getLayers();
   this->layerModel->setLayers(ls);
 }
 
 void MainWindow::removeLayerTriggered() {
+  // check validity of selection
   if ((! this->mapfile) || (! this->mapfile->isLoaded())) {
     return;
   }
-
   QModelIndex idx = this->ui->mf_structure->currentIndex();
-  // check validity of selection
   if ((idx.row() > this->mapfile->getLayers().length()) || (idx.row() < 0)) {
     return;
   }
 
   Layer * toRemove = this->mapfile->getLayers().at(idx.row());
-  if (! toRemove)
+  if (! toRemove) {
     return;
+  }
 
   this->mapfile->removeLayer(toRemove);
 

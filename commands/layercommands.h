@@ -36,13 +36,14 @@
 class AddLayerCommand : public QUndoCommand {
 
  public:
-   AddLayerCommand(Layer * newL, MapfileParser * parser, QUndoCommand *parent = 0);
+   AddLayerCommand(QString &layerName, bool isRaster, MapfileParser * parser, QUndoCommand *parent = 0);
    ~AddLayerCommand();
    void undo();
    void redo();
 
  private:
-   Layer * newLayer;
+   QString layerName;
+   bool isRaster;
    MapfileParser * parser;
 };
 

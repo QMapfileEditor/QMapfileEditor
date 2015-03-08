@@ -30,24 +30,21 @@
 
 // Add layer command
 
-AddLayerCommand::AddLayerCommand(Layer *newLayer, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent), parser(parser)
+AddLayerCommand::AddLayerCommand(QString & layerName, bool isRaster, MapfileParser *parser, QUndoCommand *parent)
+     : QUndoCommand(parent), layerName(layerName), isRaster(isRaster), parser(parser)
 {
-  this->newLayer = new Layer(* newLayer);
-  setText(QObject::tr("Create new layer '%1'").arg(newLayer->getName()));
+  setText(QObject::tr("Create new layer '%1'").arg(layerName));
 }
 
 void AddLayerCommand::undo(void) {
-  parser->removeLayer(newLayer);
+  parser->removeLayer(layerName);
 }
 
 void AddLayerCommand::redo(void) {
-  parser->addLayer(newLayer);
+  parser->addLayer(layerName, isRaster);
 }
 
-AddLayerCommand::~AddLayerCommand() {
-  delete newLayer;
-}
+AddLayerCommand::~AddLayerCommand() {}
 
 // Remove layer command
 
