@@ -84,7 +84,6 @@ HEADERS  += \
 
 FORMS    += mainwindow.ui   \
     mapsettings.ui          \
-    layersettings.ui        \
     layersettingsvector.ui  \
     layersettingsraster.ui \
     fontsettings.ui \
