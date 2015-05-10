@@ -580,20 +580,23 @@ void MainWindow::showInfo(const QString & message)
 
 // Layer-related commands
 void MainWindow::addLayer(const QString &layerName, bool isRaster) {
- // TODO:
- // 1. call parser->addLayer()
- // 2. refresh the internal models
+ mapfile->addLayer(layerName, isRaster);
+ this->layerModel->setLayers(this->mapfile->getLayers());
 }
 
 void MainWindow::addLayer(const Layer *l) {
+  mapfile->addLayer(l);
+  this->layerModel->setLayers(this->mapfile->getLayers());
 }
 
 void MainWindow::removeLayer(const QString &layerName) {
-
+  mapfile->removeLayer(layerName);
+  this->layerModel->setLayers(this->mapfile->getLayers());
 }
 
 void MainWindow::removeLayer(const Layer *l) {
-
+  mapfile->removeLayer(l);
+  this->layerModel->setLayers(this->mapfile->getLayers());
 }
 
 MainWindow::~MainWindow()

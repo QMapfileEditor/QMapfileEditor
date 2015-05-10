@@ -203,7 +203,7 @@ bool MapfileParser::layerExists(QString const & key) {
 }
 
 // creates a completely blank layer from scratch
-Layer * MapfileParser::addLayer(QString & layerName, bool isRaster) {
+Layer * MapfileParser::addLayer(const QString & layerName, bool isRaster) {
 
   layerObj * newL = msGrowMapLayers(this->map);
   if (newL == NULL) {
