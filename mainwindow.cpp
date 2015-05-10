@@ -479,11 +479,13 @@ void MainWindow::removeLayerTriggered() {
     return;
   }
 
-  this->mapfile->removeLayer(toRemove);
+  //this->mapfile->removeLayer(toRemove);
+  this->undoStack->push(new RemoveLayerCommand(toRemove, this));
 
   //refresh
   QList<Layer *> ls = this->mapfile->getLayers();
   this->layerModel->setLayers(ls);
+  this->updateMapPreview();
 }
 
 void MainWindow::showLayerSettings(const QModelIndex &i) {

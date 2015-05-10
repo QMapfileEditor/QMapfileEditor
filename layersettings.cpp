@@ -62,3 +62,11 @@ void LayerSettings::initRequiresMaskCombo(QComboBox *requires, QComboBox *mask) 
   mask->setCurrentIndex(mask->findText(layer->getMask()));
 }
 
+/**
+ * saves layer settings, code shared by vector and raster windows
+ */
+void LayerSettings::saveLayerSettings() {
+
+}
+
+

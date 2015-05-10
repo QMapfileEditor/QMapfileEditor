@@ -106,7 +106,7 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
 
 //SLOTS
 void LayerSettingsVector::accept() {
-  //this->saveLayerSettings();
+  this->saveLayerSettings();
 
   //QDialog::accept();
 }
