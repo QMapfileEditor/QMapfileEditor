@@ -449,7 +449,7 @@ void MainWindow::addLayerTriggered(bool isRaster) {
   // the pivot used between our Qt model and Mapserver is the name (char *)
   // to create a new layer, we need to ensure the name is not taken yet.
 
-  this->undoStack->push(new AddLayerCommand(newLayerName, isRaster, this->mapfile));
+  this->undoStack->push(new AddLayerCommand(newLayerName, isRaster, this));
 
   // refreshes the layerModel
   QList<Layer *> ls = this->mapfile->getLayers();
@@ -576,6 +576,24 @@ void MainWindow::showInfo(const QString & message)
    if (ui->statusbar->isEnabled() )
      ui->statusbar->showMessage(message);
    return;
+}
+
+// Layer-related commands
+void MainWindow::addLayer(const QString &layerName, bool isRaster) {
+ // TODO:
+ // 1. call parser->addLayer()
+ // 2. refresh the internal models
+}
+
+void MainWindow::addLayer(const Layer *l) {
+}
+
+void MainWindow::removeLayer(const QString &layerName) {
+
+}
+
+void MainWindow::removeLayer(const Layer *l) {
+
 }
 
 MainWindow::~MainWindow()

@@ -30,37 +30,37 @@
 
 // Add layer command
 
-AddLayerCommand::AddLayerCommand(QString & layerName, bool isRaster, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent), layerName(layerName), isRaster(isRaster), parser(parser)
+AddLayerCommand::AddLayerCommand(QString & layerName, bool isRaster, MainWindow *wnd, QUndoCommand *parent)
+     : QUndoCommand(parent), layerName(layerName), isRaster(isRaster), mainwindow(wnd)
 {
   setText(QObject::tr("Create new layer '%1'").arg(layerName));
 }
 
 void AddLayerCommand::undo(void) {
-  parser->removeLayer(layerName);
+  mainwindow->removeLayer(layerName);
 }
 
 void AddLayerCommand::redo(void) {
-  parser->addLayer(layerName, isRaster);
+  mainwindow->addLayer(layerName, isRaster);
 }
 
 AddLayerCommand::~AddLayerCommand() {}
 
 // Remove layer command
 
-RemoveLayerCommand::RemoveLayerCommand(Layer *deletedLayer, MapfileParser *parser, QUndoCommand *parent)
-     : QUndoCommand(parent), parser(parser)
+RemoveLayerCommand::RemoveLayerCommand(Layer *deletedLayer, MainWindow *wnd, QUndoCommand *parent)
+     : QUndoCommand(parent), mainwindow(wnd)
 {
   this->deletedLayer = new Layer(* deletedLayer);
   setText(QObject::tr("Delete layer '%1'").arg(deletedLayer->getName()));
 }
 
 void RemoveLayerCommand::undo(void) {
-  parser->addLayer(deletedLayer);
+  mainwindow->addLayer(deletedLayer);
 }
 
 void RemoveLayerCommand::redo(void) {
-  parser->removeLayer(deletedLayer);
+  mainwindow->removeLayer(deletedLayer);
 }
 
 RemoveLayerCommand::~RemoveLayerCommand() {

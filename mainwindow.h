@@ -73,10 +73,14 @@ class MainWindow : public QMainWindow
       QString mapfilename, prevDirPath = NULL;
       QDir mapfiledir;
 
-      // TODO: private ? public ?
       QStringList gdalGdalDrivers;
       QStringList gdalOgrDrivers;
 
+      // Layers-related actions
+      void removeLayer(const QString & layerName);
+      void addLayer(const QString & layerName, bool isRaster);
+      void removeLayer(const Layer *);
+      void addLayer(const Layer *);
 
       ~MainWindow();
 

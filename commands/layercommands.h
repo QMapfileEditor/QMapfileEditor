@@ -31,12 +31,12 @@
 
 #include <QUndoCommand>
 
-#include "../parser/mapfileparser.h"
+#include "../mainwindow.h"
 
 class AddLayerCommand : public QUndoCommand {
 
  public:
-   AddLayerCommand(QString &layerName, bool isRaster, MapfileParser * parser, QUndoCommand *parent = 0);
+   AddLayerCommand(QString &layerName, bool isRaster, MainWindow * wnd, QUndoCommand *parent = 0);
    ~AddLayerCommand();
    void undo();
    void redo();
@@ -44,20 +44,20 @@ class AddLayerCommand : public QUndoCommand {
  private:
    QString layerName;
    bool isRaster;
-   MapfileParser * parser;
+   MainWindow * mainwindow;
 };
 
 class RemoveLayerCommand : public QUndoCommand {
 
  public:
-   RemoveLayerCommand(Layer * deletedLayer, MapfileParser * parser, QUndoCommand *parent = 0);
+   RemoveLayerCommand(Layer * deletedLayer, MainWindow *wnd, QUndoCommand *parent = 0);
    ~RemoveLayerCommand();
    void undo();
    void redo();
 
  private:
    Layer * deletedLayer;
-   MapfileParser * parser;
+   MainWindow * mainwindow;
 };
 
 #endif // LAYERCOMMANDS_H
