@@ -82,6 +82,14 @@ MainWindow::MainWindow(QWidget *parent) :
   this->connect(ui->actionRedo, SIGNAL(triggered()), undoStack, SLOT(redo()));
   this->connect(undoStack, SIGNAL(indexChanged(int)), this, SLOT(handleUndoStackChanged(int)));
 
+  // undostack options (if undo / redo possible)
+  // initial state: no undo/redo possible
+  ui->actionUndo->setEnabled(false);
+  ui->actionRedo->setEnabled(false);
+
+  this->connect(undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
+  this->connect(undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
+
   //creates a default empty mapfileparser
   this->mapfile = new MapfileParser(QString());
   this->showInfo(tr("Initialisation process: success !"));
