@@ -321,6 +321,9 @@ layerObj * Layer::getInternalLayerObj(void) const {
 
 }
 
+Layer::~Layer() {
+ qDebug() << "Destroying Layer " << this->name ;
+}
 
 QStringList Layer::layerType = QStringList() << "MS_LAYER_POINT" << "MS_LAYER_LINE" << "MS_LAYER_POLYGON"
                                                     << "MS_LAYER_RASTER" << "MS_LAYER_ANNOTATION" << "MS_LAYER_QUERY"
@@ -332,7 +335,6 @@ QStringList Layer::layerType = QStringList() << "MS_LAYER_POINT" << "MS_LAYER_LI
 
 LayerModel::LayerModel(QObject * parent, QList<Layer *> const & l) : QAbstractListModel(parent), layers(l) {}
 
-#include <QDebug>
 
 LayerModel::~LayerModel() {}
 

@@ -43,6 +43,7 @@
 class Layer {
   public:
     Layer(QString const & name, struct mapObj *);
+    ~Layer();
 
     QString const & getName() const;
     void setName(QString const &);
