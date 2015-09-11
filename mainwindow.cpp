@@ -120,6 +120,8 @@ void MainWindow::handleUndoStackChanged(int i) {
   Q_UNUSED(i);
   ui->actionUndo->setText(tr("Undo '%1'").arg(undoStack->undoText()));
   ui->actionRedo->setText(tr("Redo '%1'").arg(undoStack->redoText()));
+
+  this->updateMapPreview();
 }
 
 // TODO separation of concerns: maybe just a getter
