@@ -7,6 +7,7 @@
 #include <QDataWidgetMapper>
 #include <QDialog>
 #include <QDir>
+#include <QDebug>
 #include <QFileDialog>
 #include <QRadioButton>
 #include <QStandardItem>
@@ -30,8 +31,9 @@ class LayerSettings : public QTabWidget {
 
   void initStatusRadioButton(QRadioButton *, QRadioButton *, QRadioButton *);
   void initRequiresMaskCombo(QComboBox *, QComboBox *);
-  void saveLayerSettings();
 
+  protected slots:
+      void accept();
 };
 
 

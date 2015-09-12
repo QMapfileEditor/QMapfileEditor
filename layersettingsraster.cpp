@@ -109,7 +109,8 @@ LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf, L
 
 //SLOTS
 void LayerSettingsRaster::accept() {
-    //this->saveLayerSettings();
+  qDebug() << "accept()  in layersettingsraster triggered";
+  LayerSettings::accept();
 
     //QDialog::accept();
 }

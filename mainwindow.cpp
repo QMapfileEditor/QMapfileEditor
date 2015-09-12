@@ -41,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
   this->showInfo(tr("Initializing default mapfile"));
 
-
   // inits QAction behaviours
   this->connect(ui->actionZoom_to_Extent,   SIGNAL(triggered()), SLOT(zoomToOriginalExtent()));
   this->connect(ui->actionZoom,   SIGNAL(toggled(bool)), SLOT(zoomToggled(bool)));
@@ -507,8 +506,6 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                       | QDialogButtonBox::Cancel);
 
-  connect(buttonBox, SIGNAL(accepted()), this->layerSettingsDialog, SLOT(accept()));
-  connect(buttonBox, SIGNAL(rejected()), this->layerSettingsDialog, SLOT(reject()));
 
   //TODO: give layer to layerSettings?
   //TODO: if layer is vector (ie TYPE = POINT, LINE or POLYGON and have no grid object) then:
@@ -518,6 +515,7 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
     return;
 
   Layer * l = this->mapfile->getLayers().at(i.row());
+  LayerSettings * ls = NULL;
   if (l->getType() == "MS_LAYER_RASTER") {
     this->layerSettingsDialog->setWindowTitle(tr("Raster Layer Settings"));
     LayerSettingsRaster * layerSettingsRaster = new LayerSettingsRaster(this->layerSettingsDialog, this->mapfile, l);
@@ -526,6 +524,7 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
     this->layerSettingsDialog->setLayout(mainLayout);
     this->layerSettingsDialog->resize(870, 630);
     this->layerSettingsDialog->show();
+    ls = layerSettingsRaster;
   } else {
     this->layerSettingsDialog->setWindowTitle(tr("Vector Layer Settings"));
     LayerSettingsVector * layerSettingsVector = new LayerSettingsVector(this->layerSettingsDialog, this->mapfile, l);
@@ -534,7 +533,11 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
     this->layerSettingsDialog->setLayout(mainLayout);
     this->layerSettingsDialog->resize(870, 630);
     this->layerSettingsDialog->show();
+    ls = layerSettingsVector;
   }
+
+  connect(buttonBox, SIGNAL(accepted()), ls, SLOT(accept()));
+  //connect(buttonBox, SIGNAL(rejected()), ls, SLOT(reject()));
 }
 
 void MainWindow::showAbout() {
