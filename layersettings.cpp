@@ -66,13 +66,6 @@ void LayerSettings::initRequiresMaskCombo(QComboBox *requires, QComboBox *mask) 
  * saves layer settings, code shared by vector and raster windows
  */
 void LayerSettings::accept() {
-  // Getting the QUndoStack from MainWindow
-  QDialog * ls = (QDialog *) parent();
-  MainWindow * mw = (MainWindow *) ls->parent();
-  QUndoStack * stack = mw->getUndoStack();
-
-  // Title changed
-
 }
 
 void LayerSettings::reject() {

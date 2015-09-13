@@ -32,7 +32,6 @@ class LayerSettings : public QTabWidget {
     void initStatusRadioButton(QRadioButton *, QRadioButton *, QRadioButton *);
     void initRequiresMaskCombo(QComboBox *, QComboBox *);
 
-  protected:
     void accept();
     void reject();
 
