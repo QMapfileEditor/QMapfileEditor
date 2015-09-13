@@ -56,7 +56,7 @@ class Layer {
     QString getRequires() const;
     QString getGroup() const;
     QString getType() const;
-    int getOpacity() const;
+    //int getOpacity() const;
     QString getMask() const;
     QString getUnits() const;
     QString getSizeUnits() const;

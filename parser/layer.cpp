@@ -96,12 +96,13 @@ QString Layer::getType() const  {
   return QString();
 }
 
-int Layer::getOpacity() const {
-  layerObj * l = getInternalLayerObj();
-  if (l)
-    return l->opacity;
-  return -1;
-}
+// Does not exist anymore ??
+//int Layer::getOpacity() const {
+//  layerObj * l = getInternalLayerObj();
+//  if (l)
+//    return l->opacity;
+//  return -1;
+//}
 
 QString Layer::getMask() const {
   layerObj * l = getInternalLayerObj();
@@ -397,8 +398,8 @@ QVariant LayerModel::data(const QModelIndex &index, int role) const {
       return QVariant(l->getStatus());
     case LayerModel::LAYER_TYPE:
       return QVariant(l->getType());
-    case LayerModel::LAYER_OPACITY:
-      return QVariant(l->getOpacity());
+//    case LayerModel::LAYER_OPACITY:
+//      return QVariant(l->getOpacity());
     case LayerModel::LAYER_MASK:
       return QVariant(l->getMask());
     case LayerModel::LAYER_MIN_X:

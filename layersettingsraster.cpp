@@ -44,7 +44,7 @@ LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf, L
 
   ui->mf_group_edit->setText( l->getGroup() );
 
-  ui->mf_opacity_box->setValue( l->getOpacity() );
+  //ui->mf_opacity_box->setValue( l->getOpacity() );
 
   ui->mf_tolerance_box->setValue( l->getTolerance() );
   //BUG: casse est importante?

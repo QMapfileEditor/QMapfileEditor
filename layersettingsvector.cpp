@@ -43,7 +43,7 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
   initRequiresMaskCombo(ui->mf_requires_box, ui->mf_mask_box);
 
   ui->mf_group_edit->setText( l->getGroup() );
-  ui->mf_opacity_box->setValue( l->getOpacity() );
+  //ui->mf_opacity_box->setValue( l->getOpacity() );
   ui->mf_tolerance_box->setValue( l->getTolerance() );
   //BUG: casse est importante?
   ui->mf_toleranceUnit_combo->setCurrentIndex(ui->mf_toleranceUnit_combo->findText(l->getToleranceUnits()) );
