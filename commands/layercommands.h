@@ -60,4 +60,17 @@ class RemoveLayerCommand : public QUndoCommand {
    MainWindow * mainwindow;
 };
 
+class ChangeLayerNameCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerNameCommand(Layer *l, QString &oldLayerName, QString &newLayerName, QUndoCommand *parent = 0);
+   ~ChangeLayerNameCommand();
+   void undo();
+   void redo();
+
+ private:
+   QString oldLayerName, newLayerName;
+   Layer *modifiedLayer;
+};
+
 #endif // LAYERCOMMANDS_H

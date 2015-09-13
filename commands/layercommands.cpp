@@ -28,7 +28,7 @@
 
 #include "layercommands.h"
 
-// Add layer command
+// "Add layer" command
 
 AddLayerCommand::AddLayerCommand(QString & layerName, bool isRaster, MainWindow *wnd, QUndoCommand *parent)
      : QUndoCommand(parent), layerName(layerName), isRaster(isRaster), mainwindow(wnd)
@@ -46,7 +46,7 @@ void AddLayerCommand::redo(void) {
 
 AddLayerCommand::~AddLayerCommand() {}
 
-// Remove layer command
+// "Remove layer" command
 
 RemoveLayerCommand::RemoveLayerCommand(Layer *deletedLayer, MainWindow *wnd, QUndoCommand *parent)
      : QUndoCommand(parent), mainwindow(wnd)
@@ -67,7 +67,19 @@ RemoveLayerCommand::~RemoveLayerCommand() {
   delete deletedLayer;
 }
 
+// "Change layer name" command
+ChangeLayerNameCommand::ChangeLayerNameCommand(Layer * modifiedLayer, QString & oldLayerName, QString & newLayerName, QUndoCommand * parent)
+  : QUndoCommand(parent), oldLayerName(oldLayerName), newLayerName(newLayerName), modifiedLayer(modifiedLayer)
+{
+  setText(QObject::tr("Rename layer '%1' to '%2'").arg(newLayerName, oldLayerName));
+}
 
-// Edit layers commands
+void ChangeLayerNameCommand::undo(void) {
+  modifiedLayer->setName(oldLayerName);
+}
 
+void ChangeLayerNameCommand::redo(void) {
+  modifiedLayer->setName(newLayerName);
+}
 
+ChangeLayerNameCommand::~ChangeLayerNameCommand() {}
