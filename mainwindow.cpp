@@ -499,7 +499,7 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
     this->layerSettingsDialog = NULL;
   }
 
-  this->layerSettingsDialog = new QDialog();
+  this->layerSettingsDialog = new QDialog(this);
   this->layerSettingsDialog->setModal(true);
 
   QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -610,6 +610,10 @@ void MainWindow::removeLayer(const QString &layerName) {
 void MainWindow::removeLayer(const Layer *l) {
   mapfile->removeLayer(l);
   this->layerModel->setLayers(this->mapfile->getLayers());
+}
+
+QUndoStack *  MainWindow::getUndoStack() const {
+  return this->undoStack;
 }
 
 MainWindow::~MainWindow()

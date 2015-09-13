@@ -27,8 +27,8 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  ****************************************************************************/
-
 #include "layersettings.h"
+#include "mainwindow.h"
 
 
 LayerSettings::LayerSettings(QWidget *parent, MapfileParser *p, Layer *l):
@@ -66,7 +66,13 @@ void LayerSettings::initRequiresMaskCombo(QComboBox *requires, QComboBox *mask) 
  * saves layer settings, code shared by vector and raster windows
  */
 void LayerSettings::accept() {
-  qDebug() << "accept()  in LayerSettings triggered";
+  // Getting the QUndoStack from MainWindow
+  QDialog * ls = (QDialog *) parent();
+  MainWindow * mw = (MainWindow *) ls->parent();
+  QUndoStack * stack = mw->getUndoStack();
+
+  // Title changed
+
 }
 
 void LayerSettings::reject() {

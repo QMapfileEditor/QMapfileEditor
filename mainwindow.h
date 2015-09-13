@@ -82,6 +82,8 @@ class MainWindow : public QMainWindow
       void removeLayer(const Layer *);
       void addLayer(const Layer *);
 
+      QUndoStack * getUndoStack() const;
+
       ~MainWindow();
 
  public slots:
