@@ -45,6 +45,7 @@ class LayerSettingsVector : public LayerSettings
 
  public slots:
       void accept();
+      void reject();
 
  private:
       Ui::LayerSettingsVector * ui;

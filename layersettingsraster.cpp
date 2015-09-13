@@ -106,15 +106,25 @@ LayerSettingsRaster::LayerSettingsRaster(QWidget * parent, MapfileParser * mf, L
   //TODO in layer.cpp: ui->mf_validation_table->setText( l->validation() );
 }
 
-
-//SLOTS
 void LayerSettingsRaster::accept() {
+
   qDebug() << "accept()  in layersettingsraster triggered";
+  // TODO do the logic specific to rasters here
+
+  // Calling abstract|common logic
   LayerSettings::accept();
 
-    //QDialog::accept();
+  // propagates the accept() to the parent form
+  ((QDialog *) parent())->accept();
 }
-/** End SLOTS **/
+
+void LayerSettingsRaster::reject() {
+  qDebug() << "reject()  in layersettingsraster triggered";
+  LayerSettings::reject();
+
+  // propagates the reject() to the parent form
+  ((QDialog *) parent())->reject();
+}
 
 LayerSettingsRaster::~LayerSettingsRaster() {
   delete ui;

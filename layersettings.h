@@ -24,16 +24,18 @@ class LayerSettings : public QTabWidget {
 
   Q_OBJECT ;
 
- protected:
-  LayerSettings(QWidget *parent, MapfileParser *, Layer *);
-  MapfileParser * mapfile;
-  Layer *layer;
+  protected:
+    LayerSettings(QWidget *parent, MapfileParser *, Layer *);
+    MapfileParser * mapfile;
+    Layer *layer;
 
-  void initStatusRadioButton(QRadioButton *, QRadioButton *, QRadioButton *);
-  void initRequiresMaskCombo(QComboBox *, QComboBox *);
+    void initStatusRadioButton(QRadioButton *, QRadioButton *, QRadioButton *);
+    void initRequiresMaskCombo(QComboBox *, QComboBox *);
 
-  protected slots:
-      void accept();
+  protected:
+    void accept();
+    void reject();
+
 };
 
 

@@ -503,11 +503,9 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   this->layerSettingsDialog->setModal(true);
 
   QVBoxLayout *mainLayout = new QVBoxLayout;
-  buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
-                                      | QDialogButtonBox::Cancel);
+  buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
 
-  //TODO: give layer to layerSettings?
   //TODO: if layer is vector (ie TYPE = POINT, LINE or POLYGON and have no grid object) then:
   //this->showInfo(QString::number(i.model()->data(Qt::DisplayRole)));
   //qDebug() << i.row();
@@ -537,7 +535,7 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
   }
 
   connect(buttonBox, SIGNAL(accepted()), ls, SLOT(accept()));
-  //connect(buttonBox, SIGNAL(rejected()), ls, SLOT(reject()));
+  connect(buttonBox, SIGNAL(rejected()), ls, SLOT(reject()));
 }
 
 void MainWindow::showAbout() {

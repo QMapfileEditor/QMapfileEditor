@@ -66,6 +66,9 @@ void LayerSettings::initRequiresMaskCombo(QComboBox *requires, QComboBox *mask) 
  * saves layer settings, code shared by vector and raster windows
  */
 void LayerSettings::accept() {
-  qDebug() << "accept() triggered";
+  qDebug() << "accept()  in LayerSettings triggered";
 }
 
+void LayerSettings::reject() {
+  qDebug() << "reject()  in LayerSettings triggered";
+}

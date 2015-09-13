@@ -106,8 +106,16 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
 
 //SLOTS
 void LayerSettingsVector::accept() {
+  // TODO vector-specific logic
 
-  //QDialog::accept();
+  LayerSettings::accept();
+
+  ((QDialog *) parent())->accept();
+}
+
+void LayerSettingsVector::reject() {
+  LayerSettings::reject();
+  ((QDialog *) parent())->reject();
 }
 /** End SLOTS **/
 

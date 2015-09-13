@@ -45,6 +45,7 @@ class LayerSettingsRaster : public LayerSettings
 
  public slots:
       void accept();
+      void reject();
 
  private:
       Ui::LayerSettingsRaster * ui;
