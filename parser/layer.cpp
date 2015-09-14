@@ -98,8 +98,13 @@ QString Layer::getType() const  {
 
 int Layer::getOpacity() const {
   layerObj * l = getInternalLayerObj();
+#if MS_VERSION_MAJOR < 7
   if (l)
     return l->opacity;
+#else
+  if (l && l->compositer)
+    return l->compositer->opacity;
+#endif
   return -1;
 }
 
