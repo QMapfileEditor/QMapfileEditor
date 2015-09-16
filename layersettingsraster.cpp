@@ -112,19 +112,6 @@ void LayerSettingsRaster::accept() {
   MainWindow * mw = (MainWindow *) ls->parent();
   QUndoStack * stack = mw->getUndoStack();
 
-  if (ui->mf_layerName_value->text() != layer->getName()) {
-    // check if the name is available
-    QString newValue = ui->mf_layerName_value->text();
-    if (mapfile->getLayerList().contains(newValue)) {
-      QMessageBox::critical(this, "QMapfileEditor", tr("Unable to rename layer, name already taken."));
-    } else {
-      QString oldLayerName = layer->getName();
-      ChangeLayerNameCommand * clnc = new ChangeLayerNameCommand(layer, oldLayerName, newValue);
-      stack->push(clnc);
-    }
-  }
-
-  // See comment in layersettingsvector.cpp
   LayerSettings::accept();
 
   // propagates the accept() to the parent form
@@ -137,6 +124,10 @@ void LayerSettingsRaster::reject() {
 
   // propagates the reject() to the parent form
   ((QDialog *) parent())->reject();
+}
+
+QString LayerSettingsRaster::getLayerName() const {
+   return ui->mf_layerName_value->text();
 }
 
 LayerSettingsRaster::~LayerSettingsRaster() {

@@ -35,6 +35,7 @@ class LayerSettings : public QTabWidget {
     void accept();
     void reject();
 
+    virtual QString getLayerName() const = 0;
 };
 
 
