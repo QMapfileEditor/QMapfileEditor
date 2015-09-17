@@ -43,7 +43,6 @@ QString const & Layer::getName() const {
 }
 
 void Layer::setName(QString const & newName) {
-  // TODO: check if name not already taken
   layerObj * l = getInternalLayerObj();
   if (! l)
     return;
@@ -73,6 +72,14 @@ int Layer::getStatus() const {
   if (l)
     return l->status;
   return -1;
+}
+
+void Layer::setStatus(int const newStatus) {
+  if (newStatus < 0 || newStatus > 2)
+    return;
+  layerObj * l = getInternalLayerObj();
+  if (l)
+    l->status = newStatus;
 }
 
 QString Layer::getRequires() const {

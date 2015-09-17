@@ -48,11 +48,12 @@ class Layer {
     QString const & getName() const;
     void setName(QString const &);
 
+    int getStatus() const;
+    void setStatus(int const);
     // static variables (from mapserver.h)
     static QStringList layerType;
 
     // Accessors
-    int getStatus() const;
     QString getRequires() const;
     QString getGroup() const;
     QString getType() const;

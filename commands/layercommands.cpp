@@ -26,6 +26,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  ****************************************************************************/
 
+#include <mapserver.h>
+
 #include "layercommands.h"
 
 // "Add layer" command
@@ -83,3 +85,34 @@ void ChangeLayerNameCommand::redo(void) {
 }
 
 ChangeLayerNameCommand::~ChangeLayerNameCommand() {}
+
+// "Change layer status" command
+ChangeLayerStatusCommand::ChangeLayerStatusCommand(Layer * modifiedLayer, int oldStatus, int newStatus, QUndoCommand * parent)
+  : QUndoCommand(parent), oldStatus(oldStatus), newStatus(newStatus), modifiedLayer(modifiedLayer)
+{
+  QString oldStatusDesc, newStatusDesc;
+  if (oldStatus == MS_ON)
+    oldStatusDesc = QObject::tr("ON");
+  else if (oldStatus == MS_OFF)
+    oldStatusDesc = QObject::tr("OFF");
+  else
+    oldStatusDesc = QObject::tr("Default");
+  if (newStatus == MS_ON)
+    newStatusDesc = QObject::tr("ON");
+  else if (newStatus == MS_OFF)
+    newStatusDesc = QObject::tr("OFF");
+  else
+    newStatusDesc = QObject::tr("Default");
+  setText(QObject::tr("Change  layer status from '%1' to '%2'").arg(oldStatusDesc, newStatusDesc));
+}
+
+void ChangeLayerStatusCommand::undo(void) {
+  modifiedLayer->setStatus(oldStatus);
+}
+
+void ChangeLayerStatusCommand::redo(void) {
+  modifiedLayer->setStatus(newStatus);
+}
+
+ChangeLayerStatusCommand::~ChangeLayerStatusCommand() {}
+

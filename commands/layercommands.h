@@ -73,4 +73,18 @@ class ChangeLayerNameCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerStatusCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerStatusCommand(Layer *l, int oldStatus, int newStatus, QUndoCommand *parent = 0);
+   ~ChangeLayerStatusCommand();
+   void undo();
+   void redo();
+
+ private:
+   int oldStatus, newStatus;
+   Layer *modifiedLayer;
+};
+
+
 #endif // LAYERCOMMANDS_H
