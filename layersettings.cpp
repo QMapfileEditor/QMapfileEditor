@@ -70,6 +70,7 @@ void LayerSettings::accept() {
   MainWindow * mw = (MainWindow *) ls->parent();
   QUndoStack * stack = mw->getUndoStack();
 
+  // changing the name
   if (this->getLayerName() != layer->getName()) {
     // check if the name is available
     QString newValue = this->getLayerName();
@@ -81,9 +82,12 @@ void LayerSettings::accept() {
       stack->push(clnc);
     }
   }
-
+  // Changing the status
+  if (this->getLayerStatus() != layer->getStatus()) {
+    ChangeLayerStatusCommand * st = new ChangeLayerStatusCommand(layer, layer->getStatus(), this->getLayerStatus());
+    stack->push(st);
+  }
 }
 
 void LayerSettings::reject() {
-  qDebug() << "reject()  in LayerSettings triggered";
 }

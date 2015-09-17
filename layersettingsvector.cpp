@@ -129,6 +129,13 @@ QString LayerSettingsVector::getLayerName() const {
   return ui->mf_layerName_value->text();
 }
 
+int LayerSettingsVector::getLayerStatus() const {
+ if (ui->mf_statusOn_radio->isChecked()) return 1;
+ if (ui->mf_statusOff_radio->isChecked()) return 0;
+ if (ui->mf_statusDefault_radio->isChecked()) return 2;
+ return -1;
+}
+
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
 }

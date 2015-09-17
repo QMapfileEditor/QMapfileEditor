@@ -43,6 +43,7 @@ class LayerSettingsRaster : public LayerSettings
       explicit LayerSettingsRaster(QWidget * parent, MapfileParser *m, Layer * l);
       ~LayerSettingsRaster();
       QString getLayerName() const;
+      int     getLayerStatus() const;
 
  public slots:
       void accept();

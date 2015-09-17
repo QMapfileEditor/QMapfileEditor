@@ -43,6 +43,7 @@ class LayerSettingsVector : public LayerSettings
       explicit LayerSettingsVector(QWidget * parent, MapfileParser *m, Layer *l);
       ~LayerSettingsVector();
       QString getLayerName() const;
+      int     getLayerStatus() const;
 
  public slots:
       void accept();

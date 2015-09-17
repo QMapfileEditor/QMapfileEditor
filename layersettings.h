@@ -35,7 +35,10 @@ class LayerSettings : public QTabWidget {
     void accept();
     void reject();
 
+    // Virtual methods for UI components shared
+    // between vector & raster dialogs
     virtual QString getLayerName() const = 0;
+    virtual int     getLayerStatus() const = 0;
 };
 
 
