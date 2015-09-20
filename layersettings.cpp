@@ -122,6 +122,21 @@ void LayerSettings::accept() {
     ChangeLayerMaxScaleDenomCommand *msd = new ChangeLayerMaxScaleDenomCommand(layer, layer->getMaxScaleDenom(), this->getLayerMaxScaleDenom());
     stack->push(msd);
   }
+  // changing template (TODO: Might deserve better checks (file exists ?))
+  if (this->getLayerTemplate() != layer->getTemplate()) {
+    ChangeLayerTemplateCommand *tplc = new ChangeLayerTemplateCommand(layer, layer->getTemplate(), this->getLayerTemplate());
+    stack->push(tplc);
+  }
+  // changing header (TODO: same remark)
+  if (this->getLayerHeader() != layer->getHeader()) {
+    ChangeLayerHeaderCommand *hc = new ChangeLayerHeaderCommand(layer, layer->getHeader(), this->getLayerHeader());
+    stack->push(hc);
+  }
+  // changing footer
+  if (this->getLayerFooter() != layer->getFooter()) {
+    ChangeLayerFooterCommand *fc = new ChangeLayerFooterCommand(layer, layer->getFooter(), this->getLayerFooter());
+    stack->push(fc);
+  }
 
 }
 
