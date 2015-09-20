@@ -99,5 +99,19 @@ class ChangeLayerRequiresCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerMaskCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerMaskCommand(Layer *, QString, QString, QUndoCommand * parent = 0);
+   ~ChangeLayerMaskCommand();
+   void undo();
+   void redo();
+
+ private:
+   QString oldLayer, newLayer;
+   Layer *modifiedLayer;
+};
+
+
 
 #endif // LAYERCOMMANDS_H

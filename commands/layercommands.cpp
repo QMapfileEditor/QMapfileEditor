@@ -132,3 +132,20 @@ void ChangeLayerRequiresCommand::redo() {
 
 ChangeLayerRequiresCommand::~ChangeLayerRequiresCommand() {}
 
+// "Change mask" command
+ChangeLayerMaskCommand::ChangeLayerMaskCommand(Layer * modifiedLayer, QString oldLayer, QString newLayer, QUndoCommand *parent)
+  : QUndoCommand(parent), oldLayer(oldLayer), newLayer(newLayer), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer mask from '%1' to '%2'").arg(oldLayer, newLayer));
+}
+
+void ChangeLayerMaskCommand::undo() {
+  modifiedLayer->setMask(oldLayer);
+}
+
+void ChangeLayerMaskCommand::redo() {
+  modifiedLayer->setMask(newLayer);
+}
+
+ChangeLayerMaskCommand::~ChangeLayerMaskCommand() {}
+
+
