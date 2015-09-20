@@ -33,8 +33,8 @@ void TestLayer::testLayer()
   QVERIFY(firstlayer->getMaxX() ==  180);
   QVERIFY(firstlayer->getMinY() == -90);
   QVERIFY(firstlayer->getMaxY() ==  90);
-  QVERIFY(firstlayer->getMinScale() == -1);
-  QVERIFY(firstlayer->getMaxScale() == -1);
+  QVERIFY(firstlayer->getMinScaleDenom() == -1);
+  QVERIFY(firstlayer->getMaxScaleDenom() == -1);
   QVERIFY(firstlayer->getPlugin() == "");
   QVERIFY(firstlayer->getTolerance() == -1);
   QVERIFY(firstlayer->getToleranceUnits() == "");
