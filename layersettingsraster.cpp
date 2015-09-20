@@ -119,7 +119,6 @@ void LayerSettingsRaster::accept() {
 }
 
 void LayerSettingsRaster::reject() {
-  qDebug() << "reject()  in layersettingsraster triggered";
   LayerSettings::reject();
 
   // propagates the reject() to the parent form
