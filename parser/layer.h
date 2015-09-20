@@ -66,6 +66,12 @@ class Layer {
     int  getDebugLevel() const;
     void setDebugLevel(int const);
 
+    double getMinScaleDenom() const;
+    void   setMinScaleDenom(double const);
+
+    double getMaxScaleDenom() const;
+    void   setMaxScaleDenom(double const);
+
     // static variables (from mapserver.h)
     static QStringList layerType;
 
@@ -77,8 +83,6 @@ class Layer {
     double getMaxX() const;
     double getMinY() const;
     double getMaxY() const;
-    double getMinScale() const;
-    double getMaxScale() const;
     QString getPlugin() const;
     double getTolerance() const;
     QString getToleranceUnits() const;

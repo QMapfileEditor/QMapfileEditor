@@ -48,12 +48,8 @@ LayerSettingsVector::LayerSettingsVector(QWidget * parent, MapfileParser * mf, L
   //BUG: casse est importante?
   ui->mf_toleranceUnit_combo->setCurrentIndex(ui->mf_toleranceUnit_combo->findText(l->getToleranceUnits()) );
 
-  if (l->getMinScale()) {
-    ui->mf_minScaleDenom_edit->setValue( l->getMinScale() );
-  }
-  if( l->getMaxScale()) {
-    ui->mf_maxScaleDenom_edit->setValue( l->getMaxScale() );
-  }
+  ui->mf_minScaleDenom_edit->setValue( l->getMinScaleDenom() );
+  ui->mf_maxScaleDenom_edit->setValue( l->getMaxScaleDenom() );
   ui->mf_debug_value->setValue( l->getDebugLevel() );
 
   ui->mf_template_edit->setText( l->getTemplate() );

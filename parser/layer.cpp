@@ -60,6 +60,8 @@ double Layer::getMaxScaleDenomLabel() const {
   return l->labelmaxscaledenom;
 }
 
+
+
 double Layer::getMinScaleDenomLabel() const {
   layerObj * l = getInternalLayerObj();
   if (! l)
@@ -218,18 +220,31 @@ double Layer::getMaxY() const {
   return -1;
 }
 
-double Layer::getMinScale() const {
+double Layer::getMinScaleDenom() const {
   layerObj * l = getInternalLayerObj();
   if (l)
     return l->minscaledenom;
   return -1.0;
 }
+void Layer::setMinScaleDenom(double const newMin) {
+  layerObj * l = getInternalLayerObj();
+  if (! l)
+    return;
+  l->minscaledenom = newMin;
+}
 
-double Layer::getMaxScale() const {
+double Layer::getMaxScaleDenom() const {
   layerObj * l = getInternalLayerObj();
   if (l)
     return l->maxscaledenom;
   return -1.0;
+}
+
+void Layer::setMaxScaleDenom(double const newMax) {
+  layerObj * l = getInternalLayerObj();
+  if (! l)
+    return;
+  l->maxscaledenom = newMax;
 }
 
 QString Layer::getPlugin() const {
@@ -484,9 +499,9 @@ QVariant LayerModel::data(const QModelIndex &index, int role) const {
     case LayerModel::LAYER_MAX_Y:
       return QVariant(l->getMaxY());
     case LayerModel::LAYER_MIN_SCALE:
-      return QVariant(l->getMinScale());
+      return QVariant(l->getMinScaleDenom());
     case LayerModel::LAYER_MAX_SCALE:
-      return QVariant(l->getMaxScale());
+      return QVariant(l->getMaxScaleDenom());
     case LayerModel::LAYER_TOLERANCE:
       return QVariant(l->getTolerance());
     case LayerModel::LAYER_MAX_FEATURES:
