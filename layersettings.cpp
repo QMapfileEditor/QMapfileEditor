@@ -107,6 +107,11 @@ void LayerSettings::accept() {
     ChangeLayerGroupCommand *lgc = new ChangeLayerGroupCommand(layer, layer->getGroup(), this->getLayerGroup());
     stack->push(lgc);
   }
+  // changing the debug level
+  if (this->getLayerDebugLevel() != layer->getDebugLevel()) {
+   ChangeLayerDebugLevelCommand *ldlc = new ChangeLayerDebugLevelCommand(layer, layer->getDebugLevel(), this->getLayerDebugLevel());
+   stack->push(ldlc);
+  }
 }
 
 void LayerSettings::reject() {
