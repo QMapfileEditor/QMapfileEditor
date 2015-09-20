@@ -89,6 +89,21 @@ QString Layer::getRequires() const {
   return QString();
 }
 
+void Layer::setRequires(QString const & newRequires) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    if (l->requires) {
+      free(l->requires);
+      l->requires = NULL;
+    }
+    if (newRequires.isEmpty()) {
+      return;
+    }
+    l->requires = strdup(newRequires.toStdString().c_str());
+  }
+  return;
+}
+
 QString Layer::getGroup() const {
   layerObj * l = getInternalLayerObj();
   if (l)

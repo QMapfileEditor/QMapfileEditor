@@ -50,11 +50,14 @@ class Layer {
 
     int getStatus() const;
     void setStatus(int const);
+
+    QString getRequires() const;
+    void setRequires(QString const &);
+
     // static variables (from mapserver.h)
     static QStringList layerType;
 
     // Accessors
-    QString getRequires() const;
     QString getGroup() const;
     QString getType() const;
     int getOpacity() const;
