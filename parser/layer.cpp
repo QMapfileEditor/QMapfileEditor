@@ -137,6 +137,21 @@ QString Layer::getMask() const {
   return QString();
 }
 
+void Layer::setMask(QString const &newMask) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    if (l->mask) {
+      free(l->mask);
+      l->mask = NULL;
+    }
+    if (newMask.isEmpty()) {
+      return;
+    }
+    l->mask = strdup(newMask.toStdString().c_str());
+  }
+  return;
+}
+
 QString Layer::getUnits() const {
   layerObj * l = getInternalLayerObj();
   if (l)
