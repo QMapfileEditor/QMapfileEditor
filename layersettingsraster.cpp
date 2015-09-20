@@ -152,6 +152,10 @@ int LayerSettingsRaster::getLayerOpacity() const {
   return ui->mf_opacity_box->value();
 }
 
+int LayerSettingsRaster::getLayerDebugLevel() const {
+  return ui->mf_debug_value->value();
+}
+
 LayerSettingsRaster::~LayerSettingsRaster() {
   delete ui;
 }

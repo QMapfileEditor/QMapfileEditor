@@ -152,6 +152,10 @@ QString LayerSettingsVector::getLayerGroup() const {
   return ui->mf_group_edit->text();
 }
 
+int LayerSettingsVector::getLayerDebugLevel() const {
+  return ui->mf_debug_value->value();
+}
+
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
 }
