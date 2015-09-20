@@ -92,6 +92,11 @@ void LayerSettings::accept() {
     ChangeLayerRequiresCommand * rqc = new ChangeLayerRequiresCommand(layer, layer->getRequires(), this->getLayerRequires());
     stack->push(rqc);
   }
+  // Changing the mask
+  if (this->getLayerMask() != layer->getMask()) {
+    ChangeLayerMaskCommand * lmc = new ChangeLayerMaskCommand(layer, layer->getMask(), this->getLayerMask());
+    stack->push(lmc);
+  }
 }
 
 void LayerSettings::reject() {
