@@ -181,18 +181,18 @@ void ChangeLayerGroupCommand::redo() {
 ChangeLayerGroupCommand::~ChangeLayerGroupCommand() {}
 
 // "Change debug" command
-ChangeLayerDebugCommand::ChangeLayerDebugCommand(Layer * modifiedLayer, int oldDebug, int newDebug, QUndoCommand *parent)
+ChangeLayerDebugLevelCommand::ChangeLayerDebugLevelCommand(Layer * modifiedLayer, int oldDebug, int newDebug, QUndoCommand *parent)
   : QUndoCommand(parent), oldDebug(oldDebug), newDebug(newDebug), modifiedLayer(modifiedLayer)  {
   setText(QObject::tr("Change layer debug level from '%1' to '%2'").arg(oldDebug).arg(newDebug));
 }
 
-void ChangeLayerDebugCommand::undo() {
+void ChangeLayerDebugLevelCommand::undo() {
   modifiedLayer->setDebugLevel(oldDebug);
 }
 
-void ChangeLayerDebugCommand::redo() {
+void ChangeLayerDebugLevelCommand::redo() {
   modifiedLayer->setDebugLevel(newDebug);
 }
 
-ChangeLayerDebugCommand::~ChangeLayerDebugCommand() {}
+ChangeLayerDebugLevelCommand::~ChangeLayerDebugLevelCommand() {}
 
