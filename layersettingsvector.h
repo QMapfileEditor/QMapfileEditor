@@ -44,6 +44,7 @@ class LayerSettingsVector : public LayerSettings
       ~LayerSettingsVector();
       QString getLayerName() const;
       int     getLayerStatus() const;
+      QString getLayerRequires() const;
 
  public slots:
       void accept();

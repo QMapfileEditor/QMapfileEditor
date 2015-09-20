@@ -39,6 +39,7 @@ class LayerSettings : public QTabWidget {
     // between vector & raster dialogs
     virtual QString getLayerName() const = 0;
     virtual int     getLayerStatus() const = 0;
+    virtual QString getLayerRequires() const = 0;
 };
 
 

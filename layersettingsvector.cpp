@@ -136,6 +136,10 @@ int LayerSettingsVector::getLayerStatus() const {
  return -1;
 }
 
+QString LayerSettingsVector::getLayerRequires() const {
+   return ui->mf_requires_box->currentText();
+}
+
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
 }

@@ -130,6 +130,10 @@ QString LayerSettingsRaster::getLayerName() const {
    return ui->mf_layerName_value->text();
 }
 
+QString LayerSettingsRaster::getLayerRequires() const {
+   return ui->mf_requires_box->currentText();
+}
+
 int LayerSettingsRaster::getLayerStatus() const {
  if (ui->mf_statusOn_radio->isChecked()) return 1;
  if (ui->mf_statusOff_radio->isChecked()) return 0;
