@@ -164,6 +164,20 @@ class ChangeLayerMinScaleDenomCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerMaxScaleDenomCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerMaxScaleDenomCommand(Layer *, double, double, QUndoCommand * parent = 0);
+   ~ChangeLayerMaxScaleDenomCommand();
+   void undo();
+   void redo();
+
+ private:
+   double oldmax, newmax;
+   Layer *modifiedLayer;
+};
+
+
 
 
 

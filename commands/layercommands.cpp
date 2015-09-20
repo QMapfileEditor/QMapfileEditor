@@ -213,3 +213,19 @@ void ChangeLayerMinScaleDenomCommand::redo() {
 
 ChangeLayerMinScaleDenomCommand::~ChangeLayerMinScaleDenomCommand() {}
 
+// "Change maxscaledenom" command
+ChangeLayerMaxScaleDenomCommand::ChangeLayerMaxScaleDenomCommand(Layer * modifiedLayer, double oldmax, double newmax, QUndoCommand *parent)
+  : QUndoCommand(parent), oldmax(oldmax), newmax(newmax), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer max scale denominator from '%1' to '%2'").arg(oldmax).arg(newmax));
+}
+
+void ChangeLayerMaxScaleDenomCommand::undo() {
+  modifiedLayer->setMaxScaleDenom(oldmax);
+}
+
+void ChangeLayerMaxScaleDenomCommand::redo() {
+  modifiedLayer->setMaxScaleDenom(newmax);
+}
+
+ChangeLayerMaxScaleDenomCommand::~ChangeLayerMaxScaleDenomCommand() {}
+
