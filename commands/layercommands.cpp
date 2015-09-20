@@ -151,7 +151,7 @@ ChangeLayerMaskCommand::~ChangeLayerMaskCommand() {}
 // "Change mask" command
 ChangeLayerOpacityCommand::ChangeLayerOpacityCommand(Layer * modifiedLayer, int oldOpacity, int newOpacity, QUndoCommand *parent)
   : QUndoCommand(parent), oldOpacity(oldOpacity), newOpacity(newOpacity), modifiedLayer(modifiedLayer)  {
-  setText(QObject::tr("Change layer opacity from '%1' to '%2'").arg(oldOpacity, newOpacity));
+  setText(QObject::tr("Change layer opacity from '%1' to '%2'").arg(oldOpacity).arg(newOpacity));
 }
 
 void ChangeLayerOpacityCommand::undo() {
