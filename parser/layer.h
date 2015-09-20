@@ -60,11 +60,13 @@ class Layer {
     int getOpacity() const;
     void setOpacity(int const);
 
+    QString getGroup() const;
+    void    setGroup(QString const &);
+
     // static variables (from mapserver.h)
     static QStringList layerType;
 
     // Accessors
-    QString getGroup() const;
     QString getType() const;
     QString getUnits() const;
     QString getSizeUnits() const;

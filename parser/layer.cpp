@@ -111,6 +111,20 @@ QString Layer::getGroup() const {
   return QString();
 }
 
+void Layer::setGroup(QString const &newGroup) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    if (l->group) {
+      free(l->group);
+      l->group = NULL;
+    }
+    if (newGroup.isEmpty())
+      return;
+    l->group = strdup(newGroup.toStdString().c_str());
+  }
+  return;
+}
+
 QString Layer::getType() const  {
   layerObj * l = getInternalLayerObj();
   if (l)
