@@ -51,6 +51,9 @@ class LayerSettingsRaster : public LayerSettings
       int     getLayerDebugLevel() const;
       double  getLayerMinScaleDenom() const;
       double  getLayerMaxScaleDenom() const;
+      QString getLayerTemplate() const;
+      QString getLayerHeader() const;
+      QString getLayerFooter() const;
 
  public slots:
       void accept();

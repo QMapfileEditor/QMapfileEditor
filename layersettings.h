@@ -43,11 +43,12 @@ class LayerSettings : public QTabWidget {
     virtual QString getLayerMask() const = 0;
     virtual int     getLayerOpacity() const = 0;
     virtual QString getLayerGroup() const = 0;
-    virtual int     getLayerDebugLevel() const =0;
+    virtual int     getLayerDebugLevel() const = 0;
     virtual double  getLayerMinScaleDenom() const = 0;
     virtual double  getLayerMaxScaleDenom() const = 0;
-
-
+    virtual QString getLayerTemplate() const = 0;
+    virtual QString getLayerHeader() const = 0;
+    virtual QString getLayerFooter() const = 0;
 
 };
 

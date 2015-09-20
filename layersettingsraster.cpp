@@ -160,6 +160,18 @@ double LayerSettingsRaster::getLayerMaxScaleDenom() const {
   return ui->mf_maxScaleDenom_edit->value();
 }
 
+QString LayerSettingsRaster::getLayerTemplate() const {
+  return ui->mf_template_edit->text();
+}
+
+QString LayerSettingsRaster::getLayerHeader() const {
+  return ui->mf_header_value->text();
+}
+
+QString LayerSettingsRaster::getLayerFooter() const {
+  return ui->mf_footer_value->text();
+}
+
 LayerSettingsRaster::~LayerSettingsRaster() {
   delete ui;
 }

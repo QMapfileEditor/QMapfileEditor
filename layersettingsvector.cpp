@@ -160,7 +160,17 @@ double LayerSettingsVector::getLayerMaxScaleDenom() const {
   return ui->mf_maxScaleDenom_edit->value();
 }
 
+QString LayerSettingsVector::getLayerTemplate() const {
+  return ui->mf_template_edit->text();
+}
 
+QString LayerSettingsVector::getLayerHeader() const {
+  return ui->mf_header_value->text();
+}
+
+QString LayerSettingsVector::getLayerFooter() const {
+  return ui->mf_footer_value->text();
+}
 
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
