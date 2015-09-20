@@ -145,6 +145,9 @@ int LayerSettingsRaster::getLayerStatus() const {
  return -1;
 }
 
+int LayerSettingsRaster::getLayerOpacity() const {
+  return ui->mf_opacity_box->value();
+}
 
 LayerSettingsRaster::~LayerSettingsRaster() {
   delete ui;

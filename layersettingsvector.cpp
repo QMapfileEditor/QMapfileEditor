@@ -144,6 +144,10 @@ QString LayerSettingsVector::getLayerMask() const {
   return ui->mf_mask_box->currentText();
 }
 
+int LayerSettingsVector::getLayerOpacity() const {
+  return ui->mf_opacity_box->value();
+}
+
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
 }

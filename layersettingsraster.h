@@ -46,6 +46,7 @@ class LayerSettingsRaster : public LayerSettings
       QString getLayerRequires() const;
       int     getLayerStatus() const;
       QString getLayerMask() const;
+      int     getLayerOpacity() const;
 
 
  public slots:

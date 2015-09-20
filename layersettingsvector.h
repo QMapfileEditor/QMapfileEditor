@@ -46,6 +46,7 @@ class LayerSettingsVector : public LayerSettings
       int     getLayerStatus() const;
       QString getLayerRequires() const;
       QString getLayerMask() const;
+      int     getLayerOpacity() const;
 
 
  public slots:
