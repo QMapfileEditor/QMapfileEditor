@@ -89,7 +89,7 @@ class ChangeLayerStatusCommand : public QUndoCommand {
 class ChangeLayerRequiresCommand : public QUndoCommand {
 
  public:
-   ChangeLayerRequiresCommand(Layer *, QString &, QString &, QUndoCommand * parent = 0);
+   ChangeLayerRequiresCommand(Layer *, QString, QString, QUndoCommand * parent = 0);
    ~ChangeLayerRequiresCommand();
    void undo();
    void redo();

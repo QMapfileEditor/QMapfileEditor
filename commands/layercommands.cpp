@@ -117,7 +117,7 @@ void ChangeLayerStatusCommand::redo(void) {
 ChangeLayerStatusCommand::~ChangeLayerStatusCommand() {}
 
 // "Change requires" command
-ChangeLayerRequiresCommand::ChangeLayerRequiresCommand(Layer * modifiedLayer, QString & oldLayer, QString  &newLayer, QUndoCommand *parent)
+ChangeLayerRequiresCommand::ChangeLayerRequiresCommand(Layer * modifiedLayer, QString oldLayer, QString newLayer, QUndoCommand *parent)
   : QUndoCommand(parent), oldLayer(oldLayer), newLayer(newLayer), modifiedLayer(modifiedLayer)  {
   setText(QObject::tr("Change layer require from '%1' to '%2'").arg(oldLayer, newLayer));
 }
@@ -131,3 +131,4 @@ void ChangeLayerRequiresCommand::redo() {
 }
 
 ChangeLayerRequiresCommand::~ChangeLayerRequiresCommand() {}
+
