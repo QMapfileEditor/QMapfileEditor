@@ -144,6 +144,10 @@ int LayerSettingsRaster::getLayerStatus() const {
  return -1;
 }
 
+QString LayerSettingsRaster::getLayerGroup() const {
+  return ui->mf_group_edit->text();
+}
+
 int LayerSettingsRaster::getLayerOpacity() const {
   return ui->mf_opacity_box->value();
 }

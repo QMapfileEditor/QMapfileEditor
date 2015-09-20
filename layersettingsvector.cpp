@@ -148,6 +148,10 @@ int LayerSettingsVector::getLayerOpacity() const {
   return ui->mf_opacity_box->value();
 }
 
+QString LayerSettingsVector::getLayerGroup() const {
+  return ui->mf_group_edit->text();
+}
+
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
 }

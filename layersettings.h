@@ -42,6 +42,7 @@ class LayerSettings : public QTabWidget {
     virtual QString getLayerRequires() const = 0;
     virtual QString getLayerMask() const = 0;
     virtual int     getLayerOpacity() const = 0;
+    virtual QString getLayerGroup() const = 0;
 
 };
 
