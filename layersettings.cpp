@@ -109,9 +109,20 @@ void LayerSettings::accept() {
   }
   // changing the debug level
   if (this->getLayerDebugLevel() != layer->getDebugLevel()) {
-   ChangeLayerDebugLevelCommand *ldlc = new ChangeLayerDebugLevelCommand(layer, layer->getDebugLevel(), this->getLayerDebugLevel());
-   stack->push(ldlc);
+    ChangeLayerDebugLevelCommand *ldlc = new ChangeLayerDebugLevelCommand(layer, layer->getDebugLevel(), this->getLayerDebugLevel());
+    stack->push(ldlc);
   }
+  // changing minscaledenom
+  if (this->getLayerMinScaleDenom() != layer->getMinScaleDenom()) {
+    ChangeLayerMinScaleDenomCommand *msd = new ChangeLayerMinScaleDenomCommand(layer, layer->getMinScaleDenom(), this->getLayerMinScaleDenom());
+    stack->push(msd);
+  }
+  // changing maxscaledenom
+  if (this->getLayerMaxScaleDenom() != layer->getMaxScaleDenom()) {
+    ChangeLayerMaxScaleDenomCommand *msd = new ChangeLayerMaxScaleDenomCommand(layer, layer->getMaxScaleDenom(), this->getLayerMaxScaleDenom());
+    stack->push(msd);
+  }
+
 }
 
 void LayerSettings::reject() {
