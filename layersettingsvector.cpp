@@ -152,6 +152,16 @@ int LayerSettingsVector::getLayerDebugLevel() const {
   return ui->mf_debug_value->value();
 }
 
+double LayerSettingsVector::getLayerMinScaleDenom() const {
+  return ui->mf_minScaleDenom_edit->value();
+}
+
+double LayerSettingsVector::getLayerMaxScaleDenom() const {
+  return ui->mf_maxScaleDenom_edit->value();
+}
+
+
+
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
 }

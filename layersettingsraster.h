@@ -49,7 +49,8 @@ class LayerSettingsRaster : public LayerSettings
       int     getLayerOpacity() const;
       QString getLayerGroup() const;
       int     getLayerDebugLevel() const;
-
+      double  getLayerMinScaleDenom() const;
+      double  getLayerMaxScaleDenom() const;
 
  public slots:
       void accept();

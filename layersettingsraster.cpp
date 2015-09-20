@@ -152,6 +152,14 @@ int LayerSettingsRaster::getLayerDebugLevel() const {
   return ui->mf_debug_value->value();
 }
 
+double LayerSettingsRaster::getLayerMinScaleDenom() const {
+  return ui->mf_minScaleDenom_edit->value();
+}
+
+double LayerSettingsRaster::getLayerMaxScaleDenom() const {
+  return ui->mf_maxScaleDenom_edit->value();
+}
+
 LayerSettingsRaster::~LayerSettingsRaster() {
   delete ui;
 }
