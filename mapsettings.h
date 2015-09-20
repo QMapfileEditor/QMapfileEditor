@@ -114,6 +114,7 @@ class MapSettings : public QDialog
       void removeOutputFormat();
       void setImageColor();
       void switchProjectionMode();
+      void toggleImageColor(int);
 
  private:
       Ui::MapSettings * ui;

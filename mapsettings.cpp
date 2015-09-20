@@ -124,6 +124,8 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     this->connect(ui->mf_map_config_projlib_browse, SIGNAL(clicked()), SLOT(browseProjlibFile()));
     //connect encryption key browser
     this->connect(ui->mf_map_config_encryption_browse, SIGNAL(clicked()), SLOT(browseEncryptionFile()));
+    // imagecolor enable logic
+    this->connect(ui->mf_map_imagecolor_enable, SIGNAL(stateChanged(int)), SLOT(toggleImageColor(int)));
     //connect imagecolor
     this->connect(ui->mf_map_imagecolor, SIGNAL(clicked()), SLOT(setImageColor()));
     //connect relatif path for proj lib and encryption
@@ -136,8 +138,12 @@ MapSettings::MapSettings(MainWindow * parent, MapfileParser * mf) :
     ui->mf_map_angle_slider->setValue(this->mapfile->getAngle());
 
     QColor curColor = this->mapfile->getImageColor();
-    ui->mf_map_imagecolor->setPalette(QPalette(curColor));
-
+    if (curColor.isValid()) {
+      ui->mf_map_imagecolor_enable->setCheckState(Qt::Checked);
+      ui->mf_map_imagecolor->setPalette(QPalette(curColor));
+    } else {
+      ui->mf_map_imagecolor_enable->setCheckState(Qt::Unchecked);
+    }
     ui->mf_map_angle->setValue(this->mapfile->getAngle());
     ui->mf_map_templatepattern->setText(this->mapfile->getTemplatePattern());
     ui->mf_map_datapattern->setText(this->mapfile->getDataPattern());
@@ -481,6 +487,18 @@ void MapSettings::saveMapSettings() {
 
 
 // slots
+
+void MapSettings::toggleImageColor(int state) {
+  switch(state) {
+    case Qt::Unchecked:
+      ui->mf_map_imagecolor->setDisabled(true);
+      break;
+    case Qt::Checked:
+      ui->mf_map_imagecolor->setDisabled(false);
+      break;
+  }
+}
+
 void MapSettings::openProjectionInfo() {
     QString epsgCode = ui->mf_map_projection->currentText().replace(QString("+init=epsg:"), QString(""));
     QDesktopServices::openUrl(QUrl("http://epsg.io/"+epsgCode, QUrl::StrictMode));
