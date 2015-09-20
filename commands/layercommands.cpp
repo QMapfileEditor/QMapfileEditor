@@ -196,3 +196,20 @@ void ChangeLayerDebugLevelCommand::redo() {
 
 ChangeLayerDebugLevelCommand::~ChangeLayerDebugLevelCommand() {}
 
+
+// "Change minscaledenom" command
+ChangeLayerMinScaleDenomCommand::ChangeLayerMinScaleDenomCommand(Layer * modifiedLayer, double oldmin, double newmin, QUndoCommand *parent)
+  : QUndoCommand(parent), oldmin(oldmin), newmin(newmin), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer min scale denominator from '%1' to '%2'").arg(oldmin).arg(newmin));
+}
+
+void ChangeLayerMinScaleDenomCommand::undo() {
+  modifiedLayer->setMinScaleDenom(oldmin);
+}
+
+void ChangeLayerMinScaleDenomCommand::redo() {
+  modifiedLayer->setMinScaleDenom(newmin);
+}
+
+ChangeLayerMinScaleDenomCommand::~ChangeLayerMinScaleDenomCommand() {}
+

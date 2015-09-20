@@ -151,6 +151,19 @@ class ChangeLayerDebugLevelCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerMinScaleDenomCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerMinScaleDenomCommand(Layer *, double, double, QUndoCommand * parent = 0);
+   ~ChangeLayerMinScaleDenomCommand();
+   void undo();
+   void redo();
+
+ private:
+   double oldmin, newmin;
+   Layer *modifiedLayer;
+};
+
 
 
 
