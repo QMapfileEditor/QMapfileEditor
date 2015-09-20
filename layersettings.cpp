@@ -97,6 +97,11 @@ void LayerSettings::accept() {
     ChangeLayerMaskCommand * lmc = new ChangeLayerMaskCommand(layer, layer->getMask(), this->getLayerMask());
     stack->push(lmc);
   }
+  // Changing opacity
+  if (this->getLayerOpacity() != layer->getOpacity()) {
+    ChangeLayerOpacityCommand *loc = new ChangeLayerOpacityCommand(layer, layer->getOpacity(), this->getLayerOpacity());
+    stack->push(loc);
+  }
 }
 
 void LayerSettings::reject() {
