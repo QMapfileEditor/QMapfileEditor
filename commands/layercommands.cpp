@@ -103,7 +103,7 @@ ChangeLayerStatusCommand::ChangeLayerStatusCommand(Layer * modifiedLayer, int ol
     newStatusDesc = QObject::tr("OFF");
   else
     newStatusDesc = QObject::tr("Default");
-  setText(QObject::tr("Change  layer status from '%1' to '%2'").arg(oldStatusDesc, newStatusDesc));
+  setText(QObject::tr("Change layer status from '%1' to '%2'").arg(oldStatusDesc, newStatusDesc));
 }
 
 void ChangeLayerStatusCommand::undo(void) {
@@ -116,3 +116,18 @@ void ChangeLayerStatusCommand::redo(void) {
 
 ChangeLayerStatusCommand::~ChangeLayerStatusCommand() {}
 
+// "Change requires" command
+ChangeLayerRequiresCommand::ChangeLayerRequiresCommand(Layer * modifiedLayer, QString & oldLayer, QString  &newLayer, QUndoCommand *parent)
+  : QUndoCommand(parent), oldLayer(oldLayer), newLayer(newLayer), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer require from '%1' to '%2'").arg(oldLayer, newLayer));
+}
+
+void ChangeLayerRequiresCommand::undo() {
+  modifiedLayer->setRequires(oldLayer);
+}
+
+void ChangeLayerRequiresCommand::redo() {
+  modifiedLayer->setRequires(newLayer);
+}
+
+ChangeLayerRequiresCommand::~ChangeLayerRequiresCommand() {}

@@ -86,5 +86,18 @@ class ChangeLayerStatusCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerRequiresCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerRequiresCommand(Layer *, QString &, QString &, QUndoCommand * parent = 0);
+   ~ChangeLayerRequiresCommand();
+   void undo();
+   void redo();
+
+ private:
+   QString oldLayer, newLayer;
+   Layer *modifiedLayer;
+};
+
 
 #endif // LAYERCOMMANDS_H
