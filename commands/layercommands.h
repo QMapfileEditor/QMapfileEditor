@@ -112,6 +112,20 @@ class ChangeLayerMaskCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerOpacityCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerOpacityCommand(Layer *, int, int, QUndoCommand * parent = 0);
+   ~ChangeLayerOpacityCommand();
+   void undo();
+   void redo();
+
+ private:
+   int oldOpacity, newOpacity;
+   Layer *modifiedLayer;
+};
+
+
 
 
 #endif // LAYERCOMMANDS_H
