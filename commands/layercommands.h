@@ -138,6 +138,19 @@ class ChangeLayerGroupCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerDebugCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerDebugCommand(Layer *, int, int, QUndoCommand * parent = 0);
+   ~ChangeLayerDebugCommand();
+   void undo();
+   void redo();
+
+ private:
+   int oldDebug, newDebug;
+   Layer *modifiedLayer;
+};
+
 
 
 
