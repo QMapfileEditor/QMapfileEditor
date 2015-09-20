@@ -229,3 +229,52 @@ void ChangeLayerMaxScaleDenomCommand::redo() {
 
 ChangeLayerMaxScaleDenomCommand::~ChangeLayerMaxScaleDenomCommand() {}
 
+// "Change template" command
+ChangeLayerTemplateCommand::ChangeLayerTemplateCommand(Layer * modifiedLayer, QString oldTemplate, QString newTemplate, QUndoCommand *parent)
+  : QUndoCommand(parent), oldTemplate(oldTemplate), newTemplate(newTemplate), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer template from '%1' to '%2'").arg(oldTemplate, newTemplate));
+}
+
+void ChangeLayerTemplateCommand::undo() {
+  modifiedLayer->setTemplate(oldTemplate);
+}
+
+void ChangeLayerTemplateCommand::redo() {
+  modifiedLayer->setTemplate(newTemplate);
+}
+
+ChangeLayerTemplateCommand::~ChangeLayerTemplateCommand() {}
+
+// "Change header" command
+ChangeLayerHeaderCommand::ChangeLayerHeaderCommand(Layer * modifiedLayer, QString oldHeader, QString newHeader, QUndoCommand *parent)
+  : QUndoCommand(parent), oldHeader(oldHeader), newHeader(newHeader), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer header from '%1' to '%2'").arg(oldHeader, newHeader));
+}
+
+void ChangeLayerHeaderCommand::undo() {
+  modifiedLayer->setHeader(oldHeader);
+}
+
+void ChangeLayerHeaderCommand::redo() {
+  modifiedLayer->setHeader(newHeader);
+}
+
+ChangeLayerHeaderCommand::~ChangeLayerHeaderCommand() {}
+
+// "Change footer" command
+ChangeLayerFooterCommand::ChangeLayerFooterCommand(Layer * modifiedLayer, QString oldFooter, QString newFooter, QUndoCommand *parent)
+  : QUndoCommand(parent), oldFooter(oldFooter), newFooter(newFooter), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer template from '%1' to '%2'").arg(oldFooter, newFooter));
+}
+
+void ChangeLayerFooterCommand::undo() {
+  modifiedLayer->setFooter(oldFooter);
+}
+
+void ChangeLayerFooterCommand::redo() {
+  modifiedLayer->setFooter(newFooter);
+}
+
+ChangeLayerFooterCommand::~ChangeLayerFooterCommand() {}
+
+

@@ -177,8 +177,44 @@ class ChangeLayerMaxScaleDenomCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerTemplateCommand : public QUndoCommand {
 
+ public:
+   ChangeLayerTemplateCommand(Layer *, QString, QString, QUndoCommand * parent = 0);
+   ~ChangeLayerTemplateCommand();
+   void undo();
+   void redo();
 
+ private:
+   QString oldTemplate, newTemplate;
+   Layer *modifiedLayer;
+};
 
+class ChangeLayerHeaderCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerHeaderCommand(Layer *, QString, QString, QUndoCommand * parent = 0);
+   ~ChangeLayerHeaderCommand();
+   void undo();
+   void redo();
+
+ private:
+   QString oldHeader, newHeader;
+   Layer *modifiedLayer;
+};
+
+class ChangeLayerFooterCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerFooterCommand(Layer *, QString, QString, QUndoCommand * parent = 0);
+   ~ChangeLayerFooterCommand();
+   void undo();
+   void redo();
+
+ private:
+   QString oldFooter, newFooter;
+   Layer *modifiedLayer;
+};
 
 #endif // LAYERCOMMANDS_H
+
