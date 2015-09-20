@@ -72,6 +72,15 @@ class Layer {
     double getMaxScaleDenom() const;
     void   setMaxScaleDenom(double const);
 
+    QString getTemplate() const;
+    void    setTemplate(QString const &);
+
+    QString getHeader() const;
+    void    setHeader(QString const &);
+
+    QString getFooter() const;
+    void    setFooter(QString const &);
+
     // static variables (from mapserver.h)
     static QStringList layerType;
 
@@ -90,9 +99,6 @@ class Layer {
     double getMinGeoWidth() const;
     double getMaxGeoWidth() const;
     QString getClassGroup() const;
-    QString getTemplate() const;
-    QString getHeader() const;
-    QString getFooter() const;
     QString getStyleItem() const;
     QString getFilterItem() const;
     QString getLabelItem() const;

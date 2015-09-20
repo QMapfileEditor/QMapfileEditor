@@ -304,6 +304,19 @@ QString Layer::getTemplate() const {
   return QString();
 }
 
+void Layer::setTemplate(QString const & newTemplate) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    if (l->_template) {
+      free(l->_template);
+      l->_template = NULL;
+    }
+    if (! newTemplate.isEmpty())
+      l->_template = strdup(newTemplate.toStdString().c_str());
+  }
+  return;
+}
+
 QString Layer::getHeader() const {
   layerObj * l = getInternalLayerObj();
   if (l)
@@ -311,11 +324,37 @@ QString Layer::getHeader() const {
   return QString();
 }
 
+void Layer::setHeader(QString const & newHeader) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    if (l->header) {
+      free(l->header);
+      l->header = NULL;
+    }
+    if (! newHeader.isEmpty())
+      l->header = strdup(newHeader.toStdString().c_str());
+  }
+  return;
+}
+
 QString Layer::getFooter() const {
   layerObj * l = getInternalLayerObj();
   if (l)
     return l->footer;
   return QString();
+}
+
+void Layer::setFooter(QString const & newFooter) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    if (l->footer) {
+      free(l->footer);
+      l->footer = NULL;
+    }
+    if (! newFooter.isEmpty())
+      l->footer = strdup(newFooter.toStdString().c_str());
+  }
+  return;
 }
 
 QString Layer::getStyleItem() const {
