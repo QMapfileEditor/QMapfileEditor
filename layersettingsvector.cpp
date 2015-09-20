@@ -140,6 +140,10 @@ QString LayerSettingsVector::getLayerRequires() const {
    return ui->mf_requires_box->currentText();
 }
 
+QString LayerSettingsVector::getLayerMask() const {
+  return ui->mf_mask_box->currentText();
+}
+
 LayerSettingsVector::~LayerSettingsVector() {
   delete ui;
 }

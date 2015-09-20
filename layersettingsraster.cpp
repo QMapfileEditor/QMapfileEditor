@@ -134,6 +134,10 @@ QString LayerSettingsRaster::getLayerRequires() const {
    return ui->mf_requires_box->currentText();
 }
 
+QString LayerSettingsRaster::getLayerMask() const {
+  return ui->mf_mask_box->currentText();
+}
+
 int LayerSettingsRaster::getLayerStatus() const {
  if (ui->mf_statusOn_radio->isChecked()) return 1;
  if (ui->mf_statusOff_radio->isChecked()) return 0;
