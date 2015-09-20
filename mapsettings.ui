@@ -866,6 +866,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="mf_map_imagecolor">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>100</width>
