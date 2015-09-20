@@ -125,6 +125,19 @@ class ChangeLayerOpacityCommand : public QUndoCommand {
    Layer *modifiedLayer;
 };
 
+class ChangeLayerGroupCommand : public QUndoCommand {
+
+ public:
+   ChangeLayerGroupCommand(Layer *, QString, QString, QUndoCommand * parent = 0);
+   ~ChangeLayerGroupCommand();
+   void undo();
+   void redo();
+
+ private:
+   QString oldGroup, newGroup;
+   Layer *modifiedLayer;
+};
+
 
 
 

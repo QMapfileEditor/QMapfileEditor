@@ -164,4 +164,19 @@ void ChangeLayerOpacityCommand::redo() {
 
 ChangeLayerOpacityCommand::~ChangeLayerOpacityCommand() {}
 
+// "Change group" command
+ChangeLayerGroupCommand::ChangeLayerGroupCommand(Layer * modifiedLayer, QString oldGroup, QString newGroup, QUndoCommand *parent)
+  : QUndoCommand(parent), oldGroup(oldGroup), newGroup(newGroup), modifiedLayer(modifiedLayer)  {
+  setText(QObject::tr("Change layer group from '%1' to '%2'").arg(oldGroup, newGroup));
+}
+
+void ChangeLayerGroupCommand::undo() {
+  modifiedLayer->setGroup(oldGroup);
+}
+
+void ChangeLayerGroupCommand::redo() {
+  modifiedLayer->setGroup(newGroup);
+}
+
+ChangeLayerGroupCommand::~ChangeLayerGroupCommand() {}
 
