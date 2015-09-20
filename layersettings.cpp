@@ -87,6 +87,11 @@ void LayerSettings::accept() {
     ChangeLayerStatusCommand * st = new ChangeLayerStatusCommand(layer, layer->getStatus(), this->getLayerStatus());
     stack->push(st);
   }
+  // Changing the requires
+  if (this->getLayerRequires() != layer->getRequires()) {
+    ChangeLayerRequiresCommand * rqc = new ChangeLayerRequiresCommand(layer, layer->getRequires(), this->getLayerRequires());
+    stack->push(rqc);
+  }
 }
 
 void LayerSettings::reject() {
