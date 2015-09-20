@@ -481,8 +481,11 @@
             <property name="accelerated">
              <bool>true</bool>
             </property>
+            <property name="minimum">
+             <double>-1.000000000000000</double>
+            </property>
             <property name="maximum">
-             <number>1000000000</number>
+             <double>1000000000.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -505,8 +508,11 @@
             <property name="accelerated">
              <bool>true</bool>
             </property>
+            <property name="minimum">
+             <double>-1.000000000000000</double>
+            </property>
             <property name="maximum">
-             <number>1000000000</number>
+             <double>1000000000.000000000000000</double>
             </property>
            </widget>
           </item>
