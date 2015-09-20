@@ -492,9 +492,11 @@ void MapSettings::toggleImageColor(int state) {
   switch(state) {
     case Qt::Unchecked:
       ui->mf_map_imagecolor->setDisabled(true);
+      ui->mf_map_imagecolor->setPalette(QPalette(QColor(0xff, 0xff, 0xff, 0xff)));
       break;
     case Qt::Checked:
       ui->mf_map_imagecolor->setDisabled(false);
+      ui->mf_map_imagecolor->setPalette(QPalette(mapfile->getImageColor()));
       break;
   }
 }
