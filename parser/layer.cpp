@@ -130,6 +130,16 @@ int Layer::getOpacity() const {
   return -1;
 }
 
+void Layer::setOpacity(int const newOpacity) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    // No need for prepocessor magick here,
+    // mapserver internals will do the job for us
+    msSetLayerOpacity(l, newOpacity);
+  }
+  return;
+}
+
 QString Layer::getMask() const {
   layerObj * l = getInternalLayerObj();
   if (l)

@@ -57,13 +57,15 @@ class Layer {
     QString getMask() const;
     void setMask(QString const &);
 
+    int getOpacity() const;
+    void setOpacity(int const);
+
     // static variables (from mapserver.h)
     static QStringList layerType;
 
     // Accessors
     QString getGroup() const;
     QString getType() const;
-    int getOpacity() const;
     QString getUnits() const;
     QString getSizeUnits() const;
     double getMinX() const;
