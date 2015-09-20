@@ -364,9 +364,7 @@ void TestMapfileParser::testImageColor() {
   MapfileParser * p = new MapfileParser();
 
   QColor l = p->getImageColor();
-  QVERIFY(l.red()   == 0xff);
-  QVERIFY(l.green() == 0xff);
-  QVERIFY(l.blue()  == 0xff);
+  QVERIFY(! l.isValid());
 
   p->setImageColor(QColor(0xdd, 0xad, 0xef));
   l = p->getImageColor();
