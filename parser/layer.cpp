@@ -359,6 +359,14 @@ int Layer::getDebugLevel() const {
   return -1;
 }
 
+void Layer::setDebugLevel(int const newLevel) {
+  layerObj * l = getInternalLayerObj();
+  if (l) {
+    l->debug = newLevel;
+  }
+  return;
+}
+
 QString Layer::getLabelRequires() const {
   layerObj * l = getInternalLayerObj();
   if (l)

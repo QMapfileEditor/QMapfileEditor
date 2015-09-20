@@ -63,6 +63,9 @@ class Layer {
     QString getGroup() const;
     void    setGroup(QString const &);
 
+    int  getDebugLevel() const;
+    void setDebugLevel(int const);
+
     // static variables (from mapserver.h)
     static QStringList layerType;
 
@@ -93,7 +96,6 @@ class Layer {
     double getSymbolScaleDenom() const;
     bool getLabelCache() const;
     bool getPostLabelCache() const;
-    int getDebugLevel() const;
     QString getLabelRequires() const;
 
     double getMaxScaleDenomLabel() const;
