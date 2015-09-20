@@ -102,6 +102,11 @@ void LayerSettings::accept() {
     ChangeLayerOpacityCommand *loc = new ChangeLayerOpacityCommand(layer, layer->getOpacity(), this->getLayerOpacity());
     stack->push(loc);
   }
+  // Changing the group
+  if (this->getLayerGroup() != layer->getGroup()) {
+    ChangeLayerGroupCommand *lgc = new ChangeLayerGroupCommand(layer, layer->getGroup(), this->getLayerGroup());
+    stack->push(lgc);
+  }
 }
 
 void LayerSettings::reject() {
