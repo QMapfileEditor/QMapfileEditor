@@ -31,17 +31,22 @@
 SetImageColorCommand::SetImageColorCommand(QColor color, MapfileParser *parser, QUndoCommand *parent)
      : QUndoCommand(parent), newColor(color), parser(parser)
 {
-    oldColor = parser->getImageColor();
-
-   setText(QObject::tr("change image color to %1").arg(color.name()));
+  oldColor = parser->getImageColor();
+  setText(QObject::tr("change image color to %1").arg(newColor.name()));
 }
 
 void SetImageColorCommand::undo(void) {
+  if (oldColor.isValid())
    parser->setImageColor(oldColor);
+  else
+    parser->setImageColor(QColor(0xff, 0xff, 0xff));
 }
 
 void SetImageColorCommand::redo(void) {
-   parser->setImageColor(newColor);
+   if (newColor.isValid())
+     parser->setImageColor(newColor);
+   else
+     parser->setImageColor(QColor(0xff, 0xff, 0xff));
 }
 
 
