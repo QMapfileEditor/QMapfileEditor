@@ -81,12 +81,6 @@ int main(int argc, char *argv[])
   w.gdalGdalDrivers.removeDuplicates();
   w.gdalGdalDrivers.sort();
 
-
-
-
-
-
-
   w.show();
   // preloads a mapfile if given as argument
   if (argc > 1) {
@@ -101,7 +95,6 @@ int main(int argc, char *argv[])
     GDALDeregisterDriver(d);
   }
   OGRCleanupAll();
-
 
   return ret;
 }
