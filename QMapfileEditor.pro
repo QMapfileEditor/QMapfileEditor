@@ -8,6 +8,7 @@ TEMPLATE = app
 
 QMAKE_CLEAN += $(TARGET)
 
+DEFINES += "ACCEPT_USE_OF_DEPRECATED_PROJ_API_H"
 
 SOURCES += \
         keyvaluemodel.cpp                      \

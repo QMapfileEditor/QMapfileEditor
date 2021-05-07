@@ -540,7 +540,7 @@ void MainWindow::showLayerSettings(const QModelIndex &i) {
 
 void MainWindow::showAbout() {
     QDialog* aboutDialog = new QDialog (this);
-    aboutDialog->setWindowFlags( Qt::WindowCancelButtonHint | Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowCloseButtonHint );
+    aboutDialog->setWindowFlags( Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowCloseButtonHint );
     aboutDialog->setWindowTitle(tr("About"));
     aboutDialog->setFixedSize(400,300);
     aboutDialog->setModal(true);
